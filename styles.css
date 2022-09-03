@@ -1,27 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
 .bg-color {
-  background-color: rgb(80, 80, 80);
+  background-color: rgb(9, 70, 70);
 }
-.txt-color {
-  color: rgb(80, 80, 80);
-}
-.name {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.name h3,
-h1,
-h2,
-h4 {
-  font-style: italic !important;
-  font-weight: 500;
-}
-.logo {
-  font-size: 40px;
-}
+
 .nav-link {
   color: rgb(220, 220, 220) !important;
 }
+
 .nav-links a:last-child {
   border: 2px solid rgb(209, 247, 255);
+}
+
+.parentCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-flow: wrap;
+  gap: 30px;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.childCard {
+  width: 30%;
+  background-color: #d6eeea;
+  border-radius: 5px;
+}
+
+@media screen and (max-width:600px) {
+  .parentCard {
+    flex-direction: column;
+  }
+
+  .childCard {
+    width: 90%;
+  }
+}
+
+.childCard:hover {
+  box-shadow: 2px 2px 10px black;
+}
+
+.image img {
+  width: 100%;
+  height: 200px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.card-title {
+  margin-top: 8px;
+}
+
+.card-description {
+  padding: 2%;
+}
+
+.card-btn {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.button {
+  background-color: white;
+  border: 1px solid rgb(20, 117, 121);
+  border-radius: 10px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(20, 117, 121);
+  color: white;
+  transition: 0.5s;
 }
