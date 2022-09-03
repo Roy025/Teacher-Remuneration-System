@@ -39,6 +39,7 @@ body {
 @media screen and (max-width:600px) {
   .parentCard {
     flex-direction: column;
+    align-content: center;
   }
 
   .childCard {
