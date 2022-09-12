@@ -1,0 +1,138 @@
+{
+  "format": 1,
+  "restore": {
+    "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/business.csproj": {}
+  },
+  "projects": {
+    "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/business.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/business.csproj",
+        "projectName": "business",
+        "projectPath": "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/business.csproj",
+        "packagesPath": "/home/deadking/.nuget/packages/",
+        "outputPath": "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/deadking/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/core/core.csproj": {
+                "projectPath": "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/core/core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.23.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.401/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/core/core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/core/core.csproj",
+        "projectName": "core",
+        "projectPath": "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/core/core.csproj",
+        "packagesPath": "/home/deadking/.nuget/packages/",
+        "outputPath": "/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/deadking/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.9, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[6.0.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.401/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
