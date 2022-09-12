@@ -1,0 +1,15 @@
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/bin/Debug/net6.0/business.deps.json
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/bin/Debug/net6.0/business.dll
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/bin/Debug/net6.0/business.pdb
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/bin/Debug/net6.0/core.dll
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/bin/Debug/net6.0/core.pdb
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/business.csproj.AssemblyReference.cache
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/business.GeneratedMSBuildEditorConfig.editorconfig
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/business.AssemblyInfoInputs.cache
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/business.AssemblyInfo.cs
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/business.csproj.CoreCompileInputs.cache
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/business.csproj.CopyComplete
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/business.dll
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/refint/business.dll
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/business.pdb
+/mnt/B2B03A46B03A10F9/Teacher_stuff_remuneration/backend/business/obj/Debug/net6.0/ref/business.dll
