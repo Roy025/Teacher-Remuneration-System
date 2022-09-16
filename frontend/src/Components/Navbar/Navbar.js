@@ -3,8 +3,7 @@ import { Items } from "./NavbarItems";
 //import {Button} from "../Buttons/Button";
 import "./Navbar.css";
 
-class Navbar extends Component {
-  render() {
+function Navbar () {
     return (
       <nav className="NavbarItems">
         <h1 className="navbar-logo">
@@ -25,7 +24,6 @@ class Navbar extends Component {
         </ul>
       </nav>
     );
-  }
 }
 
 export default Navbar;
