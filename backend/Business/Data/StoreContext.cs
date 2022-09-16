@@ -8,4 +8,5 @@ public class StoreContext : DbContext
     }
 
     // public DbSet<{{Entity}}> {{TableName}} { get; set; } = null;
+    public DbSet<Course> Courses { get; set; } = null;
 }
