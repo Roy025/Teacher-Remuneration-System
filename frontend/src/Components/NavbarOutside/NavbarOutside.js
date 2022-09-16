@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Items } from "./NavbarItems";
+import React from "react";
+import { Items } from "./NavbarOutsideItems";
 //import {Button} from "../Buttons/Button";
-import "./Navbar.css";
+import "./NavbarOutside.css";
 
-function Navbar () {
+function NavbarOutside () {
     return (
       <nav className="NavbarItems">
         <h1 className="navbar-logo">
@@ -26,4 +26,4 @@ function Navbar () {
     );
 }
 
-export default Navbar;
+export default NavbarOutside;
