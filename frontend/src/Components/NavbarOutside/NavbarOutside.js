@@ -1,10 +1,9 @@
-import React, { Component } from "react";
-import { Items } from "./NavbarItems";
+import React from "react";
+import { Items } from "./NavbarOutsideItems";
 //import {Button} from "../Buttons/Button";
-import "./Navbar.css";
+import "./NavbarOutside.css";
 
-class Navbar extends Component {
-  render() {
+function NavbarOutside () {
     return (
       <nav className="NavbarItems">
         <h1 className="navbar-logo">
@@ -25,7 +24,6 @@ class Navbar extends Component {
         </ul>
       </nav>
     );
-  }
 }
 
-export default Navbar;
+export default NavbarOutside;
