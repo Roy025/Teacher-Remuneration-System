@@ -14,11 +14,19 @@ app.ConfigureSwagger();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseCors("CorsPolicy");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 await app.ConfigureDatabaseAsync();
+
 app.Run();
