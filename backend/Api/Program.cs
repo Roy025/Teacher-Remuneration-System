@@ -20,4 +20,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+await app.ConfigureDatabaseAsync();
 app.Run();
