@@ -6,6 +6,9 @@
     justify-content: center;
     align-items: center;
     font-size: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 
 .navbar-logo {
@@ -26,6 +29,15 @@
     margin-right: 2rem;
 }
 
+.nav-item {
+    height: 70px;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .nav-item:hover {
+    border-bottom: 2px solid #03264b;
+  }
+
 .nav-links {
     color: azure;
     text-decoration: none;
@@ -33,9 +45,13 @@
 }
 
 .nav-links:hover {
-    background-color: #1C2541;
+    background: none;
     border-radius: 4px;
     transition: all 100ms ease-out;
+}
+
+.home{
+    background-color: transparent;
 }
 
 .nav-links-button {

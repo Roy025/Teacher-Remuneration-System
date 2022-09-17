@@ -1,12 +1,15 @@
 import React from "react";
 import "./App.css";
-import NavbarOutside from "./Components/NavbarOutside/NavbarOutside";
+import NavbarInside from "./Components/NavbarInside/NavbarInside";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 function App() {
   return (
-    <div className="App">
-      <NavbarOutside></NavbarOutside>
-    </div>
+    <Router>
+      <NavbarInside></NavbarInside>
+      <Routes>
+      </Routes>
+    </Router>
   );
 }
 

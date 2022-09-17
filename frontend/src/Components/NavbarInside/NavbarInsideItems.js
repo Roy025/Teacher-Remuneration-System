@@ -1,17 +1,17 @@
 export const Items = [
     {
         title:  "FAQ",
-        url: "#",
+        url: "/faq",
         cName: "nav-links"
     },
     {
         title:  "Notifications",
-        url: "#",
+        url: "notifications",
         cName: "nav-links"
     },
     {
         title:  "Profile",
-        url: "#",
+        url: "/profile",
         cName: "nav-links"
     }
 ]
