@@ -51,6 +51,9 @@ namespace Business.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Department", "Code")
+                        .IsUnique();
+
                     b.ToTable("Courses");
                 });
 #pragma warning restore 612, 618

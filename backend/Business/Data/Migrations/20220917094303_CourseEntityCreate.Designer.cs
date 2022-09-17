@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20220916185820_CourseEntityCreate")]
+    [Migration("20220917094303_CourseEntityCreate")]
     partial class CourseEntityCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,6 +52,9 @@ namespace Business.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Department", "Code")
+                        .IsUnique();
 
                     b.ToTable("Courses");
                 });
