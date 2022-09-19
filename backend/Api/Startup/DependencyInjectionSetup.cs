@@ -1,3 +1,6 @@
+using Business.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Api.Startup;
 public static class DependencyInjectionSetup
 {
@@ -10,6 +13,8 @@ public static class DependencyInjectionSetup
         services.AddSwaggerGen();
 
         // services.AddCorsToService();
+        services.AddDb(config);
+
 
         return services;
     }
@@ -24,6 +29,14 @@ public static class DependencyInjectionSetup
                 .AllowCredentials()
                 .WithOrigins("http://localhost:4200");
         }));
+        return services;
+    }
+
+    private static IServiceCollection AddDb(this IServiceCollection services, IConfiguration config){
+        services.AddDbContextPool<StoreContext>(options =>
+        {
+            options.UseNpgsql(config.GetConnectionString("PostgresConnection"));
+        });
         return services;
     }
 }

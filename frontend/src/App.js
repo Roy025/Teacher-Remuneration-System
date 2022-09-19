@@ -1,16 +1,20 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavbarInside } from "./Components/NavbarInside/NavbarInside";
+import NavbarInside from "./Components/NavbarInside/NavbarInside";
 import TeachersBill from './Components/TeachersBill/TeachersBill';
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 function App() {
-	return (
-		<div className="App">
-			<NavbarInside></NavbarInside>
-			<TeachersBill/>
-		</div>
-	);
+  return (
+    <Router>
+      <NavbarInside></NavbarInside>
+      <Routes>
+      </Routes>
+	  <TeachersBil>
+    </Router>
+	
+  );
 }
 
 export default App;

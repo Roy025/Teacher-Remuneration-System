@@ -1,0 +1,56 @@
+version: '3'
+services:
+
+  # redis:
+  #   image: redis:latest
+  #   # restart: always
+  #   ports:
+  #     - 4320:6379
+  #   command: [ "redis-server", "--appendonly", "yes" ]
+  #   volumes:
+  #     - redis-data:/data
+
+#   redis-commander:
+#     image: rediscommander/redis-commander:latest
+# #    restart: always
+#     environment:
+#       - REDIS_HOSTS=local:redis:6379
+#       - HTTP_USER=root
+#       - HTTP_PASSWORD=secret
+#     ports:
+#       - 8081:8081
+#     depends_on:
+#       - redis
+
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: appuser
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+#   mssqlDB:
+#     image: "mcr.microsoft.com/mssql/server"
+# #    restart: always
+#     environment:
+#       SA_PASSWORD: "Your_password123"
+#       ACCEPT_EULA: "Y"
+#     ports:
+#       - 1433:1433
+
+
+  # dotnet:
+  #   image: mcr.microsoft.com/dotnet/runtime:5.0
+
+volumes:
+  db:
