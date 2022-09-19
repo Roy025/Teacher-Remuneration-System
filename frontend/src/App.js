@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavbarOutside from './Components/NavbarOutside/NavbarOutside';
+import { NavbarInside } from "./Components/NavbarInside/NavbarInside";
 import TeachersBill from './Components/TeachersBill/TeachersBill';
 
 function App() {
 	return (
 		<div className="App">
-			<NavbarOutside></NavbarOutside>
-			<TeachersBill />
+			<NavbarInside></NavbarInside>
+			<TeachersBill/>
 		</div>
 	);
 }
