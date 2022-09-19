@@ -11,7 +11,7 @@ function App() {
       <NavbarInside></NavbarInside>
       <Routes>
       </Routes>
-	  <TeachersBil>
+	  <TeachersBill/>
     </Router>
 	
   );
