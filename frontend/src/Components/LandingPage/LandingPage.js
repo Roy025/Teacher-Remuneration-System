@@ -5,6 +5,7 @@ import {NavbarInside} from "../NavbarInside"
 function LandingPage() {
     return(
         <NavbarInside></NavbarInside>
+        
     )
 }
 
