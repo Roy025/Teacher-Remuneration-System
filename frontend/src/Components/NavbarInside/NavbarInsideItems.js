@@ -6,7 +6,7 @@ export const Items = [
     },
     {
         title:  "Notifications",
-        url: "notifications",
+        url: "/notifications",
         cName: "nav-links"
     },
     {
