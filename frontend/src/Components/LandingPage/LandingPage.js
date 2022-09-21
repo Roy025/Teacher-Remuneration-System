@@ -1,12 +1,15 @@
-import React from 'react'
-import "./LandingPage.css"
-import {NavbarInside} from "../NavbarInside"
+import React from "react";
+import PageBlock from "./PageBlock";
+import {homeBlockOne, homeBlockTwo, homeBlockThree} from "./LandingPageData"
 
 function LandingPage() {
-    return(
-        <NavbarInside></NavbarInside>
-        
-    )
+  return (
+    <>
+      <PageBlock {...homeBlockOne} />
+      <PageBlock {...homeBlockTwo} />
+      <PageBlock {...homeBlockThree} />
+    </>
+  );
 }
 
 export default LandingPage;
