@@ -8,7 +8,7 @@ function NavbarInside() {
   return (
     <nav className="navbar navbar-expand-lg  NavbarItems">
       <h1 className="navbar-brand text-light navbar-logo">
-        <Link to="/home" className="nav-links home">
+        <Link to="/" className="nav-links home">
           Teacher Staff Remuneration
           <span className="material-symbols-outlined">payments</span>
         </Link>

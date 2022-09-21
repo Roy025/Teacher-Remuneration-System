@@ -4,42 +4,52 @@ import { Link } from "react-router-dom";
 import "./PageBlock.css";
 
 function PageBlock({
-  lightTheme,
+  blockTheme,
   topLine,
   textTheme,
   textDescriptionTheme,
   headline,
   description,
   buttonLabel,
-  image,
+  imageSource,
   alt,
   imageStartLocation,
 }) {
   return (
     <>
-      <div className="Home_block">
+      <div className={blockTheme}>
         <div className="Container">
-          <div className="Row Home-block-row">
+          <div
+            className="Row Home-block-row"
+            style={{
+              display: "flex",
+              flexDirection:
+                imageStartLocation === "start" ? "row" : "row-reverse",
+            }}
+          >
             <div className="Col">
-              <div
-                className="Home-block-text-wrapper"
-                style={{
-                  display: "flex",
-                  flexDirection: (imageStartLocation = "start"
-                    ? "row-reverse"
-                    : "row"),
-                }}
-              >
-                <div className="Top-line">
-                  {topLine}
-                  <h1 className={textTheme}>{headline}</h1>
-                  <p className={textDescriptionTheme}>{description}</p>
-                  <Link to="/teachersbill">
-                    <Button buttonSize="btn--wide" buttonColor="blue">
-                      {buttonLabel}
-                    </Button>
-                  </Link>
-                </div>
+              <div className="Home-block-text-wrapper">
+                <div className="Top-line">{topLine}</div>
+                <h1 className={textTheme}>{headline}</h1>
+                <p className={textDescriptionTheme}>{description}</p>
+                <Link to="/teachersbill">
+                  <Button
+                    buttonSize="btn--wide"
+                    buttonColor="blue"
+                    buttonStyle="btn--primary"
+                  >
+                    {buttonLabel}
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            <div className="Col">
+              <div className="Home-block-image-wrapper">
+                <img
+                  src={require(`${imageSource}`)}
+                  alt={alt}
+                  className="Home-block-image"
+                />
               </div>
             </div>
           </div>

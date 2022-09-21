@@ -1,9 +1,10 @@
 import React from 'react';
-import {Navbar, NavbarItems} from "../Navbar"
-import "../Navbar/Navbar.css"
+import "./TeachersBill.css"
 
 function TeachersBill (){
     return(
-        <Navbar></Navbar>
+        <>
+
+        </>
     )
 }
