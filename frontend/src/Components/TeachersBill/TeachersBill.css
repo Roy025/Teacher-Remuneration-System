@@ -1,0 +1,21 @@
+.main-nav-link {
+	line-height: 70px;
+	text-decoration: none;
+	padding: 0 1em;
+	display: inline-block;
+	color: black;
+	position: relative;
+}
+.Link {
+	list-style: none;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	align-content: center;
+	justify-content: flex-start;
+	height: 100%;
+	align-items: center;
+}
+.form-group {
+	margin-bottom: 20px;
+}
