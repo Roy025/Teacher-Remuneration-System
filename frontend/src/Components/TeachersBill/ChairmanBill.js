@@ -9,6 +9,7 @@ import Dropdown, {
 } from '../SampleDropdown/Dropdown';
 import '../SampleDropdown/styles.css';
 import InfoComp from './InfoComp';
+import TeacherBill from './TeacherBill';
 
 const ChairmanBill = () => {
 	const [inputFields, setInputFields] = useState([
@@ -39,7 +40,7 @@ const ChairmanBill = () => {
 						</div>
 					</div>
 					<h3>Question Type</h3>
-					<InfoComp />
+					<TeacherBill />
 					<h3>Question Setter</h3>
 					<InfoComp />
 					<h3>Examiner</h3>
