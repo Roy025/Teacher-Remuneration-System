@@ -26,14 +26,17 @@
     padding-bottom: 1rem;
     border-bottom: 2px solid #fff;
     cursor: pointer;
+    background-color: black;
+    padding: 2%;
+    border-radius: 10px;
 }
 
 .Answer{
     max-height: 0;
     overflow: hidden;
-    transition: max-height 1.4s ease;
+    transition: max-height .7s ease-in-out;
 }
 
-.Answer .Clicked{
+.Answer.Clicked{
     max-height: 300px;
 }

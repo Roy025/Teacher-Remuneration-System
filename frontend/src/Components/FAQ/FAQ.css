@@ -30,6 +30,11 @@
     margin: 1%;
 }
 
+.Search-bar:hover{
+    border: 1px solid #cac7ff;
+    background: none;
+}
+
 .Search-bar input{
     background: transparent;
     flex: 1;

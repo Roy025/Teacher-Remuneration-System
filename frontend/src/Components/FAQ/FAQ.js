@@ -1,6 +1,7 @@
 import React from "react";
 import "./FAQ.css";
 import Questions from "./Questions";
+import { QuestionSet } from "./QuestionList"
 
 function FAQ() {
   return (
@@ -18,7 +19,11 @@ function FAQ() {
             <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
           </button>
         </form>
-          <Questions />
+          {QuestionSet.map((item, index) => {
+            return(
+              <Questions {...item}/>
+            )
+          })}
       </div>
     </div>
   );
