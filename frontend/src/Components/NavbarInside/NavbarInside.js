@@ -1,6 +1,5 @@
 import React from 'react';
 import { Items } from './NavbarInsideItems';
-//import {Button} from "../Buttons/Button";
 import "./NavbarInside.css";
 import { Link } from "react-router-dom";
 
