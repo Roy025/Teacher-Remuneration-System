@@ -1,0 +1,62 @@
+.Main-container{
+    width: 100%;
+    min-height: 100vh;
+    padding: 5%;
+    background: url("./faq.png");
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: .90;
+    background-repeat: repeat-y;
+}
+
+.Headline{
+    color: white;
+    padding: 1%;
+}
+
+.Top-text{
+    color: white;
+}
+
+.Search-bar{
+    width: 100%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, .2);
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+    padding: 10px 10px;
+    margin: 1%;
+}
+
+.Search-bar input{
+    background: transparent;
+    flex: 1;
+    border: 0;
+    outline: none;
+    padding: 10px 25px;
+    font-size: 1rem;
+    color: #cac7ff;
+    backdrop-filter: blur(4px) saturate(80%);
+}
+
+::placeholder{
+    color: #cac7ff;
+    font-weight:300;
+}
+
+.Search-bar button .fa-magnifying-glass{
+    scale: 2;
+    color: white;
+    padding-right: 20px;
+}
+
+.Search-bar button{
+    border: 0;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    background: transparent;
+    cursor: pointer;
+}

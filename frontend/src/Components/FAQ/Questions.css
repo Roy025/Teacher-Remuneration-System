@@ -1,0 +1,16 @@
+.Question{
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+    justify-content: center;
+    color: white;
+}
+
+.fa-caret-down{
+    rotate: 90deg;
+    align-content: center;
+    justify-content: center;
+    scale: 1.5;
+}
