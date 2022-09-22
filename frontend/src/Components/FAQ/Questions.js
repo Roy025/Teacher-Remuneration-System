@@ -11,12 +11,12 @@ function Questions() {
   }
 
   return (
-    <div className='Faq-container'>
-      <div className="Question">
+    <div className='Faq-container' onClick={changeView}>
+      <div className="Question" onClick={changeView}>
         <h5 >How to create an account?</h5>
         <i class="fa-sharp fa-solid fa-caret-down"></i>
       </div>
-      <div className= {click ? "Answer Clicked" : "Answer"} onClick={changeView}>
+      <div className= {`Answer ${click ? "Clicked" : ""}`} onClick={changeView}>
         <p>Like my father did.</p>
       </div>
     </div>
