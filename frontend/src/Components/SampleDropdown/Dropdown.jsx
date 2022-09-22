@@ -36,8 +36,22 @@ function Dropdown({ options, dropdownTitle }) {
 
 export default Dropdown;
 
-// dependancies
-// "@fortawesome/fontawesome-svg-core": "^6.2.0",
-//     "@fortawesome/free-regular-svg-icons": "^6.2.0",
-//     "@fortawesome/free-solid-svg-icons": "^6.2.0",
-//     "@fortawesome/react-fontawesome": "^0.2.0",
+export const sessionTitle = 'Session';
+export const sessionOptions = [
+	'2016-17',
+	'2017-18',
+	'2018-19',
+	'2019-20',
+	'2020-21',
+];
+export const semesterTitle = 'Semester';
+export const semesterOptions = [
+	'1st',
+	'2nd',
+	'3rd',
+	'4th',
+	'5th',
+	'6th',
+	'7th',
+	'8th',
+];
