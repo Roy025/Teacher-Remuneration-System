@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Links = () => {
 	return (
-		<div className="Link col-md-3">
+		<div className="Link col-md-2">
 			<ul>
 				<li>
 					<Link
