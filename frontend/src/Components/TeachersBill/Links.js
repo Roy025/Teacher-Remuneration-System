@@ -1,36 +1,37 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Links = () => {
 	return (
 		<div className="Link col-md-3">
 			<ul>
 				<li>
-					<a
+					<Link
 						class="list-group-item main-nav-link"
-						href="/director">
+						to="/director">
 						Director
-					</a>
+					</Link>
 				</li>
 				<li>
-					<a
+					<Link
 						class="list-group-item main-nav-link"
-						href="/committee-member">
-						Committee Member
-					</a>
+						to="/committee-chairman">
+						Committee Chairman
+					</Link>
 				</li>
 				<li>
-					<a
+					<Link
 						class="list-group-item main-nav-link"
-						href="/teacher">
+						to="/teacher">
 						Teacher
-					</a>
+					</Link>
 				</li>
 				<li>
-					<a
+					<Link
 						class="list-group-item main-nav-link"
-						href="/chief-invigilator">
+						to="/chief-invigilator">
 						Chief Invigilator
-					</a>
+					</Link>
 				</li>
 			</ul>
 			<div className="vr ms-auto" />
