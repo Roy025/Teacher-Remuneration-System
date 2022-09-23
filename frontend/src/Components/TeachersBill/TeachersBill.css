@@ -53,8 +53,12 @@
   justify-content: space-between;
 }
 
-.form-group {
-  margin-bottom: 50px;
+.Subrow1 {
+  width: 49%;
+}
+
+.Directors-form-row {
+  margin-bottom: 30px;
 }
 
 .Row4 {
@@ -64,8 +68,7 @@
 }
 
 .Row4 .form-group {
-  width: 30%;
-  margin-right: 2%;
+  width: 32%;
 }
 
 .add {

@@ -24,18 +24,18 @@ const DirectorsBill = () => {
 
         <form className="col-md-9 Director-form">
           <h1 className="text-center Director-form-title">Directors Bill</h1>
-          <div className="Row1">
-            <div className="form-group col-md-5">
+          <div className="Row1 Directors-form-row">
+            <div className="form-group col-md-5 Subrow1">
               <Dropdown
                 options={semesterOptions}
                 dropdownTitle={semesterTitle}
               />
             </div>
-            <div className="form-group col-md-5">
+            <div className="form-group col-md-5 Subrow1">
               <Dropdown options={sessionOptions} dropdownTitle={sessionTitle} />
             </div>
           </div>
-          <div className="form-group">
+          <div className="form-group Directors-form-row">
             <label>Committe Chairman</label>
             <input
               type="text"
@@ -44,7 +44,7 @@ const DirectorsBill = () => {
               placeholder="Name"
             />
           </div>
-          <div className="form-group">
+          <div className="form-group Directors-form-row">
             <label>Chief Invigilator</label>
             <input
               type="text"
@@ -55,7 +55,7 @@ const DirectorsBill = () => {
           </div>
 
           <div
-            className="Row4"
+            className="Row4 Directors-form-row"
             // key={index}
           >
             <div className="form-group col-md-4">
@@ -85,11 +85,11 @@ const DirectorsBill = () => {
                 id="member"
               />
             </div>
-            <div className="col-md-1">
-              <button type="button" className="add" onClick={addFields}>
-                <i className="fa-sharp fa-solid fa-plus"></i>
-              </button>
-            </div>
+          </div>
+          <div className="col-md-1">
+            <button type="button" className="add" onClick={addFields}>
+              <i className="fa-sharp fa-solid fa-plus"></i>
+            </button>
           </div>
         </form>
       </div>
