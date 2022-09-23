@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../SampleDropdown/styles.css';
-
+import { Additions } from './InfoComp';
 const TeacherBill = () => {
 	const [inputFields, setInputFields] = useState([
 		{
@@ -13,17 +13,18 @@ const TeacherBill = () => {
 
 	const addInputField = (e) => {
 		e.preventDefault();
+		console.log(e.target.name);
 		setInputFields([
 			...inputFields,
 			{
-				institute: '',
-				department: '',
-				name: '',
-				course: '',
+				[e.target.name]: '',
 			},
 		]);
+		console.log(e.target.name);
+
+		console.log(inputFields);
 	};
-	const removeInputFields = (index, e) => {
+	const removeInputFields = (e, index) => {
 		e.preventDefault();
 		const rows = [...inputFields];
 		rows.splice(index, 1);
@@ -35,6 +36,7 @@ const TeacherBill = () => {
 		list[index][name] = value;
 		setInputFields(list);
 	};
+	//console.log(inputFields);
 	return (
 		<div className="container">
 			{inputFields.map((data, index) => {
@@ -92,7 +94,7 @@ const TeacherBill = () => {
 							/>
 						</div>
 
-						<div className="col-md-1 text-center">
+						<div className="col-md-1 text-center mt-3">
 							{inputFields.length !== 1 ? (
 								<button
 									className="btn-outline-danger add"
@@ -106,17 +108,17 @@ const TeacherBill = () => {
 					</div>
 				);
 			})}
-
 			<div className="row">
-				<div className="col-sm-12">
+				<div className="col-sm-1">
+					{/* <Additions inputFields={{ inputFields }} /> */}
 					<button
-						className="btn btn-outline-success "
-						onClick={addInputField}>
-						Add New
+						className="btn-outline-success add"
+						onClick={addInputField}
+						type="button">
+						<i className="fa-sharp fa-solid fa-plus"></i>
 					</button>
 				</div>
 			</div>
-			<div className="col-sm-4"></div>
 		</div>
 	);
 };
