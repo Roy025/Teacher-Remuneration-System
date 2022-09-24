@@ -1,6 +1,7 @@
 import React from 'react'
 import "./Questions.css"
 import { useState } from "react"
+import { FaAngleDown } from "react-icons/fa";
 
 function Questions({
   question,
@@ -17,7 +18,7 @@ function Questions({
     <div className='Faq-container' onClick={changeView}>
       <div className="Question" onClick={changeView}>
         <h5 onClick={changeView}>{question}</h5>
-        <i class="fa-sharp fa-solid fa-caret-down"></i>
+        <FaAngleDown />
       </div>
       <div className= {`${click ? "Answer" : "Answer Clicked"}`} onClick={changeView}>
         <p onClick={changeView}>{answer}</p>

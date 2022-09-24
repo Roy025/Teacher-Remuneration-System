@@ -7,11 +7,6 @@
     color: white;
 }
 
-.fa-caret-down{
-    color: white;
-    scale: 1.5;
-}
-
 .Answer p{
     padding-top: 1rem;
     color : white;
@@ -21,12 +16,12 @@
 .Faq-container{
     width: 100%;
     max-width: 700px;
-    margin-top: 2rem;
+    margin-top: 1rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid #fff;
     cursor: pointer;
     background-color: black;
-    padding: 2%;
+    padding: 1%;
     border-radius: 10px;
 }
 

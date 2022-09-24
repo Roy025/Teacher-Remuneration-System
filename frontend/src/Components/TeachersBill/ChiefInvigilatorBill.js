@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
 import Links from './Links';
 import './TeachersBill.css';
 import Dropdown, {
@@ -11,13 +11,13 @@ import '../SampleDropdown/styles.css';
 import InfoComp from './InfoComp';
 
 const ChiefInvigilatorBill = () => {
-	const [inputFields, setInputFields] = useState([
-		{ institute: '', department: '', member: '' },
-	]);
-	const addFields = () => {
-		let newfield = { institute: '', department: '', member: '' };
-		setInputFields([...inputFields, newfield]);
-	};
+	// const [inputFields, setInputFields] = useState([
+	// 	{ institute: '', department: '', member: '' },
+	// ]);
+	// const addFields = () => {
+	// 	let newfield = { institute: '', department: '', member: '' };
+	// 	setInputFields([...inputFields, newfield]);
+	// };
 	return (
 		<>
 			<div className="row">
