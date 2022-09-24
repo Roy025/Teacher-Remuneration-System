@@ -38,7 +38,6 @@ const DirectorsBill = () => {
         <>
             <div className="Row Full-form-page">
                 <Links />
-
                 <form className="col-md-9 Form">
                     <h1 className="text-center Form-title">Directors Bill</h1>
                     <div className="Flex-row Form-row">

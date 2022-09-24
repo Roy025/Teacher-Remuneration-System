@@ -29,7 +29,6 @@ const TeacherBill = () => {
 		list[index][name] = value;
 		setInputFields(list);
 	};
-	//console.log(inputFields);
 	return (
 		<div className="Flex-row Row4 Form-row Common-info-flex-column">
 			{inputFields.map((data, index) => {
