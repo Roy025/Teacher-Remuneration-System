@@ -1,14 +1,15 @@
-import React from "react";
-import "./ProfilePage.css";
-import DatePicker from "sassy-datepicker";
-import { useState } from "react";
+import React from 'react';
+import './ProfilePage.css';
+import DatePicker from 'sassy-datepicker';
+import { useState } from 'react';
 
 function ProfilePage() {
-  const [date, setDate] = useState(new Date());
+	const [date, setDate] = useState(new Date());
 
-  const onChange = (date) => {
-    setDate(date);
-  };
+	const onChange = (date) => {
+		setDate(date);
+	};
+
 
   return (
     <div className="MainProfileBody">

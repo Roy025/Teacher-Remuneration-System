@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../SampleDropdown/styles.css';
 import { Additions } from './InfoComp';
+
 const TeacherBill = () => {
 	const [inputFields, setInputFields] = useState([
 		{
@@ -10,19 +11,11 @@ const TeacherBill = () => {
 			course: '',
 		},
 	]);
-
-	const addInputField = (e) => {
-		e.preventDefault();
-		console.log(e.target.name);
-		setInputFields([
-			...inputFields,
-			{
-				[e.target.name]: '',
-			},
-		]);
-		console.log(e.target.name);
-
-		console.log(inputFields);
+	const defaultInput = {
+		institute: '',
+		department: '',
+		name: '',
+		course: '',
 	};
 	const removeInputFields = (e, index) => {
 		e.preventDefault();
@@ -53,11 +46,10 @@ const TeacherBill = () => {
 								onChange={(evnt) => handleChange(index, evnt)}
 								value={institute}
 								className="form-control"
-								id="institute"
 								placeholder="Institute"
 							/>
 						</div>
-						<div claRequestssName="form-group col-md-3">
+						<div className="form-group col-md-3">
 							<label>Department</label>
 							<input
 								type="text"
@@ -65,7 +57,6 @@ const TeacherBill = () => {
 								onChange={(evnt) => handleChange(index, evnt)}
 								value={department}
 								className="form-control"
-								id="department"
 								placeholder="Department"
 							/>
 						</div>
@@ -77,7 +68,6 @@ const TeacherBill = () => {
 								onChange={(evnt) => handleChange(index, evnt)}
 								value={name}
 								className="form-control"
-								id="name"
 								placeholder="Name"
 							/>
 						</div>
@@ -89,7 +79,6 @@ const TeacherBill = () => {
 								onChange={(evnt) => handleChange(index, evnt)}
 								value={course}
 								className="form-control"
-								id="name"
 								placeholder="Course"
 							/>
 						</div>
@@ -110,13 +99,11 @@ const TeacherBill = () => {
 			})}
 			<div className="row">
 				<div className="col-sm-1">
-					{/* <Additions inputFields={{ inputFields }} /> */}
-					<button
-						className="btn-outline-success add"
-						onClick={addInputField}
-						type="button">
-						<i className="fa-sharp fa-solid fa-plus"></i>
-					</button>
+					<Additions
+						inputFields={inputFields}
+						setInputFields={setInputFields}
+						defaultInput={defaultInput}
+					/>{' '}
 				</div>
 			</div>
 		</div>
