@@ -13,13 +13,13 @@
 	position: relative;
 }
 
-.Row {
-	font-weight: 550;
-	width: 100%;
-	display: flex;
-	/* align-items: center; */
-	justify-content: space-between;
-	margin-bottom: 10%;
+.Full-form-page {
+  font-weight: 550;
+  width: 100%;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+  margin-bottom: 10%;
 }
 
 .Link {
@@ -36,35 +36,29 @@
 	align-items: center;
 }
 
-.Director-form {
-	width: 70%;
-	margin-right: 6%;
-	margin-left: 5%;
+.Form {
+  width: 70%;
+  margin-right: 6%;
+  margin-left: 5%;
 }
 
-.Director-form-title {
-	margin-top: 30px;
-	margin-bottom: 60px;
+.Form-title {
+  margin-top: 30px;
+  margin-bottom: 60px;
 }
 
-.Row1 {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+.Flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .Subrow1 {
 	width: 49%;
 }
 
-.Directors-form-row {
-	margin-bottom: 30px;
-}
-
-.Row4 {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+.Form-row {
+  margin-bottom: 30px;
 }
 
 .Row4 .form-group {

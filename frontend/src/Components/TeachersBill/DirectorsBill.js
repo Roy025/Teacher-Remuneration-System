@@ -35,62 +35,116 @@ const DirectorsBill = () => {
 		setInputFields(rows);
 	};
 	return (
-		<>
-			<div className="Row">
-				<Links />
-
-				<form className="col-md-9 Director-form">
-					<h1 className="text-center Director-form-title">Directors Bill</h1>
-					<div className="Row1 Directors-form-row">
-						<div className="form-group col-md-5 Subrow1">
-							<Dropdown
-								options={semesterOptions}
-								dropdownTitle={semesterTitle}
-							/>
-						</div>
-						<div className="form-group col-md-5 Subrow1">
-							<Dropdown
-								options={sessionOptions}
-								dropdownTitle={sessionTitle}
-							/>
-						</div>
-					</div>
-					<div className="form-group Directors-form-row">
-						<label>Committe Chairman</label>
-						<input
-							type="text"
-							className="form-control"
-							id="exampleFormControlInput1"
-							placeholder="Name"
-						/>
-					</div>
-					<div className="form-group Directors-form-row">
-						<label>Chief Invigilator</label>
-						<input
-							type="text"
-							className="form-control"
-							id="exampleFormControlInput1"
-							placeholder="Name"
-						/>
-					</div>
-					<div className="container">
-						<h3>Committe Member</h3>
-
-						<Chairman
-							inputFields={inputFields}
-							handleChange={handleChange}
-							removeInputFields={removeInputFields}
-						/>
-						<Additions
-							inputFields={inputFields}
-							setInputFields={setInputFields}
-							defaultInput={defaultInput}
-						/>
-					</div>
-				</form>
-			</div>
-		</>
-	);
+        <>
+            <div className="Row Full-form-page">
+                <Links />
+                <form className="col-md-9 Form">
+                    <h1 className="text-center Form-title">Directors Bill</h1>
+                    <div className="Flex-row Form-row">
+                        <div className="form-group col-md-5 Subrow1">
+                            <Dropdown
+                                options={semesterOptions}
+                                dropdownTitle={semesterTitle}
+                            />
+                        </div>
+                        <div className="form-group col-md-5 Subrow1">
+                            <Dropdown
+                                options={sessionOptions}
+                                dropdownTitle={sessionTitle}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group Form-row">
+                        <label>Committe Chairman</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Name"
+                        />
+                    </div>
+                    <div className="form-group Form-row">
+                        <label>Chief Invigilator</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Name"
+                        />
+                    </div>
+                    <div className="container">
+                        <h3>Committe Member</h3>
+                        {/* {inputFields.map((data, index) => {
+							const { institute, department, member } = data;
+							return (
+								<div
+									className="row"
+									key={index}>
+									<div className="form-group col-md-3">
+										<label>Institute</label>
+										<input
+											type="text"
+											name="institute"
+											onChange={(evnt) => handleChange(index, evnt)}
+											value={institute}
+											className="form-control"
+											id="institute"
+											placeholder="Institute"
+										/>
+									</div>
+									<div className="form-group col-md-3">
+										<label>Department</label>
+										<input
+											type="text"
+											name="department"
+											onChange={(evnt) => handleChange(index, evnt)}
+											value={department}
+											className="form-control"
+											id="department"
+											placeholder="Department"
+										/>
+									</div>
+									<div className="form-group col-md-4">
+										<label>Member</label>
+										<input
+											type="text"
+											name="member"
+											onChange={(evnt) => handleChange(index, evnt)}
+											value={member}
+											className="form-control"
+											id="member"
+											placeholder="Member"
+										/>
+									</div>
+									<div className="col-md-1 text-center mt-3">
+										{inputFields.length !== 1 ? (
+											<button
+												className="btn-outline-danger add"
+												onClick={removeInputFields}>
+												x
+											</button>
+										) : (Flex-row Row4 Form-row
+											''
+										)}
+									</div>
+								</div>
+							);
+						})} */}
+                        <Chairman
+                            inputFields={inputFields}
+                            handleChange={handleChange}
+                            removeInputFields={removeInputFields}
+                        />
+                        <Additions
+                            inputFields={inputFields}
+                            setInputFields={setInputFields}
+                            defaultInput={defaultInput}
+                        />
+                    </div>
+                </form>
+            </div>
+        </>
+    );
 };
 
 export default DirectorsBill;
