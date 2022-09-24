@@ -53,6 +53,14 @@
   justify-content: space-between;
 }
 
+.Common-info-flex-column {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  align-items: flex-start;
+  justify-content: start;
+}
+
 .Subrow1 {
 	width: 49%;
 }
@@ -80,3 +88,6 @@
 	align-content: center;
 	justify-content: center;
 }
+
+
+

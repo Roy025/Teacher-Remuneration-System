@@ -73,9 +73,9 @@ const DirectorsBill = () => {
                             placeholder="Name"
                         />
                     </div>
-                    <div className="container">
-                        <h3>Committe Member</h3>
-                        {/* {inputFields.map((data, index) => {
+
+                    <h3>Committe Member</h3>
+                    {/* {inputFields.map((data, index) => {
 							const { institute, department, member } = data;
 							return (
 								<div
@@ -85,9 +85,10 @@ const DirectorsBill = () => {
 										<label>Institute</label>
 										<input
 											type="text"
-											name="institute"
-											onChange={(evnt) => handleChange(index, evnt)}
-											value={institute}
+											name="institute
+											</button>
+										) : (Flex-row Row4 Form-row
+											''e}
 											className="form-control"
 											id="institute"
 											placeholder="Institute"
@@ -109,7 +110,7 @@ const DirectorsBill = () => {
 										<label>Member</label>
 										<input
 											type="text"
-											name="member"
+							 Flex-row Row4 Form-row				name="member"
 											onChange={(evnt) => handleChange(index, evnt)}
 											value={member}
 											className="form-control"
@@ -130,18 +131,20 @@ const DirectorsBill = () => {
 									</div>
 								</div>
 							);
+											</button>
+										) : (Flex-row Row4 Form-row
+											''
 						})} */}
-                        <Chairman
-                            inputFields={inputFields}
-                            handleChange={handleChange}
-                            removeInputFields={removeInputFields}
-                        />
-                        <Additions
-                            inputFields={inputFields}
-                            setInputFields={setInputFields}
-                            defaultInput={defaultInput}
-                        />
-                    </div>
+                    <Chairman
+                        inputFields={inputFields}
+                        handleChange={handleChange}
+                        removeInputFields={removeInputFields}
+                    />
+                    <Additions
+                        inputFields={inputFields}
+                        setInputFields={setInputFields}
+                        defaultInput={defaultInput}
+                    />
                 </form>
             </div>
         </>

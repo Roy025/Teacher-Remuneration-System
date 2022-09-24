@@ -31,14 +31,14 @@ const TeacherBill = () => {
 	};
 	//console.log(inputFields);
 	return (
-		<div className="container">
+		<div className="Flex-row Row4 Form-row Common-info-flex-column">
 			{inputFields.map((data, index) => {
 				const { institute, department, name, course } = data;
 				return (
 					<div
 						className="row"
 						key={index}>
-						<div className="form-group col-md-3">
+						<div className="form-group col">
 							<label>Institute</label>
 							<input
 								type="text"
@@ -49,7 +49,7 @@ const TeacherBill = () => {
 								placeholder="Institute"
 							/>
 						</div>
-						<div className="form-group col-md-3">
+						<div className="form-group col">
 							<label>Department</label>
 							<input
 								type="text"
@@ -60,7 +60,7 @@ const TeacherBill = () => {
 								placeholder="Department"
 							/>
 						</div>
-						<div className="form-group col-md-3">
+						<div className="form-group col">
 							<label>Teacher Name</label>
 							<input
 								type="text"
