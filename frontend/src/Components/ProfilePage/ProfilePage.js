@@ -43,7 +43,7 @@ function ProfilePage() {
       {/* Dashboard */}
       <div className="Summary-dashboard">
         <h3 className="Summary">Summary</h3>
-        
+
         <div className="Money-dashboard">
           <div className="Money-card">
             <h3 className="Money-card-title">Total Income</h3>
@@ -69,9 +69,10 @@ function ProfilePage() {
         <div className="Cleared-voucher">
           <h1 className="Cleared-voucher-heading">Cleared Vouchers</h1>
         </div>
-        <div className="Uncleared-voucher"></div>
+        <div className="Uncleared-voucher">
+          <h1 className="Cleared-voucher-heading">Uncleared Vouchers</h1>
+        </div>
       </div>
-
     </div>
   );
 }
