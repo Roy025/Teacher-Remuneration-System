@@ -257,10 +257,16 @@
 
 /* My csss */
 
+.MainProfileBody{
+    display: flex;
+    flex-direction: column;
+}
+
 .ProfileHeadContainer {
     margin-top: 1%;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-content: center;
     justify-content: center;
     gap: 200px;
@@ -272,25 +278,81 @@
     flex-direction: row;
     gap: 50px;
     background-color: white;
-    box-shadow: 0 10px 18px 0 rgba(0, 0, 0, 0.2), 0 12px 30px 0 rgba(0, 0, 0, 0.19);
-    padding: 5%;
+    box-shadow: rgba(51, 7, 35, 0.4) 5px 5px, rgba(37, 8, 27, 0.3) 10px 10px, rgba(8, 1, 6, 0.2) 15px 15px, rgba(14, 1, 9, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;    padding: 5%;
+    border: 2px solid #1f1f1f;
     border-radius: 10px;
     align-content: center;
     justify-content: center;
     font-size: 1.1rem;
-    background-image: linear-gradient(to right, #32507c, #526f92, #758ea7, #9baebd, #c5ced4);   
+    font-weight: 500;
+    background-image: linear-gradient(to right, #265778, #50738e, #7691a5, #9dafbc, #c5ced4);
 }
 
 
-img {
-    vertical-align: middle;
-    height: 65px;
-    width: 65px;
+.ProfilePic {
+    height:140px;
+    width: 140px;
     border-radius: 50%;
-    border: 4px solid #8EE3EF ;
+    border: 4px solid #44344F ;
 }
 
-.ProfileCalender{
-    float: right;
-    align-content: end;
+.NameAndInstitution{
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
 }
+
+.Calendar-design{
+    box-shadow: 0 10px 18px 0 rgba(0, 0, 0, 0.2), 0 12px 30px 0 rgba(0, 0, 0, 0.19);
+    border: 2px solid #1f1f1f ;
+    background-image: radial-gradient(circle, #265778, #50738e, #7691a5, #9dafbc, #c5ced4);
+}
+
+.Summary-dashboard{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+}
+
+.Summary{
+    text-align: center;
+    color: radial-gradient(circle, #265778, #50738e, #7691a5, #9dafbc, #c5ced4);
+}
+
+.Money-dashboard{
+    padding: 1%;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    gap: 1%;
+    flex-wrap: wrap;
+}
+
+.Money-card{
+    margin: 1%;
+    width: 100%;
+    max-width: 350px;
+    padding: 1%;
+    border: 2px solid #1f1f1f;
+    border-radius: 8px;
+    text-align: center;
+    background-image: linear-gradient(to right, #000000, #272627, #484849, #6c6d6f, #919496);
+    color: white;
+    box-shadow: rgba(51, 7, 35, 0.4) 5px 5px, rgba(37, 8, 27, 0.3) 10px 10px, rgba(8, 1, 6, 0.2) 15px 15px, rgba(14, 1, 9, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;    padding: 5%;
+}
+
+.Withdrwan {
+    background-image: linear-gradient(to right, #000000, #282327, #46424e, #5f6779, #718fa3);
+}
+
+.Remaining{
+    background-image: linear-gradient(to right, #000000, #231a21, #393043, #414b6a, #346b90);
+}
+
+.Committee{
+    background-image: linear-gradient(to right, #000000, #251714, #3c2b17, #44461d, #346438);
+}
+
+
+
