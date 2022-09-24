@@ -13,11 +13,37 @@ import TeacherBill from './TeacherBill';
 
 const ChairmanBill = () => {
 	const [inputFields, setInputFields] = useState([
-		{ institute: '', department: '', member: '' },
+		{
+			course: '',
+			number: '',
+		},
 	]);
-	const addFields = () => {
-		let newfield = { institute: '', department: '', member: '' };
-		setInputFields([...inputFields, newfield]);
+
+	const addInputField = (e) => {
+		e.preventDefault();
+		console.log(e.target.name);
+		setInputFields([
+			...inputFields,
+			{
+				[e.target.name]: '',
+			},
+		]);
+		console.log(e.target.name);
+
+		console.log(inputFields);
+	};
+	const removeInputFields = (e, index) => {
+		e.preventDefault();
+		const rows = [...inputFields];
+		rows.splice(index, 1);
+		setInputFields(rows);
+	};
+
+	const handleChange = (index, evnt) => {
+		const { name, value } = evnt.target;
+		const list = [...inputFields];
+		list[index][name] = value;
+		setInputFields(list);
 	};
 	return (
 		<>
@@ -42,30 +68,33 @@ const ChairmanBill = () => {
 					<h3>Question Type</h3>
 					<TeacherBill />
 					<h3>Question Setter</h3>
-					<InfoComp />
+					<TeacherBill />
 					<h3>Examiner</h3>
 					<h4>Part - A</h4>
-					<InfoComp />
+					<TeacherBill />
 					<h4>Part - B</h4>
-					<InfoComp />
+					<TeacherBill />
 					<h3>Scrutinizer</h3>
 					<h4>Part - A</h4>
-					<InfoComp />
+					<TeacherBill />
 					<h4>Part - B</h4>
-					<InfoComp />
+					<TeacherBill />
 					<h3>Tabulation</h3>
-					<InfoComp />
+					<TeacherBill />
 					<h3>Practical Exam</h3>
-					<InfoComp />
+					<TeacherBill />
 					<h3>Student Registration</h3>
 					<div className="row">
 						<div class="form-group col-md-3">
 							<label for="exampleFormControlInput1">CourseID</label>
 							<input
-								name="course"
 								type="text"
-								class="form-control"
+								name="course"
+								//onChange={(evnt) => handleChange(index, evnt)}
+								//value={data.course}
+								className="form-control"
 								id="course"
+								placeholder="course"
 							/>
 						</div>
 						<div class="form-group col-md-3">
@@ -73,19 +102,32 @@ const ChairmanBill = () => {
 								Resgistered Student Count
 							</label>
 							<input
-								name="number"
 								type="text"
-								class="form-control"
-								id="number"
+								name="numebr"
+								//onChange={(evnt) => handleChange(index, evnt)}
+								//value={data.course}
+								className="form-control"
+								id="numebr"
+								placeholder="numebr"
 							/>
 						</div>
-
+						<div className="col-md-1 text-center mt-3">
+							{inputFields.length !== 1 ? (
+								<button
+									className="btn-outline-danger add"
+									onClick={removeInputFields}>
+									x
+								</button>
+							) : (
+								''
+							)}
+						</div>
 						<div class="col-md-1">
 							<button
-								type="button"
-								class="add"
-								onClick={addFields}>
-								<i class="fa-sharp fa-solid fa-plus"></i>
+								className="btn-outline-success add mt-4"
+								onClick={addInputField}
+								type="button">
+								<i className="fa-sharp fa-solid fa-plus"></i>
 							</button>
 						</div>
 					</div>

@@ -1,5 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+export const Additions = ({ inputFields }) => {
+	// const [inputField, setInputField] = useState([inputFields]);
+	// console.log(inputField);
+	// const addInputField = (e) => {
+	// 	e.preventDefault();
+	// 	setInputField([
+	// 		...inputField,
+	// 		{
+	// 			[e.target.name]: '',
+	// 		},
+	// 	]);
+	// 	console.log(inputField[0].inputFields[0]);
+	// };
+	// return (
+	// 	<button
+	// 		className="btn-outline-success add"
+	// 		onClick={addInputField}
+	// 		type="button">
+	// 		<i className="fa-sharp fa-solid fa-plus"></i>
+	// 	</button>
+	// );
+};
 const InfoComp = () => {
 	return (
 		<div className="row">
