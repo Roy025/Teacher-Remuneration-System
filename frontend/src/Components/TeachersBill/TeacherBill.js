@@ -29,7 +29,6 @@ const TeacherBill = () => {
 		list[index][name] = value;
 		setInputFields(list);
 	};
-	//console.log(inputFields);
 	return (
 		<div className="container">
 			{inputFields.map((data, index) => {
