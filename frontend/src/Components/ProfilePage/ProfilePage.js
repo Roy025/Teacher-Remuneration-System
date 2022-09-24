@@ -70,13 +70,72 @@ function ProfilePage() {
         <div className="Cleared-voucher">
           <h1>Cleared Vouchers</h1>
           <div className="Catalogue-summary-container">
-            <div className="Catalogue-summary">
-              
+            <div className="Catalogue-box">
+              <div className="Session-date">
+                <div className="Session">Session: 2018-19</div>
+                <div className="Semester">4th Semester</div>
+              </div>
+              <div className="Semester-chairman">
+              <div className="Issue-date">09 Semptember, 2021</div>
+                <div className="Chairman">Mohammad Abdullah Al Mumin</div>
+              </div>
+            </div>
+            <div className="Catalogue-box">
+              <div className="Session-date">
+                <div className="Session">Session: 2018-19</div>
+                <div className="Semester">5th Semester</div>
+              </div>
+              <div className="Semester-chairman">
+              <div className="Issue-date">10 July, 2021</div>
+                <div className="Chairman">M. Jahirul Islam</div>
+              </div>
+            </div>
+            <div className="Catalogue-box">
+              <div className="Session-date">
+                <div className="Session">Session: 2017-18</div>
+                <div className="Semester">6th Semester</div>
+              </div>
+              <div className="Semester-chairman">
+              <div className="Issue-date">09 Semptember, 2021</div>
+                <div className="Chairman">M. Jahirul Islam</div>
+              </div>
+            </div>
+            <div className="Catalogue-box">
+              <div className="Session-date">
+                <div className="Session">Session: 2019-20</div>
+                <div className="Semester">3rd Semester</div>
+              </div>
+              <div className="Semester-chairman">
+              <div className="Issue-date">09 Semptember, 2021</div>
+                <div className="Chairman">Dr. Ahsan Habib</div>
+              </div>
             </div>
           </div>
-        </div>
+        </div> 
         <div className="Cleared-voucher">
           <h1>Uncleared Vouchers</h1>
+          <div className="Catalogue-summary-container">
+            <div className="Catalogue-box">
+              <div className="Session-date">
+                <div className="Session">Session: 2018-19</div>
+                <div className="Semester">6th Semester</div>
+              </div>
+              <div className="Semester-chairman">
+              <div className="Issue-date">09 January, 2023</div>
+                <div className="Chairman">Dr. Ahsan Habib</div>
+              </div>
+            </div>
+            <div className="Catalogue-box">
+              <div className="Session-date">
+                <div className="Session">Session: 2017-18</div>
+                <div className="Semester">8th Semester</div>
+              </div>
+              <div className="Semester-chairman">
+              <div className="Issue-date">09 January, 2023</div>
+                <div className="Chairman">Ms Sayma Sultana Chowdhury</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
