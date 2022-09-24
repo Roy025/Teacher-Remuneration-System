@@ -21,7 +21,7 @@ function FAQ() {
         </form>
           {QuestionSet.map((item, index) => {
             return(
-              <Questions {...item}/>
+              <Questions key={index} {...item}/>
             )
           })}
       </div>
