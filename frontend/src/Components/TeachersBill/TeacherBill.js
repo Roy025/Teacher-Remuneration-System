@@ -57,7 +57,7 @@ const TeacherBill = () => {
 								placeholder="Institute"
 							/>
 						</div>
-						<div className="form-group col-md-3">
+						<div claRequestssName="form-group col-md-3">
 							<label>Department</label>
 							<input
 								type="text"
