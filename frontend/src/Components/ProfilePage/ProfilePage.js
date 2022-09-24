@@ -67,10 +67,15 @@ function ProfilePage() {
       {/* Profile info */}
       <div className="Profile-info">
         <div className="Cleared-voucher">
-          <h1 className="Cleared-voucher-heading">Cleared Vouchers</h1>
+          <h1>Cleared Vouchers</h1>
+          <div className="Catalogue-summary-container">
+            <div className="Catalogue-summary">
+              
+            </div>
+          </div>
         </div>
-        <div className="Uncleared-voucher">
-          <h1 className="Cleared-voucher-heading">Uncleared Vouchers</h1>
+        <div className="Cleared-voucher">
+          <h1>Uncleared Vouchers</h1>
         </div>
       </div>
     </div>
