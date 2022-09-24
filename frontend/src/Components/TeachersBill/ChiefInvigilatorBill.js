@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
 import Links from './Links';
 import './TeachersBill.css';
 import Dropdown, {
@@ -8,15 +8,28 @@ import Dropdown, {
 	sessionOptions,
 } from '../SampleDropdown/Dropdown';
 import '../SampleDropdown/styles.css';
-import InfoComp from './InfoComp';
+import TeacherBill from './TeacherBill';
+import { useState } from 'react';
+import { Additions, Chairman, Chief } from './InfoComp';
 
 const ChiefInvigilatorBill = () => {
 	const [inputFields, setInputFields] = useState([
-		{ institute: '', department: '', member: '' },
+		{
+			course: '',
+		},
 	]);
-	const addFields = () => {
-		let newfield = { institute: '', department: '', member: '' };
-		setInputFields([...inputFields, newfield]);
+
+	const removeInputFields = (e, index) => {
+		e.preventDefault();
+		const rows = [...inputFields];
+		rows.splice(index, 1);
+		setInputFields(rows);
+	};
+	const handleChange = (index, evnt) => {
+		const { name, value } = evnt.target;
+		const list = [...inputFields];
+		list[index][name] = value;
+		setInputFields(list);
 	};
 	return (
 		<>
@@ -25,38 +38,53 @@ const ChiefInvigilatorBill = () => {
 				<form className="col-md-10">
 					<h1 className="text-center">Chief Invigilator Bill</h1>
 					<div className="row">
-						<div class="form-group col-md-5">
+						<div className="form-group col-md-5">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
 							/>
 						</div>
-						<div class="form-group col-md-5">
+						<div className="form-group col-md-5">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
 							/>
 						</div>
 					</div>
-					<div class="form-group col-md-4">
-						<label for="exampleFormControlInput1">CourseID</label>
-						<input
-							name="course"
-							type="text"
-							class="form-control"
-							id="course"
+
+					<div class="col-md-7">
+						<h5>Course</h5>
+						<Chief
+							inputFields={inputFields}
+							handleChange={handleChange}
+							removeInputFields={removeInputFields}
 						/>
-					</div>
-					<h5>Invigilator</h5>
-					<InfoComp />
-					<div class="col-md-1">
-						<button
-							type="button"
-							class="add"
-							//onClick={addFields}
-						>
-							<i class="fa-sharp fa-solid fa-plus"></i>
-						</button>
+						{/* <div className="row">
+							<div className="form-group col-md-3">
+								<label>Course</label>
+								<input
+									type="text"
+									name="course"
+									//onChange={(evnt) => handleChange(index, evnt)}
+									//value={data.course}
+									className="form-control"
+									id="course"
+									placeholder="Course"
+								/>
+							</div>
+						</div>
+						<h5>Invigilator</h5>
+
+						<Chairman
+							inputFields={inputFields}
+							handleChange={handleChange}
+							removeInputFields={removeInputFields}
+						/>
+						<Additions
+							inputFields={inputFields}
+							setInputFields={setInputFields}
+							defaultInput={defaultInput}
+						/>*/}
 					</div>
 				</form>
 			</div>

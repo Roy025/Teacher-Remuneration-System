@@ -1,16 +1,16 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 .main-nav-link {
-  line-height: 70px;
-  text-decoration: none;
-  padding: 0 1em;
-  display: inline-block;
-  color: black;
-  position: relative;
+	line-height: 70px;
+	text-decoration: none;
+	padding: 0 1em;
+	display: inline-block;
+	color: black;
+	position: relative;
 }
 
 .Full-form-page {
@@ -23,17 +23,17 @@
 }
 
 .Link {
-  margin-top: 15%;
-  list-style: none;
-  display: flex;
-  margin-left: 2%;
-  /* align-items: center;
+	margin-top: 15%;
+	list-style: none;
+	display: flex;
+	margin-left: 2%;
+	/* align-items: center;
   align-content: center;
   justify-content: flex-end; */
-  flex-wrap: wrap;
-  justify-content: center;
-  /* height: 100%; */
-  align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
+	/* height: 100%; */
+	align-items: center;
 }
 
 .Form {
@@ -54,7 +54,7 @@
 }
 
 .Subrow1 {
-  width: 49%;
+	width: 49%;
 }
 
 .Form-row {
@@ -62,20 +62,21 @@
 }
 
 .Row4 .form-group {
-  width: 32%;
+	width: 32%;
 }
 
 .add {
-  border: 1px solid rgb(212, 205, 205);
-  border-radius: 0.375rem;
-  margin-bottom: 25px;
-  height: 36px;
-  width: 60px;
-  background-color: #fff;
+	border: 1px solid rgb(212, 205, 205);
+	border-radius: 0.375rem;
+	margin-bottom: 25px;
+	margin-top: 5px;
+	height: 36px;
+	width: 60px;
+	background-color: #fff;
 }
 
 .fa-sharp {
-  color: #000000ce;
-  align-content: center;
-  justify-content: center;
+	color: #000000ce;
+	align-content: center;
+	justify-content: center;
 }

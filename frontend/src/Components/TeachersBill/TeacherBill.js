@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../SampleDropdown/styles.css';
+import { Additions } from './InfoComp';
 
 const TeacherBill = () => {
 	const [inputFields, setInputFields] = useState([
@@ -10,20 +11,13 @@ const TeacherBill = () => {
 			course: '',
 		},
 	]);
-
-	const addInputField = (e) => {
-		e.preventDefault();
-		setInputFields([
-			...inputFields,
-			{
-				institute: '',
-				department: '',
-				name: '',
-				course: '',
-			},
-		]);
+	const defaultInput = {
+		institute: '',
+		department: '',
+		name: '',
+		course: '',
 	};
-	const removeInputFields = (index, e) => {
+	const removeInputFields = (e, index) => {
 		e.preventDefault();
 		const rows = [...inputFields];
 		rows.splice(index, 1);
@@ -35,6 +29,7 @@ const TeacherBill = () => {
 		list[index][name] = value;
 		setInputFields(list);
 	};
+	//console.log(inputFields);
 	return (
 		<div className="container">
 			{inputFields.map((data, index) => {
@@ -51,7 +46,6 @@ const TeacherBill = () => {
 								onChange={(evnt) => handleChange(index, evnt)}
 								value={institute}
 								className="form-control"
-								id="institute"
 								placeholder="Institute"
 							/>
 						</div>
@@ -63,7 +57,6 @@ const TeacherBill = () => {
 								onChange={(evnt) => handleChange(index, evnt)}
 								value={department}
 								className="form-control"
-								id="department"
 								placeholder="Department"
 							/>
 						</div>
@@ -75,7 +68,6 @@ const TeacherBill = () => {
 								onChange={(evnt) => handleChange(index, evnt)}
 								value={name}
 								className="form-control"
-								id="name"
 								placeholder="Name"
 							/>
 						</div>
@@ -87,12 +79,11 @@ const TeacherBill = () => {
 								onChange={(evnt) => handleChange(index, evnt)}
 								value={course}
 								className="form-control"
-								id="name"
 								placeholder="Course"
 							/>
 						</div>
 
-						<div className="col-md-1 text-center">
+						<div className="col-md-1 text-center mt-3">
 							{inputFields.length !== 1 ? (
 								<button
 									className="btn-outline-danger add"
@@ -106,17 +97,15 @@ const TeacherBill = () => {
 					</div>
 				);
 			})}
-
 			<div className="row">
-				<div className="col-sm-12">
-					<button
-						className="btn btn-outline-success "
-						onClick={addInputField}>
-						Add New
-					</button>
+				<div className="col-sm-1">
+					<Additions
+						inputFields={inputFields}
+						setInputFields={setInputFields}
+						defaultInput={defaultInput}
+					/>{' '}
 				</div>
 			</div>
-			<div className="col-sm-4"></div>
 		</div>
 	);
 };
