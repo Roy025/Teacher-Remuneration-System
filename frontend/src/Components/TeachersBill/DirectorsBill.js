@@ -75,62 +75,7 @@ const DirectorsBill = () => {
 					</div>
 					<div className="container">
 						<h3>Committe Member</h3>
-						{/* {inputFields.map((data, index) => {
-							const { institute, department, member } = data;
-							return (
-								<div
-									className="row"
-									key={index}>
-									<div className="form-group col-md-3">
-										<label>Institute</label>
-										<input
-											type="text"
-											name="institute"
-											onChange={(evnt) => handleChange(index, evnt)}
-											value={institute}
-											className="form-control"
-											id="institute"
-											placeholder="Institute"
-										/>
-									</div>
-									<div className="form-group col-md-3">
-										<label>Department</label>
-										<input
-											type="text"
-											name="department"
-											onChange={(evnt) => handleChange(index, evnt)}
-											value={department}
-											className="form-control"
-											id="department"
-											placeholder="Department"
-										/>
-									</div>
-									<div className="form-group col-md-4">
-										<label>Member</label>
-										<input
-											type="text"
-											name="member"
-											onChange={(evnt) => handleChange(index, evnt)}
-											value={member}
-											className="form-control"
-											id="member"
-											placeholder="Member"
-										/>
-									</div>
-									<div className="col-md-1 text-center mt-3">
-										{inputFields.length !== 1 ? (
-											<button
-												className="btn-outline-danger add"
-												onClick={removeInputFields}>
-												x
-											</button>
-										) : (
-											''
-										)}
-									</div>
-								</div>
-							);
-						})} */}
+
 						<Chairman
 							inputFields={inputFields}
 							handleChange={handleChange}
