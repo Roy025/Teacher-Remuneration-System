@@ -55,16 +55,16 @@ const ChiefInvigilatorBill = () => {
 		<>
 			<div className="row">
 				<Links />
-				<form className="col-md-10">
-					<h1 className="text-center">Chief Invigilator Bill</h1>
-					<div className="row">
-						<div className="form-group col-md-5">
+				<form className="col-md-8 Form">
+					<h1 className="text-center Form-title">Chief Invigilator Bill</h1>
+					<div className="Flex-row Form-row">
+						<div className="form-group col-md-5 Subrow1">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
 							/>
 						</div>
-						<div className="form-group col-md-5">
+						<div className="form-group col-md-5 Subrow1">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
@@ -103,8 +103,7 @@ const ChiefInvigilatorBill = () => {
 										setInputFields={setInput}
 										defaultInput={defaultIn}
 									/>
-
-									<div className="col-md-1 text-center mt-3">
+									{/* <div className="col-md-1 text-center mt-3">
 										{input.length !== 1 ? (
 											<button
 												className="btn-outline-danger add"
@@ -114,7 +113,7 @@ const ChiefInvigilatorBill = () => {
 										) : (
 											''
 										)}
-									</div>
+									</div> */}
 								</div>
 							);
 						})}
@@ -124,6 +123,15 @@ const ChiefInvigilatorBill = () => {
 							setInputFields={setInputFields}
 							defaultInput={defaultInput}
 						/>
+						{input.length !== 1 ? (
+							<button
+								className="btn-outline-danger add"
+								onClick={removeInputFields}>
+								x
+							</button>
+						) : (
+							''
+						)}
 					</div>
 				</form>
 			</div>

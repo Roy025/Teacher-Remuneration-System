@@ -105,11 +105,42 @@ const DirectorsBill = () => {
 											placeholder="Department"
 										/>
 									</div>
-									<div className="form-group col-md-4">
+								row	<div className="form-group col-md-4">
 										<label>Member</label>
 										<input
 											type="text"
-							 Flex-row Row4 Form-row				name="member"
+							 Flex-row Row4 Form-row				{/* {inputFields.map((data, index) => {
+							const { institute, department, member } = data;
+							return (
+								<div
+									className="row"
+									key={index}>
+									<div className="form-group col-md-3">
+										<label>Institute</label>
+										<input
+											type="text"
+											name="institute
+											</button>
+										) : (Flex-row Row4 Form-row
+											''e}
+											className="form-control"
+											id="institute"
+											placeholder="Institute"
+										/>
+									</div>
+									<div className="form-group col-md-3">
+										<label>Department</label>
+										<input
+											type="text"
+											name="department"
+											onChange={(evnt) => handleChange(index, evnt)}
+											value={department}
+											className="form-control"
+											id="department"
+											placeholder="Department"
+										/>
+									</div>
+								rowname="member"
 											onChange={(evnt) => handleChange(index, evnt)}
 											value={member}
 											className="form-control"
