@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 public class Course : BaseEntity
 {
     public string Department { get; set; }
-    
     public string Code { get; set; }
     public string Title { get; set; }
-    
     public Decimal Credit { get; set; }
 }
