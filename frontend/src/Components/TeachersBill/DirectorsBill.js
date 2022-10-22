@@ -35,47 +35,46 @@ const DirectorsBill = () => {
 		setInputFields(rows);
 	};
 	return (
-		<>
-			<div className="Row">
-				<Links />
+        <>
+            <div className="Row Full-form-page">
+                <Links />
+                <form className="col-md-9 Form">
+                    <h1 className="text-center Form-title">Directors Bill</h1>
+                    <div className="Flex-row Form-row">
+                        <div className="form-group col-md-5 Subrow1">
+                            <Dropdown
+                                options={semesterOptions}
+                                dropdownTitle={semesterTitle}
+                            />
+                        </div>
+                        <div className="form-group col-md-5 Subrow1">
+                            <Dropdown
+                                options={sessionOptions}
+                                dropdownTitle={sessionTitle}
+                            />
+                        </div>
+                    </div>
+                    <div className="form-group Form-row">
+                        <label>Committe Chairman</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Name"
+                        />
+                    </div>
+                    <div className="form-group Form-row">
+                        <label>Chief Invigilator</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="Name"
+                        />
+                    </div>
 
-				<form className="col-md-9 Director-form">
-					<h1 className="text-center Director-form-title">Directors Bill</h1>
-					<div className="Row1 Directors-form-row">
-						<div className="form-group col-md-5 Subrow1">
-							<Dropdown
-								options={semesterOptions}
-								dropdownTitle={semesterTitle}
-							/>
-						</div>
-						<div className="form-group col-md-5 Subrow1">
-							<Dropdown
-								options={sessionOptions}
-								dropdownTitle={sessionTitle}
-							/>
-						</div>
-					</div>
-					<div className="form-group Directors-form-row">
-						<label>Committe Chairman</label>
-						<input
-							type="text"
-							className="form-control"
-							id="exampleFormControlInput1"
-							placeholder="Name"
-						/>
-					</div>
-					<div className="form-group Directors-form-row">
-						<label>Chief Invigilator</label>
-						<input
-							type="text"
-							className="form-control"
-							id="exampleFormControlInput1"
-							placeholder="Name"
-						/>
-					</div>
-					<div className="container">
-						<h3>Committe Member</h3>
-						{/* {inputFields.map((data, index) => {
+                    <h3>Committe Member</h3>
+                    {/* {inputFields.map((data, index) => {
 							const { institute, department, member } = data;
 							return (
 								<div
@@ -85,9 +84,10 @@ const DirectorsBill = () => {
 										<label>Institute</label>
 										<input
 											type="text"
-											name="institute"
-											onChange={(evnt) => handleChange(index, evnt)}
-											value={institute}
+											name="institute
+											</button>
+										) : (Flex-row Row4 Form-row
+											''e}
 											className="form-control"
 											id="institute"
 											placeholder="Institute"
@@ -105,11 +105,42 @@ const DirectorsBill = () => {
 											placeholder="Department"
 										/>
 									</div>
-									<div className="form-group col-md-4">
+								row	<div className="form-group col-md-4">
 										<label>Member</label>
 										<input
 											type="text"
-											name="member"
+							 Flex-row Row4 Form-row				{/* {inputFields.map((data, index) => {
+							const { institute, department, member } = data;
+							return (
+								<div
+									className="row"
+									key={index}>
+									<div className="form-group col-md-3">
+										<label>Institute</label>
+										<input
+											type="text"
+											name="institute
+											</button>
+										) : (Flex-row Row4 Form-row
+											''e}
+											className="form-control"
+											id="institute"
+											placeholder="Institute"
+										/>
+									</div>
+									<div className="form-group col-md-3">
+										<label>Department</label>
+										<input
+											type="text"
+											name="department"
+											onChange={(evnt) => handleChange(index, evnt)}
+											value={department}
+											className="form-control"
+											id="department"
+											placeholder="Department"
+										/>
+									</div>
+								rowname="member"
 											onChange={(evnt) => handleChange(index, evnt)}
 											value={member}
 											className="form-control"
@@ -124,28 +155,30 @@ const DirectorsBill = () => {
 												onClick={removeInputFields}>
 												x
 											</button>
-										) : (
+										) : (Flex-row Row4 Form-row
 											''
 										)}
 									</div>
 								</div>
 							);
+											</button>
+										) : (Flex-row Row4 Form-row
+											''
 						})} */}
-						<Chairman
-							inputFields={inputFields}
-							handleChange={handleChange}
-							removeInputFields={removeInputFields}
-						/>
-						<Additions
-							inputFields={inputFields}
-							setInputFields={setInputFields}
-							defaultInput={defaultInput}
-						/>
-					</div>
-				</form>
-			</div>
-		</>
-	);
+                    <Chairman
+                        inputFields={inputFields}
+                        handleChange={handleChange}
+                        removeInputFields={removeInputFields}
+                    />
+                    <Additions
+                        inputFields={inputFields}
+                        setInputFields={setInputFields}
+                        defaultInput={defaultInput}
+                    />
+                </form>
+            </div>
+        </>
+    );
 };
 
 export default DirectorsBill;

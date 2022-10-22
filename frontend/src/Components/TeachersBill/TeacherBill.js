@@ -80,7 +80,6 @@ const TeacherBill = () => {
                 placeholder="Course"
               />
             </div>
-
             <div className="col-md-1 text-center mt-3">
               {inputFields.length !== 1 ? (
                 <button

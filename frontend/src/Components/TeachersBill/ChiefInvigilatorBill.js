@@ -13,38 +13,58 @@ import { useState } from 'react';
 import { Additions, Chairman, Chief } from './InfoComp';
 
 const ChiefInvigilatorBill = () => {
+	const [input, setInput] = useState([
+		{
+			institute: '',
+			department: '',
+			member: '',
+		},
+	]);
+	const defaultInput = {
+		institute: '',
+		department: '',
+		member: '',
+		course: '',
+	};
 	const [inputFields, setInputFields] = useState([
 		{
+			institute: '',
+			department: '',
+			member: '',
 			course: '',
 		},
 	]);
-
+	const defaultIn = {
+		institute: '',
+		department: '',
+		member: '',
+	};
 	const removeInputFields = (e, index) => {
 		e.preventDefault();
-		const rows = [...inputFields];
+		const rows = [...input];
 		rows.splice(index, 1);
-		setInputFields(rows);
+		setInput(rows);
 	};
 	const handleChange = (index, evnt) => {
 		const { name, value } = evnt.target;
-		const list = [...inputFields];
+		const list = [...input];
 		list[index][name] = value;
-		setInputFields(list);
+		setInput(list);
 	};
 	return (
 		<>
 			<div className="row">
 				<Links />
-				<form className="col-md-10">
-					<h1 className="text-center">Chief Invigilator Bill</h1>
-					<div className="row">
-						<div className="form-group col-md-5">
+				<form className="col-md-8 Form">
+					<h1 className="text-center Form-title">Chief Invigilator Bill</h1>
+					<div className="Flex-row Form-row">
+						<div className="form-group col-md-5 Subrow1">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
 							/>
 						</div>
-						<div className="form-group col-md-5">
+						<div className="form-group col-md-5 Subrow1">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
@@ -52,39 +72,66 @@ const ChiefInvigilatorBill = () => {
 						</div>
 					</div>
 
-					<div class="col-md-7">
+					<div className="col-md-7">
 						<h5>Course</h5>
-						<Chief
-							inputFields={inputFields}
-							handleChange={handleChange}
-							removeInputFields={removeInputFields}
-						/>
-						{/* <div className="row">
-							<div className="form-group col-md-3">
-								<label>Course</label>
-								<input
-									type="text"
-									name="course"
-									//onChange={(evnt) => handleChange(index, evnt)}
-									//value={data.course}
-									className="form-control"
-									id="course"
-									placeholder="Course"
-								/>
-							</div>
-						</div>
-						<h5>Invigilator</h5>
 
-						<Chairman
-							inputFields={inputFields}
-							handleChange={handleChange}
-							removeInputFields={removeInputFields}
-						/>
+						{inputFields.map((data, index) => {
+							console.log(inputFields);
+							const { course } = data;
+							return (
+								<div
+									className="row"
+									key={index}>
+									<div className="form-group col-md-2">
+										<label>CourseID</label>
+										<input
+											type="text"
+											name="course"
+											onChange={(evnt) => handleChange(index, evnt)}
+											value={course}
+											className="form-control"
+											placeholder="Course"
+										/>
+									</div>
+									<Chairman
+										inputFields={input}
+										handleChange={handleChange}
+										removeInputFields={removeInputFields}
+									/>
+									<Additions
+										inputFields={input}
+										setInputFields={setInput}
+										defaultInput={defaultIn}
+									/>
+									{/* <div className="col-md-1 text-center mt-3">
+										{input.length !== 1 ? (
+											<button
+												className="btn-outline-danger add"
+												onClick={removeInputFields}>
+												x
+											</button>
+										) : (
+											''
+										)}
+									</div> */}
+								</div>
+							);
+						})}
+
 						<Additions
 							inputFields={inputFields}
 							setInputFields={setInputFields}
 							defaultInput={defaultInput}
-						/>*/}
+						/>
+						{input.length !== 1 ? (
+							<button
+								className="btn-outline-danger add"
+								onClick={removeInputFields}>
+								x
+							</button>
+						) : (
+							''
+						)}
 					</div>
 				</form>
 			</div>
