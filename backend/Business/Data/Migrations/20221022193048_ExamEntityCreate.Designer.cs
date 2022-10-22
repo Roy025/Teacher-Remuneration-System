@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221021181553_ExamCommitteeMemberEntityCreate")]
-    partial class ExamCommitteeMemberEntityCreate
+    [Migration("20221022193048_ExamEntityCreate")]
+    partial class ExamEntityCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace Business.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Core.Entities.ExamCommitteeMember", b =>
+            modelBuilder.Entity("Core.Entities.Exam", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,13 +34,6 @@ namespace Business.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Department")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("MemberId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("MemberRole")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -57,12 +50,10 @@ namespace Business.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId");
-
-                    b.HasIndex("Department", "Session", "Semester", "MemberId")
+                    b.HasIndex("Department", "Session", "Semester")
                         .IsUnique();
 
-                    b.ToTable("ExamCommitteeMembers");
+                    b.ToTable("Exams");
                 });
 
             modelBuilder.Entity("Core.Entities.Teacher", b =>
@@ -135,17 +126,6 @@ namespace Business.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("Core.Entities.ExamCommitteeMember", b =>
-                {
-                    b.HasOne("Core.Entities.Teacher", "Member")
-                        .WithMany()
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Member");
                 });
 #pragma warning restore 612, 618
         }
