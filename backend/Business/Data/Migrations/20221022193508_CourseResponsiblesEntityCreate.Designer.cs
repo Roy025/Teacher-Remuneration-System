@@ -3,6 +3,7 @@ using System;
 using Business.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221022193508_CourseResponsiblesEntityCreate")]
+    partial class CourseResponsiblesEntityCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,40 +152,6 @@ namespace Business.Data.Migrations
                     b.ToTable("ExamCommittees");
                 });
 
-            modelBuilder.Entity("Core.Entities.Project", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ExamId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("NumberOfExaminee")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("NumberOfRegisteredStudents")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("ExamId", "CourseId")
-                        .IsUnique();
-
-                    b.ToTable("Project");
-                });
-
             modelBuilder.Entity("Core.Entities.Teacher", b =>
                 {
                     b.Property<Guid>("Id")
@@ -254,21 +222,6 @@ namespace Business.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("ProjectTeacher", b =>
-                {
-                    b.Property<Guid>("ExaminersId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ProjectsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("ExaminersId", "ProjectsId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.ToTable("ProjectTeacher");
                 });
 
             modelBuilder.Entity("Core.Entities.CourseResponsibles", b =>
@@ -343,40 +296,6 @@ namespace Business.Data.Migrations
                     b.Navigation("Exam");
 
                     b.Navigation("Member");
-                });
-
-            modelBuilder.Entity("Core.Entities.Project", b =>
-                {
-                    b.HasOne("Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Exam", "Exam")
-                        .WithMany()
-                        .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Exam");
-                });
-
-            modelBuilder.Entity("ProjectTeacher", b =>
-                {
-                    b.HasOne("Core.Entities.Teacher", null)
-                        .WithMany()
-                        .HasForeignKey("ExaminersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
