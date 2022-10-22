@@ -1,4 +1,7 @@
 using Business.Data;
+using Core.Interfaces.Repositories;
+using Core.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Startup;
@@ -15,6 +18,29 @@ public static class DependencyInjectionSetup
         // services.AddCorsToService();
         services.AddDb(config);
 
+        services.Configure<ApiBehaviorOptions>(options =>
+        {
+            options.InvalidModelStateResponseFactory = actionContext =>
+            {
+                var errors = actionContext.ModelState
+                    .Where(e => e.Value.Errors.Count > 0)
+                    .SelectMany(x => x.Value.Errors)
+                    .Select(x => x.ErrorMessage).ToArray();
+
+                var errorResponse = new ApiValidationErrorResponse
+                {
+                    Errors = errors
+                };
+
+                return new BadRequestObjectResult(errorResponse);
+            };
+        });
+
+        // Module services
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+        // Automapper configuration
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         return services;
     }
