@@ -28,7 +28,7 @@ const ChairmanBill = () => {
 		rows.splice(index, 1);
 		setInputFields(rows);
 	};
-	const handleChange = (index, evnt) => {
+	const handleChange = (evnt, index) => {
 		const { name, value } = evnt.target;
 		const list = [...inputFields];
 		list[index][name] = value;
