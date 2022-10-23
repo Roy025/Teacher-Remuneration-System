@@ -29,6 +29,18 @@ const TeacherBill = () => {
     list[index][name] = value;
     setInputFields(list);
   };
+
+  const addInputField = () => {
+    setInputFields([
+      ...inputFields,
+      {
+        institute: "",
+        department: "",
+        name: "",
+        course: "",
+      }
+    ]);
+  };
   //console.log(inputFields);
   return (
     <div className="container">
@@ -95,11 +107,18 @@ const TeacherBill = () => {
             {inputFields.length - 1 === index && (
               <div className="row">
                 <div className="col-sm-1">
-                  <Additions
+                  {/* <Additions
                     inputFields={inputFields}
                     setInputFields={setInputFields}
                     defaultInput={defaultInput}
-                  />{" "}
+                  />{" "} */}
+                  <button
+                    className="btn-outline-success add"
+                    onClick={() => addInputField()}
+                    type="button"
+                  >
+                    <i className="fa-sharp fa-solid fa-plus"></i>
+                  </button>
                 </div>
               </div>
             )}

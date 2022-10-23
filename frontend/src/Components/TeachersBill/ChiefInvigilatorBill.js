@@ -45,7 +45,7 @@ const ChiefInvigilatorBill = () => {
 		rows.splice(index, 1);
 		setInput(rows);
 	};
-	const handleChange = (index, evnt) => {
+	const handleChange = (evnt, index) => {
 		const { name, value } = evnt.target;
 		const list = [...input];
 		list[index][name] = value;
@@ -87,7 +87,7 @@ const ChiefInvigilatorBill = () => {
 										<input
 											type="text"
 											name="course"
-											onChange={(evnt) => handleChange(index, evnt)}
+											onChange={(evnt) => handleChange(evnt, index)}
 											value={course}
 											className="form-control"
 											placeholder="Course"

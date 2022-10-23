@@ -33,7 +33,7 @@ export const Chairman = ({ inputFields, handleChange, removeInputFields }) => {
                             <input
                                 type="text"
                                 name="institute"
-                                onChange={(evnt) => handleChange(index, evnt)}
+                                onChange={(evnt) => handleChange(evnt, index)}
                                 value={institute}
                                 className="form-control"
                                 id="institute"
@@ -45,7 +45,7 @@ export const Chairman = ({ inputFields, handleChange, removeInputFields }) => {
                             <input
                                 type="text"
                                 name="department"
-                                onChange={(evnt) => handleChange(index, evnt)}
+                                onChange={(evnt) => handleChange(evnt, index)}
                                 value={department}
                                 className="form-control"
                                 id="department"
@@ -57,7 +57,7 @@ export const Chairman = ({ inputFields, handleChange, removeInputFields }) => {
                             <input
                                 type="text"
                                 name="member"
-                                onChange={(evnt) => handleChange(index, evnt)}
+                                onChange={(evnt) => handleChange(evnt, index)}
                                 value={member}
                                 className="form-control"
                                 id="member"
@@ -68,7 +68,7 @@ export const Chairman = ({ inputFields, handleChange, removeInputFields }) => {
                             {inputFields.length !== 1 ? (
                                 <button
                                     className="btn-outline-danger add"
-                                    onClick={removeInputFields}
+                                    onClick={(evnt) => removeInputFields(evnt, index)}
                                 >
                                     x
                                 </button>
