@@ -18,10 +18,6 @@ const ChairmanBill = () => {
 			number: '',
 		},
 	]);
-	const defaultInput = {
-		course: '',
-		number: '',
-	};
 	const removeInputFields = (e, index) => {
 		e.preventDefault();
 		const rows = [...inputFields];
@@ -54,80 +50,36 @@ const ChairmanBill = () => {
 							/>
 						</div>
 					</div>
-					<h3>Term Test</h3>
+
+					<h3>Question Typeing</h3>
 					<FourField />
-					<h3>Question Type</h3>
+					<h3>Question Moderation</h3>
 					<FourField />
-					<h3>Question Setter</h3>
-					<FourField />
-					<h3>Examiner</h3>
+					<h3>Answerpaper Checking</h3>
 					<h4>Part - A</h4>
 					<FourField />
 					<h4>Part - B</h4>
+					<FourField />
+					<h3>Term Test / Internal Assessment</h3>
+					<FourField />
+					<h3>Practical Exam / Sessional Assessment / LAB</h3>
+					<FourField />
+					<h3>Tabulation</h3>
+					<FourField />
+					<h3>Viva</h3>
 					<FourField />
 					<h3>Scrutinizer</h3>
 					<h4>Part - A</h4>
 					<FourField />
 					<h4>Part - B</h4>
 					<FourField />
-					<h3>Tabulation</h3>
+					<h3>Examiner</h3>
+					<h4>Part - A</h4>
 					<FourField />
-					<h3>Practical Exam</h3>
+					<h4>Part - B</h4>
 					<FourField />
-					<h3>Viva</h3>
-					<FourField />
+
 					<h3>Student Registration</h3>
-					{/* {inputFields.map((data, index) => {
-						const { number, course } = data;
-						return (
-							<div
-								className="row"
-								key={index}>
-								<div class="form-group col-md-3">
-									<label for="exampleFormControlInput1">CourseID</label>
-									<input
-										type="text"
-										name="course"
-										onChange={(evnt) => handleChange(evnt, index)}
-										value={course}
-										className="form-control"
-										placeholder="Course"
-									/>
-								</div>
-								<div class="form-group col-md-3">
-									<label for="exampleFormControlInput1">
-										Resgistered Student Count
-									</label>
-									<input
-										type="text"
-										name="number"
-										onChange={(evnt) => handleChange(evnt, index)}
-										value={number}
-										className="form-control"
-										placeholder="number"
-									/>
-								</div>
-								<div className="col-md-1 text-center mt-3">
-									{inputFields.length !== 1 ? (
-										<button
-											className="btn-outline-danger add"
-											onClick={removeInputFields}>
-											x
-										</button>
-									) : (
-										''
-									)}
-								</div>
-								<div className="col-md-1">
-									<Additions
-										inputFields={inputFields}
-										setInputFields={setInputFields}
-										defaultInput={defaultInput}
-									/>
-								</div>
-							</div>
-						);
-					})} */}
 					<StudentCount />
 				</form>
 			</div>

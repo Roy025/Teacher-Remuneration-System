@@ -8,10 +8,6 @@ const StudentCount = () => {
 			number: '',
 		},
 	]);
-	const defaultInput = {
-		course: '',
-		number: '',
-	};
 	const handleChange = (evnt, index) => {
 		const { name, value } = evnt.target;
 		const list = [...inputFields];
@@ -55,9 +51,7 @@ const StudentCount = () => {
 							/>
 						</div>
 						<div className="form-group col-md-3">
-							<label for="exampleFormControlInput1">
-								Resgistered Student Count
-							</label>
+							<label for="exampleFormControlInput1">Number of Students</label>
 							<input
 								type="text"
 								name="number"
