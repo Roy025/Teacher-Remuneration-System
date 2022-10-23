@@ -14,12 +14,12 @@
 }
 
 .Full-form-page {
-  font-weight: 550;
-  width: 100%;
-  display: flex;
-  /* align-items: center; */
-  justify-content: space-between;
-  margin-bottom: 10%;
+	font-weight: 550;
+	width: 100%;
+	display: flex;
+	/* align-items: center; */
+	justify-content: space-between;
+	margin-bottom: 10%;
 }
 
 .Link {
@@ -37,28 +37,28 @@
 }
 
 .Form {
-  width: 70%;
-  margin-right: 6%;
-  margin-left: 5%;
+	width: 70%;
+	margin-right: 6%;
+	margin-left: 5%;
 }
 
 .Form-title {
-  margin-top: 30px;
-  margin-bottom: 60px;
+	margin-top: 30px;
+	margin-bottom: 60px;
 }
 
 .Flex-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .Common-info-flex-column {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  align-items: flex-start;
-  justify-content: start;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20px;
+	align-items: flex-start;
+	justify-content: start;
 }
 
 .Subrow1 {
@@ -66,7 +66,7 @@
 }
 
 .Form-row {
-  margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 .Row4 .form-group {
@@ -88,6 +88,3 @@
 	align-content: center;
 	justify-content: center;
 }
-
-
-
