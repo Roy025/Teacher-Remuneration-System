@@ -51,35 +51,58 @@ const ChairmanBill = () => {
 						</div>
 					</div>
 
-					<h3>Question Typeing</h3>
+					<h3>
+						<b>01. Question Setting</b>
+					</h3>
 					<FourField />
-					<h3>Question Moderation</h3>
+					<h3>
+						<b>02. Question Moderation</b>
+					</h3>
 					<FourField />
-					<h3>Answerpaper Checking</h3>
+					<h3>
+						<b>03. Answerpaper Checking</b>
+					</h3>
 					<h4>Part - A</h4>
 					<FourField />
 					<h4>Part - B</h4>
 					<FourField />
-					<h3>Term Test / Internal Assessment</h3>
+					<h3>
+						<b>04. Term Test / Internal Assessment</b>
+					</h3>
 					<FourField />
-					<h3>Practical Exam / Sessional Assessment / LAB</h3>
+					<h3>
+						<b>05. Practical Exam / Sessional Assessment / LAB</b>
+					</h3>
 					<FourField />
-					<h3>Tabulation</h3>
+					<h3>
+						<b>06. Tabulation</b>
+					</h3>
+					<h4>RPS Exam System</h4>
 					<FourField />
-					<h3>Viva</h3>
+					<h4>ORPS Exam System</h4>
 					<FourField />
-					<h3>Scrutinizer</h3>
-					<h4>Part - A</h4>
+					<h3>
+						<b>07. Viva</b>
+					</h3>
 					<FourField />
-					<h4>Part - B</h4>
+					<h3>
+						<b>08. Scrutiny</b>
+					</h3>
 					<FourField />
-					<h3>Examiner</h3>
-					<h4>Part - A</h4>
+					<h3>
+						<b>09. Term PAPER</b>
+					</h3>
+					<h3>
+						<b>10. Question Type</b>
+					</h3>
 					<FourField />
-					<h4>Part - B</h4>
+					<h3>
+						<b>11. </b>
+					</h3>
 					<FourField />
-
-					<h3>Student Registration</h3>
+					<h3>
+						<b>12. Student Registration</b>
+					</h3>
 					<StudentCount />
 				</form>
 			</div>
