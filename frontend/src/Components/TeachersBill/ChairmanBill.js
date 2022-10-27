@@ -8,7 +8,7 @@ import Dropdown, {
 	sessionOptions,
 } from '../SampleDropdown/Dropdown';
 import '../SampleDropdown/styles.css';
-import FourField from '../../Functions/FourField';
+import FourField from '../../Functions/TwoField';
 import StudentCount from '../../Functions/StudentCount';
 
 const ChairmanBill = () => {

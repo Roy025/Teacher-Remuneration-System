@@ -7,7 +7,7 @@ import Dropdown, {
 } from '../SampleDropdown/Dropdown';
 import Links from './Links';
 
-export const TeacherBill = () => {
+const TeacherBill = () => {
 	return (
 		<>
 			<div className="row Full-form-page">
@@ -41,3 +41,5 @@ export const TeacherBill = () => {
 		</>
 	);
 };
+
+export default TeacherBill
