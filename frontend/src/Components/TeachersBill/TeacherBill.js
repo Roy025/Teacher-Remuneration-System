@@ -42,4 +42,4 @@ const TeacherBill = () => {
 	);
 };
 
-export default TeacherBill
+export default TeacherBill;

@@ -9,7 +9,8 @@ import Dropdown, {
 } from '../SampleDropdown/Dropdown';
 import '../SampleDropdown/styles.css';
 import { useState } from 'react';
-import { Additions, Chairman, ThreeFields } from '../../Functions/InfoComp';
+import ThreeFields from '../../Functions/ThreeFieldsNoAdd';
+import Additions from '../../Functions/Additions';
 
 const ChiefInvigilatorBill = () => {
 	const [input, setInput] = useState([
