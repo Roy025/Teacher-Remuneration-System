@@ -12,7 +12,7 @@ import Notifications from "./Components/Notifications/Notifications";
 import ChairmanBill from "./Components/TeachersBill/ChairmanBill";
 import DirectorsBill from "./Components/TeachersBill/DirectorsBill";
 import TeacherBill from "./Components/TeachersBill/TeacherBill";
-import ChiefInvigilatorBill from "./Components/TeachersBill/ChiefInvigilatorBill";
+import ChiefInvigilatorForm from "./Components/TeachersBill/ChiefInvigilatorForm";
 
 function App() {
   return (
@@ -34,7 +34,7 @@ function App() {
         <Route
           exact
           path="/chief-invigilator"
-          element={<ChiefInvigilatorBill />}
+          element={<ChiefInvigilatorForm />}
         ></Route>
         <Route exact path="/notifications" element={<Notifications />}></Route>
 		<Route exact path="/profile" element={<ProfilePage/>}></Route>
