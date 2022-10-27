@@ -8,7 +8,8 @@ import Dropdown, {
 	sessionOptions,
 } from '../SampleDropdown/Dropdown';
 import '../SampleDropdown/styles.css';
-import { Additions, ThreeFields } from '../../Functions/InfoComp';
+import ThreeFieldsNoAdd from '../../Functions/ThreeFieldsNoAdd';
+import ThreeFields from '../../Functions/ThreeFields';
 
 const DirectorsBill = () => {
 	const [inputFields, setInputFields] = useState([
@@ -57,33 +58,18 @@ const DirectorsBill = () => {
 					</div>
 					<div className="form-group Form-row">
 						<label>Committe Chairman</label>
-						<input
-							type="text"
-							className="form-control"
-							id="exampleFormControlInput1"
-							placeholder="Name"
-						/>
+						<ThreeFieldsNoAdd/>
 					</div>
 					<div className="form-group Form-row">
 						<label>Chief Invigilator</label>
-						<input
-							type="text"
-							className="form-control"
-							id="exampleFormControlInput1"
-							placeholder="Name"
-						/>
+						<ThreeFieldsNoAdd/>
 					</div>
 
-					<h3>Committe Member</h3>
+					<h3>Committe Members</h3>
 					<ThreeFields
 						inputFields={inputFields}
 						handleChange={handleChange}
 						removeInputFields={removeInputFields}
-					/>
-					<Additions
-						inputFields={inputFields}
-						setInputFields={setInputFields}
-						defaultInput={defaultInput}
 					/>
 				</form>
 			</div>

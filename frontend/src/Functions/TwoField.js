@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { Additions } from "./InfoComp";
+import "../Components/SampleDropdown/styles.css";
 
-const StudentCount = () => {
+const FourField = () => {
   const [inputFields, setInputFields] = useState([
     {
-      course: "",
-      number: "",
+		name: "",
+        course: "",
     },
   ]);
-  const defaultInput = {
-    course: "",
-    number: "",
+  const removeInputFields = (e, index) => {
+    e.preventDefault();
+    const rows = [...inputFields];
+    rows.splice(index, 1);
+    setInputFields(rows);
   };
   const handleChange = (evnt, index) => {
     const { name, value } = evnt.target;
@@ -18,30 +20,36 @@ const StudentCount = () => {
     list[index][name] = value;
     setInputFields(list);
   };
-  const removeInputFields = (e, index) => {
-    e.preventDefault();
-    const rows = [...inputFields];
-    rows.splice(index, 1);
-    setInputFields(rows);
-  };
 
   const addInputField = () => {
-	setInputFields([
-		...inputFields,
-		{
-			course: "",
-			number: "",
-		  }
-	  ]);
-  }
+    setInputFields([
+      ...inputFields,
+      {
+        name: "",
+        course: ""
+      },
+    ]);
+    console.log(inputFields);
+  };
   return (
-    <>
+    <div className="container">
       {inputFields.map((data, index) => {
-        const { number, course } = data;
+        const { name, course } = data;
         return (
-          <div className="row">
-            <div class="form-group col-md-3">
-              <label for="exampleFormControlInput1">CourseID</label>
+          <div className="row" key={index}>
+            <div className="form-group col-md-3">
+			{index === 0 ? <label>Teacher's Name</label> : ""}
+              <input
+                type="text"
+                name="name"
+                onChange={(evnt) => handleChange(evnt, index)}
+                value={name}
+                className="form-control"
+                placeholder="Name"
+              />
+            </div>
+            <div className="form-group col-md-2">
+			{index === 0 ? <label>Course ID</label> : ""}
               <input
                 type="text"
                 name="course"
@@ -51,24 +59,11 @@ const StudentCount = () => {
                 placeholder="Course"
               />
             </div>
-            <div class="form-group col-md-3">
-              <label for="exampleFormControlInput1">
-                Resgistered Student Count
-              </label>
-              <input
-                type="text"
-                name="number"
-                onChange={(evnt) => handleChange(evnt, index)}
-                value={number}
-                className="form-control"
-                placeholder="number"
-              />
-            </div>
             <div className="col-md-1 text-center mt-3">
               {inputFields.length !== 1 ? (
                 <button
                   className="btn-outline-danger add"
-                  onClick={removeInputFields}
+                  onClick={(evnt) => removeInputFields(evnt, index)}
                 >
                   x
                 </button>
@@ -97,8 +92,8 @@ const StudentCount = () => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 
-export default StudentCount;
+export default FourField;
