@@ -8,9 +8,8 @@ import Dropdown, {
 	sessionOptions,
 } from '../SampleDropdown/Dropdown';
 import '../SampleDropdown/styles.css';
-import TeacherBill from './TeacherBill';
 import { useState } from 'react';
-import { Additions, Chairman, Chief } from './InfoComp';
+import { Additions, Chairman, ThreeFields } from '../../Functions/InfoComp';
 
 const ChiefInvigilatorBill = () => {
 	const [input, setInput] = useState([
@@ -93,7 +92,7 @@ const ChiefInvigilatorBill = () => {
 											placeholder="Course"
 										/>
 									</div>
-									<Chairman
+									<ThreeFields
 										inputFields={input}
 										handleChange={handleChange}
 										removeInputFields={removeInputFields}
