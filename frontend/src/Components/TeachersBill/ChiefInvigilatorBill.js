@@ -72,7 +72,7 @@ const ChiefInvigilatorBill = () => {
 					</div>
 
 					<div className="col-md-7">
-						<h5>Course</h5>
+						<h5>Invigilation</h5>
 
 						{inputFields.map((data, index) => {
 							console.log(inputFields);
@@ -102,6 +102,17 @@ const ChiefInvigilatorBill = () => {
 										setInputFields={setInput}
 										defaultInput={defaultIn}
 									/>
+									<div className="col-md-1 text-center mt-3">
+										{input.length !== 1 ? (
+											<button
+												className="btn-outline-danger add"
+												onClick={removeInputFields}>
+												x
+											</button>
+										) : (
+											''
+										)}
+									</div>
 								</div>
 							);
 						})}
