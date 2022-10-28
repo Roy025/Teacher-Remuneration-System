@@ -5,6 +5,7 @@ import Dropdown, {
   semesterOptions,
   semesterTitle,
   sessionOptions,
+  sessionTitle,
 } from "../SampleDropdown/Dropdown";
 import Links from "./Links";
 
@@ -26,10 +27,7 @@ const TeacherBill = () => {
               />
             </div>
             <div className="form-group col-md-5">
-              <Dropdown
-                options={sessionOptions}
-                dropdownTitle={semesterTitle}
-              />
+              <Dropdown options={sessionOptions} dropdownTitle={sessionTitle} />
             </div>
           </div>
           <h3>Term Test</h3>
