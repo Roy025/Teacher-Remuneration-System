@@ -2,14 +2,15 @@
 import Links from "./Links";
 import "./TeachersBill.css";
 import Dropdown, {
-  semesterOptions,
-  semesterTitle,
-  sessionTitle,
-  sessionOptions,
-} from "../SampleDropdown/Dropdown";
-import "../SampleDropdown/styles.css";
-import { useState } from "react";
-import { Additions, Chairman, ThreeFields } from "../../Functions/InfoComp";
+	semesterOptions,
+	semesterTitle,
+	sessionTitle,
+	sessionOptions,
+} from '../SampleDropdown/Dropdown';
+import '../SampleDropdown/styles.css';
+import { useState } from 'react';
+import ThreeFields from '../../Functions/ThreeFieldsNoAdd';
+import Additions from '../../Functions/Additions';
 
 const ChiefInvigilatorBill = () => {
   const [input, setInput] = useState([

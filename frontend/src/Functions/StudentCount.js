@@ -39,7 +39,7 @@ const StudentCount = () => {
 					<div
 						className="row"
 						key={index}>
-						<div class="form-group col-md-3">
+						<div className="form-group col-md-3">
 							<label for="exampleFormControlInput1">CourseID</label>
 							<input
 								type="text"
