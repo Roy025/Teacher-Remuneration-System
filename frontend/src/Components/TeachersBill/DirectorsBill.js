@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import Links from './Links';
-import './TeachersBill.css';
+import React, { useState } from "react";
+// import { ReactDOM } from "react-dom";
+import Links from "./Links";
+import "./TeachersBill.css";
 import Dropdown, {
-	semesterOptions,
-	semesterTitle,
-	sessionTitle,
-	sessionOptions,
-} from '../SampleDropdown/Dropdown';
-import '../SampleDropdown/styles.css';
-import ThreeFieldsNoAdd from '../../Functions/ThreeFieldsNoAdd';
-import ThreeFields from '../../Functions/ThreeFields';
+  semesterOptions,
+  semesterTitle,
+  sessionTitle,
+  sessionOptions,
+} from "../SampleDropdown/Dropdown";
+import "../SampleDropdown/styles.css";
+import ThreeFieldsNoAdd from "../../Functions/ThreeFieldsNoAdd";
+import ThreeFields from "../../Functions/ThreeFields";
 
 const DirectorsBill = () => {
 	const [inputFields, setInputFields] = useState([
@@ -65,16 +66,40 @@ const DirectorsBill = () => {
 						<ThreeFieldsNoAdd />
 					</div>
 
-					<h3>Committe Members</h3>
-					<ThreeFields
-						inputFields={inputFields}
-						handleChange={handleChange}
-						removeInputFields={removeInputFields}
-					/>
-				</form>
-			</div>
-		</>
-	);
+      <div className="Row Full-form-page">
+        {/* <Links /> */}
+        <form className="col-md-9 Form">
+          {/* <h1 className="text-center Form-title">Directors Bill</h1> */}
+          <div className="Flex-row Form-row">
+            <div className="form-group col-md-5 Subrow1">
+              <Dropdown
+                options={semesterOptions}
+                dropdownTitle={semesterTitle}
+              />
+            </div>
+            <div className="form-group col-md-5 Subrow1">
+              <Dropdown options={sessionOptions} dropdownTitle={sessionTitle} />
+            </div>
+          </div>
+          <div className="form-group Form-row">
+            <label>Committee Chairman</label>
+            <ThreeFieldsNoAdd />
+          </div>
+          <div className="form-group Form-row">
+            <label>Chief Invigilator</label>
+            <ThreeFieldsNoAdd />
+          </div>
+
+          <h3>Committee Members</h3>
+          <ThreeFields
+            inputFields={inputFields}
+            handleChange={handleChange}
+            removeInputFields={removeInputFields}
+          />
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default DirectorsBill;

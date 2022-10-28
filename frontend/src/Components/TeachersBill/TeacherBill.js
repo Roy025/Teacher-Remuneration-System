@@ -1,11 +1,13 @@
-import React from 'react';
-import StudentCount from '../../Functions/StudentCount';
+import React from "react";
+// import { ReactDOM } from "react-dom";
+import StudentCount from "../../Functions/StudentCount";
 import Dropdown, {
-	semesterOptions,
-	semesterTitle,
-	sessionOptions,
-} from '../SampleDropdown/Dropdown';
-import Links from './Links';
+  semesterOptions,
+  semesterTitle,
+  sessionOptions,
+  sessionTitle,
+} from "../SampleDropdown/Dropdown";
+import Links from "./Links";
 
 const TeacherBill = () => {
 	return (
