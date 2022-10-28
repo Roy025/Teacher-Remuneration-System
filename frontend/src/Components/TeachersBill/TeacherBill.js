@@ -13,7 +13,7 @@ const TeacherBill = () => {
 			<div className="row Full-form-page">
 				<Links />
 				<form className="col-md-10 Form">
-					<h1 className="text-center Form-title">Chairman Bill</h1>
+					<h1 className="text-center Form-title">Teacher Bill</h1>
 					<div className="row">
 						<div className="form-group col-md-5">
 							<Dropdown
@@ -29,6 +29,8 @@ const TeacherBill = () => {
 						</div>
 					</div>
 					<h3>Term Test</h3>
+					<StudentCount />
+					<h3>Answerpaper Checking</h3>
 					<StudentCount />
 					<h3>Scrutiny</h3>
 					<StudentCount />

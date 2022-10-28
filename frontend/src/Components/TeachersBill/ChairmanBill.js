@@ -11,6 +11,7 @@ import '../SampleDropdown/styles.css';
 import TwoField from '../../Functions/TwoField';
 import StudentCount from '../../Functions/StudentCount';
 import Additions from '../../Functions/Additions';
+import Parts from '../../Functions/Parts';
 
 const ChairmanBill = () => {
 	const [inputSet, setInputSet] = useState([
@@ -25,12 +26,7 @@ const ChairmanBill = () => {
 			number: '',
 		},
 	]);
-	const [inputChck, setInputChck] = useState([
-		{
-			course: '',
-			number: '',
-		},
-	]);
+	const options = ['Part A', 'Part B'];
 	const [inputTerm, setInputTerm] = useState([
 		{
 			course: '',
@@ -56,12 +52,6 @@ const ChairmanBill = () => {
 		},
 	]);
 	const [inputScr, setInputScr] = useState([
-		{
-			course: '',
-			number: '',
-		},
-	]);
-	const [inputPaper, setInputPaper] = useState([
 		{
 			course: '',
 			number: '',
@@ -159,16 +149,7 @@ const ChairmanBill = () => {
 					<h3>
 						<b>03. Answerpaper Checking</b>
 					</h3>
-					<h4>Part - A</h4>
-					<TwoField
-						inputFields={inputChck}
-						setInputFields={setInputChck}
-					/>
-					<h4>Part - B</h4>
-					<TwoField
-						inputFields={inputChck}
-						setInputFields={setInputChck}
-					/>
+					<Parts />
 					<h3>
 						<b>04. Term Test / Internal Assessment</b>
 					</h3>

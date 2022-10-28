@@ -58,11 +58,11 @@ const DirectorsBill = () => {
 					</div>
 					<div className="form-group Form-row">
 						<label>Committe Chairman</label>
-						<ThreeFieldsNoAdd/>
+						<ThreeFieldsNoAdd />
 					</div>
 					<div className="form-group Form-row">
 						<label>Chief Invigilator</label>
-						<ThreeFieldsNoAdd/>
+						<ThreeFieldsNoAdd />
 					</div>
 
 					<h3>Committe Members</h3>
