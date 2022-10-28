@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+// import { ReactDOM } from "react-dom";
+import Links from "./Links";
 
 function ChiefInvigilatorForm() {
   return (
-    <div>ChiefInvigilatorForm</div>
-  )
+    <>
+      <div>
+        <Links />
+      </div>
+      <div className="Form">ChiefInvigilatorForm</div>
+    </>
+  );
 }
 
-export default ChiefInvigilatorForm
+export default ChiefInvigilatorForm;
