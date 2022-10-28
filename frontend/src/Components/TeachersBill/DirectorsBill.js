@@ -16,65 +16,95 @@ const DirectorsBill = () => {
 		{
 			institute: '',
 			department: '',
-			member: '',
+			name: '',
 		},
 	]);
-	const defaultInput = {
-		institute: '',
-		department: '',
-		member: '',
-	};
-	const handleChange = (index, evnt) => {
-		const { name, value } = evnt.target;
-		const list = [...inputFields];
-		list[index][name] = value;
-		setInputFields(list);
-	};
-	const removeInputFields = (e, index) => {
+	const [inputChair, setInputChair] = useState([
+		{
+			institute: '',
+			department: '',
+			name: '',
+		},
+	]);
+	const [inputInvi, setInputInvi] = useState([
+		{
+			institute: '',
+			department: '',
+			name: '',
+		},
+	]);
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		const rows = [...inputFields];
-		rows.splice(index, 1);
-		setInputFields(rows);
+	};
+	const [data, setData] = useState('');
+	const handleData = (childdata) => {
+		setData((old) => {
+			return [...old, { childdata }];
+		});
+		console.log(childdata);
+	};
+	console.log(data);
+	const submit = async () => {
+		console.log(inputFields);
+		console.log(inputChair);
+		console.log(inputInvi);
+		console.log(data);
 	};
 	return (
 		<>
 			<div className="Row Full-form-page">
 				<Links />
-				<form className="col-md-9 Form">
+				<form
+					className="col-md-9 Form"
+					onSubmit={handleSubmit}>
 					<h1 className="text-center Form-title">Directors Bill</h1>
 					<div className="Flex-row Form-row">
 						<div className="form-group col-md-5 Subrow1">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
+								handleData={handleData}
 							/>
 						</div>
 						<div className="form-group col-md-5 Subrow1">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
+								handleData={handleData}
 							/>
 						</div>
 					</div>
 					<div className="form-group Form-row">
 						<label>Committe Chairman</label>
-						<ThreeFieldsNoAdd/>
+						<ThreeFieldsNoAdd
+							inputFields={inputChair}
+							setInputFields={setInputChair}
+						/>
 					</div>
 					<div className="form-group Form-row">
 						<label>Chief Invigilator</label>
-						<ThreeFieldsNoAdd/>
+						<ThreeFieldsNoAdd
+							inputFields={inputInvi}
+							setInputFields={setInputInvi}
+						/>
 					</div>
-
 					<h3>Committe Members</h3>
 					<ThreeFields
 						inputFields={inputFields}
-						handleChange={handleChange}
-						removeInputFields={removeInputFields}
+						setInputFields={setInputFields}
 					/>
+					<div className="d-md-grid justify-content-md-end">
+						<button
+							type="submit"
+							className="btn btn-dark btn-lg btn-block"
+							onClick={submit}>
+							Submit
+						</button>
+					</div>
 				</form>
 			</div>
 		</>
 	);
 };
 
-export default DirectorsBill;	
+export default DirectorsBill;

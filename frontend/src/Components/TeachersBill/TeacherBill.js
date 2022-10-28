@@ -1,15 +1,57 @@
-import React from "react";
+import React, { useState } from 'react';
+import StudentCount from '../../Functions/StudentCount';
 // import { ReactDOM } from "react-dom";
-import StudentCount from "../../Functions/StudentCount";
 import Dropdown, {
-  semesterOptions,
-  semesterTitle,
-  sessionOptions,
-  sessionTitle,
-} from "../SampleDropdown/Dropdown";
-import Links from "./Links";
+	semesterOptions,
+	semesterTitle,
+	sessionOptions,
+	sessionTitle,
+} from '../SampleDropdown/Dropdown';
+import Links from './Links';
 
 const TeacherBill = () => {
+	const [inputTerm, setInputTerm] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
+	const [inputAnsA, setInputAnsA] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
+	const [inputAnsB, setInputAnsB] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
+	const [inputScrA, setInputScrA] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
+	const [inputScrB, setInputScrB] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
+	const [inputPrac, setInputPrac] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
+	const [inputViva, setInputViva] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
 	return (
 		<>
 			<div className="row Full-form-page">
@@ -26,20 +68,57 @@ const TeacherBill = () => {
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={sessionOptions}
-								dropdownTitle={semesterTitle}
+								dropdownTitle={sessionTitle}
 							/>
 						</div>
 					</div>
-					<h3>Term Test</h3>
-					<StudentCount />
-					<h3>Answerpaper Checking</h3>
-					<StudentCount />
-					<h3>Scrutiny</h3>
-					<StudentCount />
-					<h3>Practical Exam</h3>
-					<StudentCount />
-					<h3>Viva</h3>
-					<StudentCount />
+					<h3>
+						<b>Term Test</b>
+					</h3>
+					<StudentCount
+						inputFields={inputTerm}
+						setInputFields={setInputTerm}
+					/>
+					<h3>
+						<b>Answerpaper Checking</b>
+					</h3>
+					<h4>Part - A</h4>
+					<StudentCount
+						inputFields={inputAnsA}
+						setInputFields={setInputAnsA}
+					/>
+					<h4>Part - B</h4>
+					<StudentCount
+						inputFields={inputAnsB}
+						setInputFields={setInputAnsB}
+					/>
+					<h3>
+						<b>Scrutiny</b>
+					</h3>
+					<h4>Part - A</h4>
+					<StudentCount
+						inputFields={inputScrA}
+						setInputFields={setInputScrA}
+					/>
+					<h4>Part - B</h4>
+					<StudentCount
+						inputFields={inputScrB}
+						setInputFields={setInputScrB}
+					/>
+					<h3>
+						<b>Practical Exam</b>
+					</h3>
+					<StudentCount
+						inputFields={inputPrac}
+						setInputFields={setInputPrac}
+					/>
+					<h3>
+						<b>Viva</b>
+					</h3>
+					<StudentCount
+						inputFields={inputViva}
+						setInputFields={setInputViva}
+					/>
 				</form>
 			</div>
 		</>
