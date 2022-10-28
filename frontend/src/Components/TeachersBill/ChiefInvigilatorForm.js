@@ -27,4 +27,4 @@ function ChiefInvigilatorForm() {
   )
 }
 
-export default ChiefInvigilatorForm
+export default ChiefInvigilatorForm;
