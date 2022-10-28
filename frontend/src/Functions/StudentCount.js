@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Additions } from './Additions';
 
-const StudentCount = () => {
-	const [inputFields, setInputFields] = useState([
-		{
-			course: '',
-			number: '',
-		},
-	]);
+const StudentCount = ({inputFields, setInputFields}) => {
+	// const [inputFields, setInputFields] = useState([
+	// 	{
+	// 		course: '',
+	// 		number: '',
+	// 	},
+	// ]);
 	const handleChange = (evnt, index) => {
 		const { name, value } = evnt.target;
 		const list = [...inputFields];

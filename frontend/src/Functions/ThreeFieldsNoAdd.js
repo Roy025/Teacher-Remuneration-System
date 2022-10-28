@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import '../Components/SampleDropdown/styles.css';
 
-const ThreeFieldsNoAdd = () => {
-	const [inputFields, setInputFields] = useState([
-		{
-			institute: '',
-			department: '',
-			name: '',
-		},
-	]);
-
+const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
 	const handleChange = (evnt, index) => {
 		const { name, value } = evnt.target;
 		const list = [...inputFields];

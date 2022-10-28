@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function Dropdown({ options, dropdownTitle }) {
+function Dropdown({ options, dropdownTitle, handleData }) {
 	const [isActive, setIsActive] = useState(false);
 	const [selected, setSelected] = useState('Select');
 
@@ -17,12 +17,14 @@ function Dropdown({ options, dropdownTitle }) {
 			</div>
 			{isActive && (
 				<div className="Dropdown-content">
-					{options.map((option) => (
+					{options.map((option, index) => (
 						<div
 							onClick={(e) => {
 								setSelected(option);
 								setIsActive(false);
+								handleData(selected);
 							}}
+							key={index}
 							className="Dropdown-item">
 							{' '}
 							{option}
