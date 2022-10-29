@@ -18,41 +18,49 @@ const ThreeFields = () => {
   };
 
   return (
-    <div className="container">
+    //  <div className="container">
+    <div className="Container">
       {inputFields.map((data, index) => {
         const { institute, department, name } = data;
         return (
-          <div className="row" key={index}>
-            <div className="form-group col-md-3">
+          // <div className="row" key={index}>
+          <div className="FormRow" key={index}>
+            {/* <div className="form-group col-md-3"> */}
+            <div className="FormRowElement">
               <label>Institute</label>
               <input
                 type="text"
                 name="institute"
                 onChange={(evnt) => handleChange(evnt, index)}
                 value={institute}
-                className="form-control"
+                // className="form-control"
+                className="FormControl"
                 placeholder="Institute"
               />
             </div>
-            <div className="form-group col-md-3">
+            {/* <div className="form-group col-md-3"> */}
+            <div className="FormRowElement">
               <label>Department</label>
               <input
                 type="text"
                 name="department"
                 onChange={(evnt) => handleChange(evnt, index)}
                 value={department}
-                className="form-control"
+                className="FormControl"
+                // className="form-control"
                 placeholder="Department"
               />
             </div>
-            <div className="form-group col-md-3">
+            {/* <div className="form-group col-md-3"> */}
+            <div className="FormRowElement">
               <label>Teacher Name</label>
               <input
                 type="text"
                 name="name"
                 onChange={(evnt) => handleChange(evnt, index)}
                 value={name}
-                className="form-control"
+                // className="form-control"
+                className="FormControl"
                 placeholder="Name"
               />
             </div>

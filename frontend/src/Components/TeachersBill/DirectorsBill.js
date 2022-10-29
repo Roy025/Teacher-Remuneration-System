@@ -43,36 +43,43 @@ const DirectorsBill = () => {
         <Links />
       </div>
 
-      <div className="Row Full-form-page">
+      {/* <div className="Row Full-form-page"> */}
+      <div className="FullFormPage">
         {/* <Links /> */}
-        <form className="col-md-9 Form">
+        {/* <form className="col-md-9 Form"> */}
+        <form className="Form">
           {/* <h1 className="text-center Form-title">Directors Bill</h1> */}
-          <div className="Flex-row Form-row">
-            <div className="form-group col-md-5 Subrow1">
+          <div className="FormRow">
+            <div className="FormSubRow">
               <Dropdown
                 options={semesterOptions}
                 dropdownTitle={semesterTitle}
               />
             </div>
-            <div className="form-group col-md-5 Subrow1">
+
+            <div className="FormSubRow">
               <Dropdown options={sessionOptions} dropdownTitle={sessionTitle} />
             </div>
           </div>
-          <div className="form-group Form-row">
-            <label>Committee Chairman</label>
+          {/* <div className="form-group Form-row"> */}
+          <div className="formRow">
+            <label className="Label">Committee Chairman</label>
             <ThreeFieldsNoAdd />
           </div>
-          <div className="form-group Form-row">
-            <label>Chief Invigilator</label>
+          {/* <div className="form-group Form-row"> */}
+          <div className="formRow">
+            <label className="Label">Chief Invigilator</label>
             <ThreeFieldsNoAdd />
           </div>
 
-          <h3>Committee Members</h3>
-          <ThreeFields
-            inputFields={inputFields}
-            handleChange={handleChange}
-            removeInputFields={removeInputFields}
-          />
+          <div className="formRow">
+            <label className="Label">Committee Members</label>
+            <ThreeFields
+              inputFields={inputFields}
+              handleChange={handleChange}
+              removeInputFields={removeInputFields}
+            />
+          </div>
         </form>
       </div>
     </>

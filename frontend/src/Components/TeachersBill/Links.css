@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.Link {
+  position: fixed;
+  left: 15%;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(211, 226, 250);
+  padding: 1% 4%;
+}
+
+.rolelink {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  color: rgb(4, 24, 114);
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.rolelink:hover {
+  color: blue;
+}
+
+.rolelink:active {
+  color: red;
+}
+
+.active {
+  visibility: visible;
+  transition: all 0.3s;
+}
+
+.hidden {
+  visibility: hidden;
+  transition: all 0.3s;
+  transform: translateY(-110%);
+}
