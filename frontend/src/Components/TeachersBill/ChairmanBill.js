@@ -108,7 +108,12 @@ const ChairmanBill = () => {
 			course: '',
 		},
 	]);
-
+	const [inputStudentReg, setInputStudentReg] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
 	const removeInputFields = (e, index) => {
 		e.preventDefault();
 		const rows = [...input];
@@ -362,7 +367,10 @@ const ChairmanBill = () => {
 					<h3>
 						<b>12. Student Registration</b>
 					</h3>
-					<StudentCount />
+					<StudentCount
+						inputFields={inputStudentReg}
+						setInputFields={setInputStudentReg}
+					/>
 				</form>
 			</div>
 		</>
