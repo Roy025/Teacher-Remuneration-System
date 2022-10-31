@@ -26,7 +26,7 @@ const ThreeFields = () => {
           // <div className="row" key={index}>
           <div className="FormRow" key={index}>
             {/* <div className="form-group col-md-3"> */}
-            <div className="FormRowElement">
+            <div className="threeFormRowElement">
               <label>Institute</label>
               <input
                 type="text"
@@ -39,7 +39,7 @@ const ThreeFields = () => {
               />
             </div>
             {/* <div className="form-group col-md-3"> */}
-            <div className="FormRowElement">
+            <div className="threeFormRowElement">
               <label>Department</label>
               <input
                 type="text"
@@ -52,8 +52,8 @@ const ThreeFields = () => {
               />
             </div>
             {/* <div className="form-group col-md-3"> */}
-            <div className="FormRowElement">
-              <label>Teacher Name</label>
+            <div className="threeFormRowElement">
+              <label>Teacher's Name</label>
               <input
                 type="text"
                 name="name"

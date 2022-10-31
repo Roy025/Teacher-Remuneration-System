@@ -49,7 +49,7 @@ const DirectorsBill = () => {
         {/* <form className="col-md-9 Form"> */}
         <form className="Form">
           {/* <h1 className="text-center Form-title">Directors Bill</h1> */}
-          <div className="FormRow">
+          <div className="DropdownformRow">
             <div className="FormSubRow">
               <Dropdown
                 options={semesterOptions}

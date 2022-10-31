@@ -22,7 +22,7 @@ const TeacherBill = () => {
         <form className="Form">
           {/* <h1 className="text-center Form-title">Chairman Bill</h1> */}
           {/* <div className="row"> */}
-          <div className="FormRow">
+          <div className="DropdownformRow">
             <div className="FormSubRow">
               {/* <div className="form-group col-md-5"> */}
               <Dropdown
