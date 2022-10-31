@@ -3,8 +3,8 @@ import Links from './Links';
 import './TeachersBill.css';
 import Dropdown, {
 	semesterOptions,
-	semesterTitle,
-	sessionTitle,
+	// semesterTitle,
+	// sessionTitle,
 	sessionOptions,
 } from '../SampleDropdown/Dropdown';
 import '../SampleDropdown/styles.css';
@@ -38,12 +38,11 @@ const DirectorsBill = () => {
 	};
 	const [data, setData] = useState('');
 	const handleData = (childdata) => {
+		console.log(childdata);
 		setData((old) => {
 			return [...old, { childdata }];
 		});
-		console.log(childdata);
 	};
-	console.log(data);
 	const submit = async () => {
 		console.log(inputFields);
 		console.log(inputChair);
@@ -61,18 +60,18 @@ const DirectorsBill = () => {
 					<div className="Flex-row Form-row">
 						<div className="form-group col-md-5 Subrow1">
 							<Dropdown
-								options={semesterOptions}
-								dropdownTitle={semesterTitle}
+								session={sessionOptions}
+								semester={semesterOptions}
 								handleData={handleData}
 							/>
 						</div>
-						<div className="form-group col-md-5 Subrow1">
+						{/* <div className="form-group col-md-5 Subrow1">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
 								handleData={handleData}
 							/>
-						</div>
+						</div> */}
 					</div>
 					<div className="form-group Form-row">
 						<label>Committe Chairman</label>

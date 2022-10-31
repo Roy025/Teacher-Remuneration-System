@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Additions } from './Additions';
 
-const StudentCount = ({inputFields, setInputFields}) => {
+const StudentCount = ({ inputFields, setInputFields }) => {
 	// const [inputFields, setInputFields] = useState([
 	// 	{
 	// 		course: '',
