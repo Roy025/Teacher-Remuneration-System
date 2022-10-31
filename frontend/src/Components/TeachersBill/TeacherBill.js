@@ -58,7 +58,7 @@ const TeacherBill = () => {
 				<Links />
 				<form className="col-md-10 Form">
 					<h1 className="text-center Form-title">Teacher Bill</h1>
-					{/* <div className="row">
+					<div className="row">
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={semesterOptions}
@@ -71,7 +71,7 @@ const TeacherBill = () => {
 								dropdownTitle={sessionTitle}
 							/>
 						</div>
-					</div> */}
+					</div>
 					<h3>
 						<b>Term Test</b>
 					</h3>
