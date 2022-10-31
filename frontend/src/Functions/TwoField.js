@@ -31,54 +31,56 @@ const TwoField = ({ inputFields, setInputFields }) => {
       {inputFields.map((data, index) => {
         const { name, course } = data;
         return (
-          <div
-            // className="row"
-            className="FormRow"
-            key={index}
-          >
-            {/* <div className="form-group col-md-3"> */}
-            <div className="FormRowElement">
-              {index === 0 ? <label>Teacher's Name</label> : ""}
-              <input
-                type="text"
-                name="name"
-                onChange={(evnt) => handleChange(evnt, index)}
-                value={name}
-                // className="form-control"
-                className="FormControl"
-                placeholder="Name"
-              />
-            </div>
-            {/* <div className="form-group col-md-2"> */}
-            <div className="FormRowElement">
-              {index === 0 ? <label>Course ID</label> : ""}
-              <input
-                type="text"
-                name="course"
-                onChange={(evnt) => handleChange(evnt, index)}
-                value={course}
-                className="FormControl"
-                // className="form-control"
-                placeholder="Course"
-              />
-            </div>
-            {/* <div className="col-md-1 text-center mt-3"> */}
-            <div className="FormRowElement">
-              {inputFields.length !== 1 ? (
-                <button
-                  // className="btn-outline-danger add"
-                  className="crossButton"
-                  onClick={(evnt) => removeInputFields(evnt, index)}
-                >
-                  x
-                </button>
-              ) : (
-                ""
-              )}
+          <div className="ParentFormRow">
+            <div
+              // className="row"
+              className="FormRow"
+              key={index}
+            >
+              {/* <div className="form-group col-md-3"> */}
+              <div className="thriceFormRowElement">
+                {index === 0 ? <label>Teacher's Name</label> : ""}
+                <input
+                  type="text"
+                  name="name"
+                  onChange={(evnt) => handleChange(evnt, index)}
+                  value={name}
+                  // className="form-control"
+                  className="FormControl"
+                  placeholder="Name"
+                />
+              </div>
+              {/* <div className="form-group col-md-2"> */}
+              <div className="thriceFormRowElement">
+                {index === 0 ? <label>Course ID</label> : ""}
+                <input
+                  type="text"
+                  name="course"
+                  onChange={(evnt) => handleChange(evnt, index)}
+                  value={course}
+                  className="FormControl"
+                  // className="form-control"
+                  placeholder="Course"
+                />
+              </div>
+              {/* <div className="col-md-1 text-center mt-3"> */}
+              <div className="FormRowElement">
+                {inputFields.length !== 1 ? (
+                  <button
+                    // className="btn-outline-danger add"
+                    className="crossButton"
+                    onClick={(evnt) => removeInputFields(evnt, index)}
+                  >
+                    x
+                  </button>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
             {inputFields.length - 1 === index && (
               // <div className="row">
-              <div className="FormRow">
+              <div className="FormRowElement">
                 {/* <div className="col-sm-1"> */}
                 <button
                   // className="btn-outline-success add"
