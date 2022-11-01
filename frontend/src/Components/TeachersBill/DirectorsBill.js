@@ -77,8 +77,10 @@ const DirectorsBill = () => {
 			<div className="FullFormPage">
 				{/* <Links /> */}
 				{/* <form className="col-md-9 Form"> */}
-				<form className="Form">
-					{/* <h1 className="text-center Form-title">Directors Bill</h1> */}
+				<form
+					className="Form"
+					onSubmit={handleSubmit}>
+					<h1 className="text-center">Director Bill</h1>
 					<div className="DropdownformRow">
 						<div className="FormSubRow">
 							<Dropdown
