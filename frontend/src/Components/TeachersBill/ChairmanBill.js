@@ -145,12 +145,14 @@ const ChairmanBill = () => {
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
+								handleData={() => {}}
 							/>
 						</div>
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
+								handleData={() => {}}
 							/>
 						</div>
 					</div>
