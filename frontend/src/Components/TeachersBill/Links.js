@@ -26,7 +26,7 @@ class Links extends React.Component {
 	};
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <>
         {/* <nav className="Link col-md-2 this.state.show?'active':'hidden' "> */}

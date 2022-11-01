@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Links from './Links';
 import './TeachersBill.css';
 import Dropdown, {
@@ -37,11 +37,28 @@ const DirectorsBill = () => {
 		e.preventDefault();
 	};
 	const [data, setData] = useState('');
-	const handleData = (childdata) => {
-		setData((old) => {
-			return [...old, { childdata }];
-		});
-		console.log(childdata);
+	const [exam, setExam] = useState({
+		session: "",
+		semester: ""
+	})
+	const handleSession = (session) => {
+		let newExam = { ...exam };
+		newExam.session = session;
+		setExam(newExam);
+	}
+	const handleSemester = (semester) => {
+		let newExam = { ...exam };
+		newExam.semester = semester;
+		setExam(newExam);
+	}
+	useEffect(() => {
+		handleData(exam);
+	}, [exam]);
+	const handleData = (exam) => {
+		if (exam.session === "Select" || exam.semester === "Select") return;
+		console.log(exam);
+		// Fetch from api by exam info
+		
 	};
 	console.log(data);
 	const submit = async () => {
@@ -65,17 +82,17 @@ const DirectorsBill = () => {
 					<div className="DropdownformRow">
 						<div className="FormSubRow">
 							<Dropdown
-								options={semesterOptions}
-								dropdownTitle={semesterTitle}
-								handleData={handleData}
+								options={sessionOptions}
+								dropdownTitle={sessionTitle}
+								handleData={handleSession}
 							/>
 						</div>
 
 						<div className="FormSubRow">
 							<Dropdown
-								options={sessionOptions}
-								dropdownTitle={sessionTitle}
-								handleData={handleData}
+								options={semesterOptions}
+								dropdownTitle={semesterTitle}
+								handleData={handleSemester}
 							/>
 						</div>
 					</div>
