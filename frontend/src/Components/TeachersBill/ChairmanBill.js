@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { ReactDOM } from "react-dom";
 import Links from './Links';
 import './TeachersBill.css';
 import Dropdown, {
@@ -11,9 +10,8 @@ import Dropdown, {
 import '../SampleDropdown/styles.css';
 import TwoField from '../../Functions/TwoField';
 import StudentCount from '../../Functions/StudentCount';
-import Additions from '../../Functions/Additions';
 import HandleSem from '../../Functions/HandleSem';
-import TermPaperComp from './TermPaperComp';
+import TermPaperComp from '../../Functions/TermPaperComp';
 
 const ChairmanBill = () => {
 	const [inputSet, setInputSet] = useState([
@@ -88,53 +86,12 @@ const ChairmanBill = () => {
 			course: '',
 		},
 	]);
-
-	const [supervisors, setsupervisors] = useState([
-		{
-			Name1: '',
-		},
-	]);
-	const defaultSuper = {
-		Name1: '',
-	};
-	const defaultExaminar = {
-		Name2: '',
-	};
-	const [examinars, setexaminars] = useState([
-		{
-			Name2: '',
-		},
-	]);
-	const [input, setInput] = useState([
-		{
-			course: '',
-		},
-	]);
 	const [inputStudentReg, setInputStudentReg] = useState([
 		{
 			course: '',
 			number: '',
 		},
 	]);
-	const removeInputFields = (e, index) => {
-		e.preventDefault();
-		const rows = [...input];
-		rows.splice(index, 1);
-		setInput(rows);
-	};
-	const handleChange = (evnt, index) => {
-		const { name, value } = evnt.target;
-		const list = [...input];
-		list[index][name] = value;
-		setInput(list);
-		console.log(input);
-	};
-
-	const [isChecked, setIsChecked] = useState(false);
-
-	const handleOnChange = () => {
-		setIsChecked(!isChecked);
-	};
 	const [exam, setExam] = useState({
 		session: '',
 		semester: '',
