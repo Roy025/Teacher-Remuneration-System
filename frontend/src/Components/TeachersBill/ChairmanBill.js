@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // import { ReactDOM } from "react-dom";
-import Links from "./Links";
-import "./TeachersBill.css";
+import Links from './Links';
+import './TeachersBill.css';
 import Dropdown, {
 	semesterOptions,
 	semesterTitle,
@@ -12,62 +12,78 @@ import '../SampleDropdown/styles.css';
 import TwoField from '../../Functions/TwoField';
 import StudentCount from '../../Functions/StudentCount';
 import Additions from '../../Functions/Additions';
-import Parts from '../../Functions/Parts';
 
 const ChairmanBill = () => {
 	const [inputSet, setInputSet] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
 		},
 	]);
 	const [inputMod, setInputMod] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
 		},
 	]);
-	const options = ['Part A', 'Part B'];
+	const [inputAnsA, setInputAnsA] = useState([
+		{
+			name: '',
+			course: '',
+		},
+	]);
+	const [inputAnsB, setInputAnsB] = useState([
+		{
+			name: '',
+			course: '',
+		},
+	]);
 	const [inputTerm, setInputTerm] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
 		},
 	]);
 	const [inputPrac, setInputPrac] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
 		},
 	]);
 	const [inputTab, setInputTab] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
 		},
 	]);
 	const [inputViva, setInputViva] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
 		},
 	]);
-	const [inputScr, setInputScr] = useState([
+	const [inputScrA, setInputScrA] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
+		},
+	]);
+	const [inputScrB, setInputScrB] = useState([
+		{
+			name: '',
+			course: '',
 		},
 	]);
 	const [inputType, setInputType] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
 		},
 	]);
 	const [inputInvi, setInputInvi] = useState([
 		{
+			name: '',
 			course: '',
-			number: '',
 		},
 	]);
 
@@ -92,7 +108,12 @@ const ChairmanBill = () => {
 			course: '',
 		},
 	]);
-
+	const [inputStudentReg, setInputStudentReg] = useState([
+		{
+			course: '',
+			number: '',
+		},
+	]);
 	const removeInputFields = (e, index) => {
 		e.preventDefault();
 		const rows = [...input];
@@ -150,7 +171,16 @@ const ChairmanBill = () => {
 					<h3>
 						<b>03. Answerpaper Checking</b>
 					</h3>
-					<Parts />
+					<h4>Part - A</h4>
+					<TwoField
+						inputFields={inputAnsA}
+						setInputFields={setInputAnsA}
+					/>
+					<h4>Part - B</h4>
+					<TwoField
+						inputFields={inputAnsB}
+						setInputFields={setInputAnsB}
+					/>
 					<h3>
 						<b>04. Term Test / Internal Assessment</b>
 					</h3>
@@ -182,9 +212,15 @@ const ChairmanBill = () => {
 					<h3>
 						<b>08. Scrutiny</b>
 					</h3>
+					<h4>Part - A</h4>
 					<TwoField
-						inputFields={inputScr}
-						setInputFields={setInputScr}
+						inputFields={inputScrA}
+						setInputFields={setInputScrA}
+					/>
+					<h4>Part - B</h4>
+					<TwoField
+						inputFields={inputScrB}
+						setInputFields={setInputScrB}
 					/>
 					<h4>
 						<b>
@@ -215,67 +251,64 @@ const ChairmanBill = () => {
 									<b>Superviser</b>
 								</h5>
 
-								{supervisors.map((supervisor, index) => {
-									const { Name1 } = supervisor;
-									return (
-										<div
-											className="row"
-											key={index}>
-											<div className="form-group col-md-3">
-												{index === 0 ? <label>Teacher's Name</label> : ''}
-												<input
-													type="text"
-													name="Name1"
-													onChange={(evnt) => handleChange(evnt, index)}
-													value={Name1}
-													className="form-control"
-													placeholder="Name"
-												/>
-											</div>
+                {supervisors.map((supervisor, index) => {
+                  const { Name1 } = supervisor;
+                  return (
+                    <div className="row" key={index}>
+                      <div className="form-group col-md-3">
+                        {index === 0 ? <label>Teacher's Name</label> : ""}
+                        <input
+                          type="text"
+                          name="Name1"
+                          onChange={(evnt) => handleChange(evnt, index)}
+                          value={Name1}
+                          className="form-control"
+                          placeholder="Name"
+                        />
+                      </div>
 
-											<div className="col-md-1 text-center mt-3">
-												{supervisors.length !== 1 ? (
-													<button
-														className="btn-outline-danger add"
-														onClick={(evnt) => removeInputFields(evnt, index)}>
-														x
-													</button>
-												) : (
-													''
-												)}
-											</div>
-											{supervisors.length - 1 === index && (
-												<div className="row">
-													<Additions
-														inputFields={supervisors}
-														setInputFields={setsupervisors}
-														defaultInput={defaultSuper}
-													/>
-												</div>
-											)}
-										</div>
-									);
-								})}
-								<h5>
-									<b>Examiner</b>
-								</h5>
-								{examinars.map((examinar, index) => {
-									const { Name2 } = examinar;
-									return (
-										<div
-											className="row"
-											key={index}>
-											<div className="form-group col-md-3">
-												{index === 0 ? <label>Teacher's Name</label> : ''}
-												<input
-													type="text"
-													name="Name2"
-													onChange={(evnt) => handleChange(evnt, index)}
-													value={Name2}
-													className="form-control"
-													placeholder="Name"
-												/>
-											</div>
+                      <div className="col-md-1 text-center mt-3">
+                        {supervisors.length !== 1 ? (
+                          <button
+                            className="btn-outline-danger add"
+                            onClick={(evnt) => removeInputFields(evnt, index)}
+                          >
+                            x
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      {supervisors.length - 1 === index && (
+                        <div className="row">
+                          <Additions
+                            inputFields={supervisors}
+                            setInputFields={setsupervisors}
+                            defaultInput={defaultSuper}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+                <h5>
+                  <b>Examiner</b>
+                </h5>
+                {examinars.map((examinar, index) => {
+                  const { Name2 } = examinar;
+                  return (
+                    <div className="row" key={index}>
+                      <div className="form-group col-md-3">
+                        {index === 0 ? <label>Teacher's Name</label> : ""}
+                        <input
+                          type="text"
+                          name="Name2"
+                          onChange={(evnt) => handleChange(evnt, index)}
+                          value={Name2}
+                          className="form-control"
+                          placeholder="Name"
+                        />
+                      </div>
 
 											<div className="col-md-1 text-center mt-3">
 												{examinars.length !== 1 ? (
@@ -331,7 +364,10 @@ const ChairmanBill = () => {
 					<h3>
 						<b>12. Student Registration</b>
 					</h3>
-					<StudentCount />
+					<StudentCount
+						inputFields={inputStudentReg}
+						setInputFields={setInputStudentReg}
+					/>
 				</form>
 			</div>
 		</>
