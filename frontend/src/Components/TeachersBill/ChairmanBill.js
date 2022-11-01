@@ -12,6 +12,7 @@ import '../SampleDropdown/styles.css';
 import TwoField from '../../Functions/TwoField';
 import StudentCount from '../../Functions/StudentCount';
 import Additions from '../../Functions/Additions';
+import HandleSem from '../../Functions/HandleSem';
 import TermPaperComp from './TermPaperComp';
 
 const ChairmanBill = () => {
@@ -134,26 +135,50 @@ const ChairmanBill = () => {
 	const handleOnChange = () => {
 		setIsChecked(!isChecked);
 	};
-	console.log(supervisors);
+	const [exam, setExam] = useState({
+		session: '',
+		semester: '',
+	});
+	const handleSubmit = (e) => {
+		e.preventDefault();
+	};
+	const submit = async () => {
+		console.log(exam);
+		console.log(inputSet);
+		console.log(inputMod);
+		console.log(inputAnsA);
+		console.log(inputAnsB);
+		console.log(inputScrA);
+		console.log(inputScrB);
+		console.log(inputTerm);
+		console.log(inputTab);
+		console.log(inputPrac);
+		console.log(inputViva);
+		console.log(inputType);
+		console.log(inputInvi);
+		console.log(inputStudentReg);
+	};
 	return (
 		<>
 			<div className="row Full-form-page">
 				<Links />
-				<form className="col-md-10 Form">
+				<form
+					className="col-md-10 Form"
+					onSubmit={handleSubmit}>
 					<h1 className="text-center Form-title">Chairman Bill</h1>
 					<div className="row">
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
-								handleData={() => {}}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
-								handleData={() => {}}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 					</div>
@@ -254,6 +279,13 @@ const ChairmanBill = () => {
 						inputFields={inputStudentReg}
 						setInputFields={setInputStudentReg}
 					/>
+					<div>
+						<button
+							type="submit"
+							onClick={submit}>
+							Submit
+						</button>
+					</div>
 				</form>
 			</div>
 		</>

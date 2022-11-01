@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import HandleSem from '../../Functions/HandleSem';
 import StudentCount from '../../Functions/StudentCount';
 // import { ReactDOM } from "react-dom";
 import Dropdown, {
@@ -52,6 +53,24 @@ const TeacherBill = () => {
 			number: '',
 		},
 	]);
+	const [exam, setExam] = useState({
+		session: '',
+		semester: '',
+	});
+	// const handleData = (child) => {
+	// 	let newExam = { ...exam };
+	// 	if (child.length === 6) return;
+	// 	else if (child.length === 7) {
+	// 		newExam.session = child;
+	// 		console.log(child.length);
+	// 	} else if (child.length === 3) {
+	// 		newExam.semester = child;
+	// 		console.log(child.length);
+	// 	}
+	// 	setExam(newExam);
+	// 	// Fetch from api by exam info
+	// };
+	console.log(exam);
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
@@ -63,6 +82,7 @@ const TeacherBill = () => {
 		console.log(inputScrB);
 		console.log(inputPrac);
 		console.log(inputViva);
+		console.log(exam);
 	};
 	return (
 		<>
@@ -76,14 +96,16 @@ const TeacherBill = () => {
 					<div className="DropdownformRow">
 						<div className="FormSubRow">
 							<Dropdown
-								options={semesterOptions}
-								dropdownTitle={semesterTitle}
+								options={sessionOptions}
+								dropdownTitle={sessionTitle}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 						<div className="FormSubRow">
 							<Dropdown
-								options={sessionOptions}
-								dropdownTitle={sessionTitle}
+								options={semesterOptions}
+								dropdownTitle={semesterTitle}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 					</div>

@@ -1,24 +1,22 @@
-import "../Components/TeachersBill/TeachersBill.css";
+import '../Components/TeachersBill/TeachersBill.css';
 
 const Additions = ({ inputFields, defaultInput, setInputFields }) => {
-  const addInputField = (e) => {
-    e.preventDefault();
-    const clone = Object.assign({}, defaultInput);
+	const addInputField = (e) => {
+		e.preventDefault();
+		const clone = Object.assign({}, defaultInput);
+		setInputFields([...inputFields, clone]);
+		console.log(inputFields);
+	};
 
-    setInputFields([...inputFields, clone]);
-    console.log(inputFields);
-  };
-
-  return (
-    <button
-      // className="btn-outline-success add"
-      className="addButton"
-      onClick={(e) => addInputField(e)}
-      type="button"
-    >
-      <i className="fa-sharp fa-solid fa-plus"></i>
-    </button>
-  );
+	return (
+		<button
+			// className="btn-outline-success add"
+			className="addButton"
+			onClick={(e) => addInputField(e)}
+			type="button">
+			<i className="fa-sharp fa-solid fa-plus"></i>
+		</button>
+	);
 };
 
 export default Additions;
