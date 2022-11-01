@@ -1,29 +1,29 @@
-import React from "react";
+import React from 'react';
 // import { ReactDOM } from "react-dom";
 import { Link } from "react-router-dom";
 import "./Links.css";
 
 class Links extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      show: true,
-      scrollPos: 0,
-    };
-  }
-  componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
-  }
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-  }
-  handleScroll = () => {
-    // console.log(document.body.getBoundingClientRect());
-    this.setState({
-      scrollPos: document.body.getBoundingClientRect().top,
-      show: document.body.getBoundingClientRect().top > this.state.scrollPos,
-    });
-  };
+	constructor() {
+		super();
+		this.state = {
+			show: true,
+			scrollPos: 0,
+		};
+	}
+	componentDidMount() {
+		window.addEventListener('scroll', this.handleScroll);
+	}
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.handleScroll);
+	}
+	handleScroll = () => {
+		// console.log(document.body.getBoundingClientRect());
+		this.setState({
+			scrollPos: document.body.getBoundingClientRect().top,
+			show: document.body.getBoundingClientRect().top > this.state.scrollPos,
+		});
+	};
 
   render() {
     console.log(this.state);
@@ -72,11 +72,11 @@ class Links extends React.Component {
           </Link>
           {/* </li>
         </ul> */}
-          {/* <div className="vr ms-auto" /> */}
-        </div>
-      </>
-    );
-  }
+					{/* <div className="vr ms-auto" /> */}
+				</div>
+			</>
+		);
+	}
 }
 
 export default Links;

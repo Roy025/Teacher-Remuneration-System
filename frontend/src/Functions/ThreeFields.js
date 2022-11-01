@@ -1,14 +1,7 @@
-import React, { useState } from "react";
-import "../Components/SampleDropdown/styles.css";
+import React, { useState } from 'react';
+import '../Components/SampleDropdown/styles.css';
 
-const ThreeFields = () => {
-  const [inputFields, setInputFields] = useState([
-    {
-      institute: "",
-      department: "",
-      name: "",
-    },
-  ]);
+const ThreeFields = ({ inputFields, setInputFields }) => {
   const removeInputFields = (e, index) => {
     e.preventDefault();
     const rows = [...inputFields];
@@ -21,17 +14,15 @@ const ThreeFields = () => {
     list[index][name] = value;
     setInputFields(list);
   };
-
   const addInputField = () => {
     setInputFields([
       ...inputFields,
       {
-        institute: "",
-        department: "",
-        name: "",
+        institute: '',
+        department: '',
+        name: '',
       },
     ]);
-    console.log(inputFields);
   };
   return (
     // <div className="container">

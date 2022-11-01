@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 
 const TwoField = ({ inputFields, setInputFields }) => {

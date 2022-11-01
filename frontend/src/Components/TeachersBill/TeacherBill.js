@@ -1,55 +1,121 @@
-import React from "react";
+import React, { useState } from 'react';
+import StudentCount from '../../Functions/StudentCount';
 // import { ReactDOM } from "react-dom";
-import StudentCount from "../../Functions/StudentCount";
 import Dropdown, {
   semesterOptions,
   semesterTitle,
   sessionOptions,
   sessionTitle,
-} from "../SampleDropdown/Dropdown";
-import Links from "./Links";
+} from '../SampleDropdown/Dropdown';
+import Links from './Links';
 
 const TeacherBill = () => {
+  const [inputTerm, setInputTerm] = useState([
+    {
+      course: '',
+      number: '',
+    },
+  ]);
+  const [inputAnsA, setInputAnsA] = useState([
+    {
+      course: '',
+      number: '',
+    },
+  ]);
+  const [inputAnsB, setInputAnsB] = useState([
+    {
+      course: '',
+      number: '',
+    },
+  ]);
+  const [inputScrA, setInputScrA] = useState([
+    {
+      course: '',
+      number: '',
+    },
+  ]);
+  const [inputScrB, setInputScrB] = useState([
+    {
+      course: '',
+      number: '',
+    },
+  ]);
+  const [inputPrac, setInputPrac] = useState([
+    {
+      course: '',
+      number: '',
+    },
+  ]);
+  const [inputViva, setInputViva] = useState([
+    {
+      course: '',
+      number: '',
+    },
+  ]);
   return (
     <>
       <div>
         <Links />
       </div>
-      {/* <div className="row Full-form-page"> */}
       <div className="FullFormPage">
-        {/* <Links /> */}
-        {/* <form className="col-md-10 Form"> */}
         <form className="Form">
-          {/* <h1 className="text-center Form-title">Chairman Bill</h1> */}
-          {/* <div className="row"> */}
           <div className="DropdownformRow">
             <div className="FormSubRow">
-              {/* <div className="form-group col-md-5"> */}
               <Dropdown
                 options={semesterOptions}
                 dropdownTitle={semesterTitle}
               />
             </div>
-            {/* <div className="form-group col-md-5"> */}
             <div className="FormSubRow">
               <Dropdown options={sessionOptions} dropdownTitle={sessionTitle} />
             </div>
           </div>
           <div className="formRow">
             <label className="Label">Term Test</label>
-            <StudentCount />
+            <StudentCount
+              inputFields={inputTerm}
+              setInputFields={setInputTerm}
+            />
           </div>
+          <h3>
+            <b>Answerpaper Checking</b>
+          </h3>
+          <h4>Part - A</h4>
+          <StudentCount
+            inputFields={inputAnsA}
+            setInputFields={setInputAnsA}
+          />
+          <h4>Part - B</h4>
+          <StudentCount
+            inputFields={inputAnsB}
+            setInputFields={setInputAnsB}
+          />
           <div className="formRow">
             <label className="Label">Scrutiny</label>
-            <StudentCount />
+            <h4>Part - A</h4>
+            <StudentCount
+              inputFields={inputScrA}
+              setInputFields={setInputScrA}
+            />
+            <h4>Part - B</h4>
+            <StudentCount
+              inputFields={inputScrB}
+              setInputFields={setInputScrB}
+            />
           </div>
           <div className="formRow">
             <label className="Label">Practical Exam</label>
-            <StudentCount />
+            <StudentCount
+              inputFields={inputPrac}
+              setInputFields={setInputPrac}
+            />
           </div>
           <div className="formRow">
             <label className="Label">Viva</label>
-            <StudentCount />
+            <StudentCount
+              inputFields={inputViva}
+              setInputFields={setInputViva}
+            />
           </div>
         </form>
       </div>

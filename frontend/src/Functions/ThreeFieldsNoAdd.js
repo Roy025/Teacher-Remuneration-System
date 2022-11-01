@@ -1,15 +1,7 @@
-import React, { useState } from "react";
-import "../Components/SampleDropdown/styles.css";
+import React, { useState } from 'react';
+import '../Components/SampleDropdown/styles.css';
 
-const ThreeFields = () => {
-  const [inputFields, setInputFields] = useState([
-    {
-      institute: "",
-      department: "",
-      name: "",
-    },
-  ]);
-
+const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
   const handleChange = (evnt, index) => {
     const { name, value } = evnt.target;
     const list = [...inputFields];
@@ -71,4 +63,4 @@ const ThreeFields = () => {
   );
 };
 
-export default ThreeFields;
+export default ThreeFieldsNoAdd;
