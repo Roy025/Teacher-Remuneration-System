@@ -52,21 +52,26 @@ const DirectorsBill = () => {
 	};
 	return (
 		<>
-			<div className="Row Full-form-page">
+			<div>
 				<Links />
-				<form
-					className="col-md-9 Form"
-					onSubmit={handleSubmit}>
-					<h1 className="text-center Form-title">Directors Bill</h1>
-					<div className="Flex-row Form-row">
-						<div className="form-group col-md-5 Subrow1">
+			</div>
+
+			{/* <div className="Row Full-form-page"> */}
+			<div className="FullFormPage">
+				{/* <Links /> */}
+				{/* <form className="col-md-9 Form"> */}
+				<form className="Form">
+					{/* <h1 className="text-center Form-title">Directors Bill</h1> */}
+					<div className="DropdownformRow">
+						<div className="FormSubRow">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
 								handleData={handleData}
 							/>
 						</div>
-						<div className="form-group col-md-5 Subrow1">
+
+						<div className="FormSubRow">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
@@ -74,32 +79,37 @@ const DirectorsBill = () => {
 							/>
 						</div>
 					</div>
-					<div className="form-group Form-row">
-						<label>Committe Chairman</label>
+					{/* <div className="form-group Form-row"> */}
+					<div className="formRow">
+						<label className="Label">Committee Chairman</label>
 						<ThreeFieldsNoAdd
 							inputFields={inputChair}
 							setInputFields={setInputChair}
 						/>
 					</div>
-					<div className="form-group Form-row">
-						<label>Chief Invigilator</label>
+					{/* <div className="form-group Form-row"> */}
+					<div className="formRow">
+						<label className="Label">Chief Invigilator</label>
 						<ThreeFieldsNoAdd
 							inputFields={inputInvi}
 							setInputFields={setInputInvi}
 						/>
 					</div>
-					<h3>Committe Members</h3>
-					<ThreeFields
-						inputFields={inputFields}
-						setInputFields={setInputFields}
-					/>
-					<div className="d-md-grid justify-content-md-end">
-						<button
-							type="submit"
-							className="btn btn-dark btn-lg btn-block"
-							onClick={submit}>
-							Submit
-						</button>
+
+					<div className="formRow">
+						<label className="Label">Committee Members</label>
+						<ThreeFields
+							inputFields={inputFields}
+							setInputFields={setInputFields}
+						/>
+						<div className="d-md-grid justify-content-md-end">
+							<button
+								type="submit"
+								className="btn btn-dark btn-lg btn-block"
+								onClick={submit}>
+								Submit
+							</button>
+						</div>
 					</div>
 				</form>
 			</div>

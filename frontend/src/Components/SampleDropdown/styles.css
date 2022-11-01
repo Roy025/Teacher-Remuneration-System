@@ -8,7 +8,7 @@
   /* width: 400px; */
   user-select: none;
   /* margin: 100px auto; */
-  position: relative;
+  /* position: relative; */
 }
 
 .Dropdown p {
@@ -17,9 +17,9 @@
 }
 
 .Dropdown .Dropdown-btn {
-  padding: 6px 20px;
+  padding: 6px 10px;
   background: #fff;
-  border: 1px solid rgb(212, 205, 205);
+  border: 1px solid rgb(119, 110, 110);
   border-radius: 0.375rem;
   color: #333;
   display: flex;
@@ -28,18 +28,20 @@
 }
 
 .Dropdown .Dropdown-content {
-  position: absolute;
-  top: 110%;
-  left: 0;
+  /* position: absolute; */
+  /* top: 110%; */
+  /*left: 0; */
+  margin-top: 5px;
   padding: 10px;
   background: #fff;
   box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06);
   font-weight: 500;
   color: #333;
-  width: 99%;
+  width: 98%;
 }
 .select {
   font-weight: 400;
+  margin-bottom: 3%;
 }
 .Dropdown .Dropdown-content .Dropdown-item {
   padding: 10px;

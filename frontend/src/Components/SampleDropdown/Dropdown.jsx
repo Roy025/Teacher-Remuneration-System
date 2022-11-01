@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from "react";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Dropdown({ options, dropdownTitle, handleData }) {
 	const [isActive, setIsActive] = useState(false);
@@ -38,22 +38,22 @@ function Dropdown({ options, dropdownTitle, handleData }) {
 
 export default Dropdown;
 
-export const sessionTitle = 'Session';
+export const sessionTitle = "Session";
 export const sessionOptions = [
-	'2016-17',
-	'2017-18',
-	'2018-19',
-	'2019-20',
-	'2020-21',
+  "2016-17",
+  "2017-18",
+  "2018-19",
+  "2019-20",
+  "2020-21",
 ];
-export const semesterTitle = 'Semester';
+export const semesterTitle = "Semester";
 export const semesterOptions = [
-	'1st',
-	'2nd',
-	'3rd',
-	'4th',
-	'5th',
-	'6th',
-	'7th',
-	'8th',
+  "1st",
+  "2nd",
+  "3rd",
+  "4th",
+  "5th",
+  "6th",
+  "7th",
+  "8th",
 ];

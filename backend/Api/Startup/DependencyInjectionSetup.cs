@@ -1,5 +1,8 @@
 using Business.Data;
+using Business.Services;
 using Core.Interfaces.Repositories;
+using Core.Interfaces.Services;
+using Core.MapperProfile;
 using Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,9 +41,10 @@ public static class DependencyInjectionSetup
 
         // Module services
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<ITeacherService, TeacherService>();
 
         // Automapper configuration
-        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddAutoMapper(typeof(MappingProfiles));
 
         return services;
     }

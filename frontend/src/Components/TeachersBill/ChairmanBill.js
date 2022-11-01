@@ -251,67 +251,64 @@ const ChairmanBill = () => {
 									<b>Superviser</b>
 								</h5>
 
-								{supervisors.map((supervisor, index) => {
-									const { Name1 } = supervisor;
-									return (
-										<div
-											className="row"
-											key={index}>
-											<div className="form-group col-md-3">
-												{index === 0 ? <label>Teacher's Name</label> : ''}
-												<input
-													type="text"
-													name="Name1"
-													onChange={(evnt) => handleChange(evnt, index)}
-													value={Name1}
-													className="form-control"
-													placeholder="Name"
-												/>
-											</div>
+                {supervisors.map((supervisor, index) => {
+                  const { Name1 } = supervisor;
+                  return (
+                    <div className="row" key={index}>
+                      <div className="form-group col-md-3">
+                        {index === 0 ? <label>Teacher's Name</label> : ""}
+                        <input
+                          type="text"
+                          name="Name1"
+                          onChange={(evnt) => handleChange(evnt, index)}
+                          value={Name1}
+                          className="form-control"
+                          placeholder="Name"
+                        />
+                      </div>
 
-											<div className="col-md-1 text-center mt-3">
-												{supervisors.length !== 1 ? (
-													<button
-														className="btn-outline-danger add"
-														onClick={(evnt) => removeInputFields(evnt, index)}>
-														x
-													</button>
-												) : (
-													''
-												)}
-											</div>
-											{supervisors.length - 1 === index && (
-												<div className="row">
-													<Additions
-														inputFields={supervisors}
-														setInputFields={setsupervisors}
-														defaultInput={defaultSuper}
-													/>
-												</div>
-											)}
-										</div>
-									);
-								})}
-								<h5>
-									<b>Examiner</b>
-								</h5>
-								{examinars.map((examinar, index) => {
-									const { Name2 } = examinar;
-									return (
-										<div
-											className="row"
-											key={index}>
-											<div className="form-group col-md-3">
-												{index === 0 ? <label>Teacher's Name</label> : ''}
-												<input
-													type="text"
-													name="Name2"
-													onChange={(evnt) => handleChange(evnt, index)}
-													value={Name2}
-													className="form-control"
-													placeholder="Name"
-												/>
-											</div>
+                      <div className="col-md-1 text-center mt-3">
+                        {supervisors.length !== 1 ? (
+                          <button
+                            className="btn-outline-danger add"
+                            onClick={(evnt) => removeInputFields(evnt, index)}
+                          >
+                            x
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      {supervisors.length - 1 === index && (
+                        <div className="row">
+                          <Additions
+                            inputFields={supervisors}
+                            setInputFields={setsupervisors}
+                            defaultInput={defaultSuper}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+                <h5>
+                  <b>Examiner</b>
+                </h5>
+                {examinars.map((examinar, index) => {
+                  const { Name2 } = examinar;
+                  return (
+                    <div className="row" key={index}>
+                      <div className="form-group col-md-3">
+                        {index === 0 ? <label>Teacher's Name</label> : ""}
+                        <input
+                          type="text"
+                          name="Name2"
+                          onChange={(evnt) => handleChange(evnt, index)}
+                          value={Name2}
+                          className="form-control"
+                          placeholder="Name"
+                        />
+                      </div>
 
 											<div className="col-md-1 text-center mt-3">
 												{examinars.length !== 1 ? (
