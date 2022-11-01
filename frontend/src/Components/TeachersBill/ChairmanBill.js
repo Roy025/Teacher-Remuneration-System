@@ -12,6 +12,7 @@ import '../SampleDropdown/styles.css';
 import TwoField from '../../Functions/TwoField';
 import StudentCount from '../../Functions/StudentCount';
 import Additions from '../../Functions/Additions';
+import HandleSem from '../../Functions/HandleSem';
 
 const ChairmanBill = () => {
 	const [inputSet, setInputSet] = useState([
@@ -133,26 +134,50 @@ const ChairmanBill = () => {
 	const handleOnChange = () => {
 		setIsChecked(!isChecked);
 	};
-	console.log(supervisors);
+	const [exam, setExam] = useState({
+		session: '',
+		semester: '',
+	});
+	const handleSubmit = (e) => {
+		e.preventDefault();
+	};
+	const submit = async () => {
+		console.log(exam);
+		console.log(inputSet);
+		console.log(inputMod);
+		console.log(inputAnsA);
+		console.log(inputAnsB);
+		console.log(inputScrA);
+		console.log(inputScrB);
+		console.log(inputTerm);
+		console.log(inputTab);
+		console.log(inputPrac);
+		console.log(inputViva);
+		console.log(inputType);
+		console.log(inputInvi);
+		console.log(inputStudentReg);
+	};
 	return (
 		<>
 			<div className="row Full-form-page">
 				<Links />
-				<form className="col-md-10 Form">
+				<form
+					className="col-md-10 Form"
+					onSubmit={handleSubmit}>
 					<h1 className="text-center Form-title">Chairman Bill</h1>
 					<div className="row">
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
-								handleData={() => {}}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
-								handleData={() => {}}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 					</div>
@@ -232,7 +257,6 @@ const ChairmanBill = () => {
 						</b>
 					</h4>
 					{input.map((data, index) => {
-						console.log(input);
 						const { course } = data;
 						return (
 							<div
@@ -253,64 +277,67 @@ const ChairmanBill = () => {
 									<b>Superviser</b>
 								</h5>
 
-                {supervisors.map((supervisor, index) => {
-                  const { Name1 } = supervisor;
-                  return (
-                    <div className="row" key={index}>
-                      <div className="form-group col-md-3">
-                        {index === 0 ? <label>Teacher's Name</label> : ""}
-                        <input
-                          type="text"
-                          name="Name1"
-                          onChange={(evnt) => handleChange(evnt, index)}
-                          value={Name1}
-                          className="form-control"
-                          placeholder="Name"
-                        />
-                      </div>
+								{supervisors.map((supervisor, index) => {
+									const { Name1 } = supervisor;
+									return (
+										<div
+											className="row"
+											key={index}>
+											<div className="form-group col-md-3">
+												{index === 0 ? <label>Teacher's Name</label> : ''}
+												<input
+													type="text"
+													name="Name1"
+													onChange={(evnt) => handleChange(evnt, index)}
+													value={Name1}
+													className="form-control"
+													placeholder="Name"
+												/>
+											</div>
 
-                      <div className="col-md-1 text-center mt-3">
-                        {supervisors.length !== 1 ? (
-                          <button
-                            className="btn-outline-danger add"
-                            onClick={(evnt) => removeInputFields(evnt, index)}
-                          >
-                            x
-                          </button>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                      {supervisors.length - 1 === index && (
-                        <div className="row">
-                          <Additions
-                            inputFields={supervisors}
-                            setInputFields={setsupervisors}
-                            defaultInput={defaultSuper}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-                <h5>
-                  <b>Examiner</b>
-                </h5>
-                {examinars.map((examinar, index) => {
-                  const { Name2 } = examinar;
-                  return (
-                    <div className="row" key={index}>
-                      <div className="form-group col-md-3">
-                        {index === 0 ? <label>Teacher's Name</label> : ""}
-                        <input
-                          type="text"
-                          name="Name2"
-                          onChange={(evnt) => handleChange(evnt, index)}
-                          value={Name2}
-                          className="form-control"
-                          placeholder="Name"
-                        />
-                      </div>
+											<div className="col-md-1 text-center mt-3">
+												{supervisors.length !== 1 ? (
+													<button
+														className="btn-outline-danger add"
+														onClick={(evnt) => removeInputFields(evnt, index)}>
+														x
+													</button>
+												) : (
+													''
+												)}
+											</div>
+											{supervisors.length - 1 === index && (
+												<div className="row">
+													<Additions
+														inputFields={supervisors}
+														setInputFields={setsupervisors}
+														defaultInput={defaultSuper}
+													/>
+												</div>
+											)}
+										</div>
+									);
+								})}
+								<h5>
+									<b>Examiner</b>
+								</h5>
+								{examinars.map((examinar, index) => {
+									const { Name2 } = examinar;
+									return (
+										<div
+											className="row"
+											key={index}>
+											<div className="form-group col-md-3">
+												{index === 0 ? <label>Teacher's Name</label> : ''}
+												<input
+													type="text"
+													name="Name2"
+													onChange={(evnt) => handleChange(evnt, index)}
+													value={Name2}
+													className="form-control"
+													placeholder="Name"
+												/>
+											</div>
 
 											<div className="col-md-1 text-center mt-3">
 												{examinars.length !== 1 ? (
@@ -370,6 +397,13 @@ const ChairmanBill = () => {
 						inputFields={inputStudentReg}
 						setInputFields={setInputStudentReg}
 					/>
+					<div>
+						<button
+							type="submit"
+							onClick={submit}>
+							Submit
+						</button>
+					</div>
 				</form>
 			</div>
 		</>

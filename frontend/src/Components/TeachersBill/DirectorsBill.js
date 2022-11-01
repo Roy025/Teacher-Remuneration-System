@@ -10,6 +10,7 @@ import Dropdown, {
 import '../SampleDropdown/styles.css';
 import ThreeFieldsNoAdd from '../../Functions/ThreeFieldsNoAdd';
 import ThreeFields from '../../Functions/ThreeFields';
+import HandleSem from '../../Functions/HandleSem';
 
 const DirectorsBill = () => {
 	const [inputFields, setInputFields] = useState([
@@ -36,37 +37,32 @@ const DirectorsBill = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
-	const [data, setData] = useState('');
 	const [exam, setExam] = useState({
-		session: "",
-		semester: ""
-	})
-	const handleSession = (session) => {
-		let newExam = { ...exam };
-		newExam.session = session;
-		setExam(newExam);
-	}
-	const handleSemester = (semester) => {
-		let newExam = { ...exam };
-		newExam.semester = semester;
-		setExam(newExam);
-	}
-	useEffect(() => {
-		handleData(exam);
-	}, [exam]);
-	const handleData = (exam) => {
-		if (exam.session === "Select" || exam.semester === "Select") return;
-		console.log(exam);
-		// Fetch from api by exam info
-		
-	};
-	console.log(data);
+		session: '',
+		semester: '',
+	});
+	// const handleSession = (session) => {
+	// 	let newExam = { ...exam };
+	// 	newExam.session = session;
+	// 	setExam(newExam);
+	// };
+	// const handleSemester = (semester) => {
+	// 	let newExam = { ...exam };
+	// 	newExam.semester = semester;
+	// 	setExam(newExam);
+	// };
+	// useEffect(() => {
+	// 	handleData(exam);
+	// }, [exam]);
+
 	const submit = async () => {
 		console.log(inputFields);
 		console.log(inputChair);
 		console.log(inputInvi);
-		console.log(data);
+		console.log(exam);
 	};
+	console.log(exam);
+
 	return (
 		<>
 			<div>
@@ -86,7 +82,7 @@ const DirectorsBill = () => {
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
-								handleData={handleSession}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 
@@ -94,7 +90,7 @@ const DirectorsBill = () => {
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
-								handleData={handleSemester}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 					</div>
