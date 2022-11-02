@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import HandleSem from "../../Functions/HandleSem";
 import StudentCount from "../../Functions/StudentCount";
 // import { ReactDOM } from "react-dom";
 import Dropdown, {
@@ -52,17 +53,27 @@ const TeacherBill = () => {
       number: "",
     },
   ]);
+  const [exam, setExam] = useState({
+    session: "",
+    semester: "",
+  });
+  // const handleData = (child) => {
+  // 	let newExam = { ...exam };
+  // 	if (child.length === 6) return;
+  // 	else if (child.length === 7) {
+  // 		newExam.session = child;
+  // 		console.log(child.length);
+  // 	} else if (child.length === 3) {
+  // 		newExam.semester = child;
+  // 		console.log(child.length);
+  // 	}
+  // 	setExam(newExam);
+  // 	// Fetch from api by exam info
+  // };
+  console.log(exam);
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-  const [data, setData] = useState("");
-  const handleData = (childdata) => {
-    setData((old) => {
-      return [...old, { childdata }];
-    });
-    console.log(childdata);
-  };
-  console.log(data);
   const submit = async () => {
     console.log(inputTerm);
     console.log(inputAnsA);
@@ -71,7 +82,7 @@ const TeacherBill = () => {
     console.log(inputScrB);
     console.log(inputPrac);
     console.log(inputViva);
-    console.log(data);
+    console.log(exam);
   };
   return (
     <>
@@ -79,16 +90,21 @@ const TeacherBill = () => {
         <Links />
       </div>
       <div className="FullFormPage">
-        <form className="Form">
+        <form className="Form" onSubmit={handleSubmit}>
           <div className="DropdownformRow">
+            <div className="FormSubRow">
+              <Dropdown
+                options={sessionOptions}
+                dropdownTitle={sessionTitle}
+                handleData={(child) => HandleSem(child, exam, setExam)}
+              />
+            </div>
             <div className="FormSubRow">
               <Dropdown
                 options={semesterOptions}
                 dropdownTitle={semesterTitle}
+                handleData={(child) => HandleSem(child, exam, setExam)}
               />
-            </div>
-            <div className="FormSubRow">
-              <Dropdown options={sessionOptions} dropdownTitle={sessionTitle} />
             </div>
           </div>
           <div className="formRow">
@@ -111,7 +127,6 @@ const TeacherBill = () => {
               setInputFields={setInputAnsB}
             />
           </div>
-
           <div className="formRow">
             <label className="Label">Scrutiny</label>
             <h4 className="subLabel">Part - A</h4>
