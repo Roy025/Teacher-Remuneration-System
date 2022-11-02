@@ -132,12 +132,12 @@
   padding: 5px 16px;
   border-radius: 10px;
   background-color: rgb(211, 226, 250);
-  border: 2px solid rgb(46, 134, 193);
+  border: 2px solid rgb(94, 164, 211);
   margin-bottom: 1%;
 }
 
 .submitButton:hover {
   color: rgb(254, 254, 254);
-  background-color: rgb(46, 134, 193);
-  box-shadow: 1px 1px 3px 3px rgb(24, 87, 143);
+  background-color: rgb(57, 148, 209);
+  box-shadow: 1px 1px 3px 3px rgb(70, 129, 180);
 }
