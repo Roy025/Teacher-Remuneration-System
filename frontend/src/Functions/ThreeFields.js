@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import '../Components/SampleDropdown/styles.css';
+import React, { useState } from "react";
+import "../Components/SampleDropdown/styles.css";
 
 const ThreeFields = ({ inputFields, setInputFields }) => {
   const removeInputFields = (e, index) => {
@@ -18,9 +18,9 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
     setInputFields([
       ...inputFields,
       {
-        institute: '',
-        department: '',
-        name: '',
+        institute: "",
+        department: "",
+        name: "",
       },
     ]);
   };
@@ -30,10 +30,13 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
       {inputFields.map((data, index) => {
         const { institute, department, name } = data;
         return (
-          // <div className="row" key={index}>
           <div className="ParentFormRow">
-            <div className="FormRow" key={index}>
-              {/* <div className="form-group col-md-3"> */}
+            <div
+              className={
+                inputFields.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+              }
+              key={index}
+            >
               <div className="fourFormRowElement">
                 {index === 0 ? <label>Institute</label> : ""}
                 <input
@@ -41,12 +44,11 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
                   name="institute"
                   onChange={(evnt) => handleChange(evnt, index)}
                   value={institute}
-                  // className="form-control"
                   className="FormControl"
                   placeholder="Institute"
                 />
               </div>
-              {/* <div className="form-group col-md-3"> */}
+
               <div className="fourFormRowElement">
                 {index === 0 ? <label>Department</label> : ""}
                 <input
@@ -55,11 +57,10 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
                   onChange={(evnt) => handleChange(evnt, index)}
                   value={department}
                   className="FormControl"
-                  // className="form-control"
                   placeholder="Department"
                 />
               </div>
-              {/* <div className="form-group col-md-3"> */}
+
               <div className="fourFormRowElement">
                 {index === 0 ? <label>Teacher's Name</label> : ""}
                 <input
@@ -67,18 +68,14 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
                   name="name"
                   onChange={(evnt) => handleChange(evnt, index)}
                   value={name}
-                  // className="form-control"
                   className="FormControl"
                   placeholder="Name"
                 />
               </div>
 
-              {/* <div className="col-md-1 text-center mt-1"> */}
-              <div className="FormRowElement">
-                {inputFields.length !== 1 ? (
+              {inputFields.length !== 1 ? (
+                <div className="FormRowElement">
                   <button
-                    // className="btn-outline-danger add"
-                    // className="crossButton"
                     className={
                       index === 0
                         ? "crossButton crossButton-first"
@@ -88,25 +85,21 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
                   >
                     x
                   </button>
-                ) : (
-                  ""
-                )}
-              </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
 
             {inputFields.length - 1 === index && (
-              // <div className="row">
               <div className="FormRowElement">
-                {/* <div className="col-sm-1"> */}
                 <button
-                  // className="btn-outline-success add"
                   className="addButton"
                   onClick={() => addInputField()}
                   type="button"
                 >
                   <i className="fa-sharp fa-solid fa-plus "></i>
                 </button>
-                {/* </div> */}
               </div>
             )}
           </div>
