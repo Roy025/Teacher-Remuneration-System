@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import '../Components/SampleDropdown/styles.css';
+import React, { useState } from "react";
+import "../Components/SampleDropdown/styles.css";
 
 const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
   const handleChange = (evnt, index) => {
@@ -10,14 +10,11 @@ const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
   };
 
   return (
-    //  <div className="container">
     <div className="Container">
       {inputFields.map((data, index) => {
         const { institute, department, name } = data;
         return (
-          // <div className="row" key={index}>
           <div className="FormRow" key={index}>
-            {/* <div className="form-group col-md-3"> */}
             <div className="threeFormRowElement">
               <label>Institute</label>
               <input
@@ -25,12 +22,11 @@ const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
                 name="institute"
                 onChange={(evnt) => handleChange(evnt, index)}
                 value={institute}
-                // className="form-control"
                 className="FormControl"
                 placeholder="Institute"
               />
             </div>
-            {/* <div className="form-group col-md-3"> */}
+
             <div className="threeFormRowElement">
               <label>Department</label>
               <input
@@ -39,11 +35,10 @@ const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
                 onChange={(evnt) => handleChange(evnt, index)}
                 value={department}
                 className="FormControl"
-                // className="form-control"
                 placeholder="Department"
               />
             </div>
-            {/* <div className="form-group col-md-3"> */}
+
             <div className="threeFormRowElement">
               <label>Teacher's Name</label>
               <input
@@ -51,7 +46,6 @@ const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
                 name="name"
                 onChange={(evnt) => handleChange(evnt, index)}
                 value={name}
-                // className="form-control"
                 className="FormControl"
                 placeholder="Name"
               />

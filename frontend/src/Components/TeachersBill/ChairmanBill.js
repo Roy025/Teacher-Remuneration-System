@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { ReactDOM } from "react-dom";
 import Links from './Links';
 import './TeachersBill.css';
 import Dropdown, {
@@ -11,8 +10,8 @@ import Dropdown, {
 import '../SampleDropdown/styles.css';
 import TwoField from '../../Functions/TwoField';
 import StudentCount from '../../Functions/StudentCount';
-import Additions from '../../Functions/Additions';
-import TermPaperComp from './TermPaperComp';
+import HandleSem from '../../Functions/HandleSem';
+import TermPaperComp from '../../Functions/TermPaperComp';
 
 const ChairmanBill = () => {
 	const [inputSet, setInputSet] = useState([
@@ -87,73 +86,56 @@ const ChairmanBill = () => {
 			course: '',
 		},
 	]);
-
-	const [supervisors, setsupervisors] = useState([
-		{
-			Name1: '',
-		},
-	]);
-	const defaultSuper = {
-		Name1: '',
-	};
-	const defaultExaminar = {
-		Name2: '',
-	};
-	const [examinars, setexaminars] = useState([
-		{
-			Name2: '',
-		},
-	]);
-	const [input, setInput] = useState([
-		{
-			course: '',
-		},
-	]);
 	const [inputStudentReg, setInputStudentReg] = useState([
 		{
 			course: '',
 			number: '',
 		},
 	]);
-	const removeInputFields = (e, index) => {
+	const [exam, setExam] = useState({
+		session: '',
+		semester: '',
+	});
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		const rows = [...input];
-		rows.splice(index, 1);
-		setInput(rows);
 	};
-	const handleChange = (evnt, index) => {
-		const { name, value } = evnt.target;
-		const list = [...input];
-		list[index][name] = value;
-		setInput(list);
-		console.log(input);
+	const submit = async () => {
+		console.log(exam);
+		console.log(inputSet);
+		console.log(inputMod);
+		console.log(inputAnsA);
+		console.log(inputAnsB);
+		console.log(inputScrA);
+		console.log(inputScrB);
+		console.log(inputTerm);
+		console.log(inputTab);
+		console.log(inputPrac);
+		console.log(inputViva);
+		console.log(inputType);
+		console.log(inputInvi);
+		console.log(inputStudentReg);
 	};
-
-	const [isChecked, setIsChecked] = useState(false);
-
-	const handleOnChange = () => {
-		setIsChecked(!isChecked);
-	};
-	console.log(supervisors);
 	return (
 		<>
 			<div className="row Full-form-page">
 				<Links />
-				<form className="col-md-10 Form">
+				<form
+					className="col-md-10 Form"
+					onSubmit={handleSubmit}>
 					<h1 className="text-center Form-title">Chairman Bill</h1>
 					<div className="row">
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
-								handleData={() => {}}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 						<div className="form-group col-md-5">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
-								handleData={() => {}}
+								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
 					</div>
@@ -254,6 +236,13 @@ const ChairmanBill = () => {
 						inputFields={inputStudentReg}
 						setInputFields={setInputStudentReg}
 					/>
+					<div>
+						<button
+							type="submit"
+							onClick={submit}>
+							Submit
+						</button>
+					</div>
 				</form>
 			</div>
 		</>

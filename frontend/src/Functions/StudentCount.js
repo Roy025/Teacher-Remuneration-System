@@ -25,8 +25,8 @@ const StudentCount = ({ inputFields, setInputFields }) => {
     setInputFields([
       ...inputFields,
       {
-        course: '',
-        number: '',
+        course: "",
+        number: "",
       },
     ]);
     console.log(inputFields);
@@ -38,43 +38,38 @@ const StudentCount = ({ inputFields, setInputFields }) => {
         return (
           <div className="ParentFormRow">
             <div
-              // className="row"
-              className="FormRow"
+              className={
+                inputFields.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+              }
               key={index}
             >
-              {/* <div className="form-group col-md-3"> */}
               <div className="thriceFormRowElement">
-                {/* <label for="exampleFormControlInput1">CourseID</label> */}
                 {index === 0 ? <label>Course ID</label> : ""}
                 <input
                   type="text"
                   name="course"
                   onChange={(evnt) => handleChange(evnt, index)}
                   value={course}
-                  // className="form-control"
                   className="FormControl"
                   placeholder="Course"
                 />
               </div>
-              {/* <div className="form-group col-md-3"> */}
+
               <div className="thriceFormRowElement">
-                {/* <label for="exampleFormControlInput1">Number of Students</label> */}
                 {index === 0 ? <label>Number of Students</label> : ""}
                 <input
                   type="text"
                   name="number"
                   onChange={(evnt) => handleChange(evnt, index)}
                   value={number}
-                  // className="form-control"
                   className="FormControl"
                   placeholder="number"
                 />
               </div>
-              {/* <div className="col-md-1 text-center mt-3"> */}
-              <div className="FormRowElement">
-                {inputFields.length !== 1 ? (
+
+              {inputFields.length !== 1 ? (
+                <div className="FormRowElement">
                   <button
-                    //   className="btn-outline-danger add"
                     className={
                       index === 0
                         ? "crossButton crossButton-first"
@@ -84,24 +79,20 @@ const StudentCount = ({ inputFields, setInputFields }) => {
                   >
                     x
                   </button>
-                ) : (
-                  ""
-                )}
-              </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             {inputFields.length - 1 === index && (
-              //   <div className="row">
               <div className="FormRowElement">
-                {/* <div className="col-sm-1"> */}
                 <button
-                  // className="btn-outline-success add"
                   className="addButton"
                   onClick={() => addInputField()}
                   type="button"
                 >
                   <i className="fa-sharp fa-solid fa-plus"></i>
                 </button>
-                {/* </div> */}
               </div>
             )}
           </div>

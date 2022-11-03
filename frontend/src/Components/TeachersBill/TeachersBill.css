@@ -48,6 +48,10 @@
   align-items: flex-start;
   justify-content: space-between;
   flex-direction: column;
+  width: 32%;
+}
+
+.CrossFormRow .fourFormRowElement {
   width: 31%;
 }
 
@@ -56,6 +60,10 @@
   align-items: flex-start;
   justify-content: space-between;
   flex-direction: column;
+  width: 46%;
+}
+
+.CrossFormRow .thriceFormRowElement {
   width: 45%;
 }
 
@@ -74,6 +82,10 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 1%;
+}
+.subLabel {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .addButton {
@@ -107,4 +119,25 @@
 .crossButton:hover {
   color: brown;
   border: 2px solid brown;
+}
+
+.SubmitRow {
+  text-align: right;
+  margin-right: 1%;
+}
+
+.submitButton {
+  color: rgb(21, 78, 116);
+  font-size: 18px;
+  padding: 5px 16px;
+  border-radius: 10px;
+  background-color: rgb(211, 226, 250);
+  border: 2px solid rgb(94, 164, 211);
+  margin-bottom: 1%;
+}
+
+.submitButton:hover {
+  color: rgb(254, 254, 254);
+  background-color: rgb(57, 148, 209);
+  box-shadow: 1px 1px 3px 3px rgb(70, 129, 180);
 }

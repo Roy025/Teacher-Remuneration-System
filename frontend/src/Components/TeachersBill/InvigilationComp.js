@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
 
-function InvigilationComp({tag}) {
+function InvigilationComp({ tag }) {
   const [invigilation, setInvigilation] = useState([
     {
       course: "",
       names: [""],
-    }
+    },
   ]);
 
   const addInputFieldCourse = () => {
@@ -15,7 +15,7 @@ function InvigilationComp({tag}) {
       {
         course: "",
         names: [""],
-      }
+      },
     ]);
   };
 
@@ -55,92 +55,107 @@ function InvigilationComp({tag}) {
   };
 
   return (
-    <div className="row Full-form-page">
+    <div className="Container">
       {invigilation.map((data, index) => {
         const course = data;
         console.log(course);
         return (
-          <div div className="row" key={index}>
-            {index === 0 ? <label>Course ID</label> : ""}
-            <input
-              type="text"
-              name="course"
-              onChange={(evnt) => handleChangeCourse(evnt, index)}
-              value={course.course}
-              className="form-control"
-              placeholder="Course"
-            />
-            {data.names.map((info, ind) => {
-              console.log("Hi");
-              return (
-                <div className="row" key={ind}>
-                  <div className="form-group col-md-3">
-                    {ind === 0 ? <label>{tag}</label> : ""}
-                    <input
-                      type="text"
-                      name="name"
-                      onChange={(event) =>
-                        handleChangeTeacher(event, index, ind)
-                      }
-                      value={info}
-                      className="form-control"
-                      placeholder="Name"
-                    />
-                  </div>
-                  <div className="col-md-1 text-center mt-3">
-                    {data.names.length !== 1 ? (
-                      <button
-                        className="btn-outline-danger add"
-                        onClick={(evnt) =>
-                          removeInputFieldsTeacher(evnt, ind, index)
-                        }
-                      >
-                        x
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  {data.names.length - 1 === ind && (
-                    <div className="row">
-                      <div className="col-sm-1">
-                        <button
-                          className="btn-outline-success add"
-                          onClick={() => addInputFieldTeacher(index)}
-                          type="button"
-                        >
-                          <i className="fa-sharp fa-solid fa-plus"></i>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+          <div className="ParentFormRow">
+            <div
+              className={
+                invigilation.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+              }
+              key={index}
+            >
+              <div className="thriceFormRowElement">
+                {index === 0 ? <label>Course ID</label> : ""}
+                <input
+                  type="text"
+                  name="course"
+                  onChange={(evnt) => handleChangeCourse(evnt, index)}
+                  value={course.course}
+                  className="FormControl"
+                  placeholder="Course"
+                />
+              </div>
 
-            <div className="col-md-1 text-center mt-3">
+              <div className="thriceFormRowElement">
+                {data.names.map((info, ind) => {
+                  return (
+                    <div>
+                      <div classname="childThriceFormRowElement" key={ind}>
+                        <div>
+                          {ind === 0 ? <label>{tag}</label> : ""}
+                          <input
+                            type="text"
+                            name="name"
+                            onChange={(event) =>
+                              handleChangeTeacher(event, index, ind)
+                            }
+                            value={info}
+                            className="FormControl"
+                            placeholder="Name"
+                          />
+                        </div>
+
+                        {data.names.length !== 1 ? (
+                          <div className="childCrossButton">
+                            <button
+                              className="crossButton"
+                              onClick={(evnt) =>
+                                removeInputFieldsTeacher(evnt, ind, index)
+                              }
+                            >
+                              x
+                            </button>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      {data.names.length - 1 === ind && (
+                        <div className="FormRowElement">
+                          <button
+                            className="childAddbutton"
+                            onClick={() => addInputFieldTeacher(index)}
+                            type="button"
+                          >
+                            <i className="fa-sharp fa-solid fa-plus"></i>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
               {invigilation.length !== 1 ? (
-                <button
-                  className="btn-outline-danger add"
-                  onClick={(evnt) => removeInputFieldsCourse(evnt, index)}
-                >
-                  x
-                </button>
+                <div className="FormRowElement">
+                  <button
+                    className={
+                      index === 0
+                        ? "crossButton crossButton-first"
+                        : "crossButton"
+                    }
+                    onClick={(evnt) => removeInputFieldsCourse(evnt, index)}
+                  >
+                    x
+                  </button>
+                </div>
               ) : (
                 ""
               )}
             </div>
+
             {invigilation.length - 1 === index && (
-              <div className="row">
-                <div className="col-sm-1">
-                  <button
-                    className="btn-outline-success add"
-                    onClick={() => addInputFieldCourse()}
-                    type="button"
-                  >
-                    <i className="fa-sharp fa-solid fa-plus"></i>
-                  </button>
-                </div>
+              <div className="FormRowElement">
+                <button
+                  className="addButton"
+                  onClick={() => addInputFieldCourse()}
+                  type="button"
+                >
+                  <i className="fa-sharp fa-solid fa-plus"></i>
+                </button>
               </div>
             )}
           </div>
