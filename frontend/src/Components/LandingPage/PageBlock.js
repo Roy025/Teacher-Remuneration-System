@@ -14,6 +14,7 @@ function PageBlock({
 	imageSource,
 	alt,
 	imageStartLocation,
+	url
 }) {
 	return (
 		<>
@@ -31,7 +32,7 @@ function PageBlock({
 								<div className="Top-line">{topLine}</div>
 								<h1 className={textTheme}>{headline}</h1>
 								<p className={textDescriptionTheme}>{description}</p>
-								<Link to="/director">
+								<Link to={url}>
 									<Button
 										buttonSize="btn--wide"
 										buttonColor="blue"
