@@ -13,19 +13,17 @@ function FinalTeacherBill() {
   return (
     <div className="FullTablePage">
       <div className="BillTitle">Teacher Remuneration Bill</div>
-      <div className="deptTitle">{`Department: ${department}`}</div>
+      <div className="deptTitle"><b>Department:</b>{` ${department}`}</div>
       <div className="smallTitle">
         <p>
-          {`Session:
- ${session}  Semester:
- ${semester}`}
+          <b>Session:</b>{` ${session}`}  <b>Semester:</b>{` ${semester}`}
         </p>
       </div>
       <div className="TeacherInfo">
         <ol>
-          <li>{`Teacher's name: ${teachername}`}</li>
-          <li>{`Teacher's title: ${teachertitle}`}</li>
-          <li>{`Teacher's address: ${teacheraddress}`}</li>
+          <li><b>Teacher's name:</b> {` ${teachername}`}</li>
+          <li><b>Teacher's title:</b> {` ${teachertitle}`}</li>
+          <li><b>Teacher's address:</b> {` ${teacheraddress}`}</li>
         </ol>
       </div>
       <div>

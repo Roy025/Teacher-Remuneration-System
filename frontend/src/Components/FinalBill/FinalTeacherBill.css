@@ -82,8 +82,7 @@ tr:nth-child(even) {
 }
 
 .netAmount {
-  text-align: right;
+  text-align: center;
   font-weight: bold;
   color: rgb(21, 73, 107);
-  padding-right: 53px;
 }

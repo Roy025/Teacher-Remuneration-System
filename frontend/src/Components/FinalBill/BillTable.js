@@ -42,7 +42,8 @@ function BillTable() {
             );
           })}
           <tr>
-            <td colspan="2" className="netAmount">
+            <td></td>
+            <td className="netAmount">
               Total
             </td>
             <td className="amountCol">{TotalAmount}</td>
