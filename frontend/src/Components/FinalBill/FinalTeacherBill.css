@@ -38,9 +38,9 @@
 
 .PaymentBillTable {
   font-size: 18px;
-  margin-left: 18%;
+  margin-left: 16%;
   margin-bottom: 5%;
-  width: 64%;
+  width: 68%;
   border: 1px solid rgb(214, 211, 211);
 }
 
@@ -62,27 +62,31 @@ td {
   vertical-align: middle;
 }
 
+th:nth-child(even) {
+  text-align: left;
+}
+
 tr:nth-child(even) {
   background-color: rgb(209, 217, 221);
 }
 
 .criteriaCol {
   text-align: left;
-  width: 70%;
+  width: 65%;
 }
 
 .coursesCol {
-  text-align: center;
-  width: 18%;
+  text-align: left;
+  width: 25%;
 }
 
 .amountCol {
   text-align: right;
-  width: 12%;
+  width: 10%;
 }
 
 .netAmount {
-  text-align: center;
+  text-align: left;
   font-weight: bold;
   color: rgb(21, 73, 107);
 }

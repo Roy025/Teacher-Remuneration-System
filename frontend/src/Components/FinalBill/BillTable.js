@@ -43,9 +43,7 @@ function BillTable() {
           })}
           <tr>
             <td></td>
-            <td className="netAmount">
-              Total
-            </td>
+            <td className="netAmount">Total</td>
             <td className="amountCol">{TotalAmount}</td>
           </tr>
         </tbody>
