@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.FullTablePage {
+  padding: 1%;
+}
+
+.BillTitle {
+  margin-top: 1%;
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(21, 73, 107);
+  text-align: center;
+}
+
+.deptTitle {
+  margin-top: 2%;
+  font-size: 21px;
+  text-align: center;
+}
+
+.smallTitle p {
+  font-size: 21px;
+  text-align: center;
+}
+
+.TeacherInfo {
+  font-size: 19px;
+  /* font-weight: bold; */
+  line-height: 2.2em;
+  margin-top: 3%;
+  margin-bottom: 5%;
+}
+
+.PaymentBillTable {
+  font-size: 18px;
+  margin-left: 18%;
+  margin-bottom: 5%;
+  width: 64%;
+  border: 1px solid rgb(214, 211, 211);
+}
+
+th {
+  text-align: center;
+  background-color: rgb(42, 115, 163);
+  color: rgb(255, 255, 255);
+}
+
+th,
+tr {
+  height: 30px;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid rgb(214, 211, 211);
+  vertical-align: middle;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(209, 217, 221);
+}
+
+.criteriaCol {
+  text-align: left;
+  width: 70%;
+}
+
+.coursesCol {
+  text-align: center;
+  width: 18%;
+}
+
+.amountCol {
+  text-align: right;
+  width: 12%;
+}
+
+.netAmount {
+  text-align: right;
+  font-weight: bold;
+  color: rgb(21, 73, 107);
+  padding-right: 53px;
+}
