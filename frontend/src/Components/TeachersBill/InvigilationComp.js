@@ -63,70 +63,75 @@ function InvigilationComp({ tag }) {
           <div className="ParentFormRow">
             <div
               className={
-                invigilation.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+                invigilation.length === 1
+                  ? "FormRow invigilationFormRow"
+                  : "FormRow CrossFormRow"
               }
               key={index}
             >
-              <div className="thriceFormRowElement">
-                {index === 0 ? <label>Course ID</label> : ""}
-                <input
-                  type="text"
-                  name="course"
-                  onChange={(evnt) => handleChangeCourse(evnt, index)}
-                  value={course.course}
-                  className="FormControl"
-                  placeholder="Course"
-                />
-              </div>
+              <div classname="invigilationFormRowNoCross">
+                <div className="thriceFormRowElement">
+                  {index === 0 ? <label>Course ID</label> : ""}
+                  <input
+                    type="text"
+                    name="course"
+                    onChange={(evnt) => handleChangeCourse(evnt, index)}
+                    value={course.course}
+                    className="FormControl"
+                    placeholder="Course"
+                  />
+                </div>
 
-              <div className="thriceFormRowElement">
-                {data.names.map((info, ind) => {
-                  return (
-                    <div>
-                      <div classname="childThriceFormRowElement" key={ind}>
-                        <div>
-                          {ind === 0 ? <label>{tag}</label> : ""}
-                          <input
-                            type="text"
-                            name="name"
-                            onChange={(event) =>
-                              handleChangeTeacher(event, index, ind)
-                            }
-                            value={info}
-                            className="FormControl"
-                            placeholder="Name"
-                          />
-                        </div>
-
-                        {data.names.length !== 1 ? (
-                          <div className="childCrossButton">
+                <div className="thriceFormRowElement">
+                  {data.names.map((info, ind) => {
+                    return (
+                      <div className="invigilationthriceformrow">
+                        {data.names.length - 1 === ind && (
+                          <div className="childAddbutton">
                             <button
-                              className="crossButton"
-                              onClick={(evnt) =>
-                                removeInputFieldsTeacher(evnt, ind, index)
-                              }
+                              className="addButton"
+                              onClick={() => addInputFieldTeacher(index)}
+                              type="button"
                             >
-                              x
+                              <i className="fa-sharp fa-solid fa-plus"></i>
                             </button>
                           </div>
-                        ) : (
-                          ""
                         )}
-                      </div>
-                      {data.names.length - 1 === ind && (
-                        <div className="FormRowElement">
-                          <button
-                            className="childAddbutton"
-                            onClick={() => addInputFieldTeacher(index)}
-                            type="button"
-                          >
-                            <i className="fa-sharp fa-solid fa-plus"></i>
-                          </button>
+
+                        <div classname="childThriceFormRowElement" key={ind}>
+                          <div>
+                            {ind === 0 ? <label>{tag}</label> : " "}
+                            <input
+                              type="text"
+                              name="name"
+                              onChange={(event) =>
+                                handleChangeTeacher(event, index, ind)
+                              }
+                              value={info}
+                              className="FormControl"
+                              placeholder="Name"
+                            />
+                          </div>
+
+                          {data.names.length !== 1 ? (
+                            <div className="childCrossButton">
+                              <button
+                                className="crossButton"
+                                onClick={(evnt) =>
+                                  removeInputFieldsTeacher(evnt, ind, index)
+                                }
+                              >
+                                x
+                              </button>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               {invigilation.length !== 1 ? (

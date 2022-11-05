@@ -30,7 +30,12 @@ const TwoField = ({ inputFields, setInputFields }) => {
         const { name, course } = data;
         return (
           <div className="ParentFormRow">
-            <div className="FormRow" key={index}>
+            <div
+              className={
+                inputFields.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+              }
+              key={index}
+            >
               <div className="thriceFormRowElement">
                 {index === 0 ? <label>Teacher's Name</label> : ""}
                 <input
@@ -55,18 +60,22 @@ const TwoField = ({ inputFields, setInputFields }) => {
                 />
               </div>
 
-              <div className="FormRowElement">
-                {inputFields.length !== 1 ? (
+              {inputFields.length !== 1 ? (
+                <div className="FormRowElement">
                   <button
-                    className="crossButton"
+                    className={
+                      index === 0
+                        ? "crossButton crossButton-first"
+                        : "crossButton"
+                    }
                     onClick={(evnt) => removeInputFields(evnt, index)}
                   >
                     x
                   </button>
-                ) : (
-                  ""
-                )}
-              </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             {inputFields.length - 1 === index && (
               <div className="FormRowElement">

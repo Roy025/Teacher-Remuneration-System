@@ -139,68 +139,74 @@ const ChairmanBill = () => {
             </div>
           </div>
           <div className="formRow">
-            <label className="label">01. Question Setting</label>
+            <label className="Label"> Question Setting</label>
             <TwoField inputFields={inputSet} setInputFields={setInputSet} />
           </div>
-          <h3>
-            <b>02. Question Moderation</b>
-          </h3>
-          <TwoField inputFields={inputMod} setInputFields={setInputMod} />
-          <h3>
-            <b>03. Answerpaper Checking</b>
-          </h3>
-          <h4>Part - A</h4>
-          <TwoField inputFields={inputAnsA} setInputFields={setInputAnsA} />
-          <h4>Part - B</h4>
-          <TwoField inputFields={inputAnsB} setInputFields={setInputAnsB} />
-          <h3>
-            <b>04. Term Test / Internal Assessment</b>
-          </h3>
-          <TwoField inputFields={inputTerm} setInputFields={setInputTerm} />
-          <h3>
-            <b>05. Practical Exam / Sessional Assessment / LAB</b>
-          </h3>
-          <TwoField inputFields={inputPrac} setInputFields={setInputPrac} />
-          <h3>
-            <b>06. Tabulation</b>
-          </h3>
-          <TwoField inputFields={inputTab} setInputFields={setInputTab} />{" "}
-          <h3>
-            <b>07. Viva</b>
-          </h3>
-          <TwoField inputFields={inputViva} setInputFields={setInputViva} />
-          <h3>
-            <b>08. Scrutiny</b>
-          </h3>
-          <h4>Part - A</h4>
-          <TwoField inputFields={inputScrA} setInputFields={setInputScrA} />
-          <h4>Part - B</h4>
-          <TwoField inputFields={inputScrB} setInputFields={setInputScrB} />
-          <h4>
-            <b>
-              09. Term Paper / Seminar Paper / Field Work / MonoGraph / Study
-              Tour / Content Analysis / Workshop / Project / Thesis / Internship
-              / Research Planning
-            </b>
-          </h4>
-          <TermPaperComp />
-          <h3>
-            <b>10. Question Type</b>
-          </h3>
-          <TwoField inputFields={inputType} setInputFields={setInputType} />
-          <h3>
-            <b>11. Invigilation</b>
-          </h3>
-          <TwoField inputFields={inputInvi} setInputFields={setInputInvi} />
-          <h3>
-            <b>12. Student Registration</b>
-          </h3>
-          <StudentCount
-            inputFields={inputStudentReg}
-            setInputFields={setInputStudentReg}
-          />
-          <div>
-            <button type="submit" onClick={submit}>
+          <div className="formRow">
+            <label className="Label">Question Moderation</label>
+            <TwoField inputFields={inputMod} setInputFields={setInputMod} />
+          </div>
+          <div className="formRow">
+            <label className="Label">Answerpaper Checking</label>
+            <h4 className="subLabel">Part - A</h4>
+            <TwoField inputFields={inputAnsA} setInputFields={setInputAnsA} />
+            <h4 className="subLabel">Part - B</h4>
+            <TwoField inputFields={inputAnsB} setInputFields={setInputAnsB} />
+          </div>
+          <div className="formRow">
+            <label className="Label">Term Test / Internal Assessment</label>
+            <TwoField inputFields={inputTerm} setInputFields={setInputTerm} />
+          </div>
+          <div className="formRow">
+            <label className="Label">
+              Practical Exam / Sessional Assessment / LAB
+            </label>
+            <TwoField inputFields={inputPrac} setInputFields={setInputPrac} />
+          </div>
+          <div className="formRow">
+            <label className="Label">Tabulation</label>
+            <TwoField
+              inputFields={inputTab}
+              setInputFields={setInputTab}
+            />{" "}
+          </div>
+          <div className="formRow">
+            <label className="Label">Viva</label>
+            <TwoField inputFields={inputViva} setInputFields={setInputViva} />
+          </div>
+          <div className="formRow">
+            <label className="Label">Scrutiny</label>
+            <h4 className="subLabel">Part - A</h4>
+            <TwoField inputFields={inputScrA} setInputFields={setInputScrA} />
+            <h4 className="subLabel">Part - B</h4>
+            <TwoField inputFields={inputScrB} setInputFields={setInputScrB} />
+          </div>
+          <div className="formRow">
+            <label className="Label">
+              Term Paper / Seminar Paper / Field Work / MonoGraph / Study Tour /
+              Content Analysis / Workshop / Project / Thesis / Internship /
+              Research Planning
+            </label>
+            <TermPaperComp />
+          </div>
+          <div className="formRow">
+            <label className="Label">Question Type</label>
+            <TwoField inputFields={inputType} setInputFields={setInputType} />
+          </div>
+          <div className="formRow">
+            <label className="Label">Invigilation</label>
+            <TwoField inputFields={inputInvi} setInputFields={setInputInvi} />
+          </div>
+          <div className="formRow">
+            <label className="Label">Student Registration</label>
+            <StudentCount
+              inputFields={inputStudentReg}
+              setInputFields={setInputStudentReg}
+            />
+          </div>
+
+          <div className="formRow SubmitRow">
+            <button type="submit" className="submitButton" onClick={submit}>
               Submit
             </button>
           </div>

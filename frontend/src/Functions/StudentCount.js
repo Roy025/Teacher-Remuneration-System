@@ -32,7 +32,7 @@ const StudentCount = ({ inputFields, setInputFields }) => {
     console.log(inputFields);
   };
   return (
-    <>
+    <div className="Container">
       {inputFields.map((data, index) => {
         const { number, course } = data;
         return (
@@ -98,7 +98,7 @@ const StudentCount = ({ inputFields, setInputFields }) => {
           </div>
         );
       })}
-    </>
+    </div>
   );
 };
 
