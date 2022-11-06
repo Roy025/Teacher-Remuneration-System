@@ -36,7 +36,7 @@ const TwoField = ({ inputFields, setInputFields }) => {
               }
               key={index}
             >
-              <div className="thriceFormRowElement">
+              <div className="TwoFormRowElementWithAdd">
                 {index === 0 ? <label>Teacher's Name</label> : ""}
                 <input
                   type="text"
@@ -48,7 +48,7 @@ const TwoField = ({ inputFields, setInputFields }) => {
                 />
               </div>
 
-              <div className="thriceFormRowElement">
+              <div className="TwoFormRowElementWithAdd">
                 {index === 0 ? <label>Course ID</label> : ""}
                 <input
                   type="text"

@@ -36,7 +36,7 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
               }
               key={index}
             >
-              <div className="fourFormRowElement">
+              <div className="threeFormRowElementWithAdd">
                 {index === 0 ? <label>Institute</label> : ""}
                 <input
                   type="text"
@@ -48,7 +48,7 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
                 />
               </div>
 
-              <div className="fourFormRowElement">
+              <div className="threeFormRowElementWithAdd">
                 {index === 0 ? <label>Department</label> : ""}
                 <input
                   type="text"
@@ -60,7 +60,7 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
                 />
               </div>
 
-              <div className="fourFormRowElement">
+              <div className="threeFormRowElementWithAdd">
                 {index === 0 ? <label>Teacher's Name</label> : ""}
                 <input
                   type="text"

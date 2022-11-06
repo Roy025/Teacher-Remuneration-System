@@ -61,9 +61,14 @@ function InvigilationComp({ tag }) {
         console.log(course);
         return (
           <div className="ParentFormRow">
-            <div className={invigilation.length === 1 ? "invigilationFormRow" : "invigilationFormRow CrossFormRow"} key={index}>
-              <div classname="invigilationFormRowNoCross">
-                <div className="courseThriceFormRowElement">
+            <div
+              className={
+                invigilation.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+              }
+              key={index}
+            >
+              <div classname="FormRowNoCross">
+                <div className="labelFlex">
                   <label>Course ID</label>
                   <input
                     type="text"
@@ -75,60 +80,52 @@ function InvigilationComp({ tag }) {
                   />
                 </div>
 
-                <div className="thriceFormRowElement">
-                  {data.names.map((info, ind) => {
-                    return (
-                      <div classname="childThriceFormRowElement" key={ind}>
-                        <div className="invigilationChildCross">
-                        
-                        <div className="invigilationName">
-                            {ind === 0 ? <label>{tag}</label> : " "}
-                            <input
-                              type="text"
-                              name="name"
-                              onChange={(event) =>
-                                handleChangeTeacher(event, index, ind)
-                              }
-                              value={info}
-                              className="FormControl"
-                              placeholder="Name"
-                            />
-
-
-                        </div>
-
-                        {data.names.length !== 1 ? (
-                          <div className="childCrossButton">
-                            <button
-                              className="childCrossButton"
-                              onClick={(evnt) =>
-                                removeInputFieldsTeacher(evnt, ind, index)
-                              }
-                            >
-                              x
-                            </button>
-                          </div>
-                        ) : (
-                          ""
-                          )}
-                          </div>
-
-                        {data.names.length - 1 === ind && (
-                          <div className="childAddbutton">
-                            <button
-                              className="childAddButton"
-                              onClick={() => addInputFieldTeacher(index)}
-                              type="button"
-                            >
-                              <i className="fa-sharp fa-solid fa-plus"></i>
-                            </button>
-                          </div>
+                {data.names.map((info, ind) => {
+                  return (
+                    <div
+                      classname="childFormRowElementWithCrossAndAdd"
+                      key={ind}
+                    >
+                      <div className="labelFlex">
+                        {ind === 0 ? <label>{tag}</label> : " "}
+                        <input
+                          type="text"
+                          name="name"
+                          onChange={(event) =>
+                            handleChangeTeacher(event, index, ind)
+                          }
+                          value={info}
+                          className="FormControl"
+                          placeholder="Name"
+                        />
+                      </div>
+                      <div className="childCross">
+                        {data.names.length !== 1 && (
+                          <button
+                            className="childCrossButton"
+                            onClick={(evnt) =>
+                              removeInputFieldsTeacher(evnt, ind, index)
+                            }
+                          >
+                            x
+                          </button>
                         )}
                       </div>
 
-                    );
-                  })}
-                </div>
+                      <div className="childAdd">
+                        {data.names.length - 1 === ind && (
+                          <button
+                            className="childAddButton"
+                            onClick={() => addInputFieldTeacher(index)}
+                            type="button"
+                          >
+                            <i className="fa-sharp fa-solid fa-plus"></i>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
 
               {invigilation.length !== 1 ? (

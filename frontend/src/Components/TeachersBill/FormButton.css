@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.addButton {
+  color: grey;
+  padding: 4px 15px;
+  border-radius: 0.3rem;
+  background-color: transparent;
+  border: 1px solid rgb(211, 199, 199);
+  box-shadow: 1px 1px 2px 2px rgb(119, 110, 110);
+  margin-bottom: 3%;
+}
+
+.addButton:hover {
+  background-color: rgb(208, 214, 245);
+  border: 1px solid rgb(208, 214, 245);
+  color: rgba(88, 77, 77, 0.932);
+}
+
+.childAddButton {
+  color: rgb(51, 99, 153);
+  padding: 2px 6px;
+  border-radius: 0.6rem;
+  background-color: rgb(254, 254, 254);
+  border: 1px solid rgb(32, 79, 133);
+}
+
+.childAddButton:hover {
+  color: darkblue;
+  border: 2px solid rgb(3, 43, 88);
+}
+
+.crossButton {
+  color: grey;
+  padding: 4px 15px;
+  border-radius: 0.3rem;
+  background-color: transparent;
+  border: 1px solid rgb(119, 110, 110);
+}
+
+.crossButton-first {
+  margin-top: 22px;
+}
+
+.crossButton:hover {
+  color: brown;
+  border: 2px solid brown;
+}
+
+.childCrossButton {
+  color: rgb(236, 72, 72);
+  padding: 2px 6px;
+  border-radius: 0.6rem;
+  background-color: rgb(254, 254, 254);
+  border: 1px solid rgb(236, 72, 72);
+}
+
+.childCrossButton:hover {
+  color: rgb(238, 11, 30);
+  border: 2px solid rgb(238, 11, 30);
+}
+
+.SubmitRow {
+  text-align: right;
+  margin-right: 1%;
+}
+
+.submitButton {
+  color: rgb(21, 78, 116);
+  font-size: 18px;
+  padding: 5px 16px;
+  border-radius: 10px;
+  background-color: rgb(211, 226, 250);
+  border: 2px solid rgb(94, 164, 211);
+  margin-bottom: 1%;
+}
+
+.submitButton:hover {
+  color: rgb(254, 254, 254);
+  background-color: rgb(57, 148, 209);
+  box-shadow: 1px 1px 3px 3px rgb(70, 129, 180);
+}
