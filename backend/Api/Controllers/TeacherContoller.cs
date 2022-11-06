@@ -2,6 +2,7 @@ using Core.DTOs.TeacherDTOs;
 using Core.Interfaces.Services;
 using Core.Models;
 using Core.Params;
+using Core.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -32,5 +33,12 @@ public class TeacherContoller : BaseApiController
         return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacher, 200, "Teacher fetched successfully"));
     }
 
-    // [HttpPost] public async Task<Ac>
+    [HttpPost("register")]
+    public async Task<ActionResult<ApiDataResponse<TeacherLoginDto>>> RegisterTeacher(TeacherCreateDto teacher)
+    {
+        var teacherEntity = await _teacherService.CreateTeacherAsync(teacher);
+        if(teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher registration failed"));
+
+        return StatusCode(201, new ApiDataResponse<TeacherLoginDto>(teacherEntity, 201, "Teacher created successfully"));
+    }
 }

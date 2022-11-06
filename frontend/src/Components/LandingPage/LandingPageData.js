@@ -9,6 +9,7 @@ export const homeBlockOne = {
   imageSource: "./images/form-icon.png",
   alt: "Teacher's form",
   imageStartLocation: "start",
+  url: "/director"
 };
 
 export const homeBlockTwo = {
@@ -22,6 +23,7 @@ export const homeBlockTwo = {
   imageSource: "./images/history-icon.png",
   alt: "Past Bill Catalogue",
   imageStartLocation: "",
+  url: "/uncleared_catalogues"
 };
 
 export const homeBlockThree = {
@@ -35,4 +37,5 @@ export const homeBlockThree = {
   imageSource: "./images/remainder-bill-icon.png",
   alt: "Remainder bills catalogue",
   imageStartLocation: "start",
+  url: "/director"
 };

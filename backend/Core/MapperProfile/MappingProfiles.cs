@@ -11,6 +11,7 @@ public class MappingProfiles : Profile
         //     .ForMember(d => d.Department, opt => opt.MapFrom(s => s.Department));
 
         CreateMap<Teacher, TeacherResponseDto>();
+        CreateMap<TeacherCreateDto, Teacher>();
 
     }
 }

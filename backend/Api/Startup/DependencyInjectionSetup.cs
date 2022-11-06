@@ -1,11 +1,14 @@
+using System.Text;
 using Business.Data;
 using Business.Services;
 using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.MapperProfile;
 using Core.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Startup;
 public static class DependencyInjectionSetup
@@ -39,9 +42,23 @@ public static class DependencyInjectionSetup
             };
         });
 
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Token:Key"])),
+                    ValidIssuer = config["Token:Issuer"],
+                    ValidateIssuer = true,
+                    ValidateAudience = false
+                };
+            });
+
         // Module services
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITeacherService, TeacherService>();
+        services.AddScoped<ITokenService, TokenService>();
 
         // Automapper configuration
         services.AddAutoMapper(typeof(MappingProfiles));

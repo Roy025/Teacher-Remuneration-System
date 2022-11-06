@@ -57,11 +57,38 @@
 
 .thriceFormRowElement {
   display: flex;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   justify-content: space-between;
   flex-direction: column;
   width: 46%;
 }
+
+.invigilationFormRow{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+
+
+.invigilationFormRowNoCross {
+  flex-direction: column;
+  /* align-items: flex-start; */
+  border: 1px solid red;
+}
+
+.childThriceFormRowElement{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.invigilationName{
+  display: flex;
+  flex-direction: column;
+}
+
 
 .CrossFormRow .thriceFormRowElement {
   width: 45%;
@@ -104,6 +131,11 @@
   color: rgba(88, 77, 77, 0.932);
 }
 
+.childAddButton{
+  padding: 2px 6px;
+  border-radius: 1rem;
+}
+
 .crossButton {
   color: grey;
   padding: 4px 15px;
@@ -119,6 +151,13 @@
 .crossButton:hover {
   color: brown;
   border: 2px solid brown;
+}
+
+.childCrossButton {
+  
+  padding: 2px 6px;
+  border-radius: 1rem;
+  
 }
 
 .SubmitRow {

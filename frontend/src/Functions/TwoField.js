@@ -25,18 +25,17 @@ const TwoField = ({ inputFields, setInputFields }) => {
     console.log(inputFields);
   };
   return (
-    // <div className="container">
     <div className="Container">
       {inputFields.map((data, index) => {
         const { name, course } = data;
         return (
           <div className="ParentFormRow">
             <div
-              // className="row"
-              className="FormRow"
+              className={
+                inputFields.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+              }
               key={index}
             >
-              {/* <div className="form-group col-md-3"> */}
               <div className="thriceFormRowElement">
                 {index === 0 ? <label>Teacher's Name</label> : ""}
                 <input
@@ -44,12 +43,11 @@ const TwoField = ({ inputFields, setInputFields }) => {
                   name="name"
                   onChange={(evnt) => handleChange(evnt, index)}
                   value={name}
-                  // className="form-control"
                   className="FormControl"
                   placeholder="Name"
                 />
               </div>
-              {/* <div className="form-group col-md-2"> */}
+
               <div className="thriceFormRowElement">
                 {index === 0 ? <label>Course ID</label> : ""}
                 <input
@@ -58,38 +56,36 @@ const TwoField = ({ inputFields, setInputFields }) => {
                   onChange={(evnt) => handleChange(evnt, index)}
                   value={course}
                   className="FormControl"
-                  // className="form-control"
                   placeholder="Course"
                 />
               </div>
-              {/* <div className="col-md-1 text-center mt-3"> */}
-              <div className="FormRowElement">
-                {inputFields.length !== 1 ? (
+
+              {inputFields.length !== 1 ? (
+                <div className="FormRowElement">
                   <button
-                    // className="btn-outline-danger add"
-                    className="crossButton"
+                    className={
+                      index === 0
+                        ? "crossButton crossButton-first"
+                        : "crossButton"
+                    }
                     onClick={(evnt) => removeInputFields(evnt, index)}
                   >
                     x
                   </button>
-                ) : (
-                  ""
-                )}
-              </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             {inputFields.length - 1 === index && (
-              // <div className="row">
               <div className="FormRowElement">
-                {/* <div className="col-sm-1"> */}
                 <button
-                  // className="btn-outline-success add"
                   className="addButton"
                   onClick={() => addInputField()}
                   type="button"
                 >
                   <i className="fa-sharp fa-solid fa-plus"></i>
                 </button>
-                {/* </div> */}
               </div>
             )}
           </div>

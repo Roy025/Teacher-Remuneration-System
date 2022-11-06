@@ -25,7 +25,6 @@ const ThreeFields = ({ inputFields, setInputFields }) => {
     ]);
   };
   return (
-    // <div className="container">
     <div className="Container">
       {inputFields.map((data, index) => {
         const { institute, department, name } = data;
