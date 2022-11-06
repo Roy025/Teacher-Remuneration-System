@@ -168,7 +168,7 @@ const ChairmanBill = () => {
             <TwoField
               inputFields={inputTab}
               setInputFields={setInputTab}
-            />{" "}
+            />
           </div>
           <div className="formRow">
             <label className="Label">Viva</label>

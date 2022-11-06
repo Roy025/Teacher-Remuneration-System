@@ -77,16 +77,30 @@
   border: 1px solid red;
 }
 
-.childThriceFormRowElement{
+.courseThriceRowFormElement{
+  display: flex;
+  /* align-items: flex-start; */
+  justify-content: space-between;
+  flex-direction: column;
+  
+}
+
+/* .childThriceFormRowElement{
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
-}
+} */
 
 .invigilationName{
   display: flex;
   flex-direction: column;
+}
+
+.invigilationChildCross{
+   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 
@@ -113,6 +127,26 @@
 .subLabel {
   font-size: 18px;
   font-weight: 600;
+}
+
+.examinerChildCross{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.superviserChildCross{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.examinersName{
+  display: flex;
+  flex-direction: column;
+}
+.supervisersName{
+  display: flex;
+  flex-direction: column;
 }
 
 .addButton {
@@ -180,3 +214,4 @@
   background-color: rgb(57, 148, 209);
   box-shadow: 1px 1px 3px 3px rgb(70, 129, 180);
 }
+

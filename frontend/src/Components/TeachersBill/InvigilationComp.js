@@ -63,7 +63,7 @@ function InvigilationComp({ tag }) {
           <div className="ParentFormRow">
             <div className={invigilation.length === 1 ? "invigilationFormRow" : "invigilationFormRow CrossFormRow"} key={index}>
               <div classname="invigilationFormRowNoCross">
-                <div className="invigilationThriceFormRowElement">
+                <div className="courseThriceFormRowElement">
                   <label>Course ID</label>
                   <input
                     type="text"
@@ -79,17 +79,8 @@ function InvigilationComp({ tag }) {
                   {data.names.map((info, ind) => {
                     return (
                       <div classname="childThriceFormRowElement" key={ind}>
-                        {data.names.length - 1 === ind && (
-                          <div className="childAddbutton">
-                            <button
-                              className="childAddButton"
-                              onClick={() => addInputFieldTeacher(index)}
-                              type="button"
-                            >
-                              <i className="fa-sharp fa-solid fa-plus"></i>
-                            </button>
-                          </div>
-                        )}
+                        <div className="invigilationChildCross">
+                        
                         <div className="invigilationName">
                             {ind === 0 ? <label>{tag}</label> : " "}
                             <input
@@ -119,6 +110,19 @@ function InvigilationComp({ tag }) {
                           </div>
                         ) : (
                           ""
+                          )}
+                          </div>
+
+                        {data.names.length - 1 === ind && (
+                          <div className="childAddbutton">
+                            <button
+                              className="childAddButton"
+                              onClick={() => addInputFieldTeacher(index)}
+                              type="button"
+                            >
+                              <i className="fa-sharp fa-solid fa-plus"></i>
+                            </button>
+                          </div>
                         )}
                       </div>
 
