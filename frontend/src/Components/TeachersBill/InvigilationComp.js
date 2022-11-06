@@ -61,17 +61,10 @@ function InvigilationComp({ tag }) {
         console.log(course);
         return (
           <div className="ParentFormRow">
-            <div
-              className={
-                invigilation.length === 1
-                  ? "FormRow invigilationFormRow"
-                  : "FormRow CrossFormRow"
-              }
-              key={index}
-            >
+            <div className={invigilation.length === 1 ? "invigilationFormRow" : "invigilationFormRow CrossFormRow"} key={index}>
               <div classname="invigilationFormRowNoCross">
-                <div className="thriceFormRowElement">
-                  {index === 0 ? <label>Course ID</label> : ""}
+                <div className="invigilationThriceFormRowElement">
+                  <label>Course ID</label>
                   <input
                     type="text"
                     name="course"
@@ -85,11 +78,11 @@ function InvigilationComp({ tag }) {
                 <div className="thriceFormRowElement">
                   {data.names.map((info, ind) => {
                     return (
-                      <div className="invigilationthriceformrow">
+                      <div classname="childThriceFormRowElement" key={ind}>
                         {data.names.length - 1 === ind && (
                           <div className="childAddbutton">
                             <button
-                              className="addButton"
+                              className="childAddButton"
                               onClick={() => addInputFieldTeacher(index)}
                               type="button"
                             >
@@ -97,9 +90,7 @@ function InvigilationComp({ tag }) {
                             </button>
                           </div>
                         )}
-
-                        <div classname="childThriceFormRowElement" key={ind}>
-                          <div>
+                        <div className="invigilationName">
                             {ind === 0 ? <label>{tag}</label> : " "}
                             <input
                               type="text"
@@ -111,24 +102,26 @@ function InvigilationComp({ tag }) {
                               className="FormControl"
                               placeholder="Name"
                             />
-                          </div>
 
-                          {data.names.length !== 1 ? (
-                            <div className="childCrossButton">
-                              <button
-                                className="crossButton"
-                                onClick={(evnt) =>
-                                  removeInputFieldsTeacher(evnt, ind, index)
-                                }
-                              >
-                                x
-                              </button>
-                            </div>
-                          ) : (
-                            ""
-                          )}
+
                         </div>
+
+                        {data.names.length !== 1 ? (
+                          <div className="childCrossButton">
+                            <button
+                              className="childCrossButton"
+                              onClick={(evnt) =>
+                                removeInputFieldsTeacher(evnt, ind, index)
+                              }
+                            >
+                              x
+                            </button>
+                          </div>
+                        ) : (
+                          ""
+                        )}
                       </div>
+
                     );
                   })}
                 </div>
