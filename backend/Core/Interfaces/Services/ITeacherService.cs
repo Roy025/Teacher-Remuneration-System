@@ -6,6 +6,6 @@ public interface ITeacherService
 {
     Task<IReadOnlyList<TeacherResponseDto>>GetTeachersAsync(TeacherReqParams teacherParams);
     Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id);
-    Task<TeacherResponseDto> CreateTeacherAsync(TeacherCreateDto teacher);
+    Task<TeacherLoginDto> CreateTeacherAsync(TeacherCreateDto teacher);
     Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherUpdateDto teacher);
 }
