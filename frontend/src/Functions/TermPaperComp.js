@@ -90,106 +90,118 @@ function TermPaperComp() {
               }
               key={index}
             >
-              {index === 0 ? <label>Course ID</label> : ""}
-              <input
-                type="text"
-                name="course"
-                onChange={(evnt) => handleChangeCourse(evnt, index)}
-                value={course.course}
-                className="form-control"
-                placeholder="Course"
-              />
-              {data.super.map((info, ind) => {
-                console.log("Hi");
-                return (
-                  <div className="row" key={ind}>
-                    <div className="form-group col-md-3">
-                      {ind === 0 ? <label>Supervisers</label> : ""}
-                      <input
-                        type="text"
-                        name="name"
-                        onChange={(event) =>
-                          handleChangeTeacher(event, index, ind)
-                        }
-                        value={info}
-                        className="form-control"
-                        placeholder="Name"
-                      />
-                    </div>
-                    <div className="col-md-1 text-center mt-3">
-                      {data.super.length !== 1 ? (
-                        <button
-                          className="btn-outline-danger add"
-                          onClick={(evnt) =>
-                            removeInputFieldsTeacher(evnt, ind, index)
-                          }
-                        >
-                          x
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                    {data.super.length - 1 === ind && (
-                      <div className="childAddbutton">
-                        <button
-                          className="addButton"
-                          onClick={() => addInputFieldTeacher(index)}
-                          type="button"
-                        >
-                          <i className="fa-sharp fa-solid fa-plus"></i>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              <div className="FormRowNoCross">
+                <div className="labelFlex">
+                  <label>Course ID</label>
+                  <input
+                    type="text"
+                    name="course"
+                    onChange={(evnt) => handleChangeCourse(evnt, index)}
+                    value={course.course}
+                    className="FormControl"
+                    placeholder="Course"
+                  />
+                </div>
 
-              {data.examiner.map((info, ind) => {
-                console.log("Hi");
-                return (
-                  <div className="row" key={ind}>
-                    <div className="form-group col-md-3">
-                      {ind === 0 ? <label>Examiners</label> : ""}
-                      <input
-                        type="text"
-                        name="name"
-                        onChange={(event) =>
-                          handleChangeExaminer(event, index, ind)
-                        }
-                        value={info}
-                        className="form-control"
-                        placeholder="Name"
-                      />
-                    </div>
-                    <div className="col-md-1 text-center mt-3">
-                      {data.examiner.length !== 1 ? (
-                        <button
-                          className="btn-outline-danger add"
-                          onClick={(evnt) =>
-                            removeInputFieldsExaminer(evnt, ind, index)
+                {data.super.map((info, ind) => {
+                  return (
+                    <div
+                      className="childFormRowElementWithCrossAndAdd"
+                      key={ind}
+                    >
+                      <div className="labelFlex">
+                        {ind === 0 ? <label>Supervisers</label> : ""}
+                        <input
+                          type="text"
+                          name="name"
+                          onChange={(event) =>
+                            handleChangeTeacher(event, index, ind)
                           }
-                        >
-                          x
-                        </button>
+                          value={info}
+                          className="FormControl"
+                          placeholder="Name"
+                        />
+                      </div>
+                      <div className="childCross">
+                        {data.super.length !== 1 ? (
+                          <button
+                            className="childCrossButton"
+                            onClick={(evnt) =>
+                              removeInputFieldsTeacher(evnt, ind, index)
+                            }
+                          >
+                            x
+                          </button>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+
+                      {data.super.length - 1 === ind && (
+                        <div className="childAdd">
+                          <button
+                            className="childAddButton"
+                            onClick={() => addInputFieldTeacher(index)}
+                            type="button"
+                          >
+                            <i className="fa-sharp fa-solid fa-plus"></i>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+
+                {data.examiner.map((info, ind) => {
+                  console.log("Hi");
+                  return (
+                    <div
+                      className="childFormRowElementWithCrossAndAdd"
+                      key={ind}
+                    >
+                      <div className="labelFlex">
+                        {ind === 0 ? <label>Examiners</label> : ""}
+                        <input
+                          type="text"
+                          name="name"
+                          onChange={(event) =>
+                            handleChangeExaminer(event, index, ind)
+                          }
+                          value={info}
+                          className="FormControl"
+                          placeholder="Name"
+                        />
+                      </div>
+                      {data.examiner.length !== 1 ? (
+                        <div className="childCross">
+                          <button
+                            className="childCrossButton"
+                            onClick={(evnt) =>
+                              removeInputFieldsExaminer(evnt, ind, index)
+                            }
+                          >
+                            x
+                          </button>
+                        </div>
                       ) : (
                         ""
                       )}
+
+                      {data.examiner.length - 1 === ind && (
+                        <div className="childAdd">
+                          <button
+                            className="childAddButton"
+                            onClick={() => addInputFieldExaminer(index)}
+                            type="button"
+                          >
+                            <i className="fa-sharp fa-solid fa-plus"></i>
+                          </button>
+                        </div>
+                      )}
                     </div>
-                    {data.examiner.length - 1 === ind && (
-                      <div className="childAddbutton">
-                        <button
-                          className="addButton"
-                          onClick={() => addInputFieldExaminer(index)}
-                          type="button"
-                        >
-                          <i className="fa-sharp fa-solid fa-plus"></i>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
 
               {TermPaper.length !== 1 ? (
                 <div className="FormRowElement">

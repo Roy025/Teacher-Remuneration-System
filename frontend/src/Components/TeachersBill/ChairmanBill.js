@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Links from "./Links";
 import "./TeachersBill.css";
+import "./FormButton.css";
 import Dropdown, {
   semesterOptions,
   semesterTitle,
@@ -165,10 +166,7 @@ const ChairmanBill = () => {
           </div>
           <div className="formRow">
             <label className="Label">Tabulation</label>
-            <TwoField
-              inputFields={inputTab}
-              setInputFields={setInputTab}
-            />{" "}
+            <TwoField inputFields={inputTab} setInputFields={setInputTab} />
           </div>
           <div className="formRow">
             <label className="Label">Viva</label>

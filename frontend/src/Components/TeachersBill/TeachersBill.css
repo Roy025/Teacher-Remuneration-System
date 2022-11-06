@@ -1,3 +1,4 @@
+/* General CSS */
 * {
   margin: 0;
   padding: 0;
@@ -35,65 +36,6 @@
   margin-bottom: 3%;
 }
 
-.threeFormRowElement {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 32%;
-}
-
-.fourFormRowElement {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 32%;
-}
-
-.CrossFormRow .fourFormRowElement {
-  width: 31%;
-}
-
-.thriceFormRowElement {
-  display: flex;
-  /* align-items: flex-start; */
-  justify-content: space-between;
-  flex-direction: column;
-  width: 46%;
-}
-
-.invigilationFormRow{
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-}
-
-
-
-.invigilationFormRowNoCross {
-  flex-direction: column;
-  /* align-items: flex-start; */
-  border: 1px solid red;
-}
-
-.childThriceFormRowElement{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-}
-
-.invigilationName{
-  display: flex;
-  flex-direction: column;
-}
-
-
-.CrossFormRow .thriceFormRowElement {
-  width: 45%;
-}
-
 .FormControl {
   padding: 6px 10px;
   border: 1px solid rgb(119, 110, 110);
@@ -110,73 +52,56 @@
   font-weight: bold;
   margin-bottom: 1%;
 }
+
+/* DirectorForm */
+.threeFormRowElement {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 32%;
+}
+
+.threeFormRowElementWithAdd {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 32%;
+}
+
+.CrossFormRow .threeFormRowElementWithAdd {
+  width: 31%;
+}
+
+/* ChairmanForm & TeacherForm */
+.TwoFormRowElementWithAdd {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 46%;
+}
+
+.CrossFormRow .TwoFormRowElementWithAdd {
+  width: 45%;
+}
+
 .subLabel {
   font-size: 18px;
   font-weight: 600;
 }
 
-.addButton {
-  color: grey;
-  padding: 4px 15px;
-  border-radius: 0.3rem;
-  background-color: transparent;
-  border: 1px solid rgb(211, 199, 199);
-  box-shadow: 1px 1px 2px 2px rgb(119, 110, 110);
-  margin-bottom: 3%;
+/* ChairmanForm & ChiefInvigilationForm */
+.labelFlex {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
-.addButton:hover {
-  background-color: rgb(208, 214, 245);
-  border: 1px solid rgb(208, 214, 245);
-  color: rgba(88, 77, 77, 0.932);
-}
-
-.childAddButton{
-  padding: 2px 6px;
-  border-radius: 1rem;
-}
-
-.crossButton {
-  color: grey;
-  padding: 4px 15px;
-  border-radius: 0.3rem;
-  background-color: transparent;
-  border: 1px solid rgb(119, 110, 110);
-}
-
-.crossButton-first {
-  margin-top: 22px;
-}
-
-.crossButton:hover {
-  color: brown;
-  border: 2px solid brown;
-}
-
-.childCrossButton {
-  
-  padding: 2px 6px;
-  border-radius: 1rem;
-  
-}
-
-.SubmitRow {
-  text-align: right;
-  margin-right: 1%;
-}
-
-.submitButton {
-  color: rgb(21, 78, 116);
-  font-size: 18px;
-  padding: 5px 16px;
-  border-radius: 10px;
-  background-color: rgb(211, 226, 250);
-  border: 2px solid rgb(94, 164, 211);
-  margin-bottom: 1%;
-}
-
-.submitButton:hover {
-  color: rgb(254, 254, 254);
-  background-color: rgb(57, 148, 209);
-  box-shadow: 1px 1px 3px 3px rgb(70, 129, 180);
+.childFormRowElementWithCrossAndAdd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
