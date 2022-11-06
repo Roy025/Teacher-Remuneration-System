@@ -49,10 +49,42 @@ public class TeacherService : ITeacherService
         return retTeachers;
     }
 
-    public Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherUpdateDto teacher)
+    public async Task<TeacherLoginDto> LoginTeacherAsync(TeacherLoginReqDto teacher)
     {
+        var teacherEntity = await _unitOfWork.Repository<Teacher>().ListAllAsync();
+        var teacherToLogin = teacherEntity.FirstOrDefault(t => t.Email == teacher.Email);
+        if (teacherEntity == null) return null;
+        if (!BCrypt.Net.BCrypt.Verify(teacher.Password, teacherToLogin.Password)) return null;
+        return GetTeacherLoginDto(teacherToLogin);
         throw new NotImplementedException();
     }
+
+    public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherUpdateDto teacher)
+    {
+        var teacherEntity = await _unitOfWork.Repository<Teacher>().GetByIdAsync(id);
+
+        if (teacherEntity == null) return null;
+        
+        TeacherUpdateDtoToTeacher(teacher, teacherEntity);
+        
+        _unitOfWork.Repository<Teacher>().Update(teacherEntity);
+        
+        var result = await _unitOfWork.Complete();
+        
+        if (result <= 0) return null;
+        
+        return _mapper.Map<TeacherResponseDto>(teacherEntity);
+    }
+
+    private void TeacherUpdateDtoToTeacher(TeacherUpdateDto teacher, Teacher teacherEntity)
+    {
+        teacherEntity.Name = !String.IsNullOrEmpty(teacher.Name) ? teacher.Name : teacherEntity.Name;
+        teacherEntity.Email = !String.IsNullOrEmpty(teacher.Email) ? teacher.Email : teacherEntity.Email;
+        teacherEntity.Password = !String.IsNullOrEmpty(teacher.Password) ? BCrypt.Net.BCrypt.HashPassword(teacher.Password) : teacherEntity.Password;
+        teacherEntity.BankAccount = !String.IsNullOrEmpty(teacher.BankAccount) ? teacher.BankAccount : teacherEntity.BankAccount;
+        teacherEntity.Designation = !String.IsNullOrEmpty(teacher.Designation) ? teacher.Designation : teacherEntity.Designation;
+    }
+
     private TeacherLoginDto GetTeacherLoginDto(Teacher teacherEntity)
     {
         return new TeacherLoginDto
