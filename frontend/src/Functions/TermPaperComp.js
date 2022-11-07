@@ -153,7 +153,6 @@ function TermPaperComp() {
                 })}
 
                 {data.examiner.map((info, ind) => {
-                  console.log("Hi");
                   return (
                     <div
                       className="childFormRowElementWithCrossAndAdd"
