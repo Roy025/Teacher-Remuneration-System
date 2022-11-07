@@ -87,7 +87,7 @@ function InvigilationComp({ tag }) {
                       key={ind}
                     >
                       <div className="labelFlex">
-                        {ind === 0 ? <label>{tag}</label> : " "}
+                        {ind === 0 && <label>{tag}</label>}
                         <input
                           type="text"
                           name="name"
@@ -99,8 +99,8 @@ function InvigilationComp({ tag }) {
                           placeholder="Name"
                         />
                       </div>
-                      <div className="childCross">
-                        {data.names.length !== 1 && (
+                      {data.names.length !== 1 && (
+                        <div className="childCross">
                           <button
                             className="childCrossButton"
                             onClick={(evnt) =>
@@ -109,11 +109,11 @@ function InvigilationComp({ tag }) {
                           >
                             x
                           </button>
-                        )}
-                      </div>
+                        </div>
+                      )}
 
-                      <div className="childAdd">
-                        {data.names.length - 1 === ind && (
+                      {data.names.length - 1 === ind && (
+                        <div className="childAdd">
                           <button
                             className="childAddButton"
                             onClick={() => addInputFieldTeacher(index)}
@@ -121,8 +121,8 @@ function InvigilationComp({ tag }) {
                           >
                             <i className="fa-sharp fa-solid fa-plus"></i>
                           </button>
-                        )}
-                      </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })}
