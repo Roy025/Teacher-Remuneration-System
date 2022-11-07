@@ -1,15 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import "./checkbox.css";
 
-function TermPaperComp() {
-  const [TermPaper, setTermPaper] = useState([
-    {
-      course: "",
-      super: [""],
-      examiner: [""],
-    },
-  ]);
-
+function TermPaperComp({ TermPaper, setTermPaper }) {
   const addInputFieldCourse = () => {
     setTermPaper([
       ...TermPaper,
@@ -17,8 +9,17 @@ function TermPaperComp() {
         course: "",
         super: [""],
         examiner: [""],
+        committee: false,
       },
     ]);
+  };
+
+  const setCommitteeStatus = (e, index) => {
+    const list = [...TermPaper];
+    if (list[index].committee === true) list[index].committee = false;
+    else list[index].committee = true;
+    setTermPaper(list);
+  console.log(list);
   };
 
   const removeInputFieldsCourse = (e, index) => {
@@ -38,7 +39,6 @@ function TermPaperComp() {
   const handleChangeTeacher = (evnt, index, ind) => {
     const { name, value } = evnt.target;
     const list = [...TermPaper];
-    console.log(list[index].super[name]);
     list[index].super[ind] = value;
     setTermPaper(list);
   };
@@ -59,7 +59,6 @@ function TermPaperComp() {
   const handleChangeExaminer = (evnt, index, ind) => {
     const { name, value } = evnt.target;
     const list = [...TermPaper];
-    console.log(list[index].super[name]);
     list[index].examiner[ind] = value;
     setTermPaper(list);
   };
@@ -81,9 +80,8 @@ function TermPaperComp() {
     <div className="Container">
       {TermPaper.map((data, index) => {
         const course = data;
-        console.log(course);
         return (
-          <div className="ParentFormRow">
+          <div className="ParentFormRow" key={index}>
             <div
               className={
                 data.super.length === 1 ? "FormRow" : "FormRow CrossFormRow"
@@ -205,7 +203,18 @@ function TermPaperComp() {
                     </div>
                   );
                 })}
+                <div className="FormRowNoCross">
+                  <label class="Form-control">
+                    <input
+                      type="checkbox"
+                      name="checkbox"
+                      onChange={(evnt) => setCommitteeStatus(evnt, index)}
+                    />
+                    Exam committee
+                  </label>
+                </div>
               </div>
+              {/* onChange={(evnt) => setCommitteeStatus(evnt, index)} */}
 
               {TermPaper.length !== 1 ? (
                 <div className="FormRowElement">

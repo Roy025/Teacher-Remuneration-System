@@ -14,6 +14,13 @@ import { useState } from "react";
 import InvigilationComp from "./InvigilationComp";
 
 const ChiefInvigilatorBill = () => {
+  const [invigilation, setInvigilation] = useState([
+    {
+      course: "",
+      names: [""],
+    },
+  ]);
+
   const [exam, setExam] = useState({
     session: "",
     semester: "",
@@ -48,7 +55,7 @@ const ChiefInvigilatorBill = () => {
 
           <div className="formRow">
             <label className="Label">Invigilation</label>
-            <InvigilationComp tag={"Invigilator's name"} />
+            <InvigilationComp tag={"Invigilator's name"} invigilation={invigilation} setInvigilation={setInvigilation}/>
           </div>
           <div className="formRow SubmitRow">
             <button type="submit" className="submitButton" onClick={submit}>
