@@ -1,14 +1,7 @@
 import React from "react";
-import { useState } from "react";
 
-function InvigilationComp({ tag }) {
-  const [invigilation, setInvigilation] = useState([
-    {
-      course: "",
-      names: [""],
-    },
-  ]);
-
+function InvigilationComp({ tag, invigilation, setInvigilation }) {
+  
   const addInputFieldCourse = () => {
     setInvigilation([
       ...invigilation,
