@@ -103,5 +103,24 @@
 .childFormRowElementWithCrossAndAdd {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 4%;
+  margin-bottom: 2%;
+}
+
+/* ChairmanForm */
+.FormRowNoCross {
+  width: 100%;
+}
+
+.TermpaperCompElement {
+  width: 46%;
+}
+
+.TermPaperCourse {
+  margin-bottom: 2%;
+}
+
+.labelTermpaperCompElement {
+  width: 80%;
 }
