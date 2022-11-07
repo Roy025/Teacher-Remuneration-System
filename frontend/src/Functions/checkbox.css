@@ -3,6 +3,7 @@
 }
 
 .Form-control {
+  font-family: system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.1;
