@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Links from "./Links";
 import "./TeachersBill.css";
+import "./FormButton.css";
 import Dropdown, {
   semesterOptions,
   semesterTitle,
@@ -80,22 +81,26 @@ const ChairmanBill = () => {
       course: "",
     },
   ]);
-  const [inputInvi, setInputInvi] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
   const [inputStudentReg, setInputStudentReg] = useState([
     {
       course: "",
       number: "",
     },
   ]);
+
   const [exam, setExam] = useState({
     session: "",
     semester: "",
   });
+  const [TermPaper, setTermPaper] = useState([
+    {
+      course: "",
+      super: [""],
+      examiner: [""],
+      committee: false
+    },
+  ]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -112,7 +117,6 @@ const ChairmanBill = () => {
     console.log(inputPrac);
     console.log(inputViva);
     console.log(inputType);
-    console.log(inputInvi);
     console.log(inputStudentReg);
   };
   return (
@@ -165,10 +169,7 @@ const ChairmanBill = () => {
           </div>
           <div className="formRow">
             <label className="Label">Tabulation</label>
-            <TwoField
-              inputFields={inputTab}
-              setInputFields={setInputTab}
-            />{" "}
+            <TwoField inputFields={inputTab} setInputFields={setInputTab} />
           </div>
           <div className="formRow">
             <label className="Label">Viva</label>
@@ -184,19 +185,21 @@ const ChairmanBill = () => {
           <div className="formRow">
             <label className="Label">
               Term Paper / Seminar Paper / Field Work / MonoGraph / Study Tour /
-              Content Analysis / Workshop / Project / Thesis / Internship /
+              Content Analysis / Workshop / Project / Thesis(Under-graduate) / Internship /
               Research Planning
             </label>
-            <TermPaperComp />
+            <TermPaperComp TermPaper={TermPaper} setTermPaper={setTermPaper} />
           </div>
           <div className="formRow">
             <label className="Label">Question Type</label>
             <TwoField inputFields={inputType} setInputFields={setInputType} />
           </div>
+
           <div className="formRow">
-            <label className="Label">Invigilation</label>
-            <TwoField inputFields={inputInvi} setInputFields={setInputInvi} />
+            <label className="Label">Thesis(Post-graduate)</label>
+            <TwoField inputFields={inputType} setInputFields={setInputType} />
           </div>
+
           <div className="formRow">
             <label className="Label">Student Registration</label>
             <StudentCount

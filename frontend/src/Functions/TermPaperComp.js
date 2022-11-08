@@ -1,15 +1,7 @@
 import React from "react";
-import { useState } from "react";
+import "./checkbox.css";
 
-function TermPaperComp() {
-  const [TermPaper, setTermPaper] = useState([
-    {
-      course: "",
-      super: [""],
-      examiner: [""],
-    },
-  ]);
-
+function TermPaperComp({ TermPaper, setTermPaper }) {
   const addInputFieldCourse = () => {
     setTermPaper([
       ...TermPaper,
@@ -17,8 +9,17 @@ function TermPaperComp() {
         course: "",
         super: [""],
         examiner: [""],
+        committee: false,
       },
     ]);
+  };
+
+  const setCommitteeStatus = (e, index) => {
+    const list = [...TermPaper];
+    if (list[index].committee === true) list[index].committee = false;
+    else list[index].committee = true;
+    setTermPaper(list);
+  console.log(list);
   };
 
   const removeInputFieldsCourse = (e, index) => {
@@ -38,7 +39,6 @@ function TermPaperComp() {
   const handleChangeTeacher = (evnt, index, ind) => {
     const { name, value } = evnt.target;
     const list = [...TermPaper];
-    console.log(list[index].super[name]);
     list[index].super[ind] = value;
     setTermPaper(list);
   };
@@ -59,7 +59,6 @@ function TermPaperComp() {
   const handleChangeExaminer = (evnt, index, ind) => {
     const { name, value } = evnt.target;
     const list = [...TermPaper];
-    console.log(list[index].super[name]);
     list[index].examiner[ind] = value;
     setTermPaper(list);
   };
@@ -81,115 +80,141 @@ function TermPaperComp() {
     <div className="Container">
       {TermPaper.map((data, index) => {
         const course = data;
-        console.log(course);
         return (
-          <div className="ParentFormRow">
+          <div className="ParentFormRow" key={index}>
             <div
               className={
                 data.super.length === 1 ? "FormRow" : "FormRow CrossFormRow"
               }
               key={index}
             >
-              {index === 0 ? <label>Course ID</label> : ""}
-              <input
-                type="text"
-                name="course"
-                onChange={(evnt) => handleChangeCourse(evnt, index)}
-                value={course.course}
-                className="form-control"
-                placeholder="Course"
-              />
-              {data.super.map((info, ind) => {
-                console.log("Hi");
-                return (
-                  <div className="row" key={ind}>
-                    <div className="form-group col-md-3">
-                      {ind === 0 ? <label>Supervisers</label> : ""}
-                      <input
-                        type="text"
-                        name="name"
-                        onChange={(event) =>
-                          handleChangeTeacher(event, index, ind)
-                        }
-                        value={info}
-                        className="form-control"
-                        placeholder="Name"
-                      />
-                    </div>
-                    <div className="col-md-1 text-center mt-3">
-                      {data.super.length !== 1 ? (
-                        <button
-                          className="btn-outline-danger add"
-                          onClick={(evnt) =>
-                            removeInputFieldsTeacher(evnt, ind, index)
-                          }
-                        >
-                          x
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                    {data.super.length - 1 === ind && (
-                      <div className="childAddbutton">
-                        <button
-                          className="addButton"
-                          onClick={() => addInputFieldTeacher(index)}
-                          type="button"
-                        >
-                          <i className="fa-sharp fa-solid fa-plus"></i>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              <div className="FormRowNoCross">
+                <div className="labelFlex TermpaperCompElement TermPaperCourse">
+                  <label>Course ID</label>
+                  <input
+                    type="text"
+                    name="course"
+                    onChange={(evnt) => handleChangeCourse(evnt, index)}
+                    value={course.course}
+                    className="FormControl"
+                    placeholder="Course"
+                  />
+                </div>
 
-              {data.examiner.map((info, ind) => {
-                console.log("Hi");
-                return (
-                  <div className="row" key={ind}>
-                    <div className="form-group col-md-3">
-                      {ind === 0 ? <label>Examiners</label> : ""}
-                      <input
-                        type="text"
-                        name="name"
-                        onChange={(event) =>
-                          handleChangeExaminer(event, index, ind)
-                        }
-                        value={info}
-                        className="form-control"
-                        placeholder="Name"
-                      />
+                {data.super.map((info, ind) => {
+                  return (
+                    <div className={ind === 0 ? "firstRow" : ""}>
+                      <div
+                        className={`childFormRowElementWithCrossAndAdd TermpaperCompElement`}
+                        key={ind}
+                      >
+                        <div className="labelFlex labelTermpaperCompElement">
+                          {ind === 0 ? <label>Supervisers</label> : ""}
+                          <input
+                            type="text"
+                            name="name"
+                            onChange={(event) =>
+                              handleChangeTeacher(event, index, ind)
+                            }
+                            value={info}
+                            className="FormControl"
+                            placeholder="Name"
+                          />
+                        </div>
+
+                        {data.super.length !== 1 ? (
+                          <div className="childCross">
+                            <button
+                              className="childCrossButton"
+                              onClick={(evnt) =>
+                                removeInputFieldsTeacher(evnt, ind, index)
+                              }
+                            >
+                              x
+                            </button>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+
+                        {data.super.length - 1 === ind && (
+                          <div className="childAdd">
+                            <button
+                              className="childAddButton"
+                              onClick={() => addInputFieldTeacher(index)}
+                              type="button"
+                            >
+                              <i className="fa-sharp fa-solid fa-plus"></i>
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <div className="col-md-1 text-center mt-3">
-                      {data.examiner.length !== 1 ? (
-                        <button
-                          className="btn-outline-danger add"
-                          onClick={(evnt) =>
-                            removeInputFieldsExaminer(evnt, ind, index)
+                  );
+                })}
+
+                {data.examiner.map((info, ind) => {
+                  return (
+                    <div
+                      className={`childFormRowElementWithCrossAndAdd TermpaperCompElement ${
+                        ind === 0 ? "firstRow" : ""
+                      }`}
+                      key={ind}
+                    >
+                      <div className="labelFlex labelTermpaperCompElement">
+                        {ind === 0 ? <label>Examiners</label> : ""}
+                        <input
+                          type="text"
+                          name="name"
+                          onChange={(event) =>
+                            handleChangeExaminer(event, index, ind)
                           }
-                        >
-                          x
-                        </button>
+                          value={info}
+                          className="FormControl"
+                          placeholder="Name"
+                        />
+                      </div>
+                      {data.examiner.length !== 1 ? (
+                        <div className="childCross">
+                          <button
+                            className="childCrossButton"
+                            onClick={(evnt) =>
+                              removeInputFieldsExaminer(evnt, ind, index)
+                            }
+                          >
+                            x
+                          </button>
+                        </div>
                       ) : (
                         ""
                       )}
+
+                      {data.examiner.length - 1 === ind && (
+                        <div className="childAdd">
+                          <button
+                            className="childAddButton"
+                            onClick={() => addInputFieldExaminer(index)}
+                            type="button"
+                          >
+                            <i className="fa-sharp fa-solid fa-plus"></i>
+                          </button>
+                        </div>
+                      )}
                     </div>
-                    {data.examiner.length - 1 === ind && (
-                      <div className="childAddbutton">
-                        <button
-                          className="addButton"
-                          onClick={() => addInputFieldExaminer(index)}
-                          type="button"
-                        >
-                          <i className="fa-sharp fa-solid fa-plus"></i>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                  );
+                })}
+                <div className="FormRowNoCross">
+                  <label class="Form-control">
+                    <input
+                      type="checkbox"
+                      name="checkbox"
+                      onChange={(evnt) => setCommitteeStatus(evnt, index)}
+                    />
+                    Exam committee
+                  </label>
+                </div>
+              </div>
+              {/* onChange={(evnt) => setCommitteeStatus(evnt, index)} */}
 
               {TermPaper.length !== 1 ? (
                 <div className="FormRowElement">

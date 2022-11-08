@@ -43,7 +43,7 @@ const StudentCount = ({ inputFields, setInputFields }) => {
               }
               key={index}
             >
-              <div className="thriceFormRowElement">
+              <div className="TwoFormRowElementWithAdd">
                 {index === 0 ? <label>Course ID</label> : ""}
                 <input
                   type="text"
@@ -55,7 +55,7 @@ const StudentCount = ({ inputFields, setInputFields }) => {
                 />
               </div>
 
-              <div className="thriceFormRowElement">
+              <div className="TwoFormRowElementWithAdd">
                 {index === 0 ? <label>Number of Students</label> : ""}
                 <input
                   type="text"

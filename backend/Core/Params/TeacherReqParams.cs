@@ -14,4 +14,5 @@ public class TeacherReqParams
         get => _department;
         set => _department = value.ToLower();
     }
+    public string? Email { get; set; } = null;
 }

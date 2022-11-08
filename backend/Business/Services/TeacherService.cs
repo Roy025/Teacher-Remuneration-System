@@ -11,16 +11,25 @@ public class TeacherService : ITeacherService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public TeacherService(IUnitOfWork unitOfWork, IMapper mapper)
+    private readonly ITokenService _tokenService;
+    public TeacherService(IUnitOfWork unitOfWork, ITokenService tokenService, IMapper mapper)
     {
+        _tokenService = tokenService;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
 
-    public Task<TeacherResponseDto> CreateTeacherAsync(TeacherCreateDto teacher)
+    public async Task<TeacherLoginDto> CreateTeacherAsync(TeacherCreateDto teacher)
     {
-        throw new NotImplementedException();
+        teacher.Password = BCrypt.Net.BCrypt.HashPassword(teacher.Password);
+        var teacherEntity = _mapper.Map<Teacher>(teacher);
+        _unitOfWork.Repository<Teacher>().Add(teacherEntity);
+        var result = await _unitOfWork.Complete();
+        if (result <= 0) return null;
+        return GetTeacherLoginDto(teacherEntity);
     }
+
+
 
     public async Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id)
     {
@@ -36,12 +45,54 @@ public class TeacherService : ITeacherService
         var teachers = await _unitOfWork.Repository<Teacher>().ListAllAsyncWithSpec(spec);
 
         var retTeachers = _mapper.Map<IReadOnlyList<TeacherResponseDto>>(teachers);
-        
+
         return retTeachers;
     }
 
-    public Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherUpdateDto teacher)
+    public async Task<TeacherLoginDto> LoginTeacherAsync(TeacherLoginReqDto teacher)
     {
+        var teacherEntity = await _unitOfWork.Repository<Teacher>().ListAllAsync();
+        var teacherToLogin = teacherEntity.FirstOrDefault(t => t.Email == teacher.Email);
+        if (teacherEntity == null) return null;
+        if (!BCrypt.Net.BCrypt.Verify(teacher.Password, teacherToLogin.Password)) return null;
+        return GetTeacherLoginDto(teacherToLogin);
         throw new NotImplementedException();
+    }
+
+    public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherUpdateDto teacher)
+    {
+        var teacherEntity = await _unitOfWork.Repository<Teacher>().GetByIdAsync(id);
+
+        if (teacherEntity == null) return null;
+        
+        TeacherUpdateDtoToTeacher(teacher, teacherEntity);
+        
+        _unitOfWork.Repository<Teacher>().Update(teacherEntity);
+        
+        var result = await _unitOfWork.Complete();
+        
+        if (result <= 0) return null;
+        
+        return _mapper.Map<TeacherResponseDto>(teacherEntity);
+    }
+
+    private void TeacherUpdateDtoToTeacher(TeacherUpdateDto teacher, Teacher teacherEntity)
+    {
+        teacherEntity.Name = !String.IsNullOrEmpty(teacher.Name) ? teacher.Name : teacherEntity.Name;
+        teacherEntity.Email = !String.IsNullOrEmpty(teacher.Email) ? teacher.Email : teacherEntity.Email;
+        teacherEntity.Password = !String.IsNullOrEmpty(teacher.Password) ? BCrypt.Net.BCrypt.HashPassword(teacher.Password) : teacherEntity.Password;
+        teacherEntity.BankAccount = !String.IsNullOrEmpty(teacher.BankAccount) ? teacher.BankAccount : teacherEntity.BankAccount;
+        teacherEntity.Designation = !String.IsNullOrEmpty(teacher.Designation) ? teacher.Designation : teacherEntity.Designation;
+    }
+
+    private TeacherLoginDto GetTeacherLoginDto(Teacher teacherEntity)
+    {
+        return new TeacherLoginDto
+        {
+            Email = teacherEntity.Email,
+            Designation = teacherEntity.Designation,
+            Image = teacherEntity.Image,
+            Token = _tokenService.CreateToken(teacherEntity),
+        };
     }
 }
