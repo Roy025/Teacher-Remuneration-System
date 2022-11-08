@@ -26,11 +26,9 @@ class Links extends React.Component {
 	};
 
 	render() {
-		
 		return (
 			<>
-				<div
-					className={this.state.show ? 'Link active' : 'Link hidden'}>
+				<div className={this.state.show ? 'Link active' : 'Link hidden'}>
 					<Link
 						className="rolelink"
 						to="/director">
