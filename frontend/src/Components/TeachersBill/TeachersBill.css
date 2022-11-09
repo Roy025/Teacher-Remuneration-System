@@ -3,7 +3,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
 }
 
 .FullFormPage {
@@ -16,7 +15,13 @@
   width: 70%;
   margin-left: 15%;
   margin-bottom: 15%;
-  background-color: whitesmoke;
+  /* From https://css.glass */
+background: rgba(70, 105, 158, 0.22);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(0px);
+-webkit-backdrop-filter: blur(0px);
+border: 1px solid rgba(70, 105, 158, 1);
 }
 
 .DropdownformRow {

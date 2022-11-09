@@ -13,6 +13,7 @@ import TwoField from "../../Functions/TwoField";
 import StudentCount from "../../Functions/StudentCount";
 import HandleSem from "../../Functions/HandleSem";
 import TermPaperComp from "../../Functions/TermPaperComp";
+import ThesisComp from "../../Functions/ThesisComp";
 
 const ChairmanBill = () => {
   const [inputSet, setInputSet] = useState([
@@ -197,7 +198,7 @@ const ChairmanBill = () => {
 
           <div className="formRow">
             <label className="Label">Thesis(Post-graduate)</label>
-            <TwoField inputFields={inputType} setInputFields={setInputType} />
+            <ThesisComp/>
           </div>
 
           <div className="formRow">
