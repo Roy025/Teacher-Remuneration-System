@@ -33,6 +33,10 @@
   border: 2px solid rgb(3, 43, 88);
 }
 
+.firstRow .childAddButton {
+  margin-top: 80%;
+}
+
 .crossButton {
   color: grey;
   padding: 4px 15px;
@@ -61,6 +65,10 @@
 .childCrossButton:hover {
   color: rgb(238, 11, 30);
   border: 2px solid rgb(238, 11, 30);
+}
+
+.firstRow .childCrossButton {
+  margin-top: 100%;
 }
 
 .SubmitRow {
