@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 .FullFormPage {
@@ -15,12 +16,7 @@
   width: 70%;
   margin-left: 15%;
   margin-bottom: 15%;
-  background: rgba(70, 105, 158, 0.22);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  border: 1px solid rgba(70, 105, 158, 1);
+  background-color: whitesmoke;
 }
 
 .DropdownformRow {
@@ -107,25 +103,6 @@
 
 .childFormRowElementWithCrossAndAdd {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 4%;
-  margin-bottom: 2%;
-}
-
-/* ChairmanForm */
-.FormRowNoCross {
-  width: 100%;
-}
-
-.TermpaperCompElement {
-  width: 46%;
-}
-
-.TermPaperCourse {
-  margin-bottom: 2%;
-}
-
-.labelTermpaperCompElement {
-  width: 80%;
+  flex-direction: row;
+  justify-content: space-between;
 }
