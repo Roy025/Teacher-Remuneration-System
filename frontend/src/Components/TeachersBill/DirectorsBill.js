@@ -94,7 +94,6 @@ const DirectorsBill = () => {
 							/>
 						</div>
 					</div>
-
           <div className="formRow">
             <label className="Label">Committee Chairman</label>
             <ThreeFieldsNoAdd
