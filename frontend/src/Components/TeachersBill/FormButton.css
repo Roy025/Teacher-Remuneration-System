@@ -33,6 +33,14 @@
   border: 2px solid rgb(3, 43, 88);
 }
 
+.childCrossButton {
+  color: rgb(236, 72, 72);
+  padding: 2px 6px;
+  border-radius: 0.6rem;
+  background-color: rgb(254, 254, 254);
+  border: 1px solid rgb(236, 72, 72);
+}
+
 .firstRow .childAddButton {
   margin-top: 80%;
 }
@@ -54,13 +62,6 @@
   border: 2px solid brown;
 }
 
-.childCrossButton {
-  color: rgb(236, 72, 72);
-  padding: 2px 6px;
-  border-radius: 0.6rem;
-  background-color: rgb(254, 254, 254);
-  border: 1px solid rgb(236, 72, 72);
-}
 
 .childCrossButton:hover {
   color: rgb(238, 11, 30);

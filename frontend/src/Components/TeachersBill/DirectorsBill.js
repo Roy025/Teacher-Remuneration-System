@@ -15,6 +15,13 @@ import ThreeFields from "../../Functions/ThreeFields";
 import HandleSem from "../../Functions/HandleSem";
 
 const DirectorsBill = () => {
+  const [inputVivaBoard, setVivaBoard] = useState([
+    {
+      institute: "",
+      department: "",
+      name: "",
+    },
+  ]);
   const [inputFields, setInputFields] = useState([
     {
       institute: "",
