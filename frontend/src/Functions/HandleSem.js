@@ -9,6 +9,9 @@ function HandleSem(child, exam, setExam) {
 	} else if (child.length === 3) {
 		newExam.semester = child;
 		console.log(child.length);
+	} else {
+		newExam.dept = child;
+		console.log(child.length);
 	}
 	setExam(newExam);
 }
