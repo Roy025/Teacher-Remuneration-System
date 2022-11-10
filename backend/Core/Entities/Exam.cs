@@ -12,7 +12,7 @@ public class Exam : BaseEntity
     public Teacher? Chairman { get; set; }
     public Guid CheifInvigilatorId { get; set; }
     public Teacher? CheifInvigilator { get; set; }
-    ICollection<Teacher> Members { get; set; } = new List<Teacher>();
-    ICollection<TheoryCourseResponsibles> TheoryCourses { get; set; } = new List<TheoryCourseResponsibles>();
-    ICollection<LabCourseResponsibles> LabCourses { get; set; } = new List<LabCourseResponsibles>();
+    public ICollection<Teacher> Members { get; set; } = new List<Teacher>();
+    public ICollection<TheoryCourseResponsibles> TheoryCourses { get; set; } = new List<TheoryCourseResponsibles>();
+    public ICollection<LabCourseResponsibles> LabCourses { get; set; } = new List<LabCourseResponsibles>();
 }
