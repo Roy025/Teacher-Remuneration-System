@@ -1,7 +1,9 @@
 import React from "react";
-import ThesisTwoField from "./ThesisTwoField";
+import ThesisSuper from "./ThesisSuper";
 import ThreeFields from "./ThreeFields";
-import TempTwo from "./TempTwo";
+import TempTwo from "./ThesisCoSuper";
+import ThesisCoSuper from "./ThesisCoSuper";
+import ThesisAssess from "./ThesisAssess";
 
 function ThesisComp({
   inputVivaBoard,
@@ -74,30 +76,28 @@ function ThesisComp({
 
       <div className="formRow">
         <label className="subLabel">Supervisor Assign</label>
-        <TempTwo
+        <ThesisSuper
           inputFields={inputThesisManagers}
           setInputFields={setThesisManagers}
-          field="super"
         />
       </div>
 
       <div className="formRow">
-        <label className="subLabel">Co-superviser Assign</label>
-        <TempTwo
+        <label className="subLabel">Co-supervisor Assign</label>
+        <ThesisCoSuper
           inputFields={inputThesisManagers}
           setInputFields={setThesisManagers}
-          field="cosuper"
         />
       </div>
 
       <div className="formRow">
         <label className="subLabel">Assessor Assign</label>
-        <TempTwo
+        <ThesisAssess
           inputFields={inputThesisManagers}
           setInputFields={setThesisManagers}
-          field="assess"
         />
       </div>
+
     </div>
   );
 }

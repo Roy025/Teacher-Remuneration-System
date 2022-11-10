@@ -1,38 +1,47 @@
 import "../Components/SampleDropdown/styles.css";
 
-const TempTwo = ({ inputFields, setInputFields }) => {
+const ThesisSuper = ({ inputFields, setInputFields}) => {
   const removeInputFields = (e, index) => {
     e.preventDefault();
     const rows = [...inputFields];
-    rows.splice(index, 1);
+    rows[0].supers.splice(index, 1);
     setInputFields(rows);
   };
-  const handleChange = (evnt, index) => {
+
+  console.log(inputFields);
+
+  const handleChangeName = (evnt, index) => {
     const { name, value } = evnt.target;
     const list = [...inputFields];
-    list[index][name] = value;
+    list[0].supers[index].name = value;
     setInputFields(list);
   };
 
+  const handleChangeStudent = (evnt, index) => {
+    const { name, value } = evnt.target;
+    const list = [...inputFields];
+    list[0].supers[index].stdntID = value;
+    setInputFields(list);
+  };
+
+
   const addInputField = () => {
-    setInputFields([
-      ...inputFields,
-      {
+    const list = [...inputFields];
+    list[0].supers.push({
         name: "",
-        course: "",
-      },
-    ]);
-    console.log(inputFields);
+        stdntID: "",
+      },)
+    setInputFields(list)
   };
   return (
     <div className="Container">
-      {inputFields.map((data, index) => {
-        const { name, course } = data;
+      {inputFields[0].supers.map((data, index) => {
+        const { name, id } = data;
         return (
-          <div className="ParentFormRow">
+          <div className="ParentFormRow" key={index}>
             <div
               className={
-                inputFields.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+                inputFields[0].supers.length === 1 ? "FormRow" : "FormRow CrossFormRow"
               }
               key={index}
             >
@@ -41,7 +50,7 @@ const TempTwo = ({ inputFields, setInputFields }) => {
                 <input
                   type="text"
                   name="name"
-                  onChange={(evnt) => handleChange(evnt, index)}
+                  onChange={(evnt) => handleChangeName(evnt, index)}
                   value={name}
                   className="FormControl"
                   placeholder="Name"
@@ -53,14 +62,14 @@ const TempTwo = ({ inputFields, setInputFields }) => {
                 <input
                   type="text"
                   name="reg"
-                  onChange={(evnt) => handleChange(evnt, index)}
-                  value={course}
+                  onChange={(evnt) => handleChangeStudent(evnt, index)}
+                  value={id}
                   className="FormControl"
                   placeholder="Student ID"
                 />
               </div>
 
-              {inputFields.length !== 1 ? (
+              {inputFields[0].supers.length !== 1 ? (
                 <div className="FormRowElement">
                   <button
                     className={
@@ -77,7 +86,7 @@ const TempTwo = ({ inputFields, setInputFields }) => {
                 ""
               )}
             </div>
-            {inputFields.length - 1 === index && (
+            {inputFields[0].supers.length - 1 === index && (
               <div className="FormRowElement">
                 <button
                   className="addButton"
@@ -95,4 +104,4 @@ const TempTwo = ({ inputFields, setInputFields }) => {
   );
 };
 
-export default TempTwo;
+export default ThesisSuper;

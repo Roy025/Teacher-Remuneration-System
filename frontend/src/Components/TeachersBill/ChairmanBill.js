@@ -157,7 +157,7 @@ const ChairmanBill = () => {
 
   const [inputThesisManagers, setThesisManagers] = useState([{
     course: "",
-    super: [
+    supers: [
       {
         name: "",
         stdntID: "",

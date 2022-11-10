@@ -1,45 +1,47 @@
 import "../Components/SampleDropdown/styles.css";
 
-const ThesisTwoField = ({ inputFields, setInputFields, field}) => {
+const ThesisAssess = ({ inputFields, setInputFields, field}) => {
   const removeInputFields = (e, index) => {
     e.preventDefault();
     const rows = [...inputFields];
-    rows[field].splice(index, 1);
+    rows[0].assess.splice(index, 1);
     setInputFields(rows);
   };
-  console.log(inputFields[field]);
+
+  console.log(inputFields[0].assess);
+
   const handleChangeName = (evnt, index) => {
     const { name, value } = evnt.target;
     const list = [...inputFields];
-    list[0][field][index].name = value;
+    list[0].assess[index].name = value;
     setInputFields(list);
   };
 
   const handleChangeStudent = (evnt, index) => {
     const { name, value } = evnt.target;
     const list = [...inputFields];
-    list[0][field][index].stdntID = value;
+    list[0].assess[index].stdntID = value;
     setInputFields(list);
   };
 
 
   const addInputField = () => {
     const list = [...inputFields];
-    list.field.push({
+    list[0].assess.push({
         name: "",
         stdntID: "",
       },)
-    console.log(inputFields);
+    setInputFields(list)
   };
   return (
     <div className="Container">
-      {inputFields[field].map((data, index) => {
+      {inputFields[0].assess.map((data, index) => {
         const { name, id } = data;
         return (
           <div className="ParentFormRow" key={index}>
             <div
               className={
-                inputFields[field].length === 1 ? "FormRow" : "FormRow CrossFormRow"
+                inputFields[0].assess.length === 1 ? "FormRow" : "FormRow CrossFormRow"
               }
               key={index}
             >
@@ -67,7 +69,7 @@ const ThesisTwoField = ({ inputFields, setInputFields, field}) => {
                 />
               </div>
 
-              {inputFields.length !== 1 ? (
+              {inputFields[0].assess.length !== 1 ? (
                 <div className="FormRowElement">
                   <button
                     className={
@@ -84,7 +86,7 @@ const ThesisTwoField = ({ inputFields, setInputFields, field}) => {
                 ""
               )}
             </div>
-            {inputFields.length - 1 === index && (
+            {inputFields[0].assess.length - 1 === index && (
               <div className="FormRowElement">
                 <button
                   className="addButton"
@@ -102,4 +104,4 @@ const ThesisTwoField = ({ inputFields, setInputFields, field}) => {
   );
 };
 
-export default ThesisTwoField;
+export default ThesisAssess;
