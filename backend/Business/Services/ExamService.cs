@@ -38,7 +38,7 @@ public class ExamService : IExamService
         if (exams.Count() > 0)
         {
             //update first
-            exam.Chairman  = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id);
+            exam.Chairman = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id);
             exam.CheifInvigilator = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.CheifInvigilator.Id);
             exam.Members = new List<Teacher>();
             foreach (var member in examCreateFromDirectorDto.Members)
@@ -70,7 +70,7 @@ public class ExamService : IExamService
         var result = await _unitOfWork.Complete();
         if (result <= 0)
         {
-            throw new ("Failed to create exam");
+            throw new("Failed to create exam");
         }
         return _mapper.Map<Exam, ExamResponseDtoDirector>(exam);
     }
@@ -102,5 +102,15 @@ public class ExamService : IExamService
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
         var semesters = exams.Select(x => x.Semester).Distinct();
         return semesters;
+    }
+
+    public Task<IEnumerable<string>> GetExamSessionsForChairman(ExamReqParams examReqParams, UserFromToken user)
+    {
+        if (user.UserId == null)
+            throw new UnAuthorizedException("You are not authorized to perform this action");
+
+        // var spec  = new ExamSpecificationForChairman(examReqParams);
+
+        throw new NotImplementedException();
     }
 }
