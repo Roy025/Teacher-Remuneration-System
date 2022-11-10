@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import Links from "./Links";
-import "./TeachersBill.css";
-import "./FormButton.css";
+import React, { useEffect, useState } from 'react';
+import Links from './Links';
+import './TeachersBill.css';
+import './FormButton.css';
 
 import Dropdown, {
-  semesterOptions,
-  semesterTitle,
-  sessionTitle,
-  sessionOptions,
-} from "../SampleDropdown/Dropdown";
-import "../SampleDropdown/styles.css";
-import ThreeFieldsNoAdd from "../../Functions/ThreeFieldsNoAdd";
-import ThreeFields from "../../Functions/ThreeFields";
-import HandleSem from "../../Functions/HandleSem";
+	semesterOptions,
+	semesterTitle,
+	sessionTitle,
+	sessionOptions,
+} from '../SampleDropdown/Dropdown';
+import '../SampleDropdown/styles.css';
+import ThreeFieldsNoAdd from '../../Functions/ThreeFieldsNoAdd';
+import ThreeFields from '../../Functions/ThreeFields';
+import HandleSem from '../../Functions/HandleSem';
 
 const DirectorsBill = () => {
   const [inputMembers, setMembers] = useState([
@@ -67,32 +67,33 @@ const DirectorsBill = () => {
   // };
   // console.log(exam);
 
-  return (
-    <>
-      <div>
-        <Links />
-      </div>
+	return (
+		<>
+			<div>
+				<Links />
+			</div>
 
-      <div className="FullFormPage">
-        <form className="Form" onSubmit={handleSubmit}>
-          <div className="DropdownformRow">
-            <div className="FormSubRow">
-              <Dropdown
-                options={sessionOptions}
-                dropdownTitle={sessionTitle}
-                handleData={(child) => HandleSem(child, exam, setExam)}
-              />
-            </div>
+			<div className="FullFormPage">
+				<form
+					className="Form"
+					onSubmit={handleSubmit}>
+					<div className="DropdownformRow">
+						<div className="FormSubRow">
+							<Dropdown
+								options={sessionOptions}
+								dropdownTitle={sessionTitle}
+								handleData={(child) => HandleSem(child, exam, setExam)}
+							/>
+						</div>
 
-            <div className="FormSubRow">
-              <Dropdown
-                options={semesterOptions}
-                dropdownTitle={semesterTitle}
-                handleData={(child) => HandleSem(child, exam, setExam)}
-              />
-            </div>
-          </div>
-
+						<div className="FormSubRow">
+							<Dropdown
+								options={semesterOptions}
+								dropdownTitle={semesterTitle}
+								handleData={(child) => HandleSem(child, exam, setExam)}
+							/>
+						</div>
+					</div>
           <div className="formRow">
             <label className="Label">Committee Chairman</label>
             <ThreeFieldsNoAdd
