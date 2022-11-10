@@ -15,15 +15,9 @@ import ThreeFields from "../../Functions/ThreeFields";
 import HandleSem from "../../Functions/HandleSem";
 
 const DirectorsBill = () => {
-  const [inputVivaBoard, setVivaBoard] = useState([
+  const [inputMembers, setMembers] = useState([
     {
-      institute: "",
-      department: "",
-      name: "",
-    },
-  ]);
-  const [inputFields, setInputFields] = useState([
-    {
+      id: "",
       institute: "",
       department: "",
       name: "",
@@ -31,6 +25,7 @@ const DirectorsBill = () => {
   ]);
   const [inputChair, setInputChair] = useState([
     {
+      id: "",
       institute: "",
       department: "",
       name: "",
@@ -38,11 +33,24 @@ const DirectorsBill = () => {
   ]);
   const [inputInvi, setInputInvi] = useState([
     {
+      id: "",
       institute: "",
       department: "",
       name: "",
     },
   ]);
+
+  const localTeacherDB = [
+    {
+      id: "",
+      name: "",
+      email: "",
+      institute: "",
+      department: "",
+      designation: "",
+      image: "",
+    },
+  ];
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -50,27 +58,14 @@ const DirectorsBill = () => {
     session: "",
     semester: "",
   });
-  // const handleSession = (session) => {
-  // 	let newExam = { ...exam };
-  // 	newExam.session = session;
-  // 	setExam(newExam);
-  // };
-  // const handleSemester = (semester) => {
-  // 	let newExam = { ...exam };
-  // 	newExam.semester = semester;
-  // 	setExam(newExam);
-  // };
-  // useEffect(() => {
-  // 	handleData(exam);
-  // }, [exam]);
 
-  const submit = async () => {
-    console.log(inputFields);
-    console.log(inputChair);
-    console.log(inputInvi);
-    console.log(exam);
-  };
-  console.log(exam);
+  // const submit = async () => {
+  //   console.log(inputFields);
+  //   console.log(inputChair);
+  //   console.log(inputInvi);
+  //   console.log(exam);
+  // };
+  // console.log(exam);
 
   return (
     <>
@@ -103,6 +98,7 @@ const DirectorsBill = () => {
             <ThreeFieldsNoAdd
               inputFields={inputChair}
               setInputFields={setInputChair}
+              localTeacherDB={localTeacherDB}
             />
           </div>
 
@@ -111,17 +107,19 @@ const DirectorsBill = () => {
             <ThreeFieldsNoAdd
               inputFields={inputInvi}
               setInputFields={setInputInvi}
+              localTeacherDB={localTeacherDB}
             />
           </div>
 
           <div className="formRow">
             <label className="Label">Committee Members</label>
             <ThreeFields
-              inputFields={inputFields}
-              setInputFields={setInputFields}
+              inputFields={inputMembers}
+              setInputFields={setMembers}
+              localTeacherDB={localTeacherDB}
             />
             <div className="formRow SubmitRow">
-              <button type="submit" className="submitButton" onClick={submit}>
+              <button type="submit" className="submitButton">
                 Submit
               </button>
             </div>
