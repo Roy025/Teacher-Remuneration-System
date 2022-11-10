@@ -9,8 +9,8 @@ public class TeacherSpecification : BaseSpecification<Teacher>
         : base(
             x=>
             (string.IsNullOrEmpty(teacherParams.Email) || x.Email.ToLower() == teacherParams.Email) &&
-            (teacherParams.Institute == null || x.Institute == teacherParams.Institute) &&
-            (teacherParams.Department == null || x.Department == teacherParams.Department)
+            (string.IsNullOrEmpty(teacherParams.Institute) || x.Institute == teacherParams.Institute) &&
+            (string.IsNullOrEmpty(teacherParams.Department) || x.Department.ToLower() == teacherParams.Department.ToLower())
     )
     {
     }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace Api.Startup;
 public static class DependencyInjectionSetup
@@ -19,8 +20,35 @@ public static class DependencyInjectionSetup
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-
+        // services.AddSwaggerGen();
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "JWTToken_Auth_API",
+                Version = "v1"
+            });
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+        });
         // services.AddCorsToService();
         services.AddDb(config);
 
@@ -59,6 +87,7 @@ public static class DependencyInjectionSetup
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITeacherService, TeacherService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IExamService, ExamService>();
 
         // Automapper configuration
         services.AddAutoMapper(typeof(MappingProfiles));
@@ -79,7 +108,8 @@ public static class DependencyInjectionSetup
         return services;
     }
 
-    private static IServiceCollection AddDb(this IServiceCollection services, IConfiguration config){
+    private static IServiceCollection AddDb(this IServiceCollection services, IConfiguration config)
+    {
         services.AddDbContextPool<StoreContext>(options =>
         {
             options.UseNpgsql(config.GetConnectionString("PostgresConnection"));

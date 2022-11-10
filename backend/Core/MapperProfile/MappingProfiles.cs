@@ -1,4 +1,5 @@
 using AutoMapper;
+using Core.DTOs.ExamDTOs;
 using Core.DTOs.TeacherDTOs;
 using Core.Entities;
 
@@ -10,8 +11,9 @@ public class MappingProfiles : Profile
         // CreateMap<Teacher, TeacherResponseDto>()
         //     .ForMember(d => d.Department, opt => opt.MapFrom(s => s.Department));
 
-        CreateMap<Teacher, TeacherResponseDto>();
-        CreateMap<TeacherCreateDto, Teacher>();
+        CreateMap<Teacher, TeacherResponseDto>().ReverseMap();
+        CreateMap<TeacherCreateDto, Teacher>().ReverseMap();
+        CreateMap<Exam, ExamResponseDtoDirector>().ReverseMap();
 
     }
 }

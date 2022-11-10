@@ -26,25 +26,6 @@ namespace Business.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teachers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    Password = table.Column<string>(type: "text", nullable: false),
-                    Institute = table.Column<string>(type: "text", nullable: false),
-                    Department = table.Column<string>(type: "text", nullable: false),
-                    BankAccount = table.Column<string>(type: "text", nullable: false),
-                    Designation = table.Column<string>(type: "text", nullable: false),
-                    Image = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teachers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Exams",
                 columns: table => new
                 {
@@ -58,18 +39,31 @@ namespace Business.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Exams", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Teachers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Institute = table.Column<string>(type: "text", nullable: false),
+                    Department = table.Column<string>(type: "text", nullable: false),
+                    BankAccount = table.Column<string>(type: "text", nullable: true),
+                    Designation = table.Column<string>(type: "text", nullable: false),
+                    Image = table.Column<string>(type: "text", nullable: true),
+                    ExamId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Exams_Teachers_ChairmanId",
-                        column: x => x.ChairmanId,
-                        principalTable: "Teachers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Exams_Teachers_CheifInvigilatorId",
-                        column: x => x.CheifInvigilatorId,
-                        principalTable: "Teachers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Teachers_Exams_ExamId",
+                        column: x => x.ExamId,
+                        principalTable: "Exams",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -266,6 +260,11 @@ namespace Business.Data.Migrations
                 column: "VivaExaminerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Teachers_ExamId",
+                table: "Teachers",
+                column: "ExamId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TheoryCoursesResponsibles_AnswerPaperCheckerPartAId",
                 table: "TheoryCoursesResponsibles",
                 column: "AnswerPaperCheckerPartAId");
@@ -330,10 +329,34 @@ namespace Business.Data.Migrations
                 name: "IX_TheoryCoursesResponsibles_VivaExaminerId",
                 table: "TheoryCoursesResponsibles",
                 column: "VivaExaminerId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Exams_Teachers_ChairmanId",
+                table: "Exams",
+                column: "ChairmanId",
+                principalTable: "Teachers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Exams_Teachers_CheifInvigilatorId",
+                table: "Exams",
+                column: "CheifInvigilatorId",
+                principalTable: "Teachers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Exams_Teachers_ChairmanId",
+                table: "Exams");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Exams_Teachers_CheifInvigilatorId",
+                table: "Exams");
+
             migrationBuilder.DropTable(
                 name: "LabCoursesResponsibles");
 
@@ -344,10 +367,10 @@ namespace Business.Data.Migrations
                 name: "Courses");
 
             migrationBuilder.DropTable(
-                name: "Exams");
+                name: "Teachers");
 
             migrationBuilder.DropTable(
-                name: "Teachers");
+                name: "Exams");
         }
     }
 }
