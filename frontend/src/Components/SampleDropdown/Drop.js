@@ -1,47 +1,55 @@
-import SelectSearch from 'react-select-search';
+// import SelectSearch from 'react-select-search';
 import { useRef, useState } from 'react';
-function Drop({ options }) {
-	const searchInput = useRef();
+import Select from 'react-select';
+import AsyncSelect from 'react-select/async';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './styles.css';
+
+function Drop({ options, dropdownTitle, handleData }) {
 	const [isActive, setIsActive] = useState(false);
 	const [selected, setSelected] = useState('Select');
-
-	const handleChange = (...args) => {
-		// searchInput.current.querySelector("input").value = "";
-		console.log('ARGS:', args);
-
-		console.log('CHANGE:');
-		setSelected(args);
-		setIsActive(false);
+	const [filteredOptions, setfilteredOptions] = useState(options);
+	const handleChange = (evnt) => {
+		const arr = options.filter((x) =>
+			x.toLowerCase().includes(evnt.target.value.toLowerCase())
+		);
+		setfilteredOptions(arr);
 	};
-
-	const handleFilter = (items) => {
-		return (searchValue) => {
-			if (searchValue.length === 0) {
-				return options;
-			}
-			const updatedItems = items.map((list) => {
-				const newItems = list.items.filter((item) => {
-					return item.name.toLowerCase().includes(searchValue.toLowerCase());
-				});
-				return { ...list, items: newItems };
-			});
-			return updatedItems;
-		};
-	};
-
 	return (
-		<div className="App">
-			<SelectSearch
-				ref={searchInput}
-				options={options}
-				filterOptions={handleFilter(options)}
-				value=""
-				name="Workshop"
-				placeholder="Choose a workshop"
-				search
-				onChange={handleChange}
-			/>
+		<div className="Dropdown select">
+			<p>{dropdownTitle}</p>
+			<div
+				className="Dropdown-btn"
+				onClick={(e) => setIsActive(!isActive)}>
+				<input
+					type="text"
+					onChange={(evnt) => handleChange(evnt)}
+					className="FormControl"
+					value={selected}
+				/>
+				{selected}
+				<FontAwesomeIcon icon={faCaretDown} />
+			</div>
+			{isActive && (
+				<div className="Dropdown-content">
+					{filteredOptions.map((option, index) => (
+						<div
+							onClick={() => {
+								setSelected(option);
+								setIsActive(false);
+								handleData(option);
+							}}
+							key={index}
+							className="Dropdown-item">
+							{' '}
+							{option}
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }
+
 export default Drop;
