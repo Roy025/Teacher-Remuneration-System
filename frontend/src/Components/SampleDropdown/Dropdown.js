@@ -5,13 +5,14 @@ import './styles.css';
 
 function Dropdown({ options, dropdownTitle, handleData }) {
 	const [isActive, setIsActive] = useState(false);
-	const [selected, setSelected] = useState('Select');
+	const [selected, setSelected] = useState('');
 	const [filteredOptions, setfilteredOptions] = useState(options);
 	const handleChange = (evnt) => {
 		const arr = options.filter((x) =>
 			x.toLowerCase().includes(evnt.target.value.toLowerCase())
 		);
 		setfilteredOptions(arr);
+		setSelected(evnt.target.value);
 	};
 	return (
 		<div className="Dropdown select">
@@ -22,10 +23,10 @@ function Dropdown({ options, dropdownTitle, handleData }) {
 				<input
 					type="text"
 					onChange={(evnt) => handleChange(evnt)}
-					className="FormControl"
+					className="FormControl inp"
 					value={selected}
+					placeholder="Select"
 				/>
-				{selected}
 				<FontAwesomeIcon icon={faCaretDown} />
 			</div>
 			{isActive && (

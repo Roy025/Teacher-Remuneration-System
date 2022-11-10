@@ -86,21 +86,21 @@ const TeacherBill = () => {
 					className="Form"
 					onSubmit={handleSubmit}>
 					<div className="DropdownformRow">
-						<div className="FormSubRow">
+						<div className="FormSubRow1">
 							<Dropdown
 								options={sessionOptions}
 								dropdownTitle={sessionTitle}
 								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
-						<div className="FormSubRow">
+						<div className="FormSubRow1">
 							<Dropdown
 								options={semesterOptions}
 								dropdownTitle={semesterTitle}
 								handleData={(child) => HandleSem(child, exam, setExam)}
 							/>
 						</div>
-						<div className="FormSubRow">
+						<div className="FormSubRow1">
 							<Dropdown
 								options={deptOptions}
 								dropdownTitle={deptTitle}
