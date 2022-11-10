@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20221106131518_InitialMigration")]
+    [Migration("20221110053722_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,7 +113,6 @@ namespace Business.Data.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("BankAccount")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Department")
@@ -127,6 +126,9 @@ namespace Business.Data.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid?>("ExamId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Image")
                         .HasColumnType("text");
@@ -144,6 +146,8 @@ namespace Business.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
 
                     b.ToTable("Teachers");
                 });
@@ -301,7 +305,7 @@ namespace Business.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Exam", "Exam")
-                        .WithMany()
+                        .WithMany("LabCourses")
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -335,6 +339,13 @@ namespace Business.Data.Migrations
                     b.Navigation("VivaExaminer");
                 });
 
+            modelBuilder.Entity("Core.Entities.Teacher", b =>
+                {
+                    b.HasOne("Core.Entities.Exam", null)
+                        .WithMany("Members")
+                        .HasForeignKey("ExamId");
+                });
+
             modelBuilder.Entity("Core.Entities.TheoryCourseResponsibles", b =>
                 {
                     b.HasOne("Core.Entities.Teacher", "AnswerPaperCheckerPartA")
@@ -352,7 +363,7 @@ namespace Business.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Exam", "Exam")
-                        .WithMany()
+                        .WithMany("TheoryCourses")
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -418,6 +429,15 @@ namespace Business.Data.Migrations
                     b.Navigation("TermTestAnswerChecker");
 
                     b.Navigation("VivaExaminer");
+                });
+
+            modelBuilder.Entity("Core.Entities.Exam", b =>
+                {
+                    b.Navigation("LabCourses");
+
+                    b.Navigation("Members");
+
+                    b.Navigation("TheoryCourses");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,14 +6,15 @@ using Core.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
-public class TeacherContoller : BaseApiController
+public class TeacherController : BaseApiController
 {
-    private readonly ILogger<TeacherContoller> _logger;
+    // private readonly ILogger<TeacherContoller> _logger;
     private readonly ITeacherService _teacherService;
+    private readonly ITokenService _tokenService;
 
-    public TeacherContoller(ILogger<TeacherContoller> logger, ITeacherService teacherService)
+    public TeacherController(ITeacherService teacherService, ITokenService tokenService)
     {
-        _logger = logger;
+        _tokenService = tokenService;
         _teacherService = teacherService;
     }
 
@@ -28,6 +29,8 @@ public class TeacherContoller : BaseApiController
     [HttpGet("{id}")]
     public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> GetTeacherById(Guid id)
     {
+        // var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
+        // if (user == null) return StatusCode(401, new ApiDataResponse<TeacherResponseDto>(null, 401, "Unauthorized"));
         var teacher = await _teacherService.GetTeacherByIdAsync(id);
 
         return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacher, 200, "Teacher fetched successfully"));
@@ -37,8 +40,8 @@ public class TeacherContoller : BaseApiController
     public async Task<ActionResult<ApiDataResponse<TeacherLoginDto>>> RegisterTeacher(TeacherCreateDto teacher)
     {
         var teacherEntity = await _teacherService.CreateTeacherAsync(teacher);
-        
-        if(teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher registration failed"));
+
+        if (teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher registration failed"));
 
         return StatusCode(201, new ApiDataResponse<TeacherLoginDto>(teacherEntity, 201, "Teacher created successfully"));
     }
@@ -47,8 +50,8 @@ public class TeacherContoller : BaseApiController
     public async Task<ActionResult<ApiDataResponse<TeacherLoginDto>>> LoginTeacher(TeacherLoginReqDto teacher)
     {
         var teacherEntity = await _teacherService.LoginTeacherAsync(teacher);
-        
-        if(teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher login failed"));
+
+        if (teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher login failed"));
 
         return StatusCode(200, new ApiDataResponse<TeacherLoginDto>(teacherEntity, 200, "Teacher logged in successfully"));
     }
@@ -56,8 +59,8 @@ public class TeacherContoller : BaseApiController
     public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> UpdateTeacher(Guid id, TeacherUpdateDto teacher)
     {
         var teacherEntity = await _teacherService.UpdateTeacherAsync(id, teacher);
-        
-        if(teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher update failed"));
+
+        if (teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher update failed"));
 
         return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacherEntity, 200, "Teacher updated successfully"));
     }

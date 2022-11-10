@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Core.Entities;
 using Core.Interfaces.Services;
+using Core.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -22,7 +23,7 @@ public class TokenService : ITokenService
     {
         var claims = new List<Claim>
         {
-            new(ClaimTypes.Email, teacher.Email),
+            new("email", teacher.Email),
             new("userId", teacher.Id.ToString()),
             new("designation", teacher.Designation),
             new("department", teacher.Department),
@@ -42,4 +43,29 @@ public class TokenService : ITokenService
 
         return tokenHandler.WriteToken(token);
     }
+
+    // extract the user from the token
+    public UserFromToken GetUserFromToken(string authHeader)
+    {
+        string token = authHeader.Split(" ")[1];
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenObj = tokenHandler.ReadJwtToken(token);
+        // Console.WriteLine(tokenObj.ToString());
+        var user = new UserFromToken
+        {
+            Email = tokenObj.Claims.First(c => c.Type == "email").Value,
+            UserId = Guid.Parse(tokenObj.Claims.First(c => c.Type == "userId").Value),
+            Designation = tokenObj.Claims.First(c => c.Type == "designation").Value,
+            Department = tokenObj.Claims.First(c => c.Type == "department").Value,
+        };
+        return user;
+    }
+    
+    // private string GetTokenFromRequest(string authHeader)
+    // {
+    //     if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+    //         return null;
+    //     return authHeader.Substring(7);
+    // }
+
 }
