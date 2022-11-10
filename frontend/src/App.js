@@ -14,6 +14,8 @@ import TeacherBill from './Components/TeachersBill/TeacherBill';
 import ChiefInvigilatorBill from './Components/TeachersBill/ChiefInvigilatorBill';
 import FinalTeacherBill from './Components/FinalBill/FinalTeacherBill';
 import ScrollToTop from './Functions/ScrollTotop';
+import Drop from './Components/SampleDropdown/Drop';
+import { deptOptions } from './Components/SampleDropdown/Dropdown';
 
 function App() {
 	// useEffect(() => {
@@ -60,6 +62,10 @@ function App() {
 					exact
 					path="/profile"
 					element={<ProfilePage />}></Route>
+				<Route
+					exact
+					path="/drop"
+					element={<Drop options={deptOptions} />}></Route>
 			</Routes>
 		</>
 	);
