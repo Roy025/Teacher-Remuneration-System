@@ -1,26 +1,37 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './styles.css';
 
 function Dropdown({ options, dropdownTitle, handleData }) {
 	const [isActive, setIsActive] = useState(false);
-	const [selected, setSelected] = useState('Select');
-	// useEffect(() => {
-	// 	handleData(selected);
-	// }, [selected]);
-
+	const [selected, setSelected] = useState('');
+	const [filteredOptions, setfilteredOptions] = useState(options);
+	const handleChange = (evnt) => {
+		const arr = options.filter((x) =>
+			x.toLowerCase().includes(evnt.target.value.toLowerCase())
+		);
+		setfilteredOptions(arr);
+		setSelected(evnt.target.value);
+	};
 	return (
 		<div className="Dropdown select">
 			<p>{dropdownTitle}</p>
 			<div
 				className="Dropdown-btn"
 				onClick={(e) => setIsActive(!isActive)}>
-				{selected}
+				<input
+					type="text"
+					onChange={(evnt) => handleChange(evnt)}
+					className="FormControl inp"
+					value={selected}
+					placeholder="Select"
+				/>
 				<FontAwesomeIcon icon={faCaretDown} />
 			</div>
 			{isActive && (
 				<div className="Dropdown-content">
-					{options.map((option, index) => (
+					{filteredOptions.map((option, index) => (
 						<div
 							onClick={() => {
 								setSelected(option);
