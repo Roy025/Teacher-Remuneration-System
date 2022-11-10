@@ -1,9 +1,30 @@
-import React from 'react'
+import React from "react";
 
-function ThesisComp() {
+function ThesisComp({
+  inputVivaBoard,
+  setVivaBoard,
+  inputThesisSuper,
+  setThesisSuper,
+  inputThesisCoSuper,
+  setThesisCoSuper,
+  inputThesisAssess,
+  setThesisAssess,
+}) {
   return (
-    <div>ThesisComp</div>
-  )
+    <div className="Container">
+      <div className="">
+        <input
+          type="text"
+          name="name"
+          // onChange={(event) =>
+          //   handleChangeTeacher(event, index, ind)
+          // }
+          className=""
+          placeholder="Name"
+        />
+      </div>
+    </div>
+  );
 }
 
-export default ThesisComp
+export default ThesisComp;

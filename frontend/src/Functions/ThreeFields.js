@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 
-const ThreeFields = ({ inputFields, setInputFields }) => {
+const ThreeFields = ({ inputFields, setInputFields, localTeacherDB }) => {
   const removeInputFields = (e, index) => {
     e.preventDefault();
     const rows = [...inputFields];
