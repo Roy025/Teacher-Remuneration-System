@@ -13,6 +13,8 @@ import TwoField from "../../Functions/TwoField";
 import StudentCount from "../../Functions/StudentCount";
 import HandleSem from "../../Functions/HandleSem";
 import TermPaperComp from "../../Functions/TermPaperComp";
+import ThesisComp from "../../Functions/ThesisComp";
+import ThreeFields from "../../Functions/ThreeFields";
 
 const ChairmanBill = () => {
   const [inputSet, setInputSet] = useState([
@@ -97,10 +99,60 @@ const ChairmanBill = () => {
       course: "",
       super: [""],
       examiner: [""],
-      committee: false
+      committee: false,
+    },
+  ]);
+  const [inputInvi, setInvi] = useState([
+    {
+      institute: "",
+      department: "",
+      name: "",
     },
   ]);
 
+  const [inputVivaBoard, setVivaBoard] = useState([
+    {
+      institute: "",
+      department: "",
+      name: "",
+    },
+  ]);
+
+  const [inputThesisSuper, setThesisSuper] = useState([
+    {
+      institute: "",
+      department: "",
+      name: "",
+    },
+  ]);
+
+  const [inputThesisCoSuper, setThesisCoSuper] = useState([
+    {
+      institute: "",
+      department: "",
+      name: "",
+    },
+  ]);
+
+  const [inputThesisAssess, setThesisAssess] = useState([
+    {
+      institute: "",
+      department: "",
+      name: "",
+    },
+  ]);
+
+  const [inputThesisManagers, setThesisManagers] = useState({
+    course: "",
+    super: [
+      {
+        supername: "",
+        stdntID: ""
+      },
+    ],
+    cosuper: [""],
+    assess: [""],
+  });
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -185,8 +237,8 @@ const ChairmanBill = () => {
           <div className="formRow">
             <label className="Label">
               Term Paper / Seminar Paper / Field Work / MonoGraph / Study Tour /
-              Content Analysis / Workshop / Project / Thesis(Under-graduate) / Internship /
-              Research Planning
+              Content Analysis / Workshop / Project / Thesis(Under-graduate) /
+              Internship / Research Planning
             </label>
             <TermPaperComp TermPaper={TermPaper} setTermPaper={setTermPaper} />
           </div>
@@ -196,8 +248,16 @@ const ChairmanBill = () => {
           </div>
 
           <div className="formRow">
+            <label className="Label">Invigilators</label>
+            <ThreeFields inputFields={inputInvi} setInputFields={setInvi} />
+          </div>
+
+          <div className="formRow">
             <label className="Label">Thesis(Post-graduate)</label>
-            <TwoField inputFields={inputType} setInputFields={setInputType} />
+            <ThesisComp
+              inputVivaBoard={inputVivaBoard}
+              setVivaBoard={setVivaBoard}
+            />
           </div>
 
           <div className="formRow">

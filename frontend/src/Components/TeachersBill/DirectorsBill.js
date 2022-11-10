@@ -15,42 +15,57 @@ import ThreeFields from '../../Functions/ThreeFields';
 import HandleSem from '../../Functions/HandleSem';
 
 const DirectorsBill = () => {
-	const [inputFields, setInputFields] = useState([
-		{
-			institute: '',
-			department: '',
-			name: '',
-		},
-	]);
-	const [inputChair, setInputChair] = useState([
-		{
-			institute: '',
-			department: '',
-			name: '',
-		},
-	]);
-	const [inputInvi, setInputInvi] = useState([
-		{
-			institute: '',
-			department: '',
-			name: '',
-		},
-	]);
-	const handleSubmit = (e) => {
-		e.preventDefault();
-	};
-	const [exam, setExam] = useState({
-		session: '',
-		semester: '',
-	});
+  const [inputMembers, setMembers] = useState([
+    {
+      id: "",
+      institute: "",
+      department: "",
+      name: "",
+    },
+  ]);
+  const [inputChair, setInputChair] = useState([
+    {
+      id: "",
+      institute: "",
+      department: "",
+      name: "",
+    },
+  ]);
+  const [inputInvi, setInputInvi] = useState([
+    {
+      id: "",
+      institute: "",
+      department: "",
+      name: "",
+    },
+  ]);
 
-	const submit = async () => {
-		console.log(inputFields);
-		console.log(inputChair);
-		console.log(inputInvi);
-		console.log(exam);
-	};
-	console.log(exam);
+  const localTeacherDB = [
+    {
+      id: "",
+      name: "",
+      email: "",
+      institute: "",
+      department: "",
+      designation: "",
+      image: "",
+    },
+  ];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+  const [exam, setExam] = useState({
+    session: "",
+    semester: "",
+  });
+
+  // const submit = async () => {
+  //   console.log(inputFields);
+  //   console.log(inputChair);
+  //   console.log(inputInvi);
+  //   console.log(exam);
+  // };
+  // console.log(exam);
 
 	return (
 		<>
@@ -79,42 +94,41 @@ const DirectorsBill = () => {
 							/>
 						</div>
 					</div>
+          <div className="formRow">
+            <label className="Label">Committee Chairman</label>
+            <ThreeFieldsNoAdd
+              inputFields={inputChair}
+              setInputFields={setInputChair}
+              localTeacherDB={localTeacherDB}
+            />
+          </div>
 
-					<div className="formRow">
-						<label className="Label">Committee Chairman</label>
-						<ThreeFieldsNoAdd
-							inputFields={inputChair}
-							setInputFields={setInputChair}
-						/>
-					</div>
+          <div className="formRow">
+            <label className="Label">Chief Invigilator</label>
+            <ThreeFieldsNoAdd
+              inputFields={inputInvi}
+              setInputFields={setInputInvi}
+              localTeacherDB={localTeacherDB}
+            />
+          </div>
 
-					<div className="formRow">
-						<label className="Label">Chief Invigilator</label>
-						<ThreeFieldsNoAdd
-							inputFields={inputInvi}
-							setInputFields={setInputInvi}
-						/>
-					</div>
-
-					<div className="formRow">
-						<label className="Label">Committee Members</label>
-						<ThreeFields
-							inputFields={inputFields}
-							setInputFields={setInputFields}
-						/>
-						<div className="formRow SubmitRow">
-							<button
-								type="submit"
-								className="submitButton"
-								onClick={submit}>
-								Submit
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</>
-	);
+          <div className="formRow">
+            <label className="Label">Committee Members</label>
+            <ThreeFields
+              inputFields={inputMembers}
+              setInputFields={setMembers}
+              localTeacherDB={localTeacherDB}
+            />
+            <div className="formRow SubmitRow">
+              <button type="submit" className="submitButton">
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </>
+  );
 };
 
 export default DirectorsBill;
