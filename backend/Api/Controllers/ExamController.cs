@@ -22,6 +22,8 @@ public class ExamController : BaseApiController
     //     var semesters = await _examService.GetSemestersBySessionForDirector(session, user);
     //     return StatusCode(200, new ApiDataResponse<IEnumerable<string>>(semesters, 200, "Semesters fetched successfully"));
     // }
+
+    // Director Section
     [HttpGet("/director")]
     public async Task<ActionResult<ApiDataResponse<ExamResponseDtoDirector>>> GetExamsForDirector([FromQuery] ExamReqParams examParams)
     {
@@ -29,13 +31,25 @@ public class ExamController : BaseApiController
         var exam = await _examService.GetExamsForDirectorAsync(examParams, user);
         return StatusCode(200, new ApiDataResponse<ExamResponseDtoDirector>(exam, 200, "Exams fetched successfully"));
     }
+    
     [HttpPost("/director")]
-    public Task<ActionResult<ApiDataResponse<IEnumerable<ExamResponseDtoDirector>>>> CreateExamsFromDirector([FromBody] ExamCreateFromDirectorDto examCreateFromDirectorDto)
+    public async Task<ActionResult<ApiDataResponse<ExamResponseDtoDirector>>> CreateExamsFromDirector([FromBody] ExamCreateFromDirectorDto examCreateFromDirectorDto)
     {
         var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
-        var exams = _examService.CreateExamsFromDirector(examCreateFromDirectorDto, user);
+        var exams = await _examService.CreateExamsFromDirector(examCreateFromDirectorDto, user);
+
+        return StatusCode(200, new ApiDataResponse<ExamResponseDtoDirector>(exams, 200, "Exams created successfully"));
+        // throw new NotImplementedException();
+    }
+    //////////////////////////////////
+
+    // Chairman Section
+    [HttpGet("/chairman")]
+    public Task<ActionResult<ApiDataResponse<IEnumerable<string>>>> GetExamSessionsForChairman([FromQuery] ExamReqParams examReqParams)
+    {
+        var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
+        var sessions = _examService.GetExamSessionsForChairman(examReqParams, user);
 
         throw new NotImplementedException();
     }
-
 }
