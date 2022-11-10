@@ -17,6 +17,19 @@ import ThesisComp from "../../Functions/ThesisComp";
 import ThreeFields from "../../Functions/ThreeFields";
 
 const ChairmanBill = () => {
+  const localTeacherDB = [
+    {
+      id: "",
+      name: "",
+      email: "",
+      institute: "",
+      department: "",
+      designation: "",
+      image: "",
+    },
+  ];
+
+
   const [inputSet, setInputSet] = useState([
     {
       name: "",
@@ -142,17 +155,27 @@ const ChairmanBill = () => {
     },
   ]);
 
-  const [inputThesisManagers, setThesisManagers] = useState({
+  const [inputThesisManagers, setThesisManagers] = useState([{
     course: "",
     super: [
       {
-        supername: "",
-        stdntID: ""
+        name: "",
+        stdntID: "",
       },
     ],
-    cosuper: [""],
-    assess: [""],
-  });
+    cosuper: [
+      {
+        name: "",
+        stdntID: "",
+      },
+    ],
+    assess: [
+      {
+        name: "",
+        stdntID: "",
+      },
+    ],
+  }]);
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -257,6 +280,15 @@ const ChairmanBill = () => {
             <ThesisComp
               inputVivaBoard={inputVivaBoard}
               setVivaBoard={setVivaBoard}
+              inputThesisSuper={inputThesisSuper}
+              setThesisSuper={setThesisSuper}
+              inputThesisCoSuper={inputThesisCoSuper}
+              setThesisCoSuper={setThesisCoSuper}
+              inputThesisAssess={inputThesisAssess}
+              setThesisAssess={setThesisAssess}
+              inputThesisManagers={inputThesisManagers}
+              setThesisManagers={setThesisManagers}
+              localTeacherDB={localTeacherDB}
             />
           </div>
 

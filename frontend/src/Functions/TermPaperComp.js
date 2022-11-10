@@ -32,7 +32,6 @@ function TermPaperComp({ TermPaper, setTermPaper }) {
   const handleChangeCourse = (evnt, index) => {
     const { name, value } = evnt.target;
     const list = [...TermPaper];
-    list[index][name] = value;
     setTermPaper(list);
   };
 
