@@ -39,15 +39,15 @@ const ChiefInvigilatorBill = () => {
           <div className="DropdownformRow">
             <div className="FormSubRow">
               <Dropdown
-                options={semesterOptions}
-                dropdownTitle={semesterTitle}
+                options={sessionOptions}
+                dropdownTitle={sessionTitle}
                 handleData={(child) => HandleSem(child, exam, setExam)}
               />
             </div>
             <div className="FormSubRow">
               <Dropdown
-                options={sessionOptions}
-                dropdownTitle={sessionTitle}
+                options={semesterOptions}
+                dropdownTitle={semesterTitle}
                 handleData={(child) => HandleSem(child, exam, setExam)}
               />
             </div>
