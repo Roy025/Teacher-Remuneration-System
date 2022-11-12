@@ -7,7 +7,7 @@ public class ExamSpecificationForChairman : BaseSpecification<Exam>
     protected ExamSpecificationForChairman(ExamReqParams examReqParams) : base(x =>
         (string.IsNullOrEmpty(examReqParams.Session) || x.Session == examReqParams.Session) &&
         (string.IsNullOrEmpty(examReqParams.Semester) || x.Semester == examReqParams.Semester) &&
-        (string.IsNullOrEmpty(examReqParams.Department) || x.Department == examReqParams.Department) &&
+        (examReqParams.DepartmentId == null || x.DepartmentId == examReqParams.DepartmentId) &&
         (examReqParams.TeacherId == null || x.ChairmanId == examReqParams.TeacherId)
     )
     {

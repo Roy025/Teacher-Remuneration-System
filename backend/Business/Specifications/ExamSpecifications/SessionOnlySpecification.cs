@@ -8,7 +8,7 @@ namespace Business.Specifications.ExamSpecifications
         public SessionOnlySpecification(ExamReqParamOnlySession examParams)
             : base(x =>
                 (string.IsNullOrEmpty(examParams.Session) || x.Session.ToLower() == examParams.Session) &&
-                (examParams.Department == null || x.Department == examParams.Department) 
+                (examParams.DepartmentId == null || x.DepartmentId == examParams.DepartmentId) 
             )
         {
         }

@@ -3,12 +3,12 @@ using Core.Params;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Specifications.ExamSpecifications;
-public class ExamWithMembersSpecification : BaseSpecification<Exam>
+public class ExamForDirectorSpecification : BaseSpecification<Exam>
 {
-    public ExamWithMembersSpecification(ExamReqParams examReqParams) : base(
+    public ExamForDirectorSpecification(ExamReqParams examReqParams) : base(
         x => (string.IsNullOrEmpty(examReqParams.Semester) || x.Semester == examReqParams.Semester) &&
              (string.IsNullOrEmpty(examReqParams.Session) || x.Session == examReqParams.Session) &&
-             (string.IsNullOrEmpty(examReqParams.Department) || x.Department == examReqParams.Department)
+             (examReqParams.DepartmentId == null || x.DepartmentId == examReqParams.DepartmentId)
     )
     {
         AddInclude(x => x.Include(x => x.Chairman));
