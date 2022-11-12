@@ -29,10 +29,10 @@ public class ExamService : IExamService
         {
             Session = examCreateFromDirectorDto.Session,
             Semester = examCreateFromDirectorDto.Semester,
-            Department = user.Department
+            DepartmentId = user.DepartmentId
         };
 
-        var spec = new ExamWithMembersSpecification(param);
+        var spec = new ExamForDirectorSpecification(param);
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
         var exam = exams.FirstOrDefault();
         if (exams.Count() > 0)
@@ -44,7 +44,10 @@ public class ExamService : IExamService
             foreach (var member in examCreateFromDirectorDto.Members)
             {
                 var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(member.Id);
-                exam.Members.Add(teacher);
+                if(teacher != null)
+                {
+                    exam.Members.Add(teacher);
+                }
             }
             _unitOfWork.Repository<Exam>().Update(exam);
         }
@@ -55,7 +58,7 @@ public class ExamService : IExamService
             {
                 Session = examCreateFromDirectorDto.Session,
                 Semester = examCreateFromDirectorDto.Semester,
-                Department = user.Department,
+                DepartmentId = user.DepartmentId,
                 Chairman = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id),
                 CheifInvigilator = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.CheifInvigilator.Id),
                 Members = new List<Teacher>()
@@ -63,7 +66,10 @@ public class ExamService : IExamService
             foreach (var member in examCreateFromDirectorDto.Members)
             {
                 var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(member.Id);
-                exam.Members.Add(teacher);
+                if(teacher != null)
+                {
+                    exam.Members.Add(teacher);
+                }
             }
             _unitOfWork.Repository<Exam>().Add(exam);
         }
@@ -79,30 +85,30 @@ public class ExamService : IExamService
     {
         if (user.Designation != "Director")
             throw new UnAuthorizedException("You are not authorized to perform this action");
-        examParams.Department = user.Department;
+        examParams.DepartmentId = user.DepartmentId;
 
-        var spec = new ExamWithMembersSpecification(examParams);
+        var spec = new ExamForDirectorSpecification(examParams);
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
         if (exams == null)
             throw new NotFoundException("No exam found");
-        var exam = exams.ElementAt(0);
+        var exam = exams.FirstOrDefault();
         var examResponseDto = _mapper.Map<ExamResponseDtoDirector>(exam);
         return examResponseDto;
     }
 
-    public async Task<IEnumerable<string>> GetSemestersBySessionForDirector(string session, UserFromToken user)
-    {
-        if (user.Designation != "Director")
-            throw new UnAuthorizedException("You are not authorized to perform this action");
-        var param = new ExamReqParamOnlySession();
-        param.Session = session;
-        param.TeacherId = user.UserId;
-        param.Department = user.Department;
-        var spec = new SessionOnlySpecification(param);
-        var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
-        var semesters = exams.Select(x => x.Semester).Distinct();
-        return semesters;
-    }
+    // public async Task<IEnumerable<string>> GetSemestersBySessionForDirector(string session, UserFromToken user)
+    // {
+    //     if (user.Designation != "Director")
+    //         throw new UnAuthorizedException("You are not authorized to perform this action");
+    //     var param = new ExamReqParamOnlySession();
+    //     param.Session = session;
+    //     param.TeacherId = user.UserId;
+    //     param.DepartmentId = user.DepartmentId;
+    //     var spec = new SessionOnlySpecification(param);
+    //     var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
+    //     var semesters = exams.Select(x => x.Semester).Distinct();
+    //     return semesters;
+    // }
 
     public Task<IEnumerable<string>> GetExamSessionsForChairman(ExamReqParams examReqParams, UserFromToken user)
     {
