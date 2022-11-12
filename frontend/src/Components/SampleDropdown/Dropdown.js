@@ -6,6 +6,7 @@ import './styles.css';
 function Dropdown({ options, dropdownTitle, handleData }) {
 	const [isActive, setIsActive] = useState(false);
 	const [selected, setSelected] = useState('');
+	const [selectedData, setSelectedData] = useState('');
 	const [filteredOptions, setfilteredOptions] = useState(options);
 	const handleChange = (evnt) => {
 		const arr = options.filter((x) =>
@@ -14,6 +15,10 @@ function Dropdown({ options, dropdownTitle, handleData }) {
 		setfilteredOptions(arr);
 		setSelected(evnt.target.value);
 	};
+	const handleSelect = (option) => {
+		const prop = dropdownTitle.toLowerCase();
+		handleData(prop, option);
+	}
 	return (
 		<div className="Dropdown select">
 			<p>{dropdownTitle}</p>
@@ -33,10 +38,12 @@ function Dropdown({ options, dropdownTitle, handleData }) {
 				<div className="Dropdown-content">
 					{filteredOptions.map((option, index) => (
 						<div
-							onClick={() => {
+							onClick={(e) => {
 								setSelected(option);
 								setIsActive(false);
-								handleData(option);
+								// handleData(option);
+								handleSelect(option);
+								selectedData(option);
 							}}
 							key={index}
 							className="Dropdown-item">
