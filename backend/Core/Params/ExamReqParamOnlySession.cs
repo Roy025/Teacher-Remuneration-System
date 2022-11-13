@@ -9,14 +9,8 @@ namespace Core.Params
     {
         public ExamReqParamOnlySession()
         { }
-        public ExamReqParamOnlySession( string session, Guid TeacherId, string department)
-        {
-            Session = session;
-            this.TeacherId = TeacherId;
-            this.Department = department;
-        }
         public string Session { get; set; } = null!;
         public Guid TeacherId { get; set; } = Guid.Empty;
-        public string Department { get; set; } = null!;
+        public Guid? DepartmentId { get; set; } = null; 
     }
 }

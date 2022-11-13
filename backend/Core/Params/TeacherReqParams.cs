@@ -8,11 +8,6 @@ public class TeacherReqParams
         set => _institute = value.ToLower();
     }
     
-    private string? _department;
-    public string? Department
-    {
-        get => _department;
-        set => _department = value.ToLower();
-    }
+    public Guid? DepartmentId { get; set; } = null;
     public string? Email { get; set; } = null;
 }
