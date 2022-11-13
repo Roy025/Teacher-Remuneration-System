@@ -251,7 +251,7 @@ const ChairmanBill = () => {
             <TwoField inputFields={inputViva} setInputFields={setInputViva} />
           </div>
           <div className="formRow">
-            <label className="Label">Scrutiny</label>
+            <label className="Label">Scrutineer</label>
             <h4 className="subLabel">Part - A</h4>
             <TwoField inputFields={inputScrA} setInputFields={setInputScrA} />
             <h4 className="subLabel">Part - B</h4>
