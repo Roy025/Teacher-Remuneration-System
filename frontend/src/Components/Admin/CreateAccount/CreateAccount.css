@@ -47,7 +47,7 @@
 
 .AccountLabel {
   max-width: 100px;
-  margin: 2%;
+  margin-top: 2%;
   width: 100%;
   font-family: "Bitter", serif;
   font-size: 1rem;
@@ -70,7 +70,7 @@
 .AccountInput {
   width: 400px;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin-top: 1%;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
@@ -102,10 +102,17 @@
   transition: all 0.2s, box-shadow 0.08s ease-in;
   touch-action: manipulation;
   width: 14%;
+  scale: 0.9;
 }
 
 .AccountButton:focus {
   box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
     rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
     rgba(50, 151, 211, 0.3) 0 0 0 4px;
+}
+
+.AccountSubmit{
+  align-self: flex-end;
+  margin-right: 5%;
+  background-color: #7A89C2;
 }

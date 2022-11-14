@@ -122,7 +122,7 @@ const CreateAccount = () => {
               </div>
 
               <div className="InsideAccountContainer">
-                {index === data.members.length-1 && (
+                {index === data.members.length - 1 && (
                   <button
                     className="AccountButton"
                     onClick={() => addMembers()}
@@ -142,6 +142,7 @@ const CreateAccount = () => {
             </div>
           );
         })}
+        <button className="AccountButton AccountSubmit">Submit</button>
       </div>
     </div>
   );
