@@ -6,6 +6,7 @@ import './styles.css';
 function Dropdown({ options, dropdownTitle, handleData }) {
 	const [isActive, setIsActive] = useState(false);
 	const [selected, setSelected] = useState('');
+	const [selectedData, setSelectedData] = useState('');
 	const [filteredOptions, setfilteredOptions] = useState(options);
 	const handleChange = (evnt) => {
 		const arr = options.filter((x) =>
@@ -42,6 +43,7 @@ function Dropdown({ options, dropdownTitle, handleData }) {
 								setIsActive(false);
 								// handleData(option);
 								handleSelect(option);
+								selectedData(option);
 							}}
 							key={index}
 							className="Dropdown-item">
