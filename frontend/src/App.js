@@ -14,6 +14,8 @@ import TeacherBill from './Components/TeachersBill/TeacherBill';
 import ChiefInvigilatorBill from './Components/TeachersBill/ChiefInvigilatorBill';
 import FinalTeacherBill from './Components/FinalBill/FinalTeacherBill';
 import ScrollToTop from './Functions/ScrollTotop';
+import AdminHome from './Components/Admin/AdminHome';
+import CreateAccount from './Components/Admin/CreateAccount/CreateAccount';
 function App() {
 	return (
 		<>
@@ -56,6 +58,14 @@ function App() {
 					exact
 					path="/profile"
 					element={<ProfilePage />}></Route>
+				<Route
+					exact
+					path="/temp"
+					element={<AdminHome />}></Route>
+				<Route
+					exact
+					path="/createaccount"
+					element={<CreateAccount />}></Route>
 			</Routes>
 		</>
 	);
