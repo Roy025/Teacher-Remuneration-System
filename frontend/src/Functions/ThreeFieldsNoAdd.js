@@ -1,42 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
 const ThreeFieldsNoAdd = ({ options, propName, handleData }) => {
-  // console.log("ThreeFieldsNoAdd", propName);
-  const [listOfInstitutes, setListOfInstitutes] = useState(options);
   const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([]);
   const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([]);
-
-  const [selectedTeachers, setSelectedTeachers] = useState([{
+  const [selectedTeachers] = useState([{
     id: '',
     name: '',
     institute: '',
     department: '',
-  }])
+  }]);
+
   const handleInstitute = (property, value) => {
     setFilteredListOfDepartments(value.departments);
   };
+
   const handleDepartment = (property, value) => {
     setFilteredListOfTeachers(value.teachers);
   };
+
   const handleTeacher = (property, value) => {
     handleData(propName, value);
   };
-  // useEffect(() => {
-  //   console.log(filteredListOfDepartments);
-  // }, [filteredListOfDepartments]);
 
   return (
     <div className="Container">
       {selectedTeachers.map((data, index) => {
-        const { institute, department, name } = data;
         return (
           <div className="FormRow" key={index}>
             <div className="threeFormRowElement">
               {index === 0 && <label>Institute</label>}
               <DropdownNoTitleTeacher
-                options={listOfInstitutes}
+                options={options}
                 propName="institute"
                 handleData={handleInstitute}
               />
@@ -58,7 +54,6 @@ const ThreeFieldsNoAdd = ({ options, propName, handleData }) => {
               />
             </div>
           </div>
-
         )
       })}
     </div>

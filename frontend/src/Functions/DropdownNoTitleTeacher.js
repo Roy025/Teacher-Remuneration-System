@@ -5,10 +5,10 @@ import "../Components/SampleDropdown/styles.css";
 
 // const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
 const DropdownNoTitleTeacher = ({ options, propName, handleData, index }) => {
-    // console.log("DropdownNoTitleTeacher", propName);
     const [isActive, setIsActive] = useState(false);
     const [selected, setSelected] = useState('');
     const [filteredOptions, setfilteredOptions] = useState(options);
+    
     const handleChange = (evnt) => {
         const arr = options.filter((x) =>
             x.name.toLowerCase().includes(evnt.target.value.toLowerCase())
@@ -16,18 +16,19 @@ const DropdownNoTitleTeacher = ({ options, propName, handleData, index }) => {
         setfilteredOptions(arr);
         setSelected(evnt.target.value);
     };
+
     useEffect(() => {
         setfilteredOptions(options);
     }, [options]);
+
     const handleSelect = (option) => {
-        console.log(index);
         if (index === undefined) {
             handleData(propName, option);
         } else {
             handleData(propName, option, index);
-
         }
     }
+
     return (
         <div className="Dropdown select">
             <div
@@ -49,7 +50,6 @@ const DropdownNoTitleTeacher = ({ options, propName, handleData, index }) => {
                             onClick={(e) => {
                                 setSelected(option.name);
                                 setIsActive(false);
-                                // handleData(option);
                                 handleSelect(option);
                             }}
                             key={index}

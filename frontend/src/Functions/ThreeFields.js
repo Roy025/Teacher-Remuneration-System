@@ -3,7 +3,6 @@ import "../Components/SampleDropdown/styles.css";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
 const ThreeFields = ({ options, propName, handleData }) => {
-  const [listOfInstitutes, setListOfInstitutes] = useState(options);
   const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([[{}]]);
   const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([[{}]]);
   const [selectedTeachers, setSelectedTeachers] = useState([{
@@ -81,7 +80,7 @@ const ThreeFields = ({ options, propName, handleData }) => {
               <div className="threeFormRowElement">
                 {index === 0 && <label>Institute</label>}
                 <DropdownNoTitleTeacher
-                  options={listOfInstitutes}
+                  options={options}
                   propName="institute"
                   handleData={handleInstitute}
                   index={index}
