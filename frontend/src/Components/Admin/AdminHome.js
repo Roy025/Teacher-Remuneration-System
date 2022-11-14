@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { SimpleButton } from "../Buttons/SimpleButton";
 import "./AdminHome.css";
+import SimpleButton from "../Buttons/SimpleButton"
 
 function AdminHome() {
   return (

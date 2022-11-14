@@ -16,6 +16,7 @@ import FinalTeacherBill from './Components/FinalBill/FinalTeacherBill';
 import ScrollToTop from './Functions/ScrollTotop';
 import AdminHome from './Components/Admin/AdminHome';
 import CreateAccount from './Components/Admin/CreateAccount/CreateAccount';
+
 function App() {
 	return (
 		<>
@@ -65,7 +66,7 @@ function App() {
 				<Route
 					exact
 					path="/createaccount"
-					element={<CreateAccount />}></Route>
+					element={<CreateAccount	 />}></Route>
 			</Routes>
 		</>
 	);
