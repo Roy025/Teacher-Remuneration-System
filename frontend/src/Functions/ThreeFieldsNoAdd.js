@@ -1,60 +1,68 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
+import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
-const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
-  const handleChange = (evnt, index) => {
-    const { name, value } = evnt.target;
-    const list = [...inputFields];
-    list[index][name] = value;
-    setInputFields(list);
+const ThreeFieldsNoAdd = ({ options, propName, handleData }) => {
+  // console.log("ThreeFieldsNoAdd", propName);
+  const [listOfInstitutes, setListOfInstitutes] = useState(options);
+  const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([]);
+  const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([]);
+
+  const [selectedTeachers, setSelectedTeachers] = useState([{
+    id: '',
+    name: '',
+    institute: '',
+    department: '',
+  }])
+  const handleInstitute = (property, value) => {
+    setFilteredListOfDepartments(value.departments);
   };
+  const handleDepartment = (property, value) => {
+    setFilteredListOfTeachers(value.teachers);
+  };
+  const handleTeacher = (property, value) => {
+    handleData(propName, value);
+  };
+  // useEffect(() => {
+  //   console.log(filteredListOfDepartments);
+  // }, [filteredListOfDepartments]);
 
   return (
     <div className="Container">
-      {inputFields.map((data, index) => {
+      {selectedTeachers.map((data, index) => {
         const { institute, department, name } = data;
         return (
           <div className="FormRow" key={index}>
             <div className="threeFormRowElement">
-              <label>Institute</label>
-              <input
-                type="text"
-                name="institute"
-                onChange={(evnt) => handleChange(evnt, index)}
-                value={institute}
-                className="FormControl"
-                placeholder="Institute"
+              {index === 0 && <label>Institute</label>}
+              <DropdownNoTitleTeacher
+                options={listOfInstitutes}
+                propName="institute"
+                handleData={handleInstitute}
               />
             </div>
-
             <div className="threeFormRowElement">
-              <label>Department</label>
-              <input
-                type="text"
-                name="department"
-                onChange={(evnt) => handleChange(evnt, index)}
-                value={department}
-                className="FormControl"
-                placeholder="Department"
+              {index === 0 && <label>Department</label>}
+              <DropdownNoTitleTeacher
+                options={filteredListOfDepartments}
+                propName="department"
+                handleData={handleDepartment}
               />
             </div>
-
             <div className="threeFormRowElement">
-              <label>Teacher's Name</label>
-              <input
-                type="text"
-                name="name"
-                onChange={(evnt) => handleChange(evnt, index)}
-                value={name}
-                className="FormControl"
-                placeholder="Name"
+              {index === 0 && <label>Teacher</label>}
+              <DropdownNoTitleTeacher
+                options={filteredListOfTeachers}
+                propName="teacher"
+                handleData={handleTeacher}
               />
             </div>
           </div>
-        );
+
+        )
       })}
     </div>
-  );
+  )
 };
 
 export default ThreeFieldsNoAdd;

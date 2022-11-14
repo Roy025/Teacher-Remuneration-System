@@ -5,7 +5,7 @@
 }
 
 .Dropdown {
-	/* width: 400px; */
+	width: 100%;
 	user-select: none;
 	/* margin: 100px auto; */
 	/* position: relative; */
@@ -25,6 +25,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	
 }
 
 .Dropdown .Dropdown-content {
@@ -46,6 +47,7 @@
 .Dropdown .Dropdown-content .Dropdown-item {
 	padding: 10px;
 	cursor: pointer;
+
 }
 
 .Dropdown .Dropdown-content .Dropdown-item:hover {
@@ -55,8 +57,4 @@
 .Dropdown-content {
 	height: 150px;
 	overflow-y: scroll;
-}
-.inp {
-	border: none;
-	outline: none;
 }
