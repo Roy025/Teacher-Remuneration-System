@@ -73,6 +73,7 @@ const DirectorsBill = () => {
     newData[property] = value;
     setData(newData);
   };
+
   // useEffect(() => {
   //   console.log(data);
   // }, [data]);

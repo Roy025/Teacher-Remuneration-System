@@ -1,0 +1,54 @@
+.CreateCards {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15%;
+  padding: 5%;
+  flex-wrap: wrap;
+  background-image: linear-gradient(
+    to left top,
+    #78aa63,
+    #47884e,
+    #4c8663,
+    #71a08f,
+    #75c9b7
+  );
+}
+
+.IndCreateCard {
+  margin: 1%;
+  max-width: 15rem;
+  height: 20rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  column-gap: 10px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid green;
+  border-radius: 10px 30px;
+  background-image: linear-gradient(
+    to left top,
+    #abd699,
+    #9bd4a1,
+    #8cd1a8,
+    #7fcdb0,
+    #75c9b7
+  );
+}
+
+.Admin-icons {
+  padding: 10%;
+  scale: 300%;
+  color: #ffffff;
+}
+
+.Card-text {
+  padding: 4%;
+  display: flex;
+  font-size: large;
+  flex-wrap: wrap;
+  text-align: center;
+  color: rgb(61, 55, 55);
+}

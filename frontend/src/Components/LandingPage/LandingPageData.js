@@ -37,5 +37,5 @@ export const homeBlockThree = {
   imageSource: "./images/remainder-bill-icon.png",
   alt: "Remainder bills catalogue",
   imageStartLocation: "start",
-  url: "/director"
+  url: "/temp"
 };
