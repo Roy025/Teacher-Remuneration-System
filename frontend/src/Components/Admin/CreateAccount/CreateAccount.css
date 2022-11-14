@@ -1,0 +1,9 @@
+.AccountContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15%;
+  padding: 5%;
+  flex-wrap: wrap;
+}
