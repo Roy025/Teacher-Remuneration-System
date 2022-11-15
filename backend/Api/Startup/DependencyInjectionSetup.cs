@@ -88,6 +88,7 @@ public static class DependencyInjectionSetup
         services.AddScoped<ITeacherService, TeacherService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IExamService, ExamService>();
+        services.AddScoped<IAdminService, AdminService>();
 
         // Automapper configuration
         services.AddAutoMapper(typeof(MappingProfiles));
