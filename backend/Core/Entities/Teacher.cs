@@ -3,10 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.Entities;
 public class Teacher : BaseEntity
 {
-    public string Name { get; set; }
+    public string? Name { get; set; } = null;
     public string Email { get; set; }
     public string Password { get; set; }
-    public string Institute { get; set; }
     public Guid DepartmentId { get; set; }
     public Department? Department { get; set; }
     public string? BankAccount { get; set; } = null!;
