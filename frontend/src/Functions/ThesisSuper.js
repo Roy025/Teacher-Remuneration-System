@@ -1,3 +1,4 @@
+import React from 'react';
 import "../Components/SampleDropdown/styles.css";
 
 const ThesisSuper = ({ inputFields, setInputFields}) => {

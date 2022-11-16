@@ -1,7 +1,9 @@
+
 import { useState } from "react";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.css";
+
 
 function Dropdown({ options, dropdownTitle, handleData }) {
 	const [isActive, setIsActive] = useState(false);

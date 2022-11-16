@@ -1,4 +1,5 @@
 import "../Components/SampleDropdown/styles.css";
+import React from 'react';
 
 const TwoField = ({ inputFields, setInputFields }) => {
   const removeInputFields = (e, index) => {
