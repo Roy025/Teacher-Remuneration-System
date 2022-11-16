@@ -35,17 +35,19 @@
 }
 .FormRow {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-between;
 	margin-bottom: 1%;
 }
 
 .FormControl {
 	padding: 6px 10px;
-	border: 1px solid rgb(119, 110, 110);
-	border-radius: 0.375rem;
+	/* border: 1px solid rgb(119, 110, 110); */
+	border: none;
+	/* border-radius: 0.375rem; */
 	width: 100%;
 	margin: 1%;
+	outline: none;
 }
 
 .FormControl:focus {

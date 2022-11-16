@@ -1,96 +1,119 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
+import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
-const ThreeFields = ({ inputFields, setInputFields, localTeacherDB }) => {
-  const removeInputFields = (e, index) => {
-    e.preventDefault();
-    const rows = [...inputFields];
-    rows.splice(index, 1);
-    setInputFields(rows);
+const ThreeFields = ({ options, propName, handleData }) => {
+  const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([[{}]]);
+  const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([[{}]]);
+  const [selectedTeachers, setSelectedTeachers] = useState([{
+    id: '',
+    name: '',
+  }])
+
+  const handleInstitute = (property, value, index) => {
+    const departments = [...filteredListOfDepartments];
+    departments[index] = value.departments;
+    setFilteredListOfDepartments(departments);
   };
-  const handleChange = (evnt, index) => {
-    const { name, value } = evnt.target;
-    const list = [...inputFields];
-    list[index][name] = value;
-    setInputFields(list);
+
+  const handleDepartment = (property, value, index) => {
+    const teachers = [...filteredListOfTeachers];
+    teachers[index] = value.teachers;
+    setFilteredListOfTeachers(teachers);
   };
+
+  const handleTeacher = (property, value, index) => {
+    const newSelectedTeachers = [...selectedTeachers];
+    newSelectedTeachers[index] = value;
+    setSelectedTeachers(newSelectedTeachers);
+  };
+
+  // useEffect(() => {
+  //   // handleData(propName, selectedTeachers);
+  //   console.log(selectedTeachers);
+  // }, [selectedTeachers]);
+
   const addInputField = () => {
-    setInputFields([
-      ...inputFields,
-      {
-        institute: "",
-        department: "",
-        name: "",
-      },
+    const departments = [...filteredListOfDepartments];
+    departments.push([{}]);
+    setFilteredListOfDepartments(departments);
+
+    const teachers = [...filteredListOfTeachers];
+    teachers.push([{}]);
+    setFilteredListOfTeachers(teachers);
+
+    setSelectedTeachers([
+      ...selectedTeachers,
+      {},
     ]);
   };
+
+  const removeInputFields = (e, index) => {
+    e.preventDefault();
+    const teachers = [...selectedTeachers];
+    teachers.splice(index, 1);
+    setSelectedTeachers(teachers);
+
+    const departments = [...filteredListOfDepartments];
+    departments.splice(index, 1);
+    setFilteredListOfDepartments(departments);
+
+    const teachersList = [...filteredListOfTeachers];
+    teachersList.splice(index, 1);
+    setFilteredListOfTeachers(teachersList);
+  };
+
+  useEffect(() => {
+    handleData(propName, selectedTeachers);
+  }, [selectedTeachers]);
+
   return (
     <div className="Container">
-      {inputFields.map((data, index) => {
-        const { institute, department, name } = data;
+      {selectedTeachers.map((data, index) => {
+
         return (
           <div className="ParentFormRow">
             <div
-              className={
-                inputFields.length === 1 ? "FormRow" : "FormRow CrossFormRow"
-              }
+              className={`FormRow ${selectedTeachers.length !== 1 && "CrossFormRow"}`}
               key={index}
             >
-              <div className="threeFormRowElementWithAdd">
-                {index === 0 ? <label>Institute</label> : ""}
-                <input
-                  type="text"
-                  name="institute"
-                  onChange={(evnt) => handleChange(evnt, index)}
-                  value={institute}
-                  className="FormControl"
-                  placeholder="Institute"
+              <div className="threeFormRowElement">
+                {index === 0 && <label>Institute</label>}
+                <DropdownNoTitleTeacher
+                  options={options}
+                  propName="institute"
+                  handleData={handleInstitute}
+                  index={index}
                 />
               </div>
-
-              <div className="threeFormRowElementWithAdd">
-                {index === 0 ? <label>Department</label> : ""}
-                <input
-                  type="text"
-                  name="department"
-                  onChange={(evnt) => handleChange(evnt, index)}
-                  value={department}
-                  className="FormControl"
-                  placeholder="Department"
+              <div className="threeFormRowElement">
+                {index === 0 && <label>Department</label>}
+                <DropdownNoTitleTeacher
+                  options={filteredListOfDepartments[index]}
+                  propName="department"
+                  handleData={handleDepartment}
+                  index={index}
                 />
               </div>
-
-              <div className="threeFormRowElementWithAdd">
-                {index === 0 ? <label>Teacher's Name</label> : ""}
-                <input
-                  type="text"
-                  name="name"
-                  onChange={(evnt) => handleChange(evnt, index)}
-                  value={name}
-                  className="FormControl"
-                  placeholder="Name"
+              <div className="threeFormRowElement">
+                {index === 0 && <label>Teacher</label>}
+                <DropdownNoTitleTeacher
+                  options={filteredListOfTeachers[index]}
+                  propName="teacher"
+                  handleData={handleTeacher}
+                  index={index}
                 />
               </div>
-
-              {inputFields.length !== 1 ? (
+              {selectedTeachers.length !== 1 && (
                 <div className="FormRowElement">
                   <button
-                    className={
-                      index === 0
-                        ? "crossButton crossButton-first"
-                        : "crossButton"
-                    }
+                    className={`crossButton ${index === 0 && "crossButton-first"}`}
                     onClick={(evnt) => removeInputFields(evnt, index)}
-                  >
-                    x
-                  </button>
+                  >x</button>
                 </div>
-              ) : (
-                ""
               )}
             </div>
-
-            {inputFields.length - 1 === index && (
+            {selectedTeachers.length - 1 === index && (
               <div className="FormRowElement">
                 <button
                   className="addButton"
@@ -102,10 +125,11 @@ const ThreeFields = ({ inputFields, setInputFields, localTeacherDB }) => {
               </div>
             )}
           </div>
-        );
+
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
 export default ThreeFields;
