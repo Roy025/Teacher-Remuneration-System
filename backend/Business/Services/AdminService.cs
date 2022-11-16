@@ -29,4 +29,10 @@ public class AdminService : IAdminService
         if (result <= 0) return null;
         return instituteEntity;
     }
+
+    public async Task<IReadOnlyList<Institute>> GetAllInstituteAsync()
+    {
+        var institutes = await _unitOfWork.Repository<Institute>().ListAllAsync();
+        return institutes;
+    }
 }

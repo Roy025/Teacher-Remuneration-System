@@ -20,4 +20,12 @@ public class AdminController : BaseApiController
         if (instituteEntity == null) return BadRequest("Institute not created");
         return StatusCode(200, new ApiDataResponse<Institute>(instituteEntity, 201, "Institute Created successfully"));
     }
+
+    [HttpGet("institute")]
+    public async Task<ActionResult<ApiDataResponse<IReadOnlyList<Institute>>>> GetInstituteAsync()
+    {
+        var institutes = await _adminService.GetAllInstituteAsync();
+        if (institutes == null) return BadRequest("Institutes not found");
+        return StatusCode(200, new ApiDataResponse<IReadOnlyList<Institute>>(institutes, 200, "Institutes found successfully"));
+    }
 }

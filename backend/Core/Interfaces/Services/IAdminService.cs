@@ -10,6 +10,7 @@ namespace Core.Interfaces.Services
     public interface IAdminService
     {
         Task<Institute> CreateInstituteAsync(InstituteDto institute);
+        Task<IReadOnlyList<Institute>> GetAllInstituteAsync();
         Task<Institute> CreateDepartmentAsync(Department department);
     }
 }
