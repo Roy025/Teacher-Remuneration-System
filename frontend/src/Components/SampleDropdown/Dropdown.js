@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import React,{ useState } from "react";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.css";
