@@ -121,28 +121,28 @@ const CreateAccount = () => {
                 </div>
               </div>
 
+              {data.members.length !== 1 && (
+                <button
+                  className="AdminButton"
+                  onClick={() => deleteMembers(index)}
+                >
+                  Remove
+                </button>
+              )}
               <div className="InsideAccountContainer">
                 {index === data.members.length - 1 && (
                   <button
-                    className="AccountButton"
+                    className="AdminButton"
                     onClick={() => addMembers()}
                   >
                     Add
-                  </button>
-                )}
-                {data.members.length !== 1 && (
-                  <button
-                    className="AccountButton"
-                    onClick={() => deleteMembers(index)}
-                  >
-                    Remove
                   </button>
                 )}
               </div>
             </div>
           );
         })}
-        <button className="AccountButton AccountSubmit">Submit</button>
+        <button className="AdminButton AdminSubmit">Submit</button>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import React from 'react';
 import Links from "./Links";
 import "./TeachersBill.css";
 import "./FormButton.css";
