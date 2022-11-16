@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Core.Entities;
+[Index(nameof(Name), IsUnique = true)]
 public class Institute : BaseEntity
 {
     public string Name { get; set; }
