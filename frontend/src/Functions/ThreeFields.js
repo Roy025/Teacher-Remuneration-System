@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
-const ThreeFields = ({ options, propName, handleData }) => {
+const ThreeFields = ({ options, propName, handleData, existingData = [], setExistingData }) => {
   const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([[{}]]);
   const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([[{}]]);
-  const [selectedTeachers, setSelectedTeachers] = useState([{
+  const [selectedTeachers, setSelectedTeachers] = useState(existingData ? existingData : [{
     id: '',
     name: '',
   }])
+
+  const [selectedInstitute, setSelectedInstitute] = useState(existingData ? existingData.map(x => x.institute) : ['']);
+  const [selectedDepartment, setSelectedDepartment] = useState(existingData ? existingData.map(x => x.department) : ['']);
+  const [selectedMembers, setSelectedMembers] = useState(existingData ? existingData.map(x => x.name) : ['']);
+
 
   const handleInstitute = (property, value, index) => {
     const departments = [...filteredListOfDepartments];
@@ -28,10 +33,9 @@ const ThreeFields = ({ options, propName, handleData }) => {
     setSelectedTeachers(newSelectedTeachers);
   };
 
-  // useEffect(() => {
-  //   // handleData(propName, selectedTeachers);
-  //   console.log(selectedTeachers);
-  // }, [selectedTeachers]);
+  useEffect(() => {
+    setExistingData(selectedTeachers);
+  }, [selectedTeachers]);
 
   const addInputField = () => {
     const departments = [...filteredListOfDepartments];
@@ -45,6 +49,11 @@ const ThreeFields = ({ options, propName, handleData }) => {
     setSelectedTeachers([
       ...selectedTeachers,
       {},
+    ]);
+
+    setSelectedMembers([
+      ...selectedMembers,
+      '',
     ]);
   };
 
@@ -61,11 +70,12 @@ const ThreeFields = ({ options, propName, handleData }) => {
     const teachersList = [...filteredListOfTeachers];
     teachersList.splice(index, 1);
     setFilteredListOfTeachers(teachersList);
-  };
 
-  useEffect(() => {
-    handleData(propName, selectedTeachers);
-  }, [selectedTeachers]);
+    const members = [...selectedMembers];
+    members.splice(index, 1);
+    setSelectedMembers(members);
+
+  };
 
   return (
     <div className="Container">
@@ -84,6 +94,9 @@ const ThreeFields = ({ options, propName, handleData }) => {
                   propName="institute"
                   handleData={handleInstitute}
                   index={index}
+                  selected={selectedInstitute}
+                  setSelected={setSelectedInstitute}
+
                 />
               </div>
               <div className="threeFormRowElement">
@@ -93,6 +106,8 @@ const ThreeFields = ({ options, propName, handleData }) => {
                   propName="department"
                   handleData={handleDepartment}
                   index={index}
+                  selected={selectedDepartment}
+                  setSelected={setSelectedDepartment}
                 />
               </div>
               <div className="threeFormRowElement">
@@ -102,6 +117,8 @@ const ThreeFields = ({ options, propName, handleData }) => {
                   propName="teacher"
                   handleData={handleTeacher}
                   index={index}
+                  selected={selectedMembers}
+                  setSelected={setSelectedMembers}
                 />
               </div>
               {selectedTeachers.length !== 1 && (

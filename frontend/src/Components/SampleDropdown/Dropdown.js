@@ -1,13 +1,12 @@
 
-import { useState } from "react";
+import React,{ useState } from "react";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.css";
 
 
-function Dropdown({ options, dropdownTitle, handleData }) {
+function Dropdown({ options, dropdownTitle, handleData, selected='', setSelected }) {
 	const [isActive, setIsActive] = useState(false);
-	const [selected, setSelected] = useState('');
 	const [filteredOptions, setfilteredOptions] = useState(options);
 	const handleChange = (evnt) => {
 		const arr = options.filter((x) =>
@@ -16,10 +15,6 @@ function Dropdown({ options, dropdownTitle, handleData }) {
 		setfilteredOptions(arr);
 		setSelected(evnt.target.value);
 	};
-	const handleSelect = (option) => {
-		const prop = dropdownTitle.toLowerCase();
-		handleData(prop, option);
-	}
 	return (
 		<div className="Dropdown select">
 			<p>{dropdownTitle}</p>
@@ -42,7 +37,6 @@ function Dropdown({ options, dropdownTitle, handleData }) {
 							onClick={(e) => {
 								setSelected(option);
 								setIsActive(false);
-								handleSelect(option);
 							}}
 							key={index}
 							className="Dropdown-item">
