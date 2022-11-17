@@ -49,7 +49,7 @@ public static class DependencyInjectionSetup
         }
     });
         });
-        // services.AddCorsToService();
+        services.AddCorsToService();
         services.AddDb(config);
 
         services.Configure<ApiBehaviorOptions>(options =>
@@ -104,7 +104,7 @@ public static class DependencyInjectionSetup
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
-                .WithOrigins("http://localhost:4200");
+                .WithOrigins("http://localhost:3000");
         }));
         return services;
     }

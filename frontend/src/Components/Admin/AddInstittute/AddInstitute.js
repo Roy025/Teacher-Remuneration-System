@@ -2,25 +2,36 @@ import React, { useState } from "react";
 import "./AddInstitute.css";
 import { useMutation } from "@tanstack/react-query";
 
-const path = "";
-
-const addInstitute = async (data) => {
-  const response = await fetch(path, {
-    method: "POST",
-    body: JSON.stringify({
-      name: data.institute,
-    }),
-    headers: {
-      "Content-type": "application/json; charset-UTF-8",
-    },
-  });
-  return response.json();
-};
-
 const AddInstitute = () => {
+
+    //Adding institute
+  const path = "https://localhost:5001/api/Admin/institute";
+
+  const addInstitute = async (info) => {
+    const response = await fetch(path, {
+      method: "POST",
+      body: JSON.stringify({
+        name: info.institute,
+      }),
+      headers: {
+        "Content-type": "application/json; charset-UTF-8",
+      },
+    });
+    const newData = { institute: ""};
+    setData(newData);
+    return response.json();
+  };
+
+  //Fetching institute data
+
+
+
+  //Handling data
   const [data, setData] = useState({
     institute: "",
   });
+
+  const [insList, setInsList] = ("");
 
   const handleInstitute = (e) => {
     const { name, value } = e.target;
@@ -38,8 +49,8 @@ const AddInstitute = () => {
   if (isLoading) {
     console.log("loading");
   }
-  if(isError){
-    console.log("Something went wrong ")
+  if (isError) {
+    console.log("Something went wrong ");
   }
 
   return (
@@ -57,7 +68,12 @@ const AddInstitute = () => {
             placeholder="Institute"
           />
         </div>
-        <button className="AdminButton AdminSubmit" onClick={() => mutate({institute: data})}>Submit</button>
+        <button
+          className="AdminButton AdminSubmit"
+          onClick={() => mutate({ institute: data.institute })}
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
