@@ -11,7 +11,6 @@ namespace Core.Interfaces.Services
     {
         Task<Institute> CreateInstituteAsync(InstituteDto institute);
         Task<IReadOnlyList<Institute>> GetAllInstituteAsync();
-        Task<Institute> CreateDepartmentAsync(Department department);
         Task<DepartmentResDto> CreateDepartmentAsync(DepartmentCreateDto department);
     }
 }

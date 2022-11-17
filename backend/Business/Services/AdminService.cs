@@ -24,6 +24,7 @@ public class AdminService : IAdminService
         return _mapper.Map<DepartmentResDto>(departmentEntity);
     }
 
+
     public async Task<Institute> CreateInstituteAsync(InstituteDto institute)
     {
         var instituteEntity = _mapper.Map<Institute>(institute);
