@@ -9,7 +9,7 @@ const CreateAccount = () => {
     department: "",
     members: [
       {
-        id: "",
+        email: "",
         password: "",
       },
     ],
@@ -99,11 +99,11 @@ const CreateAccount = () => {
                   )}
                   <input
                     type="text"
-                    name="id"
+                    name="email"
                     onChange={(evnt) => handlememberid(evnt, index)}
                     value={info.id}
                     className="AccountInput"
-                    placeholder="userID"
+                    placeholder="Email"
                   />
                 </div>
                 <div className="AccountInputFields  " key={index}>
