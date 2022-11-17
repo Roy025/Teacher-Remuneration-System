@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers;
 public class AdminController : BaseApiController
 {
-        private readonly IAdminService _adminService;
+    private readonly IAdminService _adminService;
     public AdminController(IAdminService adminService)
     {
-            _adminService = adminService;
+        _adminService = adminService;
     }
 
     [HttpPost("institute")]
@@ -20,12 +20,17 @@ public class AdminController : BaseApiController
         if (instituteEntity == null) return BadRequest("Institute not created");
         return StatusCode(200, new ApiDataResponse<Institute>(instituteEntity, 201, "Institute Created successfully"));
     }
-
     [HttpGet("institute")]
     public async Task<ActionResult<ApiDataResponse<IReadOnlyList<Institute>>>> GetInstituteAsync()
     {
         var institutes = await _adminService.GetAllInstituteAsync();
         if (institutes == null) return BadRequest("Institutes not found");
         return StatusCode(200, new ApiDataResponse<IReadOnlyList<Institute>>(institutes, 200, "Institutes found successfully"));
+    [HttpPost("department")]
+    public async Task<ActionResult<ApiDataResponse<DepartmentResDto>>> CreateDepartmentAsync([FromBody] DepartmentCreateDto department)
+    {
+        var departmentEntity = await _adminService.CreateDepartmentAsync(department);
+        if (departmentEntity == null) return BadRequest("Department not created");
+        return StatusCode(200, new ApiDataResponse<DepartmentResDto>(departmentEntity, 201, "Department Created successfully"));
     }
 }

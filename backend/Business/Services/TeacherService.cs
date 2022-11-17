@@ -29,8 +29,6 @@ public class TeacherService : ITeacherService
         return GetTeacherLoginDto(teacherEntity);
     }
 
-
-
     public async Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id)
     {
         var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(id);
