@@ -15,9 +15,13 @@ public class AdminService : IAdminService
         _unitOfWork = unitOfWork;
     }
 
-    public Task<Institute> CreateDepartmentAsync(Department department)
+    public async Task<DepartmentResDto> CreateDepartmentAsync(DepartmentCreateDto department)
     {
-        throw new NotImplementedException();
+        var departmentEntity = _mapper.Map<Department>(department);
+        _unitOfWork.Repository<Department>().Add(departmentEntity);
+        var result  = await _unitOfWork.Complete();
+        if (result <= 0) return null;
+        return _mapper.Map<DepartmentResDto>(departmentEntity);
     }
 
     public async Task<Institute> CreateInstituteAsync(InstituteDto institute)
@@ -28,11 +32,5 @@ public class AdminService : IAdminService
         var result = await _unitOfWork.Complete();
         if (result <= 0) return null;
         return instituteEntity;
-    }
-
-    public async Task<IReadOnlyList<Institute>> GetAllInstituteAsync()
-    {
-        var institutes = await _unitOfWork.Repository<Institute>().ListAllAsync();
-        return institutes;
     }
 }
