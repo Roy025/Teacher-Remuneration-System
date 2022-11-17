@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import * as ReactDOM from "react-dom";
 import "./AddInstitute.css";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 const AddInstitute = () => {
+  const [instituteList, setInstituteList] = useState([]);
 
-    //Adding institute
-  const path = "https://localhost:5001/api/Admin/institute";
+  const [data, setData] = useState({
+    institute: "",
+  });
+  //Adding institute
+  const postpath = "https://localhost:5001/api/Admin/institute";
+  const fetchpath = "https://localhost:5001/api/Admin/institute";
+
+  const Fetching = async () => {
+    const response = await fetch(fetchpath);
+    return response.json();
+  };
+
+  const { info } = useQuery("institution-list", Fetching, {
+    refetchOnMount: true,
+  })
+  setInstituteList(info)
+
 
   const addInstitute = async (info) => {
-    const response = await fetch(path, {
+    const response = await fetch(postpath, {
       method: "POST",
       body: JSON.stringify({
         name: info.institute,
@@ -17,21 +34,16 @@ const AddInstitute = () => {
         "Content-type": "application/json; charset-UTF-8",
       },
     });
-    const newData = { institute: ""};
+    const newData = { institute: "" };
     setData(newData);
     return response.json();
   };
 
   //Fetching institute data
 
-
-
   //Handling data
-  const [data, setData] = useState({
-    institute: "",
-  });
 
-  const [insList, setInsList] = ("");
+  const [insList, setInsList] = "";
 
   const handleInstitute = (e) => {
     const { name, value } = e.target;
@@ -74,6 +86,12 @@ const AddInstitute = () => {
         >
           Submit
         </button>
+      </div>
+
+      <div className="InstituteList">
+        {instituteList.map((data, index) => {
+          return <div className="InstituteItem">{data.name}</div>;
+        })}
       </div>
     </div>
   );
