@@ -3,18 +3,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 
-// const ThreeFieldsNoAdd = ({ inputFields, setInputFields }) => {
-const DropdownNoTitleTeacher = ({ options, propName, handleData, index }) => {
+const DropdownNoTitleTeacher = ({ options, propName, handleData, index, selected, setSelected }) => {
     const [isActive, setIsActive] = useState(false);
-    const [selected, setSelected] = useState('');
     const [filteredOptions, setfilteredOptions] = useState(options);
-    
+
     const handleChange = (evnt) => {
         const arr = options.filter((x) =>
             x.name.toLowerCase().includes(evnt.target.value.toLowerCase())
         );
         setfilteredOptions(arr);
-        setSelected(evnt.target.value);
+        if (index !== undefined) {
+            const newSelected = [...selected];
+            newSelected[index] = evnt.target.value;
+            setSelected(newSelected);
+        } else {
+            setSelected(evnt.target.value);
+        }
     };
 
     useEffect(() => {
@@ -23,8 +27,12 @@ const DropdownNoTitleTeacher = ({ options, propName, handleData, index }) => {
 
     const handleSelect = (option) => {
         if (index === undefined) {
+            setSelected(option.name);
             handleData(propName, option);
         } else {
+            const newSelected = [...selected];
+            newSelected[index] = option.name;
+            setSelected(newSelected);
             handleData(propName, option, index);
         }
     }
@@ -38,21 +46,20 @@ const DropdownNoTitleTeacher = ({ options, propName, handleData, index }) => {
                     type="text"
                     onChange={(evnt) => handleChange(evnt)}
                     className="FormControl"
-                    value={selected}
+                    value={index!==undefined? selected[index] : selected}
                     placeholder="Select"
                 />
                 <FontAwesomeIcon icon={faCaretDown} />
             </div>
             {isActive && (
                 <div className="Dropdown-content">
-                    {filteredOptions.map((option, index) => (
+                    {filteredOptions.map((option, ind) => (
                         <div
                             onClick={(e) => {
-                                setSelected(option.name);
                                 setIsActive(false);
                                 handleSelect(option);
                             }}
-                            key={index}
+                            key={ind}
                             className="Dropdown-item">
                             {' '}
                             {option.name}

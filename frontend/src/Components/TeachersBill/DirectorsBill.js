@@ -15,40 +15,68 @@ import ThreeFields from '../../Functions/ThreeFields';
 
 
 const DirectorsBill = () => {
+  const [selectedSemester, setSelectedSemester] = useState('');
+  const [selectedSession, setSelectedSession] = useState('');
+  const [selectedChairman, setSelectedChairman] = useState('');
+  const [selectedChiefInvigilator, setSelectedChiefInvigilator] = useState('');
+  const [selectedMembers, setSelectedMembers] = useState([]);
+
   const [data, setData] = useState({
     session: "",
     semester: "",
     chairman: {
       id: "",
+      name: "Nihal",
+      institute: "SUST",
+      department: "SWE",
     },
     chiefInvigilator: {
       id: "",
+      name: "Nihal",
+      institute: "SUST",
+      department: "CSE",
     },
     members: [
       {
         id: "",
-        institute: "",
-        department: "",
+        name: "Muna",
+        institute: "SUST",
+        department: "CSE",
+      },
+      {
+        id: "",
+        name: "Nijhum",
+        institute: "SUST",
+        department: "CSE",
       },
     ],
   })
 
-  const handleMainData = (property, value) => {
-    const newData = { ...data };
-    newData[property] = value;
-    setData(newData);
-  };
+  // const handleMainData = (property, value) => {
+  //   const newData = { ...data };
+  //   newData[property] = value;
+  //   setData(newData);
+  // };
 
   useEffect(() => {
     console.log(data);
   }, [data]);
 
   const handleSubmit = (e) => {
+    const newData = { ...data };
+    newData.session = selectedSession;
+    newData.semester = selectedSemester;
+    newData.chairman = selectedChairman;
+    newData.chiefInvigilator = selectedChiefInvigilator;
+    newData.members = selectedMembers;
+    setData(newData);
     e.preventDefault();
   };
 
+
   const [institutes, setInstitutes] = useState([
     {
+      id: 101,
       name: "Shahjalal University of Science and Technology",
       departments: [
         {
@@ -83,7 +111,8 @@ const DirectorsBill = () => {
               <Dropdown
                 options={sessionOptions}
                 dropdownTitle={sessionTitle}
-                handleData={handleMainData}
+                selected={selectedSession}
+                setSelected={setSelectedSession}
               />
             </div>
 
@@ -91,7 +120,8 @@ const DirectorsBill = () => {
               <Dropdown
                 options={semesterOptions}
                 dropdownTitle={semesterTitle}
-                handleData={handleMainData}
+                selected={selectedSemester}
+                setSelected={setSelectedSemester}
               />
             </div>
           </div>
@@ -101,7 +131,8 @@ const DirectorsBill = () => {
             <ThreeFieldsNoAdd
               options={institutes}
               propName="chairman"
-              handleData={handleMainData}
+              existingData={data.chairman}
+              setExistingData={setSelectedChairman}
             />
           </div>
 
@@ -110,7 +141,8 @@ const DirectorsBill = () => {
             <ThreeFieldsNoAdd
               options={institutes}
               propName="chiefInvigilator"
-              handleData={handleMainData}
+              existingData={data.chiefInvigilator}
+              setExistingData={setSelectedChiefInvigilator}
             />
           </div>
 
@@ -119,7 +151,8 @@ const DirectorsBill = () => {
             <ThreeFields
               options={institutes}
               propName="members"
-              handleData={handleMainData}
+              existingData={data.members}
+              setExistingData={setSelectedMembers}
             />
             <div className="formRow SubmitRow">
               <button type="submit" className="submitButton">
