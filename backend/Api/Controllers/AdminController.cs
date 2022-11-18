@@ -23,7 +23,7 @@ public class AdminController : BaseApiController
     [HttpPost("register")]
     public async Task<ActionResult<ApiDataResponse<Admin>>> Register([FromBody] AdminRegisterDTO adminRegisterDTO)
     {
-        var user = GetUserFromToken();
+        // var user = GetUserFromToken();
         var admin = await _adminService.Register(adminRegisterDTO);
         return StatusCode(201, new ApiDataResponse<Admin>(admin, 201, "Admin created successfully"));
     }
@@ -40,7 +40,7 @@ public class AdminController : BaseApiController
     public async Task<ActionResult<ApiDataResponse<Institute>>> CreateInstituteAsync([FromBody] InstituteDto institute)
     {
         
-        var user = GetUserFromToken();
+        // var user = GetUserFromToken();
         var instituteEntity = await _adminService.CreateInstituteAsync(institute);
         if (instituteEntity == null) return BadRequest("Institute not created");
         return StatusCode(200, new ApiDataResponse<Institute>(instituteEntity, 201, "Institute Created successfully"));
@@ -49,7 +49,7 @@ public class AdminController : BaseApiController
     [HttpDelete("institute/{institute}")]
     public async Task<ActionResult<ApiDataResponse<Institute>>> DeleteInstituteAsync([FromRoute] Guid institute)
     {
-        var user = GetUserFromToken();
+        // var user = GetUserFromToken();
         var instituteEntity = await _adminService.DeleteInstituteAsync(institute);
         if (instituteEntity == null) return BadRequest("Institute not deleted");
         return StatusCode(200, new ApiDataResponse<Institute>(instituteEntity, 200, "Institute deleted successfully"));
@@ -59,7 +59,7 @@ public class AdminController : BaseApiController
     public async Task<ActionResult<ApiDataResponse<DepartmentResDto>>> CreateDepartmentAsync([FromBody] DepartmentCreateDto department)
     {
 
-        var user = GetUserFromToken();
+        // var user = GetUserFromToken();
         var departmentEntity = await _adminService.CreateDepartmentAsync(department);
         if (departmentEntity == null) return BadRequest("Department not created");
         return StatusCode(200, new ApiDataResponse<DepartmentResDto>(departmentEntity, 201, "Department Created successfully"));
@@ -68,7 +68,7 @@ public class AdminController : BaseApiController
     [HttpDelete("department/{department}")]
     public async Task<ActionResult<ApiDataResponse<DepartmentResDto>>> DeleteDepartmentAsync([FromRoute] Guid department)
     {
-        var user = GetUserFromToken();
+        // var user = GetUserFromToken();
         var departmentEntity = await _adminService.DeleteDepartmentAsync(department);
         if (departmentEntity == null) return BadRequest("Department not deleted");
         return StatusCode(200, new ApiDataResponse<DepartmentResDto>(departmentEntity, 200, "Department deleted successfully"));
@@ -77,7 +77,7 @@ public class AdminController : BaseApiController
     [HttpPost("teacher/register")]
     public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> RegisterTeacherAsync([FromBody] TeacherCreateDto teacher)
     {
-        var user = GetUserFromToken();
+        // var user = GetUserFromToken();
         var teacherEntity = await _adminService.RegisterTeacherAsync(teacher);
         if (teacherEntity == null) return BadRequest("Teacher not created");
         return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacherEntity, 201, "Teacher Created successfully"));
