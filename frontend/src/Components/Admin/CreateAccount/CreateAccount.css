@@ -73,6 +73,11 @@
   font-size: 1rem;
 }
 
+.AccountInput:hover{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all .4s ease;
+}
+
 .InsideAccountContainer {
   display: flex;
   flex-direction: row;

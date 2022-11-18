@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import * as ReactDOM from "react-dom";
 import "./AddInstitute.css";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { instance as axios } from "../../axios";
 
 const AddInstitute = () => {
   const [instituteList, setInstituteList] = useState([]);
@@ -9,37 +10,31 @@ const AddInstitute = () => {
   const [data, setData] = useState({
     institute: "",
   });
-  //Adding institute
-  const postpath = "https://localhost:5001/api/Admin/institute";
-  const fetchpath = "https://localhost:5001/api/Admin/institute";
 
-  const Fetching = async () => {
-    const response = await fetch(fetchpath);
-    return response.json();
+  //Fetching institute data
+  const fetchInstitute = async () => {
+    const response = await axios.get("/institute");
+    return response;
   };
 
-  const { info } = useQuery("institution-list", Fetching, {
-    refetchOnMount: true,
-  })
-  setInstituteList(info)
+  useQuery(["institution-list"], async () => {
+    const store = await fetchInstitute();
+    console.log(store);
+    setInstituteList(store.data.data);
+    return store;
+  });
 
+  //Adding institute
 
   const addInstitute = async (info) => {
-    const response = await fetch(postpath, {
-      method: "POST",
-      body: JSON.stringify({
-        name: info.institute,
-      }),
-      headers: {
-        "Content-type": "application/json; charset-UTF-8",
-      },
+    const response = await axios.post("/Admin/institute", {
+      name: info.institute,
     });
     const newData = { institute: "" };
     setData(newData);
-    return response.json();
+    console.log(response);
+    return response;
   };
-
-  //Fetching institute data
 
   //Handling data
 
@@ -53,14 +48,12 @@ const AddInstitute = () => {
     console.log(newData);
   };
 
-  const { mutate, isLoading, isError } = useMutation(addInstitute, {
+  const { mutate, isError } = useMutation(addInstitute, {
     onSuccess: (success) => {
       console.log(success);
+      window.location.reload(false);
     },
   });
-  if (isLoading) {
-    console.log("loading");
-  }
   if (isError) {
     console.log("Something went wrong ");
   }
@@ -89,6 +82,7 @@ const AddInstitute = () => {
       </div>
 
       <div className="InstituteList">
+        <h1 className="AddInsHeader">Existing Institutes</h1>
         {instituteList.map((data, index) => {
           return <div className="InstituteItem">{data.name}</div>;
         })}
