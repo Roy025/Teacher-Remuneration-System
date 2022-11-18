@@ -20,11 +20,21 @@ public class AdminController : BaseApiController
 
     }
 
-    // [HttpPost("login")]
-    // public async Task<ActionResult<UserFromToken>> Login(LoginDto loginDto)
-    // {
-        
-    // }
+    [HttpPost("register")]
+    public async Task<ActionResult<ApiDataResponse<Admin>>> Register([FromBody] AdminRegisterDTO adminRegisterDTO)
+    {
+        var user = GetUserFromToken();
+        var admin = await _adminService.Register(adminRegisterDTO);
+        return StatusCode(201, new ApiDataResponse<Admin>(admin, 201, "Admin created successfully"));
+    }
+
+    [HttpPost("login")]
+    public async Task<ActionResult<ApiDataResponse<AdminLoginResDto>>> Login([FromBody] AdminLoginDTO adminLoginDTO)
+    {
+        var admin = await _adminService.Login(adminLoginDTO);
+        if (admin == null) return Unauthorized(new ApiResponse(401, "Invalid email or password"));
+        return Ok(new ApiDataResponse<AdminLoginResDto>(admin, 200, "Admin logged in successfully"));
+    }
 
     [HttpPost("institute")]
     public async Task<ActionResult<ApiDataResponse<Institute>>> CreateInstituteAsync([FromBody] InstituteDto institute)

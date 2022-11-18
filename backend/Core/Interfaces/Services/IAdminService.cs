@@ -16,6 +16,8 @@ namespace Core.Interfaces.Services
         Task<DepartmentResDto> CreateDepartmentAsync(DepartmentCreateDto department);
         Task<DepartmentResDto> DeleteDepartmentAsync(Guid department);
         Task<TeacherResponseDto> RegisterTeacherAsync(TeacherCreateDto teacher);
+        Task<Admin> Register(AdminRegisterDTO adminRegisterDTO);
+        Task<AdminLoginResDto> Login(AdminLoginDTO adminLoginDTO);
 
 
     }

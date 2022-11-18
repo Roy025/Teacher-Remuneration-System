@@ -21,6 +21,9 @@ public class MappingProfiles : Profile
         
         CreateMap<DepartmentCreateDto, Department>().ReverseMap();
         CreateMap<Department, DepartmentResDto>().ReverseMap();
+        
+        CreateMap<AdminRegisterDTO, Admin>().ReverseMap();
+        CreateMap<Admin, AdminLoginResDto>().ReverseMap();
 
     }
 }
