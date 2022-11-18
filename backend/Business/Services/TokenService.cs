@@ -45,6 +45,30 @@ public class TokenService : ITokenService
         return tokenHandler.WriteToken(token);
     }
 
+    public string CreateToken(Admin admin)
+    {
+        var claims = new List<Claim>
+        {
+            new("email", admin.Email),
+            new("userId", admin.Id.ToString()),
+            new("designation", admin.Designation),
+        };
+        var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.Now.AddDays(100),
+            SigningCredentials = creds,
+            Issuer = _config["Token:Issuer"]
+        };
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+
+        return tokenHandler.WriteToken(token);
+    }
+
     // extract the user from the token
     public UserFromToken GetUserFromToken(string authHeader)
     {
@@ -69,6 +93,8 @@ public class TokenService : ITokenService
             throw new UnAuthorizedException();
         }
     }
+
+    
 
     // private string GetTokenFromRequest(string authHeader)
     // {

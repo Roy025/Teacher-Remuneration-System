@@ -1,18 +1,23 @@
+using System.Net.Mail;
 using AutoMapper;
+using Business.Specifications.AdminSpecifications;
 using Core.DTOs.OtherDTOs;
 using Core.DTOs.TeacherDTOs;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.Models;
+using Core.Utils;
 
 namespace Business.Services;
 public class AdminService : IAdminService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public AdminService(IUnitOfWork unitOfWork, IMapper mapper)
+    private readonly ITokenService _tokenService;
+    public AdminService(IUnitOfWork unitOfWork, IMapper mapper, ITokenService tokenService)
     {
+        _tokenService = tokenService;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
     }
@@ -21,7 +26,7 @@ public class AdminService : IAdminService
     {
         var departmentEntity = _mapper.Map<Department>(department);
         _unitOfWork.Repository<Department>().Add(departmentEntity);
-        var result  = await _unitOfWork.Complete();
+        var result = await _unitOfWork.Complete();
         if (result <= 0) return null;
         return _mapper.Map<DepartmentResDto>(departmentEntity);
     }
@@ -57,6 +62,37 @@ public class AdminService : IAdminService
         return instituteEntity;
     }
 
+    public async Task<AdminLoginResDto> Login(AdminLoginDTO adminLoginDTO)
+    {
+        var spec = new AdminByEmailSpecification(adminLoginDTO.email);
+        var admins = await _unitOfWork.Repository<Admin>().ListAllAsyncWithSpec(spec);
+        
+        if (admins == null) return null;
+        
+        var admin = admins.FirstOrDefault();
+        if (admin == null) return null;
+        
+        if (!BCrypt.Net.BCrypt.Verify(adminLoginDTO.Password, admin.Password)) return null;
+
+        return new AdminLoginResDto
+        {
+            Email = admin.Email,
+            Token = _tokenService.CreateToken(admin),
+            Designation = admin.Designation,
+        };
+    }
+
+    public async Task<Admin> Register(AdminRegisterDTO adminRegisterDTO)
+    {
+        ValidateEmailAddress(adminRegisterDTO.Email);
+        var admin = _mapper.Map<Admin>(adminRegisterDTO);
+        admin.Password = BCrypt.Net.BCrypt.HashPassword(adminRegisterDTO.Password);
+        _unitOfWork.Repository<Admin>().Add(admin);
+        var result = await _unitOfWork.Complete();
+        if (result <= 0) return null;
+        return admin;
+    }
+
     public async Task<TeacherResponseDto> RegisterTeacherAsync(TeacherCreateDto teacher)
     {
         var teacherEntity = _mapper.Map<Teacher>(teacher);
@@ -64,5 +100,20 @@ public class AdminService : IAdminService
         var result = await _unitOfWork.Complete();
         if (result <= 0) return null;
         return _mapper.Map<TeacherResponseDto>(teacherEntity);
+    }
+    private bool ValidateEmailAddress(string email)
+    {
+        if (string.IsNullOrEmpty(email)) return false;
+
+        try
+        {
+            MailAddress to = new MailAddress(email);
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            throw new BadRequestException("Invalid Email Address");
+        }
     }
 }
