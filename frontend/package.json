@@ -29,8 +29,8 @@
         "webfontloader": "^1.6.28"
     },
     "scripts": {
-        "build": "react-scripts build",
-        "start": "react-scripts --openssl-legacy-provider start",
+        "build": "react-scripts build --openssl-legacy-provider",
+        "start": "react-scripts start --openssl-legacy-provider",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
