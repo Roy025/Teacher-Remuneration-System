@@ -100,7 +100,7 @@ public class AdminController : BaseApiController
             throw new UnAuthorizedException();
         }
         var _user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
-        if(_user.Designation != "Admin")
+        if(_user.Role != "Admin")
         {
             throw new UnAuthorizedException();
         }

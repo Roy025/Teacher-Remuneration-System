@@ -26,7 +26,7 @@ public class TokenService : ITokenService
         {
             new("email", teacher.Email),
             new("userId", teacher.Id.ToString()),
-            new("designation", teacher.Designation),
+            new("role", teacher.Role),
             new("departmentId", teacher.DepartmentId.ToString()),
         };
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
@@ -51,7 +51,7 @@ public class TokenService : ITokenService
         {
             new("email", admin.Email),
             new("userId", admin.Id.ToString()),
-            new("designation", admin.Designation),
+            new("role", admin.Role),
         };
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
@@ -82,7 +82,7 @@ public class TokenService : ITokenService
             {
                 Email = tokenObj.Claims.First(c => c.Type == "email").Value,
                 UserId = Guid.Parse(tokenObj.Claims.First(c => c.Type == "userId").Value),
-                Designation = tokenObj.Claims.First(c => c.Type == "designation").Value,
+                Role = tokenObj.Claims.First(c => c.Type == "role").Value,
                 DepartmentId = Guid.Parse(tokenObj.Claims.First(c => c.Type == "departmentId").Value),
             };
             return user;
