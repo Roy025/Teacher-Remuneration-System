@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 
 const DropdownNoTitleTeacher = ({ options, propName, handleData, index, selected, setSelected }) => {
+    // console.log(options);
     const [isActive, setIsActive] = useState(false);
     const [filteredOptions, setfilteredOptions] = useState(options);
 

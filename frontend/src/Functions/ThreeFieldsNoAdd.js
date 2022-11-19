@@ -1,21 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
+import { instance as axios } from "../Components/axios";
 
-const ThreeFieldsNoAdd = ({ options, propName, handleData, existingData = '', setExistingData }) => {
+const ThreeFieldsNoAdd = ({ options, propName, handleData, existingData='', setExistingData }) => {
   const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([]);
   const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState(existingData.institute ? existingData.institute : '');
   const [selectedDepartment, setSelectedDepartment] = useState(existingData.department ? existingData.department : '');
   const [selectedName, setSelectedName] = useState(existingData.name ? existingData.name : '');
 
-  const handleInstitute = (property, value) => {
-    console.log(value);
-    setFilteredListOfDepartments(value.departments);
+  useEffect(() => {
+    setSelectedInstitute(existingData.department ? existingData.department.institute.name : '');
+
+    setSelectedDepartment(existingData.department ? existingData.department.name : '');
+
+    setSelectedName(existingData.name ? existingData.name : '');
+  }, [existingData]);
+
+
+  const handleInstitute = async (property, value) => {
+    try {
+      const res = await axios.get(`/department?institute=${value.id}`);
+      setFilteredListOfDepartments(res.data.data);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
-  const handleDepartment = (property, value) => {
-    setFilteredListOfTeachers(value.teachers);
+  const handleDepartment = async (property, value) => {
+    try {
+      const res = await axios.get(`/teacher?department=${value.id}`);
+      setFilteredListOfTeachers(res.data.data);
+
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   const handleTeacher = (property, value) => {

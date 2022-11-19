@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.css";
 
 
-function Dropdown({ options, dropdownTitle, handleData, selected='', setSelected }) {
+function Dropdown({ options, dropdownTitle, handleData, selected, setSelected }) {
 	const [isActive, setIsActive] = useState(false);
 	const [filteredOptions, setfilteredOptions] = useState(options);
 	const handleChange = (evnt) => {
@@ -36,6 +36,7 @@ function Dropdown({ options, dropdownTitle, handleData, selected='', setSelected
 							onClick={(e) => {
 								setSelected(option);
 								setIsActive(false);
+								// handleData();
 							}}
 							key={index}
 							className="Dropdown-item">

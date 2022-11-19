@@ -11,8 +11,8 @@ public class ExamForDirectorSpecification : BaseSpecification<Exam>
              (examReqParams.DepartmentId == null || x.DepartmentId == examReqParams.DepartmentId)
     )
     {
-        AddInclude(x => x.Include(x => x.Chairman));
-        AddInclude(x => x.Include(x => x.CheifInvigilator));
-        AddInclude(x => x.Include(x => x.Members));
+        AddInclude(x => x.Include(x => x.Chairman).ThenInclude(c=> c.Department).ThenInclude(d=>d.Institute));
+        AddInclude(x => x.Include(x => x.CheifInvigilator).ThenInclude(c => c.Department).ThenInclude(d => d.Institute));
+        AddInclude(x => x.Include(x => x.Members).ThenInclude(c => c.Department).ThenInclude(d => d.Institute));
     }
 }
