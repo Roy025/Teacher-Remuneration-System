@@ -61,8 +61,13 @@ const DirectorsBill = () => {
 
 
 
-  const handleSubmit = () => {
-    const newData = {  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+  };
+
+  const save = async () => {
+    const newData = {};
     // const newData = { ...data };
     console.log(selectedSession);
     newData.session = selectedSession;
@@ -72,24 +77,24 @@ const DirectorsBill = () => {
     newData.members = selectedMembers;
     console.log(newData);
     // setData(newData);
-    // try {
-    //   const res = await axios.post('/Exam/director', newData,
-    //     {
-    //       headers: {
-    //         // 'Content-Type': 'application/json',
-    //         'Authorization': `Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphaGlyLWNzZUBzdXN0LmVkdSIsInVzZXJJZCI6IjIyMTAwMmVhLWM4OWMtNDg5OC1hMmE3LTQ5MzUwNGU5OWE0NiIsImRlc2lnbmF0aW9uIjoiRGlyZWN0b3IiLCJkZXBhcnRtZW50SWQiOiJkZWIzYjE2Yi1lOTgzLTRiMjAtODdiYS05OTFlNWQ4MWI1NDQiLCJuYmYiOjE2Njg3ODQ3NjQsImV4cCI6MTY3NzQyNDc2NCwiaWF0IjoxNjY4Nzg0NzY0LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.cYrbdFQjlNA7To2bWKYLTl5CaAVSlWa1T3-MbIFHTEz-YZc2YSjd4dwfuw3f1RtTvtEsPZDGYMhXzaQnOBtNpA`
-    //       },
-    //     }
-    //   );
-    //   console.log(res);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const res = await axios.post('/Exam/director', newData,
+        {
+          headers: {
+            // 'Content-Type': 'application/json',
+            'Authorization': `Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphaGlyLWNzZUBzdXN0LmVkdSIsInVzZXJJZCI6IjIyMTAwMmVhLWM4OWMtNDg5OC1hMmE3LTQ5MzUwNGU5OWE0NiIsImRlc2lnbmF0aW9uIjoiRGlyZWN0b3IiLCJkZXBhcnRtZW50SWQiOiJkZWIzYjE2Yi1lOTgzLTRiMjAtODdiYS05OTFlNWQ4MWI1NDQiLCJuYmYiOjE2Njg3ODQ3NjQsImV4cCI6MTY3NzQyNDc2NCwiaWF0IjoxNjY4Nzg0NzY0LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.cYrbdFQjlNA7To2bWKYLTl5CaAVSlWa1T3-MbIFHTEz-YZc2YSjd4dwfuw3f1RtTvtEsPZDGYMhXzaQnOBtNpA`
+          },
+        }
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
 
 
 
     // const res = await axios.post
-  };
+  }
 
   // useEffect(() => {
   //   console.log(selectedSession);
@@ -149,7 +154,7 @@ const DirectorsBill = () => {
       <div className="FullFormPage">
         <form
           className="Form"
-        // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
         >
           <div className="DropdownformRow">
             <div className="FormSubRow">
@@ -204,7 +209,7 @@ const DirectorsBill = () => {
             <div className="formRow SubmitRow">
               <button
                 type="submit"
-                className="submitButton" onClick={console.log("Hi")} >
+                className="submitButton" onClick={save}>
                 Submit
               </button>
             </div>
