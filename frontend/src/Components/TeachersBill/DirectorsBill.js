@@ -142,8 +142,10 @@ const DirectorsBill = () => {
       }
     }
   }
-
-  useQuery(["prev-data"], fetchPrevData);
+  useEffect(() => {
+    fetchPrevData();
+  }, [selectedSession, selectedSemester]);
+  // useQuery(["prev-data"], fetchPrevData);
 
   return (
     <>
