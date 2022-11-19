@@ -52,12 +52,6 @@ const DirectorsBill = () => {
     ],
   })
 
-  // const handleMainData = (property, value) => {
-  //   const newData = { ...data };
-  //   newData[property] = value;
-  //   setData(newData);
-  // };
-
   useEffect(() => {
     console.log(data);
   }, [data]);
@@ -70,6 +64,7 @@ const DirectorsBill = () => {
     newData.chiefInvigilator = selectedChiefInvigilator;
     newData.members = selectedMembers;
     setData(newData);
+    // const res = 
     e.preventDefault();
   };
 

@@ -14,10 +14,16 @@ public class MappingProfiles : Profile
 
         CreateMap<Teacher, TeacherResponseDto>().ReverseMap();
         CreateMap<TeacherCreateDto, Teacher>().ReverseMap();
+
         CreateMap<Exam, ExamResponseDtoDirector>().ReverseMap();
+        
         CreateMap<InstituteDto, Institute>().ReverseMap();
+        
         CreateMap<DepartmentCreateDto, Department>().ReverseMap();
         CreateMap<Department, DepartmentResDto>().ReverseMap();
+        
+        CreateMap<AdminRegisterDTO, Admin>().ReverseMap();
+        CreateMap<Admin, AdminLoginResDto>().ReverseMap();
 
     }
 }

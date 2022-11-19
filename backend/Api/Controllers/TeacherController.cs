@@ -36,16 +36,7 @@ public class TeacherController : BaseApiController
         return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacher, 200, "Teacher fetched successfully"));
     }
 
-    [HttpPost("register")]
-    public async Task<ActionResult<ApiDataResponse<TeacherLoginDto>>> RegisterTeacher(TeacherCreateDto teacher)
-    {
-        var teacherEntity = await _teacherService.CreateTeacherAsync(teacher);
-
-        if (teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher registration failed"));
-
-        return StatusCode(201, new ApiDataResponse<TeacherLoginDto>(teacherEntity, 201, "Teacher created successfully"));
-    }
-
+    
     [HttpPost("login")]
     public async Task<ActionResult<ApiDataResponse<TeacherLoginDto>>> LoginTeacher(TeacherLoginReqDto teacher)
     {
