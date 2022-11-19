@@ -4,6 +4,7 @@ using System.Text;
 using Core.Entities;
 using Core.Interfaces.Services;
 using Core.Models;
+using Core.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -29,7 +30,31 @@ public class TokenService : ITokenService
             new("departmentId", teacher.DepartmentId.ToString()),
         };
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
-        
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.Now.AddDays(100),
+            SigningCredentials = creds,
+            Issuer = _config["Token:Issuer"]
+        };
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+
+        return tokenHandler.WriteToken(token);
+    }
+
+    public string CreateToken(Admin admin)
+    {
+        var claims = new List<Claim>
+        {
+            new("email", admin.Email),
+            new("userId", admin.Id.ToString()),
+            new("designation", admin.Designation),
+        };
+        var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
@@ -47,20 +72,30 @@ public class TokenService : ITokenService
     // extract the user from the token
     public UserFromToken GetUserFromToken(string authHeader)
     {
-        string token = authHeader.Split(" ")[1];
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var tokenObj = tokenHandler.ReadJwtToken(token);
-        // Console.WriteLine(tokenObj.ToString());
-        var user = new UserFromToken
+        try
+
         {
-            Email = tokenObj.Claims.First(c => c.Type == "email").Value,
-            UserId = Guid.Parse(tokenObj.Claims.First(c => c.Type == "userId").Value),
-            Designation = tokenObj.Claims.First(c => c.Type == "designation").Value,
-            DepartmentId = Guid.Parse(tokenObj.Claims.First(c => c.Type == "departmentId").Value),
-        };
-        return user;
+            string token = authHeader.Split(" ")[1];
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenObj = tokenHandler.ReadJwtToken(token);
+            var user = new UserFromToken
+            {
+                Email = tokenObj.Claims.First(c => c.Type == "email").Value,
+                UserId = Guid.Parse(tokenObj.Claims.First(c => c.Type == "userId").Value),
+                Designation = tokenObj.Claims.First(c => c.Type == "designation").Value,
+                DepartmentId = Guid.Parse(tokenObj.Claims.First(c => c.Type == "departmentId").Value),
+            };
+            return user;
+        }
+        catch (Exception e)
+        {
+
+            throw new UnAuthorizedException();
+        }
     }
+
     
+
     // private string GetTokenFromRequest(string authHeader)
     // {
     //     if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
