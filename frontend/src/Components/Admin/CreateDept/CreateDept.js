@@ -18,7 +18,7 @@ const CreateDept = () => {
     dept: "",
   });
 
-  //Fetching department data
+  //Fetching institute data
   const fetchInstitute = async () => {
     const response = await axios.get("/institute");
     return response;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import * as ReactDOM from "react-dom";
 import "./AddInstitute.css";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { instance as axios } from "../../axios";
