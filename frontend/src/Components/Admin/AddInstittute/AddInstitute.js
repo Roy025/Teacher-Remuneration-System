@@ -19,7 +19,6 @@ const AddInstitute = () => {
 
   useQuery(["institution-list"], async () => {
     const store = await fetchInstitute();
-    console.log(store);
     setInstituteList(store.data.data);
     return store;
   });
@@ -32,22 +31,8 @@ const AddInstitute = () => {
     });
     const newData = { institute: "" };
     setData(newData);
-    console.log(response);
     return response;
   };
-
-  //Handling data
-
-  const [insList, setInsList] = "";
-
-  const handleInstitute = (e) => {
-    const { name, value } = e.target;
-    const newData = { ...data };
-    newData[name] = value;
-    setData(newData);
-    console.log(newData);
-  };
-
   const { mutate, isError } = useMutation(addInstitute, {
     onSuccess: (success) => {
       console.log(success);
@@ -58,18 +43,27 @@ const AddInstitute = () => {
     console.log("Something went wrong ");
   }
 
+  //Handling data
+
+  const handleInstitute = (e) => {
+    const { name, value } = e.target;
+    const newData = { ...data };
+    newData[name] = value;
+    setData(newData);
+  };
+
   return (
     <div className="AddInsWrap">
       <div className="AddInsContainer">
         <h1 className="AddInsHeader">Add Institute</h1>
-        <div className="AddInsInputFields">
-          <label className="AddInsLabel">Institute</label>
+        <div className="AddInputFields">
+          <label className="AddLabel">Institute</label>
           <input
             type="text"
             name="institute"
             onChange={(evnt) => handleInstitute(evnt)}
             value={data.institute}
-            className="AddInsInput"
+            className="AddInput"
             placeholder="Institute"
           />
         </div>
@@ -82,7 +76,7 @@ const AddInstitute = () => {
       </div>
 
       <div className="InstituteList">
-        <h1 className="AddInsHeader">Existing Institutes</h1>
+        <h1 className="AddHeader">Existing Institutes</h1>
         {instituteList.map((data, index) => {
           return <div className="InstituteItem">{data.name}</div>;
         })}
