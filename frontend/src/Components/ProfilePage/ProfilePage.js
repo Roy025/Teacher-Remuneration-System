@@ -33,18 +33,18 @@ function ProfilePage() {
 							<img
 								src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
 								alt="Avatar"
-								className="img-fluid my-5 pro-4"
+								className="img-fluid my-5 pro-4 image"
 							/>
 							<h3>Mr. AHsan Habib</h3>
 						</div>
 						<div className="containerB">
 							<div>
-								<p>Email</p>
-								<h4>asdfgh@gmail.com</h4>
+								<p className="para">Email</p>
+								<h4 className="h4">asdfgh@gmail.com</h4>
 							</div>
 							<div>
 								<div className="edit">
-									<p>Bank Account</p>
+									<p className="para">Bank Account</p>
 									<i className="far fa-edit mb-5 editbtn"></i>
 								</div>
 								{disableButton1 ? (
@@ -61,12 +61,16 @@ function ProfilePage() {
 										}
 									/>
 								) : (
-									<h4 onClick={() => setDisableButton1(true)}>{account}</h4>
+									<h4
+										className="h4"
+										onClick={() => setDisableButton1(true)}>
+										{account}
+									</h4>
 								)}{' '}
 							</div>
 							<div>
 								<div className="edit">
-									<p>Designation</p>
+									<p className="para">Designation</p>
 									<i className="far fa-edit mb-5 editbtn"></i>
 								</div>
 								{disableButton ? (
@@ -80,16 +84,20 @@ function ProfilePage() {
 										}}
 									/>
 								) : (
-									<h4 onClick={() => setDisableButton(true)}>{designation}</h4>
+									<h4
+										className="h4"
+										onClick={() => setDisableButton(true)}>
+										{designation}
+									</h4>
 								)}{' '}
 							</div>
 							<div>
-								<p>Department</p>
-								<h4>SWE</h4>
+								<p className="para">Department</p>
+								<h4 className="h4">SWE</h4>
 							</div>
 							<div>
-								<p>Institute</p>
-								<h4>SUST</h4>
+								<p className="para">Institute</p>
+								<h4 className="h4">SUST</h4>
 							</div>
 						</div>
 					</div>
