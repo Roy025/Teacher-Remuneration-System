@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import { Button } from "../../Buttons/Button";
-import SimpleButton from "../../Buttons/SimpleButton";
+import DropdownNoTitleTeacher from "../../../Functions/DropdownNoTitleTeacher";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { instance as axios } from "../../axios";
 import "./CreateAccount.css";
 
 const CreateAccount = () => {
+  // Store things
+  const [instituteList, setInstituteList] = useState([]);
+  const [selectedInstitute, setSelectedInstitute] = useState([""]);
+  const [deptList, setDeptList] = useState([]);
+  const [insData, setInsData] = useState({
+    id: "",
+    institute: "",
+    dept: "",
+  });
   const [data, setData] = useState({
     institute: "",
     department: "",
@@ -14,6 +24,20 @@ const CreateAccount = () => {
       },
     ],
   });
+
+  //Fetching institute data
+  const fetchInstitute = async () => {
+    const response = await axios.get("/institute");
+    return response;
+  };
+
+  useQuery(["institution-list"], async () => {
+    const store = await fetchInstitute();
+    setInstituteList(store.data.data);
+    return store;
+  });
+
+  // Handle data
 
   const handleMainData = (property, value) => {
     const newData = { ...data };
@@ -68,13 +92,12 @@ const CreateAccount = () => {
         <h1 className="AccountHeader">Create Accounts</h1>
         <div className="AccountInputFields">
           <label className="AccountLabel">Institute</label>
-          <input
-            type="text"
-            name="institute"
-            onChange={(evnt) => handleInstitute(evnt)}
-            value={data.institute}
-            className="AccountInput"
-            placeholder="Institute"
+          <DropdownNoTitleTeacher
+            options={instituteList}
+            propName="institute"
+            handleData={handleInstitute}
+            selected={selectedInstitute}
+            setSelected={setSelectedInstitute}
           />
         </div>
         <div className="AccountInputFields">
@@ -95,7 +118,7 @@ const CreateAccount = () => {
               <div className="InsideAccountContainer" key={index}>
                 <div className="AccountInputFields" key={index}>
                   {index === 0 && (
-                    <label className="AccountLabel">Teacher ID</label>
+                    <label className="AccountLabel">Teacher Email</label>
                   )}
                   <input
                     type="text"
@@ -131,10 +154,7 @@ const CreateAccount = () => {
               )}
               <div className="InsideAccountContainer">
                 {index === data.members.length - 1 && (
-                  <button
-                    className="AdminButton"
-                    onClick={() => addMembers()}
-                  >
+                  <button className="AdminButton" onClick={() => addMembers()}>
                     Add
                   </button>
                 )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query"
 import Links from './Links';
 import './TeachersBill.css';
 import './FormButton.css';
@@ -14,7 +14,6 @@ import '../SampleDropdown/styles.css';
 import ThreeFieldsNoAdd from '../../Functions/ThreeFieldsNoAdd';
 import ThreeFields from '../../Functions/ThreeFields';
 import { instance as axios } from '../axios';
-
 const DirectorsBill = () => {
 	const [selectedSemester, setSelectedSemester] = useState('');
 	const [selectedSession, setSelectedSession] = useState('');
