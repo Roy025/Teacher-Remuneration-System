@@ -17,7 +17,7 @@ import ScrollToTop from './Functions/ScrollTotop';
 import AdminHome from './Components/Admin/AdminHome';
 import CreateAccount from './Components/Admin/CreateAccount/CreateAccount';
 import AddInstitute from './Components/Admin/AddInstittute/AddInstitute';
-import Login from './Components/Login/login';
+import Login from './Components/Login/Login';
 
 function App() {
 	return (

@@ -1,82 +1,44 @@
-.login {
-	width: 400px;
-	margin: 16px auto;
-	font-size: 16px;
+.login-page {
+	padding: 8% 0 0;
+	margin: auto;
+	display: grid;
 }
-
-/* Reset top and bottom margins from certain elements */
-.login-header,
-.login p {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-/* The triangle form is achieved by a CSS hack */
-.login-triangle {
-	width: 0;
-	margin-right: auto;
-	margin-left: auto;
-	border: 12px solid transparent;
-	border-bottom-color: #28d;
-}
-
-.login-header {
-	background: #28d;
-	padding: 20px;
-	font-size: 1.4em;
-	font-weight: normal;
+.form {
+	position: relative;
+	z-index: 1;
+	background: #dce7dc;
+	width: 40%;
+	margin: 0 auto 100px;
+	padding: 45px;
 	text-align: center;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form button {
+	font-family: 'Roboto', sans-serif;
 	text-transform: uppercase;
-	color: #fff;
-}
-
-.login-container {
-	background: #ebebeb;
-	padding: 12px;
-}
-
-/* Every row inside .login-container is defined with p tags */
-.login p {
-	padding: 12px;
-}
-
-.login input {
-	box-sizing: border-box;
-	display: block;
-	width: 100%;
-	border-width: 1px;
-	border-style: solid;
-	padding: 16px;
 	outline: 0;
-	font-family: inherit;
-	font-size: 0.95em;
-}
-
-.login input[type='email'],
-.login input[type='password'] {
-	background: #fff;
-	border-color: #bbb;
-	color: #555;
-}
-
-/* Text fields' focus effect */
-.login input[type='email']:focus,
-.login input[type='password']:focus {
-	border-color: #888;
-}
-
-.login input[type='submit'] {
-	background: #28d;
-	border-color: transparent;
-	color: #fff;
+	background: #4caf50;
+	width: 100%;
+	border: 0;
+	padding: 15px;
+	color: #ffffff;
 	cursor: pointer;
 }
-
-.login input[type='submit']:hover {
-	background: #17c;
+.form button:hover {
+	background-color: #469849;
 }
-
-/* Buttons' focus effect */
-.login input[type='submit']:focus {
-	border-color: #05a;
+.form input {
+	font-family: 'Roboto', sans-serif;
+	background: #f2f2f2;
+	width: 100%;
+	border: 1px solid rgb(1, 111, 12);
+	margin: 0 0 15px;
+	padding: 15px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+.heading {
+	font-style: italic;
+	font-size: 220%;
+	color: #115514;
 }
