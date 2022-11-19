@@ -36,13 +36,13 @@
   margin-bottom: 5%;
 }
 
-.AddInsInputFields {
+.AddInputFields {
   display: flex;
   flex-direction: column;
   margin-top: 2%;
 }
 
-.AddInsLabel {
+.AddLabel {
   max-width: 100px;
   margin-top: 2%;
   width: 100%;
@@ -64,7 +64,7 @@
   -box-shadow: -5px 23px 0px 160px rgba(51, 51, 51, 0);
 }
 
-.AddInsInput {
+.AddInput {
   width: 400px;
   padding: 12px 20px;
   margin-top: 1%;
@@ -73,9 +73,9 @@
   font-size: 1rem;
 }
 
-.AddInsInput:hover{
+.AddInput:hover{
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  transition: all .4s ease;
+  transition: all .1s ease;
 }
 
 .InstituteList {
