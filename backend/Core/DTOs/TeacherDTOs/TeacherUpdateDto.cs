@@ -6,4 +6,5 @@ public class TeacherUpdateDto
     public string? Password { get; set; } = null!;
     public string? BankAccount { get; set; } = null!;
     public string? Designation { get; set; } = null;
+    public string? Role { get; set; } = null;
 }

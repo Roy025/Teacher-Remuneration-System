@@ -14,6 +14,7 @@ public class MappingProfiles : Profile
 
         CreateMap<Teacher, TeacherResponseDto>().ReverseMap();
         CreateMap<TeacherCreateDto, Teacher>().ReverseMap();
+        CreateMap<TeacherUpdateDto, Teacher>().ReverseMap();
 
         CreateMap<Exam, ExamResponseDtoDirector>().ReverseMap();
         

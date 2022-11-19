@@ -66,19 +66,19 @@ public class AdminService : IAdminService
     {
         var spec = new AdminByEmailSpecification(adminLoginDTO.email);
         var admins = await _unitOfWork.Repository<Admin>().ListAllAsyncWithSpec(spec);
-        
+
         if (admins == null) return null;
-        
+
         var admin = admins.FirstOrDefault();
         if (admin == null) return null;
-        
+
         if (!BCrypt.Net.BCrypt.Verify(adminLoginDTO.Password, admin.Password)) return null;
 
         return new AdminLoginResDto
         {
             Email = admin.Email,
             Token = _tokenService.CreateToken(admin),
-            Designation = admin.Designation,
+            Role = admin.Role
         };
     }
 
@@ -96,11 +96,44 @@ public class AdminService : IAdminService
     public async Task<TeacherResponseDto> RegisterTeacherAsync(TeacherCreateDto teacher)
     {
         var teacherEntity = _mapper.Map<Teacher>(teacher);
+        teacherEntity.Password = BCrypt.Net.BCrypt.HashPassword(teacher.Password);
         _unitOfWork.Repository<Teacher>().Add(teacherEntity);
+        Console.WriteLine(teacherEntity.Id);
+        Console.WriteLine(teacherEntity.Email);
+        Console.WriteLine(teacherEntity.Password);
+        Console.WriteLine(teacherEntity.DepartmentId);
         var result = await _unitOfWork.Complete();
         if (result <= 0) return null;
         return _mapper.Map<TeacherResponseDto>(teacherEntity);
     }
+
+    public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid teacher, TeacherUpdateDto teacherUpdateDto)
+    {
+        var teacherEntity = await _unitOfWork.Repository<Teacher>().GetByIdAsync(teacher);
+        if (teacherEntity == null) return null;
+
+        if (!string.IsNullOrEmpty(teacherUpdateDto.Password))
+            teacherEntity.Password = BCrypt.Net.BCrypt.HashPassword(teacherUpdateDto.Password);
+
+        if (!string.IsNullOrEmpty(teacherUpdateDto.Name))
+            teacherEntity.Name = teacherUpdateDto.Name;
+        
+        if(!string.IsNullOrEmpty(teacherUpdateDto.Email))
+            teacherEntity.Email = teacherUpdateDto.Email;
+        
+        if(!string.IsNullOrEmpty(teacherUpdateDto.Designation))
+            teacherEntity.Designation = teacherUpdateDto.Designation;
+        if(!string.IsNullOrEmpty(teacherUpdateDto.Role))
+            teacherEntity.Role = teacherUpdateDto.Role;
+
+        
+        _unitOfWork.Repository<Teacher>().Update(teacherEntity);
+        var result = await _unitOfWork.Complete();
+        
+        if (result <= 0) return null;
+        return _mapper.Map<TeacherResponseDto>(teacherEntity);
+    }
+
     private bool ValidateEmailAddress(string email)
     {
         if (string.IsNullOrEmpty(email)) return false;

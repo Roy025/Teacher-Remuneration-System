@@ -83,6 +83,14 @@ public class AdminController : BaseApiController
         return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacherEntity, 201, "Teacher Created successfully"));
     }
     
+    [HttpPatch("teacher/{teacher}")]
+    public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> UpdateTeacherAsync([FromRoute] Guid teacher, [FromBody] TeacherUpdateDto teacherUpdateDto)
+    {
+        // var user = GetUserFromToken();
+        var teacherEntity = await _adminService.UpdateTeacherAsync(teacher, teacherUpdateDto);
+        if (teacherEntity == null) return BadRequest("Teacher not updated");
+        return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacherEntity, 200, "Teacher updated successfully"));
+    }
 
 
     private UserFromToken? GetUserFromToken()
@@ -92,7 +100,7 @@ public class AdminController : BaseApiController
             throw new UnAuthorizedException();
         }
         var _user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
-        if(_user.Designation != "Admin")
+        if(_user.Role != "Admin")
         {
             throw new UnAuthorizedException();
         }

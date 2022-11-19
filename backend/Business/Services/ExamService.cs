@@ -21,7 +21,7 @@ public class ExamService : IExamService
 
     public async Task<ExamResponseDtoDirector> CreateExamsFromDirector(ExamCreateFromDirectorDto examCreateFromDirectorDto, UserFromToken user)
     {
-        if (user.Designation != "Director")
+        if (user.Role != "Director")
         {
             throw new UnAuthorizedException("You are not authorized to perform this action");
         }
@@ -83,7 +83,7 @@ public class ExamService : IExamService
 
     public async Task<ExamResponseDtoDirector> GetExamsForDirectorAsync(ExamReqParams examParams, UserFromToken user)
     {
-        if (user.Designation != "Director")
+        if (user.Role != "Director")
             throw new UnAuthorizedException("You are not authorized to perform this action");
         examParams.DepartmentId = user.DepartmentId;
 
