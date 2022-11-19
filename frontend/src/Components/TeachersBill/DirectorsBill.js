@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useQuery } from "@tanstack/react-query"
 import Links from './Links';
 import './TeachersBill.css';
 import './FormButton.css';
@@ -60,11 +61,10 @@ const DirectorsBill = () => {
 
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const newData = {  };
     // const newData = { ...data };
-    // console.log(data);
+    console.log(selectedSession);
     newData.session = selectedSession;
     newData.semester = selectedSemester;
     newData.chairman = selectedChairman;
@@ -91,26 +91,26 @@ const DirectorsBill = () => {
     // const res = await axios.post
   };
 
-  useEffect(() => {
-    console.log(selectedSession);
-    console.log(selectedSemester);
-    console.log(selectedChairman);
-    console.log(selectedChiefInvigilator);
-    console.log(selectedMembers);
+  // useEffect(() => {
+  //   console.log(selectedSession);
+  //   console.log(selectedSemester);
+  //   console.log(selectedChairman);
+  //   console.log(selectedChiefInvigilator);
+  //   console.log(selectedMembers);
 
-  }, [selectedSemester, selectedSession, selectedChairman, selectedChiefInvigilator, selectedMembers]);
+  // }, [selectedSemester, selectedSession, selectedChairman, selectedChiefInvigilator, selectedMembers]);
   const [institutes, setInstitutes] = useState([]);
 
-  const fetchInstitutes = async () => {
-    const res = await axios.get('/institute');
-    setInstitutes(res.data.data);
+  const fetchInstitute = async () => {
+    const response = await axios.get("/institute");
+    return response;
   };
 
-  useEffect(() => {
-    (async () => {
-      await fetchInstitutes();
-    })();
-  }, []);
+  useQuery(["institution-list"], async () => {
+    const store = await fetchInstitute();
+    setInstitutes(store.data.data);
+    return store;
+  });
 
   // useEffect(async () => {
   //   console.log(data);
@@ -138,11 +138,7 @@ const DirectorsBill = () => {
     }
   }
 
-  useEffect(() => {
-    (async () => {
-      await fetchPrevData();
-    })();
-  }, [selectedSemester, selectedSession]);
+  useQuery(["prev-data"], fetchPrevData);
 
   return (
     <>
@@ -208,7 +204,7 @@ const DirectorsBill = () => {
             <div className="formRow SubmitRow">
               <button
                 type="submit"
-                className="submitButton" onClick={async (e) => handleSubmit()} >
+                className="submitButton" onClick={console.log("Hi")} >
                 Submit
               </button>
             </div>
