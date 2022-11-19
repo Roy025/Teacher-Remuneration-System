@@ -6,140 +6,97 @@ import { useState } from 'react';
 function ProfilePage() {
 	const [date, setDate] = useState(new Date());
 
-	const onChange = (date) => {
-		setDate(date);
+	const [disableButton, setDisableButton] = useState(false);
+	const [disableButton1, setDisableButton1] = useState(false);
+	const [inputFields, setInputFields] = useState([
+		{
+			account: '23456',
+			designation: 'sdfghj',
+		},
+	]);
+	const handleChange = (evnt, index) => {
+		const { name, value } = evnt.target;
+		console.log(name);
+		console.log(value);
+		const list = [...inputFields];
+		list[index][name] = value;
+		setInputFields(list);
 	};
 
-
-  return (
-    <div className="MainProfileBody">
-      {/* Profile avatar and calendar */}
-      <div className="ProfileHeadContainer">
-        <div className="ProfileHead">
-          <div className="ProfileAvatar">
-            <img
-              className="ProfilePic"
-              src={require("./images/profilePic.jpg")}
-              alt="profilePic"
-            />
-          </div>
-          <div className="NameAndInstitution">
-            <div className="ProfileName">Raihan Ullah</div>
-            <div className="ProfileInstitution">
-              Shahjalal University of Science and Technology
-            </div>
-            <div className="ProfileDesignation">Lecturer</div>
-          </div>
-        </div>
-        <div className="ProfileCalender">
-          <DatePicker
-            onChange={onChange}
-            value={date}
-            className="Calendar-design"
-            weekStartsFrom="Sunday"
-          />
-        </div>
-      </div>
-
-      {/* Dashboard */}
-      <div className="Summary-dashboard">
-        <h3 className="Summary">Summary</h3>
-
-        <div className="Money-dashboard">
-          <div className="Money-card">
-            <h3 className="Money-card-title">Total Income</h3>
-            <h5 className="Money-card-amount">BDT 4,49,650</h5>
-          </div>
-          <div className="Money-card Withdrwan">
-            <h3 className="Money-card-title">Withdrwan Amount</h3>
-            <h5 className="Money-card-amount">BDT 4,00,650</h5>
-          </div>
-          <div className="Money-card Remaining">
-            <h3 className="Money-card-title">Remaining Amount</h3>
-            <h5 className="Money-card-amount">BDT 49,650</h5>
-          </div>
-          <div className="Money-card Committee">
-            <h3 className="Money-card-title">Active Committee</h3>
-            <h5 className="Money-card-amount">02</h5>
-          </div>
-        </div>
-      </div>
-
-      {/* Profile info */}
-      <div className="Profile-info">
-        <div className="Cleared-voucher">
-          <h1>Cleared Vouchers</h1>
-          <div className="Catalogue-summary-container">
-            <div className="Catalogue-box">
-              <div className="Session-date">
-                <div className="Session">Session: 2018-19</div>
-                <div className="Semester">4th Semester</div>
-              </div>
-              <div className="Semester-chairman">
-              <div className="Issue-date">09 Semptember, 2021</div>
-                <div className="Chairman">Mohammad Abdullah Al Mumin</div>
-              </div>
-            </div>
-            <div className="Catalogue-box">
-              <div className="Session-date">
-                <div className="Session">Session: 2018-19</div>
-                <div className="Semester">5th Semester</div>
-              </div>
-              <div className="Semester-chairman">
-              <div className="Issue-date">10 July, 2021</div>
-                <div className="Chairman">M. Jahirul Islam</div>
-              </div>
-            </div>
-            <div className="Catalogue-box">
-              <div className="Session-date">
-                <div className="Session">Session: 2017-18</div>
-                <div className="Semester">6th Semester</div>
-              </div>
-              <div className="Semester-chairman">
-              <div className="Issue-date">09 Semptember, 2021</div>
-                <div className="Chairman">M. Jahirul Islam</div>
-              </div>
-            </div>
-            <div className="Catalogue-box">
-              <div className="Session-date">
-                <div className="Session">Session: 2019-20</div>
-                <div className="Semester">3rd Semester</div>
-              </div>
-              <div className="Semester-chairman">
-              <div className="Issue-date">09 Semptember, 2021</div>
-                <div className="Chairman">Dr. Ahsan Habib</div>
-              </div>
-            </div>
-          </div>
-        </div> 
-        <div className="Cleared-voucher">
-          <h1>Uncleared Vouchers</h1>
-          <div className="Catalogue-summary-container">
-            <div className="Catalogue-box">
-              <div className="Session-date">
-                <div className="Session">Session: 2018-19</div>
-                <div className="Semester">6th Semester</div>
-              </div>
-              <div className="Semester-chairman">
-              <div className="Issue-date">09 January, 2023</div>
-                <div className="Chairman">Dr. Ahsan Habib</div>
-              </div>
-            </div>
-            <div className="Catalogue-box">
-              <div className="Session-date">
-                <div className="Session">Session: 2017-18</div>
-                <div className="Semester">8th Semester</div>
-              </div>
-              <div className="Semester-chairman">
-              <div className="Issue-date">09 January, 2023</div>
-                <div className="Chairman">Ms Sayma Sultana Chowdhury</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className="profile">
+			{inputFields.map((data, index) => {
+				const { account, designation } = data;
+				return (
+					<div className="card">
+						<div className="containerA">
+							<img
+								src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
+								alt="Avatar"
+								className="img-fluid my-5 pro-4"
+							/>
+							<h3>Mr. AHsan Habib</h3>
+						</div>
+						<div className="containerB">
+							<div>
+								<p>Email</p>
+								<h4>asdfgh@gmail.com</h4>
+							</div>
+							<div>
+								<div className="edit">
+									<p>Bank Account</p>
+									<i className="far fa-edit mb-5 editbtn"></i>
+								</div>
+								{disableButton1 ? (
+									<input
+										type="number"
+										name="account"
+										value={account}
+										onChange={(evnt) => handleChange(evnt, index)}
+										onKeyDown={(e) => {
+											if (e.key === 'Enter') setDisableButton1(false);
+										}}
+										onKeyPress={(e) =>
+											!/[0-9]/.test(e.key) && e.preventDefault()
+										}
+									/>
+								) : (
+									<h4 onClick={() => setDisableButton1(true)}>{account}</h4>
+								)}{' '}
+							</div>
+							<div>
+								<div className="edit">
+									<p>Designation</p>
+									<i className="far fa-edit mb-5 editbtn"></i>
+								</div>
+								{disableButton ? (
+									<input
+										type="text"
+										name="designation"
+										value={designation}
+										onChange={(evnt) => handleChange(evnt, index)}
+										onKeyDown={(e) => {
+											if (e.key === 'Enter') setDisableButton(false);
+										}}
+									/>
+								) : (
+									<h4 onClick={() => setDisableButton(true)}>{designation}</h4>
+								)}{' '}
+							</div>
+							<div>
+								<p>Department</p>
+								<h4>SWE</h4>
+							</div>
+							<div>
+								<p>Institute</p>
+								<h4>SUST</h4>
+							</div>
+						</div>
+					</div>
+				);
+			})}
+		</div>
+	);
 }
 
 export default ProfilePage;
