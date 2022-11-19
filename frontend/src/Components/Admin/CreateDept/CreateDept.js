@@ -8,6 +8,7 @@ const CreateDept = () => {
   // Store incoming data
   const [instituteList, setInstituteList] = useState([]);
   const [selectedInstitute, setSelectedInstitute] = useState([""]);
+  const [insTituteAvailabe, setInsTituteAvailabe] = useState(false);
 
   const [deptList, setDeptList] = useState([]);
 
@@ -49,24 +50,17 @@ const CreateDept = () => {
   }
 
   // //Fetching department data
-  let insTituteAvailabe = false;
 
-  const fetchDept = async () => {
-    const response = await axios.get(`/department`);
+  const fetchDept = async (id) => {
+    const response = await axios.get(`/department?institute=${id}`);
+    console.log(response)
+    setDeptList(response.data.data)
     return response;
   };
 
-  useQuery(
-    ["dept-list"],
-    async () => {
-      const store = await fetchDept(data.id);
-      setDeptList(store.data.data);
-      return store;
-    },
-    {
-      enabled: insTituteAvailabe,
-    }
-  );
+  useQuery(["dept-list", data.id], () => fetchDept(data.id), {
+    enabled: !!insTituteAvailabe,
+  });
 
   //Handling data
 
@@ -74,7 +68,7 @@ const CreateDept = () => {
     const newData = { ...data };
     newData.propName = option.name;
     newData.id = option.id;
-    insTituteAvailabe = true;
+    setInsTituteAvailabe(true);
     setData(newData);
   };
 
