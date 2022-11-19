@@ -8,7 +8,7 @@ public class Admin : BaseEntity
     public string Email { get; set;}
 
     public string Password { get; set; }
-    public string? Designation { get; set; } = "Admin";
+    public string? Role { get; set; } = "Admin";
     private bool ValidateEmailAddress(string email)
     {
         if (string.IsNullOrEmpty(email)) return false;

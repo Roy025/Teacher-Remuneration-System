@@ -91,7 +91,7 @@ public class TeacherService : ITeacherService
         return new TeacherLoginDto
         {
             Email = teacherEntity.Email,
-            Designation = teacherEntity.Designation,
+            Role = teacherEntity.Role,
             Image = teacherEntity.Image,
             Token = _tokenService.CreateToken(teacherEntity),
         };

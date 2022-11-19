@@ -78,7 +78,7 @@ public class AdminService : IAdminService
         {
             Email = admin.Email,
             Token = _tokenService.CreateToken(admin),
-            Designation = admin.Designation,
+            Role = admin.Role
         };
     }
 
@@ -123,6 +123,8 @@ public class AdminService : IAdminService
         
         if(!string.IsNullOrEmpty(teacherUpdateDto.Designation))
             teacherEntity.Designation = teacherUpdateDto.Designation;
+        if(!string.IsNullOrEmpty(teacherUpdateDto.Role))
+            teacherEntity.Role = teacherUpdateDto.Role;
 
         
         _unitOfWork.Repository<Teacher>().Update(teacherEntity);
