@@ -52,6 +52,11 @@ public static class DependencyInjectionSetup
         services.AddCorsToService();
         services.AddDb(config);
 
+    //     services.(options =>
+    // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+// );
+        
+
         services.Configure<ApiBehaviorOptions>(options =>
         {
             options.InvalidModelStateResponseFactory = actionContext =>

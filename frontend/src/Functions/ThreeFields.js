@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
+import { instance as axios } from "../Components/axios";
 
 const ThreeFields = ({ options, propName, handleData, existingData = [], setExistingData }) => {
   const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([[{}]]);
@@ -14,16 +15,42 @@ const ThreeFields = ({ options, propName, handleData, existingData = [], setExis
   const [selectedDepartment, setSelectedDepartment] = useState(existingData ? existingData.map(x => x.department) : ['']);
   const [selectedMembers, setSelectedMembers] = useState(existingData ? existingData.map(x => x.name) : ['']);
 
+  useEffect(() => {
+    setSelectedInstitute(existingData ? existingData.map(x => {
+      if (x.department && x.department.institute.name)
+        return x.department.institute.name
+      else
+        return ''
+    }) : ['']);
 
-  const handleInstitute = (property, value, index) => {
+    setSelectedDepartment(existingData ? existingData.map(x => {
+      if (x.department && x.department.name)
+        return x.department.name
+      else
+        return ''
+    }) : ['']);
+
+    
+    setSelectedMembers(existingData ? existingData.map(x => x.name) : ['']);
+    
+    setSelectedTeachers(existingData ? existingData : [{
+      id: '',
+      name: '',
+    }])
+  }, [existingData]);
+
+
+  const handleInstitute = async (property, value, index) => {
     const departments = [...filteredListOfDepartments];
-    departments[index] = value.departments;
+    const res = await axios.get(`/department?institute=${value.id}`);
+    departments[index] = res.data.data;
     setFilteredListOfDepartments(departments);
   };
 
-  const handleDepartment = (property, value, index) => {
+  const handleDepartment = async (property, value, index) => {
     const teachers = [...filteredListOfTeachers];
-    teachers[index] = value.teachers;
+    const res = await axios.get(`/teacher?department=${value.id}`);
+    teachers[index] = res.data.data;
     setFilteredListOfTeachers(teachers);
   };
 

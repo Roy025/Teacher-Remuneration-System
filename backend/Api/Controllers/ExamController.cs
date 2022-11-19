@@ -25,7 +25,7 @@ public class ExamController : BaseApiController
     // }
 
     // Director Section
-    [HttpGet("/director")]
+    [HttpGet("director")]
     public async Task<ActionResult<ApiDataResponse<ExamResponseDtoDirector>>> GetExamsForDirector([FromQuery] ExamReqParams examParams)
     {
         if (!Request.Headers.ContainsKey("Authorization"))
@@ -37,7 +37,7 @@ public class ExamController : BaseApiController
         return StatusCode(200, new ApiDataResponse<ExamResponseDtoDirector>(exam, 200, "Exams fetched successfully"));
     }
     
-    [HttpPost("/director")]
+    [HttpPost("director")]
     public async Task<ActionResult<ApiDataResponse<ExamResponseDtoDirector>>> CreateExamsFromDirector([FromBody] ExamCreateFromDirectorDto examCreateFromDirectorDto)
     {
         if (!Request.Headers.ContainsKey("Authorization"))
@@ -53,7 +53,7 @@ public class ExamController : BaseApiController
     //////////////////////////////////
 
     // Chairman Section
-    [HttpGet("/chairman")]
+    [HttpGet("chairman")]
     public Task<ActionResult<ApiDataResponse<IEnumerable<string>>>> GetExamSessionsForChairman([FromQuery] ExamReqParams examReqParams)
     {
         if (!Request.Headers.ContainsKey("Authorization"))
