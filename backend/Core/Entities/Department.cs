@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Core.Entities;
 public class Department : BaseEntity
 {
@@ -7,5 +9,6 @@ public class Department : BaseEntity
     public Guid InstituteId { get; set; }
     public Institute? Institute { get; set; } = null!;
     public ICollection<Course> Courses { get; set; } = new List<Course>();
+    [JsonIgnore]
     public ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
 }

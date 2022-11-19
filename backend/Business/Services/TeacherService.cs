@@ -5,6 +5,7 @@ using Core.Entities;
 using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.Params;
+using Core.Utils;
 
 namespace Business.Services;
 public class TeacherService : ITeacherService
@@ -51,8 +52,10 @@ public class TeacherService : ITeacherService
     {
         var teacherEntity = await _unitOfWork.Repository<Teacher>().ListAllAsync();
         var teacherToLogin = teacherEntity.FirstOrDefault(t => t.Email == teacher.Email);
-        if (teacherEntity == null) return null;
-        if (!BCrypt.Net.BCrypt.Verify(teacher.Password, teacherToLogin.Password)) return null;
+        if (teacherEntity == null) 
+            throw new NotFoundException("Teacher not found");
+        if (!BCrypt.Net.BCrypt.Verify(teacher.Password, teacherToLogin.Password)) 
+            throw new UnAuthorizedException("Invalid password");
         return GetTeacherLoginDto(teacherToLogin);
         throw new NotImplementedException();
     }
