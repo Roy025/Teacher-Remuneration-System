@@ -18,7 +18,7 @@ const DropdownNoTitleTeacher = ({ options, propName, handleData, index, selected
         if (index !== undefined) {
             const newSelected = [...selected];
             newSelected[index] = evnt.target.value;
-            console.log("newSelected", newSelected[index]);
+            // console.log("newSelected", newSelected[index]);
             setSelected(newSelected);
         } else {
             setSelected(evnt.target.value);
