@@ -152,6 +152,13 @@ const ChairmanBill = () => {
       name: "",
     },
   }]);
+  const [registeredStudentsData, setRegisteredStudentsData] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
   const [listOfInvigilators, setListOfInvigilators] = useState([{ id: "", name: "", department: "", institute: "" }]);
 
   const handleSubmit = (e) => {
@@ -357,13 +364,14 @@ const ChairmanBill = () => {
             />
           </div> */}
 
-          {/* <div className="formRow">
+          <div className="formRow">
             <label className="Label">Student Registration</label>
             <StudentCount
-              inputFields={inputStudentReg}
-              setInputFields={setInputStudentReg}
+              options={listOfCourses}
+              existingData={registeredStudentsData}
+              setExistingData={setRegisteredStudentsData}
             />
-          </div>  */}
+          </div>
 
           <div className="formRow SubmitRow">
             <button type="submit" className="submitButton" onClick={submit}>
