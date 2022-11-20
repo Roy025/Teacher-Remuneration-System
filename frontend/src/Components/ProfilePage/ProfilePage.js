@@ -33,7 +33,7 @@ function ProfilePage() {
 							<img
 								src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
 								alt="Avatar"
-								className="img-fluid my-5 pro-4"
+								className="img-fluid my-5 pro-4 Profile-image"
 							/>
 							<h3>Mr. AHsan Habib</h3>
 						</div>
