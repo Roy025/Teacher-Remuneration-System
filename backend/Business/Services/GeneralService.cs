@@ -43,6 +43,13 @@ namespace Business.Services
             return institutes;
         }
 
+        public async Task<IReadOnlyList<Student>> GetAllStudentAsync(Guid department)
+        {
+            var spec = new StudentsByDeptIdSpec(department);
+            var students = await _unitOfWork.Repository<Student>().ListAllAsyncWithSpec(spec);
+            return students;
+        }
+
         public async Task<IReadOnlyList<TeacherResponseDto>> GetAllTeacherAsync(Guid department)
         {
             var spec = new TeacherByDept(department);
