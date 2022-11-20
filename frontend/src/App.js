@@ -74,6 +74,10 @@ function App() {
 					exact
 					path="/addinstitute"
 					element={<AddInstitute />}></Route>
+					<Route
+					exact
+					path="/adddepartment"
+					element={<CreateDept />}></Route>
 				<Route
 					exact
 					path="/login"
