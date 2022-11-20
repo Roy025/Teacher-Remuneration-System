@@ -19,12 +19,8 @@ import ThreeFields from "../../Functions/ThreeFields";
 const ChairmanBill = () => {
   const [selectedSession, setSelectedSession] = useState("");
   const [selectedSemester, setSelectedSemester] = useState("");
-  const [listOfInstitutes, setListOfInstitutes] = useState([
-    { id: "1", name: "SUST" },
-    { id: "2", name: "BRAC" },]);
-  const [listOfTeachers, setListOfTeachers] = useState([
-    { id: "1", name: "Nihal" },
-    { id: "2", name: "Muna" },]);
+  const [listOfInstitutes, setListOfInstitutes] = useState([{}]);
+  const [listOfTeachers, setListOfTeachers] = useState([{}]);
   const [listOfCourses, setListOfCourses] = useState(
     [
       {
