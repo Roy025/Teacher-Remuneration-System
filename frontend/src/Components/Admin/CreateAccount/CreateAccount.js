@@ -36,7 +36,7 @@ const CreateAccount = () => {
     return store;
   });
 
-  // //Fetching department data
+  //Fetching department data
 
   const fetchDept = async (id) => {
     const response = await axios.get(`/department?institute=${id}`);
