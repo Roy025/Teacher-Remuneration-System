@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Specifications.GeneralSpecifications;
+using Core.DTOs.CourseDTOs;
 using Core.DTOs.OtherDTOs;
 using Core.DTOs.TeacherDTOs;
 using Core.Entities;
@@ -20,6 +21,13 @@ namespace Business.Services
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+        }
+
+        public async Task<IReadOnlyList<CourseResponseDto>> GetAllCourseAsync(Guid department)
+        {
+            var spec = new CourseByDeptIdSpec(department);
+            var courses = await _unitOfWork.Repository<Course>().ListAllAsyncWithSpec(spec);
+            return _mapper.Map<IReadOnlyList<CourseResponseDto>>(courses);
         }
 
         public async Task<IReadOnlyList<DepartmentResDto>> GetAllDepartmentAsync(Guid institute)
