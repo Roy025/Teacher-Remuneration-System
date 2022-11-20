@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.DTOs.CourseDTOs;
 using Core.DTOs.OtherDTOs;
 using Core.DTOs.TeacherDTOs;
 using Core.Entities;
@@ -43,5 +44,13 @@ public class GeneralController : ControllerBase
         var teachers = await _generalService.GetAllTeacherAsync(department);
         if (teachers == null) return BadRequest("Teachers not found");
         return StatusCode(200, new ApiDataResponse<IReadOnlyList<TeacherResponseDto>>(teachers, 200, "Teachers found successfully"));
+    }
+
+    [HttpGet("course")]
+    public async Task<ActionResult<ApiDataResponse<IReadOnlyList<CourseResponseDto>>>> GetCourseAsync([FromQuery]Guid department)
+    {
+        var courses = await _generalService.GetAllCourseAsync(department);
+        if (courses == null) return BadRequest("Courses not found");
+        return StatusCode(200, new ApiDataResponse<IReadOnlyList<CourseResponseDto>>(courses, 200, "Courses found successfully"));
     }
 }

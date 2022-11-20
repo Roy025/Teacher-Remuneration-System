@@ -1,3 +1,4 @@
+using Core.DTOs.CourseDTOs;
 using Core.DTOs.OtherDTOs;
 using Core.DTOs.TeacherDTOs;
 using Core.Entities;
@@ -92,6 +93,33 @@ public class AdminController : BaseApiController
         return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacherEntity, 200, "Teacher updated successfully"));
     }
 
+    [HttpDelete("teacher/{teacher}")]
+    public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> DeleteTeacherAsync([FromRoute] Guid teacher)
+    {
+        // var user = GetUserFromToken();
+        var teacherEntity = await _adminService.DeleteTeacherAsync(teacher);
+        if (teacherEntity == null) return BadRequest("Teacher not deleted");
+        return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacherEntity, 200, "Teacher deleted successfully"));
+    }
+
+
+    [HttpPost("course/create")]
+    public async Task<ActionResult<ApiDataResponse<IReadOnlyList<CourseResponseDto>>>> CreateCourseAsync([FromBody] IReadOnlyList<CourseCreateDto> courses)
+    {
+        // var user = GetUserFromToken();
+        var courseEntities = await _adminService.CreateCourseAsync(courses);
+        if (courseEntities == null) return BadRequest("Course not created");
+        return StatusCode(200, new ApiDataResponse<IReadOnlyList<CourseResponseDto>>(courseEntities, 201, "Course Created successfully"));
+    }
+
+    [HttpDelete("course/{course}")]
+    public async Task<ActionResult<ApiDataResponse<CourseResponseDto>>> DeleteCourseAsync([FromRoute] Guid course)
+    {
+        // var user = GetUserFromToken();
+        var courseEntity = await _adminService.DeleteCourseAsync(course);
+        if (courseEntity == null) return BadRequest("Course not deleted");
+        return StatusCode(200, new ApiDataResponse<CourseResponseDto>(courseEntity, 200, "Course deleted successfully"));
+    }
 
     private UserFromToken? GetUserFromToken()
     {
