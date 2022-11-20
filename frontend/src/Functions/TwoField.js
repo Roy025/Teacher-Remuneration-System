@@ -1,75 +1,94 @@
 import "../Components/SampleDropdown/styles.css";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
-const TwoField = ({ inputFields, setInputFields }) => {
-  const removeInputFields = (e, index) => {
-    e.preventDefault();
-    const rows = [...inputFields];
-    rows.splice(index, 1);
-    setInputFields(rows);
-  };
-  const handleChange = (evnt, index) => {
-    const { name, value } = evnt.target;
-    const list = [...inputFields];
-    list[index][name] = value;
-    setInputFields(list);
-  };
+const TwoField = ({ courses, teachers, handleData, existingData = [], setExistingData }) => {
+  const [selectedResponsibilities, setSelectedResponsibilities] = useState([{}]);
+
+  const [selectedCourses, setSelectedCourses] = useState(existingData ? existingData.map(x => {
+    if (x.course && x.course.code) return x.course.code;
+    else return "";
+  }) : [""]);
+
+  const [selectedTeachers, setSelectedTeachers] = useState(existingData ? existingData.map(x => {
+    if (x.teacher && x.teacher.name) return x.teacher.name;
+    else return "";
+  }) : [""]);
 
   const addInputField = () => {
-    setInputFields([
-      ...inputFields,
-      {
-        name: "",
-        course: "",
-      },
-    ]);
-    console.log(inputFields);
+    setSelectedCourses([...selectedCourses, ""]);
+    setSelectedTeachers([...selectedTeachers, ""]);
+    setSelectedResponsibilities([...selectedResponsibilities, {}]);
   };
+
+  const removeInputFields = (e, index) => {
+    e.preventDefault();
+    const rows = [...selectedResponsibilities];
+    rows.splice(index, 1);
+    setSelectedResponsibilities(rows);
+
+    const courses = [...selectedCourses];
+    courses.splice(index, 1);
+    setSelectedCourses(courses);
+
+    const teachers = [...selectedTeachers];
+    teachers.splice(index, 1);
+    setSelectedTeachers(teachers);
+
+    const existing = [...existingData];
+    existing.splice(index, 1);
+    setExistingData(existing);
+  }
+
+  const handleChange = (property, value, index) => {
+    const tmp = [...existingData];
+    tmp[index] = { ...tmp[index], [property]: value };
+    setExistingData(tmp);
+  }
+
+  useEffect(() => {
+    setSelectedResponsibilities(existingData);
+  }, [existingData])
+
   return (
     <div className="Container">
-      {inputFields.map((data, index) => {
-        const { name, course } = data;
+      {selectedResponsibilities.map((data, index) => {
         return (
           <div className="ParentFormRow">
             <div
               className={
-                inputFields.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+                selectedResponsibilities.length === 1 ? "FormRow" : "FormRow CrossFormRow"
               }
               key={index}
             >
               <div className="TwoFormRowElementWithAdd">
                 {index === 0 ? <label>Teacher's Name</label> : ""}
-                <input
-                  type="text"
-                  name="name"
-                  onChange={(evnt) => handleChange(evnt, index)}
-                  value={name}
-                  className="FormControl"
-                  placeholder="Name"
+                <DropdownNoTitleTeacher
+                  options={teachers}
+                  handleData={handleChange}
+                  propName="teacher"
+                  index={index}
+                  selected={selectedTeachers}
+                  setSelected={setSelectedTeachers}
                 />
               </div>
 
               <div className="TwoFormRowElementWithAdd">
                 {index === 0 ? <label>Course ID</label> : ""}
-                <input
-                  type="text"
-                  name="course"
-                  onChange={(evnt) => handleChange(evnt, index)}
-                  value={course}
-                  className="FormControl"
-                  placeholder="Course"
+                <DropdownNoTitleTeacher
+                  options={courses}
+                  handleData={handleChange}
+                  propName="course"
+                  index={index}
+                  selected={selectedCourses}
+                  setSelected={setSelectedCourses}
                 />
               </div>
-
-              {inputFields.length !== 1 ? (
+              {selectedResponsibilities.length !== 1 ? (
                 <div className="FormRowElement">
                   <button
-                    className={
-                      index === 0
-                        ? "crossButton crossButton-first"
-                        : "crossButton"
-                    }
-                    onClick={(evnt) => removeInputFields(evnt, index)}
+                    className={index === 0 ? "crossButton crossButton-first" : "crossButton"}
+                    onClick={(e) => removeInputFields(e, index)}
                   >
                     x
                   </button>
@@ -78,13 +97,9 @@ const TwoField = ({ inputFields, setInputFields }) => {
                 ""
               )}
             </div>
-            {inputFields.length - 1 === index && (
+            {selectedResponsibilities.length - 1 === index && (
               <div className="FormRowElement">
-                <button
-                  className="addButton"
-                  onClick={() => addInputField()}
-                  type="button"
-                >
+                <button className="addButton" onClick={() => addInputField()} type="button">
                   <i className="fa-sharp fa-solid fa-plus"></i>
                 </button>
               </div>
@@ -95,5 +110,4 @@ const TwoField = ({ inputFields, setInputFields }) => {
     </div>
   );
 };
-
 export default TwoField;

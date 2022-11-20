@@ -5,7 +5,9 @@ import { instance as axios } from "../Components/axios";
 
 const ThreeFields = ({ options, propName, handleData, existingData = [], setExistingData }) => {
   const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([[{}]]);
+  
   const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([[{}]]);
+  
   const [selectedTeachers, setSelectedTeachers] = useState(existingData ? existingData : [{
     id: '',
     name: '',
