@@ -18,6 +18,7 @@ import AdminHome from './Components/Admin/AdminHome';
 import CreateAccount from './Components/Admin/CreateAccount/CreateAccount';
 import AddInstitute from './Components/Admin/AddInstittute/AddInstitute';
 import Login from './Components/Login/Login';
+import CreateDept from "./Components/Admin/CreateDept/CreateDept";
 
 function App() {
 	return (
@@ -73,6 +74,10 @@ function App() {
 					exact
 					path="/addinstitute"
 					element={<AddInstitute />}></Route>
+					<Route
+					exact
+					path="/adddepartment"
+					element={<CreateDept />}></Route>
 				<Route
 					exact
 					path="/login"

@@ -10,7 +10,7 @@
 	display: flex;
 }
 
-.image {
+.Profile-image {
 	padding: 2rem;
 	width: 70%;
 	height: 400px;
@@ -42,6 +42,7 @@
 	color: rgb(51, 51, 51);
 	font-size: 100% /*px, cm, in, etc.*/;
 }
+
 .h4 {
 	padding-bottom: 9%;
 	color: rgb(0, 0, 51);
