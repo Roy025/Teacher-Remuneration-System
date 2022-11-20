@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactToPrint } from "react-to-print";
 import Dropdown, {
   semesterOptions,
   semesterTitle,
@@ -27,30 +28,46 @@ function FinalTeacherBill() {
           <Dropdown options={semesterOptions} dropdownTitle={semesterTitle} />
         </div>
       </div>
-      <div className="BillTitle">Teacher Remuneration Bill</div>
-      <div className="smallTitle">
-        <p>
-          <b>Session:</b>
-          {` ${session}`} <b>Semester:</b>
-          {` ${semester}`}
-        </p>
-      </div>
-      <div className="TeacherInfo">
-        <div>
-          <b>Teacher's name:</b> {` ${teachername}`}
+
+      <ReactToPrint
+        trigger={() => {
+          return <button>Print</button>;
+        }}
+        content={() => this.componentRef}
+        pagestyle="print"
+      />
+
+      <div
+        ref={(el) => {
+          this.componentRef = el;
+        }}
+        className="BillForm"
+      >
+        <div className="BillTitle">Teacher Remuneration Bill</div>
+        <div className="smallTitle">
+          <p>
+            <b>Session:</b>
+            {` ${session}`} <b>Semester:</b>
+            {` ${semester}`}
+          </p>
+        </div>
+        <div className="TeacherInfo">
+          <div>
+            <b>Teacher's name:</b> {` ${teachername}`}
+          </div>
+          <div>
+            <b>Teacher's title:</b> {` ${teachertitle}`}
+          </div>
+          <div>
+            <b>Teacher's department:</b> {` ${teacherdepartment}`}
+          </div>
+          <div>
+            <b>Teacher's address:</b> {` ${teacheraddress}`}
+          </div>
         </div>
         <div>
-          <b>Teacher's title:</b> {` ${teachertitle}`}
+          <BillTable />
         </div>
-        <div>
-          <b>Teacher's department:</b> {` ${teacherdepartment}`}
-        </div>
-        <div>
-          <b>Teacher's address:</b> {` ${teacheraddress}`}
-        </div>
-      </div>
-      <div>
-        <BillTable />
       </div>
     </div>
   );
