@@ -93,18 +93,20 @@ public class AdminService : IAdminService
         return admin;
     }
 
-    public async Task<TeacherResponseDto> RegisterTeacherAsync(TeacherCreateDto teacher)
+    public async Task<IReadOnlyList<TeacherResponseDto>> RegisterTeacherAsync(IReadOnlyList<TeacherCreateDto> teachers)
     {
-        var teacherEntity = _mapper.Map<Teacher>(teacher);
-        teacherEntity.Password = BCrypt.Net.BCrypt.HashPassword(teacher.Password);
-        _unitOfWork.Repository<Teacher>().Add(teacherEntity);
-        Console.WriteLine(teacherEntity.Id);
-        Console.WriteLine(teacherEntity.Email);
-        Console.WriteLine(teacherEntity.Password);
-        Console.WriteLine(teacherEntity.DepartmentId);
+        List<Teacher> registeredTeachers = new List<Teacher>();
+        foreach(var teacher in teachers)
+        {
+
+            var teacherEntity = _mapper.Map<Teacher>(teacher);
+            teacherEntity.Password = BCrypt.Net.BCrypt.HashPassword(teacher.Password);
+            _unitOfWork.Repository<Teacher>().Add(teacherEntity);
+            registeredTeachers.Add(teacherEntity);
+        }
         var result = await _unitOfWork.Complete();
         if (result <= 0) return null;
-        return _mapper.Map<TeacherResponseDto>(teacherEntity);
+        return _mapper.Map<IReadOnlyList<TeacherResponseDto>>(registeredTeachers);
     }
 
     public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid teacher, TeacherUpdateDto teacherUpdateDto)
