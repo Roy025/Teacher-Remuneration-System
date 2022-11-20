@@ -20,6 +20,7 @@ import AddInstitute from "./Components/Admin/AddInstittute/AddInstitute";
 import CreateDept from "./Components/Admin/CreateDept/CreateDept";
 import Login from "./Components/Login/Login";
 import ViewAccount from "./Components/Admin/ViewAccount/ViewAccount";
+import UpdateRole from "./Components/Admin/UpdateRole/UpdateRole";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route exact path="/adddepartment" element={<CreateDept />}></Route>
         <Route exact path="/viewaccounts" element={<ViewAccount />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
+        <Route exact path="/updaterole" element={<UpdateRole />}></Route>
       </Routes>
     </>
   );

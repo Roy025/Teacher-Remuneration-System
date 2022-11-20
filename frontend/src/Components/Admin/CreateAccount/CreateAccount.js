@@ -17,6 +17,7 @@ const CreateAccount = () => {
     department: "",
     members: [
       {
+        name: "",
         email: "",
         password: "",
         departmentId: "",
@@ -81,6 +82,13 @@ const CreateAccount = () => {
     const { name, value } = e.target;
     const newData = { ...data };
     newData.members[index].password = value;
+    newData.members[index].departmentId = data.id;
+    setData(newData);
+  };
+  const handlemembername = (e, index) => {
+    const { name, value } = e.target;
+    const newData = { ...data };
+    newData.members[index].name = value;
     newData.members[index].departmentId = data.id;
     setData(newData);
   };
@@ -151,6 +159,19 @@ const CreateAccount = () => {
           return (
             <div className="InsedAccountWrap">
               <div className="InsideAccountContainer" key={index}>
+                <div className="AccountInputFields">
+                  {index === 0 && (
+                    <label className="AccountLabel">Teacher Name</label>
+                  )}
+                  <input
+                    type="text"
+                    name="name"
+                    onChange={(evnt) => handlemembername(evnt, index)}
+                    value={data.members.name}
+                    className="AccountInput"
+                    placeholder="Name"
+                  />
+                </div>
                 <div className="AccountInputFields">
                   {index === 0 && (
                     <label className="AccountLabel">Teacher Email</label>

@@ -16,7 +16,6 @@
   padding-bottom: 5%;
   flex-wrap: wrap;
   border-radius: 10px;
-  max-width: 1000px;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -44,7 +43,7 @@
 
 .AccountLabel {
   max-width: 150px;
-  margin: 1%;
+  margin-top: 2%;
   width: 100%;
   font-family: "Bitter", serif;
   font-size: 1rem;
@@ -52,7 +51,6 @@
   letter-spacing: 0.025rem;
   font-style: normal;
   text-transform: capitalize;
-  text-align: center;
   color: #ffffff;
   background-color: #2eb9cc;
   border-radius: 0.25rem;
@@ -82,7 +80,8 @@
 .InsideAccountContainer {
   display: flex;
   flex-direction: row;
-  gap: 2%;
+  flex-wrap: wrap;
+  gap: 2px;
 }
 
 .AdminButton {
