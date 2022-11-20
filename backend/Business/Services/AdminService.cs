@@ -1,6 +1,7 @@
 using System.Net.Mail;
 using AutoMapper;
 using Business.Specifications.AdminSpecifications;
+using Core.DTOs.CourseDTOs;
 using Core.DTOs.OtherDTOs;
 using Core.DTOs.TeacherDTOs;
 using Core.Entities;
@@ -20,6 +21,18 @@ public class AdminService : IAdminService
         _tokenService = tokenService;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
+    }
+
+    public async Task<IReadOnlyList<CourseResponseDto>> CreateCourseAsync(IReadOnlyList<CourseCreateDto> courses)
+    {
+        var courseEntities = _mapper.Map<IReadOnlyList<Course>>(courses);
+        foreach (var course in courseEntities)
+        {
+            _unitOfWork.Repository<Course>().Add(course);
+        }
+        var result = await _unitOfWork.Complete();
+        if (result <= 0) return null;
+        return _mapper.Map<IReadOnlyList<CourseResponseDto>>(courseEntities);
     }
 
     public async Task<DepartmentResDto> CreateDepartmentAsync(DepartmentCreateDto department)
@@ -42,6 +55,16 @@ public class AdminService : IAdminService
         return instituteEntity;
     }
 
+    public async Task<CourseResponseDto> DeleteCourseAsync(Guid course)
+    {
+        var courseEntity = await _unitOfWork.Repository<Course>().GetByIdAsync(course);
+        if (courseEntity == null) throw new NotFoundException("Course not found");
+        _unitOfWork.Repository<Course>().Delete(courseEntity);
+        var result = await _unitOfWork.Complete();
+        if (result <= 0) return null;
+        return _mapper.Map<CourseResponseDto>(courseEntity);
+    }
+
     public async Task<DepartmentResDto> DeleteDepartmentAsync(Guid department)
     {
         var departmentEntity = await _unitOfWork.Repository<Department>().GetByIdAsync(department);
@@ -60,6 +83,16 @@ public class AdminService : IAdminService
         var result = await _unitOfWork.Complete();
         if (result <= 0) return null;
         return instituteEntity;
+    }
+
+    public async Task<TeacherResponseDto> DeleteTeacherAsync(Guid teacher)
+    {
+        var teacherEntity = await _unitOfWork.Repository<Teacher>().GetByIdAsync(teacher);
+        if (teacherEntity == null) throw new NotFoundException("Teacher not found");
+        _unitOfWork.Repository<Teacher>().Delete(teacherEntity);
+        var result = await _unitOfWork.Complete();
+        if (result <= 0) return null;
+        return _mapper.Map<TeacherResponseDto>(teacherEntity);
     }
 
     public async Task<AdminLoginResDto> Login(AdminLoginDTO adminLoginDTO)
@@ -95,18 +128,15 @@ public class AdminService : IAdminService
 
     public async Task<IReadOnlyList<TeacherResponseDto>> RegisterTeacherAsync(IReadOnlyList<TeacherCreateDto> teachers)
     {
-        List<Teacher> registeredTeachers = new List<Teacher>();
-        foreach(var teacher in teachers)
+        var teacherEntities = _mapper.Map<IReadOnlyList<Teacher>>(teachers);
+        foreach (var teacher in teacherEntities)
         {
-
-            var teacherEntity = _mapper.Map<Teacher>(teacher);
-            teacherEntity.Password = BCrypt.Net.BCrypt.HashPassword(teacher.Password);
-            _unitOfWork.Repository<Teacher>().Add(teacherEntity);
-            registeredTeachers.Add(teacherEntity);
+            teacher.Password = BCrypt.Net.BCrypt.HashPassword(teacher.Password);
+            _unitOfWork.Repository<Teacher>().Add(teacher);
         }
         var result = await _unitOfWork.Complete();
         if (result <= 0) return null;
-        return _mapper.Map<IReadOnlyList<TeacherResponseDto>>(registeredTeachers);
+        return _mapper.Map<IReadOnlyList<TeacherResponseDto>>(teacherEntities);
     }
 
     public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid teacher, TeacherUpdateDto teacherUpdateDto)

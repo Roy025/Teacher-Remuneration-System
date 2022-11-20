@@ -1,4 +1,5 @@
 using AutoMapper;
+using Core.DTOs.CourseDTOs;
 using Core.DTOs.ExamDTOs;
 using Core.DTOs.OtherDTOs;
 using Core.DTOs.TeacherDTOs;
@@ -25,6 +26,8 @@ public class MappingProfiles : Profile
         
         CreateMap<AdminRegisterDTO, Admin>().ReverseMap();
         CreateMap<Admin, AdminLoginResDto>().ReverseMap();
-
+        
+        
+        CreateMap<CourseCreateDto, Course>().ReverseMap();
     }
 }

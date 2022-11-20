@@ -50,14 +50,12 @@ public class TeacherService : ITeacherService
 
     public async Task<TeacherLoginDto> LoginTeacherAsync(TeacherLoginReqDto teacher)
     {
-        var teacherEntity = await _unitOfWork.Repository<Teacher>().ListAllAsync();
-        var teacherToLogin = teacherEntity.FirstOrDefault(t => t.Email == teacher.Email);
-        if (teacherEntity == null) 
-            throw new NotFoundException("Teacher not found");
-        if (!BCrypt.Net.BCrypt.Verify(teacher.Password, teacherToLogin.Password)) 
-            throw new UnAuthorizedException("Invalid password");
-        return GetTeacherLoginDto(teacherToLogin);
-        throw new NotImplementedException();
+        var spec = new TeacherByEmailSpec(teacher.Email);
+        var teacherEntities = await _unitOfWork.Repository<Teacher>().ListAllAsyncWithSpec(spec);
+        var teacherEntity = teacherEntities.FirstOrDefault();
+        if(teacherEntity == null) throw new NotFoundException("Teacher not found");
+        if (!BCrypt.Net.BCrypt.Verify(teacher.Password, teacherEntity.Password)) throw new UnAuthorizedException("Invalid password");
+        return GetTeacherLoginDto(teacherEntity);        
     }
 
     public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherOwnUpdateDto teacher)

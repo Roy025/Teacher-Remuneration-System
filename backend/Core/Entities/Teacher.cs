@@ -5,7 +5,7 @@ public class Teacher : BaseEntity
 {
     public string? Name { get; set; } = null;
     public string Email { get; set; }
-    public string? Role { get; set; } = null;
+    public string? Role { get; set; } = "Teacher";
     public string Password { get; set; }
     public Guid DepartmentId { get; set; }
     public Department? Department { get; set; } = null;
