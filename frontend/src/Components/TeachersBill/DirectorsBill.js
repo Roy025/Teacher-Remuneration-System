@@ -33,32 +33,6 @@ const DirectorsBill = () => {
 			},
 		},
 	]);
-
-	// const [data, setData] = useState({
-	//   session: "",
-	//   semester: "",
-	//   chairman: {
-	//     id: "",
-	//     name: "",
-	//     institute: "",
-	//     department: "",
-	//   },
-	//   cheifInvigilator: {
-	//     id: "",
-	//     name: "",
-	//     institute: "",
-	//     department: "",
-	//   },
-	//   members: [
-	//     {
-	//       id: "",
-	//       name: "",
-	//       institute: "",
-	//       department: "",
-	//     },
-	//   ],
-	// })
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
@@ -107,14 +81,6 @@ const DirectorsBill = () => {
 		// const res = await axios.post
 	};
 
-	// useEffect(() => {
-	//   console.log(selectedSession);
-	//   console.log(selectedSemester);
-	//   console.log(selectedChairman);
-	//   console.log(selectedChiefInvigilator);
-	//   console.log(selectedMembers);
-
-	// }, [selectedSemester, selectedSession, selectedChairman, selectedChiefInvigilator, selectedMembers]);
 	const [institutes, setInstitutes] = useState([]);
 
 	const fetchInstitute = async () => {

@@ -35,7 +35,7 @@ function ProfilePage() {
 								<img
 									src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
 									alt="Avatar"
-									className="img-fluid my-5 pro-4 image"
+									className="profile-image"
 								/>
 								<h2>Mr. AHsan Habib</h2>
 							</div>
@@ -52,16 +52,13 @@ function ProfilePage() {
 									{disableButton1 ? (
 										<input
 											className="input"
-											type="number"
+											type="text"
 											name="account"
 											value={account}
 											onChange={(evnt) => handleChange(evnt, index)}
 											onKeyDown={(e) => {
 												if (e.key === 'Enter') setDisableButton1(false);
 											}}
-											onKeyPress={(e) =>
-												!/[0-9]/.test(e.key) && e.preventDefault()
-											}
 										/>
 									) : (
 										<h4
@@ -113,4 +110,3 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
-
