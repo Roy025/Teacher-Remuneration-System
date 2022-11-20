@@ -85,6 +85,16 @@ public class AdminService : IAdminService
         return instituteEntity;
     }
 
+    public async Task<StudentResponseDto> DeleteStudentAsync(Guid student)
+    {
+        var studentEntity = await _unitOfWork.Repository<Student>().GetByIdAsync(student);
+        if (studentEntity == null) throw new NotFoundException("Student not found");
+        _unitOfWork.Repository<Student>().Delete(studentEntity);
+        var result = await _unitOfWork.Complete();
+        if (result <= 0) return null;
+        return _mapper.Map<StudentResponseDto>(studentEntity);
+    }
+
     public async Task<TeacherResponseDto> DeleteTeacherAsync(Guid teacher)
     {
         var teacherEntity = await _unitOfWork.Repository<Teacher>().GetByIdAsync(teacher);
@@ -124,6 +134,18 @@ public class AdminService : IAdminService
         var result = await _unitOfWork.Complete();
         if (result <= 0) return null;
         return admin;
+    }
+
+    public async Task<IReadOnlyList<StudentResponseDto>> RegisterStudentAsync(IReadOnlyList<StudentCreateDto> students)
+    {
+        var studentEntities = _mapper.Map<IReadOnlyList<Student>>(students);
+        foreach (var student in studentEntities)
+        {
+            _unitOfWork.Repository<Student>().Add(student);
+        }
+        var result = await _unitOfWork.Complete();
+        if (result <= 0) return null;
+        return _mapper.Map<IReadOnlyList<StudentResponseDto>>(studentEntities);
     }
 
     public async Task<IReadOnlyList<TeacherResponseDto>> RegisterTeacherAsync(IReadOnlyList<TeacherCreateDto> teachers)

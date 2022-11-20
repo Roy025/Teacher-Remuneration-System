@@ -29,5 +29,9 @@ public class MappingProfiles : Profile
         
         
         CreateMap<CourseCreateDto, Course>().ReverseMap();
+        CreateMap<Course, CourseResponseDto>().ReverseMap();
+        
+        CreateMap<StudentCreateDto, Student>().ReverseMap();
+        CreateMap<Student, StudentResponseDto>().ReverseMap();
     }
 }

@@ -14,6 +14,7 @@ public class StoreContext : DbContext
     public DbSet<Department> Departments { get; set; } = null;
     public DbSet<Course> Courses { get; set; } = null;
     public DbSet<Teacher> Teachers { get; set; } = null;
+    public DbSet<Student> Students { get; set; } = null;
     public DbSet<Exam> Exams { get; set; } = null;
     public DbSet<Invigilator> Invigilators { get; set; } = null;
     public DbSet<TheoryCourseResponsibles> TheoryCoursesResponsibles { get; set; } = null;
