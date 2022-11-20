@@ -47,12 +47,26 @@ public class TeacherController : BaseApiController
         return StatusCode(200, new ApiDataResponse<TeacherLoginDto>(teacherEntity, 200, "Teacher logged in successfully"));
     }
     [HttpPatch("{id}")]
-    public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> UpdateTeacher(Guid id, TeacherUpdateDto teacher)
+    public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> UpdateTeacher(Guid id, TeacherOwnUpdateDto teacher)
     {
+        // var user = GetUserFromToken();
+
+        // if(user.UserId != id) throw new UnAuthorizedException();
+        
         var teacherEntity = await _teacherService.UpdateTeacherAsync(id, teacher);
 
         if (teacherEntity == null) return StatusCode(400, new BadRequestException("Teacher update failed"));
 
         return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacherEntity, 200, "Teacher updated successfully"));
+    }
+
+    private UserFromToken? GetUserFromToken()
+    {
+        if (!Request.Headers.ContainsKey("Authorization"))
+        {
+            throw new UnAuthorizedException();
+        }
+        var _user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
+        return _user;
     }
 }

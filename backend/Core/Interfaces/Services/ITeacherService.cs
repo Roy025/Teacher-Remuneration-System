@@ -8,5 +8,5 @@ public interface ITeacherService
     Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id);
     Task<TeacherLoginDto> CreateTeacherAsync(TeacherCreateDto teacher);
     Task<TeacherLoginDto> LoginTeacherAsync(TeacherLoginReqDto teacher);
-    Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherUpdateDto teacher);
+    Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherOwnUpdateDto teacher);
 }

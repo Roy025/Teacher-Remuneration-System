@@ -60,7 +60,7 @@ public class TeacherService : ITeacherService
         throw new NotImplementedException();
     }
 
-    public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherUpdateDto teacher)
+    public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherOwnUpdateDto teacher)
     {
         var teacherEntity = await _unitOfWork.Repository<Teacher>().GetByIdAsync(id);
 
@@ -77,13 +77,11 @@ public class TeacherService : ITeacherService
         return _mapper.Map<TeacherResponseDto>(teacherEntity);
     }
 
-    private void TeacherUpdateDtoToTeacher(TeacherUpdateDto teacher, Teacher teacherEntity)
+    private void TeacherUpdateDtoToTeacher(TeacherOwnUpdateDto teacher, Teacher teacherEntity)
     {
-        // teacherEntity.Name = !String.IsNullOrEmpty(teacher.Name) ? teacher.Name : teacherEntity.Name;
-        teacherEntity.Email = !String.IsNullOrEmpty(teacher.Email) ? teacher.Email : teacherEntity.Email;
-        teacherEntity.Password = !String.IsNullOrEmpty(teacher.Password) ? BCrypt.Net.BCrypt.HashPassword(teacher.Password) : teacherEntity.Password;
-        // teacherEntity.BankAccount = !String.IsNullOrEmpty(teacher.BankAccount) ? teacher.BankAccount : teacherEntity.BankAccount;
-        // teacherEntity.Designation = !String.IsNullOrEmpty(teacher.Designation) ? teacher.Designation : teacherEntity.Designation;
+        teacherEntity.Name = !String.IsNullOrEmpty(teacher.Name) ? teacher.Name : teacherEntity.Name;
+        teacherEntity.BankAccount = !String.IsNullOrEmpty(teacher.BankAccount) ? teacher.BankAccount : teacherEntity.BankAccount;
+        teacherEntity.Designation = !String.IsNullOrEmpty(teacher.Designation) ? teacher.Designation : teacherEntity.Designation;
     }
 
     private TeacherLoginDto GetTeacherLoginDto(Teacher teacherEntity)
