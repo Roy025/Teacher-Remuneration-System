@@ -17,6 +17,7 @@ import ScrollToTop from './Functions/ScrollTotop';
 import AdminHome from './Components/Admin/AdminHome';
 import CreateAccount from './Components/Admin/CreateAccount/CreateAccount';
 import AddInstitute from './Components/Admin/AddInstittute/AddInstitute';
+import CreateDept from "./Components/Admin/CreateDept/CreateDept";
 import Login from './Components/Login/login';
 
 function App() {
@@ -73,6 +74,10 @@ function App() {
 					exact
 					path="/addinstitute"
 					element={<AddInstitute />}></Route>
+					<Route
+					exact
+					path="/adddepartment"
+					element={<CreateDept />}></Route>
 				<Route
 					exact
 					path="/login"
