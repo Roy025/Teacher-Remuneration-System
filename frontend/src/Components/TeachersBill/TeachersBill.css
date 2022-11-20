@@ -49,6 +49,11 @@
 	margin: 1%;
 	outline: none;
 }
+.FormControl.number {
+	border: 1px solid rgb(119, 110, 110);
+	border-radius: 0.375rem;
+	
+}
 
 .FormControl:focus {
 	outline-color: rgb(37, 136, 175);
