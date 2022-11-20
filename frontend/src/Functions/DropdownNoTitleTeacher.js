@@ -9,13 +9,16 @@ const DropdownNoTitleTeacher = ({ options, propName, handleData, index, selected
     const [filteredOptions, setfilteredOptions] = useState(options);
 
     const handleChange = (evnt) => {
-        const arr = options.filter((x) =>
-            x.name.toLowerCase().includes(evnt.target.value.toLowerCase())
-        );
+        const arr = options.filter((x) => {
+            if(x.name)return x.name.toLowerCase().includes(evnt.target.value.toLowerCase());
+            else return x.code.toLowerCase().includes(evnt.target.value.toLowerCase());
+        });
+        // console.log("arr", arr);
         setfilteredOptions(arr);
         if (index !== undefined) {
             const newSelected = [...selected];
             newSelected[index] = evnt.target.value;
+            console.log("newSelected", newSelected[index]);
             setSelected(newSelected);
         } else {
             setSelected(evnt.target.value);
@@ -28,11 +31,12 @@ const DropdownNoTitleTeacher = ({ options, propName, handleData, index, selected
 
     const handleSelect = (option) => {
         if (index === undefined) {
-            setSelected(option.name);
+            setSelected(option.name || option.code);
             handleData(propName, option);
         } else {
             const newSelected = [...selected];
-            newSelected[index] = option.name;
+            newSelected[index] = option.name || option.code;
+            // console.log(newSelected[index]);
             setSelected(newSelected);
             handleData(propName, option, index);
         }
@@ -63,7 +67,7 @@ const DropdownNoTitleTeacher = ({ options, propName, handleData, index, selected
                             key={ind}
                             className="Dropdown-item">
                             {' '}
-                            {option.name}
+                            {option.name || option.code}
                         </div>
                     ))}
                 </div>
