@@ -31,11 +31,11 @@ function ProfilePage() {
 					<div className="card">
 						<div className="containerA">
 							<img
-								src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
+								src="https://images.pexels.com/photos/3772620/pexels-photo-3772620.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
 								alt="Avatar"
 								className="img-fluid my-5 pro-4 Profile-image"
 							/>
-							<h3>Mr. AHsan Habib</h3>
+							<h3>Raihan Ullah</h3>
 						</div>
 						<div className="containerB">
 							<div>

@@ -75,12 +75,12 @@ public class AdminController : BaseApiController
     }
 
     [HttpPost("teacher/register")]
-    public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> RegisterTeacherAsync([FromBody] TeacherCreateDto teacher)
+    public async Task<ActionResult<ApiDataResponse<IReadOnlyList<TeacherResponseDto>>>> RegisterTeacherAsync([FromBody] IReadOnlyList<TeacherCreateDto> teachers)
     {
         // var user = GetUserFromToken();
-        var teacherEntity = await _adminService.RegisterTeacherAsync(teacher);
-        if (teacherEntity == null) return BadRequest("Teacher not created");
-        return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacherEntity, 201, "Teacher Created successfully"));
+        var teacherEntities = await _adminService.RegisterTeacherAsync(teachers);
+        if (teacherEntities == null) return BadRequest("Teacher not created");
+        return StatusCode(200, new ApiDataResponse<IReadOnlyList<TeacherResponseDto>>(teacherEntities, 201, "Teacher Created successfully"));
     }
     
     [HttpPatch("teacher/{teacher}")]

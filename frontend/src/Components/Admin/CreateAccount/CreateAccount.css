@@ -43,8 +43,8 @@
 }
 
 .AccountLabel {
-  max-width: 100px;
-  margin-top: 2%;
+  max-width: 150px;
+  margin: 1%;
   width: 100%;
   font-family: "Bitter", serif;
   font-size: 1rem;
@@ -52,6 +52,7 @@
   letter-spacing: 0.025rem;
   font-style: normal;
   text-transform: capitalize;
+  text-align: center;
   color: #ffffff;
   background-color: #2eb9cc;
   border-radius: 0.25rem;
