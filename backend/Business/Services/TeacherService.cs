@@ -79,11 +79,11 @@ public class TeacherService : ITeacherService
 
     private void TeacherUpdateDtoToTeacher(TeacherUpdateDto teacher, Teacher teacherEntity)
     {
-        teacherEntity.Name = !String.IsNullOrEmpty(teacher.Name) ? teacher.Name : teacherEntity.Name;
+        // teacherEntity.Name = !String.IsNullOrEmpty(teacher.Name) ? teacher.Name : teacherEntity.Name;
         teacherEntity.Email = !String.IsNullOrEmpty(teacher.Email) ? teacher.Email : teacherEntity.Email;
         teacherEntity.Password = !String.IsNullOrEmpty(teacher.Password) ? BCrypt.Net.BCrypt.HashPassword(teacher.Password) : teacherEntity.Password;
-        teacherEntity.BankAccount = !String.IsNullOrEmpty(teacher.BankAccount) ? teacher.BankAccount : teacherEntity.BankAccount;
-        teacherEntity.Designation = !String.IsNullOrEmpty(teacher.Designation) ? teacher.Designation : teacherEntity.Designation;
+        // teacherEntity.BankAccount = !String.IsNullOrEmpty(teacher.BankAccount) ? teacher.BankAccount : teacherEntity.BankAccount;
+        // teacherEntity.Designation = !String.IsNullOrEmpty(teacher.Designation) ? teacher.Designation : teacherEntity.Designation;
     }
 
     private TeacherLoginDto GetTeacherLoginDto(Teacher teacherEntity)

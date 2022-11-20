@@ -117,14 +117,10 @@ public class AdminService : IAdminService
         if (!string.IsNullOrEmpty(teacherUpdateDto.Password))
             teacherEntity.Password = BCrypt.Net.BCrypt.HashPassword(teacherUpdateDto.Password);
 
-        if (!string.IsNullOrEmpty(teacherUpdateDto.Name))
-            teacherEntity.Name = teacherUpdateDto.Name;
-        
+       
         if(!string.IsNullOrEmpty(teacherUpdateDto.Email))
             teacherEntity.Email = teacherUpdateDto.Email;
         
-        if(!string.IsNullOrEmpty(teacherUpdateDto.Designation))
-            teacherEntity.Designation = teacherUpdateDto.Designation;
         if(!string.IsNullOrEmpty(teacherUpdateDto.Role))
             teacherEntity.Role = teacherUpdateDto.Role;
 

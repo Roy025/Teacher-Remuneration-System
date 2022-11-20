@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from "@tanstack/react-query"
+import { useQuery } from '@tanstack/react-query';
 import Links from './Links';
 import './TeachersBill.css';
 import './FormButton.css';
@@ -176,8 +176,6 @@ const DirectorsBill = () => {
 	useEffect(() => {
 		fetchPrevData();
 	}, [selectedSession, selectedSemester]);
-	// useQuery(["prev-data"], fetchPrevData);
-
 	return (
 		<>
 			<div>
