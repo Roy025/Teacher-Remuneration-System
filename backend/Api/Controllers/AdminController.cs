@@ -121,6 +121,24 @@ public class AdminController : BaseApiController
         return StatusCode(200, new ApiDataResponse<CourseResponseDto>(courseEntity, 200, "Course deleted successfully"));
     }
 
+    [HttpPost("student/register")]
+    public async Task<ActionResult<ApiDataResponse<IReadOnlyList<StudentResponseDto>>>> RegisterStudentAsync([FromBody] IReadOnlyList<StudentCreateDto> students)
+    {
+        // var user = GetUserFromToken();
+        var studentEntities = await _adminService.RegisterStudentAsync(students);
+        if (studentEntities == null) return BadRequest("Student not created");
+        return StatusCode(200, new ApiDataResponse<IReadOnlyList<StudentResponseDto>>(studentEntities, 201, "Student Created successfully"));
+    }
+
+    [HttpDelete("student/{student}")]
+    public async Task<ActionResult<ApiDataResponse<StudentResponseDto>>> DeleteStudentAsync([FromRoute] Guid student)
+    {
+        // var user = GetUserFromToken();
+        var studentEntity = await _adminService.DeleteStudentAsync(student);
+        if (studentEntity == null) return BadRequest("Student not deleted");
+        return StatusCode(200, new ApiDataResponse<StudentResponseDto>(studentEntity, 200, "Student deleted successfully"));
+    }
+
     private UserFromToken? GetUserFromToken()
     {
         if (!Request.Headers.ContainsKey("Authorization"))

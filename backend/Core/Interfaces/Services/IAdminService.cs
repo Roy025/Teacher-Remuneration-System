@@ -16,6 +16,8 @@ public interface IAdminService
     Task<Admin> Register(AdminRegisterDTO adminRegisterDTO);
     Task<AdminLoginResDto> Login(AdminLoginDTO adminLoginDTO);
     Task<IReadOnlyList<CourseResponseDto>> CreateCourseAsync(IReadOnlyList<CourseCreateDto> courses);
+    Task<IReadOnlyList<StudentResponseDto>> RegisterStudentAsync(IReadOnlyList<StudentCreateDto> students);
     Task<CourseResponseDto> DeleteCourseAsync(Guid course);
+    Task<StudentResponseDto> DeleteStudentAsync(Guid student);
 
 }

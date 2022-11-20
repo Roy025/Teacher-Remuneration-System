@@ -10,5 +10,5 @@ public interface IGeneralService
     Task<IReadOnlyList<DepartmentResDto>> GetAllDepartmentAsync(Guid institute);
     Task<IReadOnlyList<TeacherResponseDto>> GetAllTeacherAsync(Guid department);
     Task<IReadOnlyList<CourseResponseDto>> GetAllCourseAsync(Guid department);
-
+    Task<IReadOnlyList<Student>> GetAllStudentAsync(Guid department);
 }

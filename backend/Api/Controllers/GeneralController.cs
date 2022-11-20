@@ -53,4 +53,12 @@ public class GeneralController : ControllerBase
         if (courses == null) return BadRequest("Courses not found");
         return StatusCode(200, new ApiDataResponse<IReadOnlyList<CourseResponseDto>>(courses, 200, "Courses found successfully"));
     }
+
+    [HttpGet("student")]
+    public async Task<ActionResult<ApiDataResponse<IReadOnlyList<Student>>>> GetStudentAsync([FromQuery]Guid department)
+    {
+        var students = await _generalService.GetAllStudentAsync(department);
+        if (students == null) return BadRequest("Students not found");
+        return StatusCode(200, new ApiDataResponse<IReadOnlyList<Student>>(students, 200, "Students found successfully"));
+    }
 }
