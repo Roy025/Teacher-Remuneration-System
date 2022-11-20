@@ -1,50 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
-const StudentCount = ({ inputFields, setInputFields }) => {
+const StudentCount = ({ options, propName, handeData, existingData, setExistingData }) => {
+  const [selectedData, setSelectedData] = useState([{}]);
+  const [selectedCourses, setSelectedCourses] = useState(existingData ? existingData.map(x => {
+    return (x.course && x.course.code) ? x.course.code : "";
+  }) : [""]);
+
+  const [numberOfStudents, setNumberOfStudents] = useState(existingData ? existingData.map(x => {
+    return x.numberOfStudents ? x.numberOfStudents : ``;
+  }) : [""]);
+
   const handleChange = (evnt, index) => {
-    const { name, value } = evnt.target;
-    const list = [...inputFields];
-    list[index][name] = value;
-    setInputFields(list);
-  };
+    const tmp = evnt.target.value;
+    // console.log(existingData);
+    // console.log(tmp);
+    const list = [...numberOfStudents];
+    list[index] = tmp;
+    setNumberOfStudents(list);
+    const tmp2 = [...existingData];
+    tmp2[index].numberOfStudents = tmp;
+    setExistingData(tmp2);
+  }
   const removeInputFields = (e, index) => {
     e.preventDefault();
-    const rows = [...inputFields];
-    rows.splice(index, 1);
-    setInputFields(rows);
+    const courses = [...selectedCourses];
+    courses.splice(index, 1);
+    setSelectedCourses(courses);
+    const students = [...numberOfStudents];
+    students.splice(index, 1);
+    setNumberOfStudents(students);
+    const existing = [...existingData];
+    existing.splice(index, 1);
+    setExistingData(existing);
   };
 
   const addInputField = () => {
-    setInputFields([
-      ...inputFields,
-      {
-        course: "",
-        number: "",
-      },
-    ]);
-    console.log(inputFields);
+    setSelectedData([...selectedData, {}]);
+    setSelectedCourses([...selectedCourses, ""]);
+    setNumberOfStudents([...numberOfStudents, ""]);
+    setExistingData([...existingData, {}]);
   };
+  useEffect(() => {
+    setSelectedData(existingData);
+  }, [existingData]);
+
   return (
-    <div className="Container">
-      {inputFields.map((data, index) => {
-        const { number, course } = data;
+    <div className="Container" >
+      {selectedData.map((data, index) => {
         return (
           <div className="ParentFormRow">
-            <div
-              className={
-                inputFields.length === 1 ? "FormRow" : "FormRow CrossFormRow"
-              }
-              key={index}
-            >
+            <div className={`FormRow ${selectedData.length === 1 ? "" : "CrossFormRow"}`} key={index}>
               <div className="TwoFormRowElementWithAdd">
                 {index === 0 ? <label>Course ID</label> : ""}
-                <input
-                  type="text"
-                  name="course"
-                  onChange={(evnt) => handleChange(evnt, index)}
-                  value={course}
-                  className="FormControl"
-                  placeholder="Course"
+                <DropdownNoTitleTeacher
+                  options={options}
+                  propName="course"
+                  index={index}
+                  selected={selectedCourses}
+                  setSelected={setSelectedCourses}
                 />
               </div>
 
@@ -52,16 +66,16 @@ const StudentCount = ({ inputFields, setInputFields }) => {
                 {index === 0 ? <label>Number of Students</label> : ""}
                 <input
                   type="number"
-                  name="number"
+                  name="numberOfStudents"
                   onChange={(evnt) => handleChange(evnt, index)}
-                  value={number}
-                  className="FormControl"
+                  value={numberOfStudents[index]}
+                  className="FormControl number"
                   placeholder="Number"
                   onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
                 />
               </div>
 
-              {inputFields.length !== 1 ? (
+              {selectedData.length !== 1 ? (
                 <div className="FormRowElement">
                   <button
                     className={
@@ -78,7 +92,7 @@ const StudentCount = ({ inputFields, setInputFields }) => {
                 ""
               )}
             </div>
-            {inputFields.length - 1 === index && (
+            {selectedData.length - 1 === index && (
               <div className="FormRowElement">
                 <button
                   className="addButton"
@@ -93,7 +107,7 @@ const StudentCount = ({ inputFields, setInputFields }) => {
         );
       })}
     </div>
-  );
-};
+  )
+}
 
 export default StudentCount;
