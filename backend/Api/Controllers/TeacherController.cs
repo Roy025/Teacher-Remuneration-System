@@ -27,13 +27,13 @@ public class TeacherController : BaseApiController
     // }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ApiDataResponse<TeacherResponseDto>>> GetTeacherById(Guid id)
+    public async Task<ActionResult<ApiDataResponse<TeacherOwnResponseDto>>> GetTeacherById(Guid id)
     {
         // var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
         // if (user == null) return StatusCode(401, new ApiDataResponse<TeacherResponseDto>(null, 401, "Unauthorized"));
         var teacher = await _teacherService.GetTeacherByIdAsync(id);
 
-        return StatusCode(200, new ApiDataResponse<TeacherResponseDto>(teacher, 200, "Teacher fetched successfully"));
+        return StatusCode(200, new ApiDataResponse<TeacherOwnResponseDto>(teacher, 200, "Teacher fetched successfully"));
     }
 
     
