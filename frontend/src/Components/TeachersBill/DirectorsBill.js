@@ -277,7 +277,8 @@ const DirectorsBill = () => {
 					<label className="Label">Courses</label>
 					{courses.map((course, index) => {
 						return (
-							<div>
+							<div className={`FormRow ${courses.length !== 1 && "CrossFormRow"}`}
+								key={index}>
 								<div className="threeFormRowElement">
 									<DropdownNoTitleTeacher
 										options={courseList}
