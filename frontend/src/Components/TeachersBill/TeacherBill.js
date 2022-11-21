@@ -12,70 +12,79 @@ import Dropdown, {
 } from "../SampleDropdown/Dropdown";
 import Links from "./Links";
 
-const TeacherBill = () => {
-  const [inputTerm, setInputTerm] = useState([
-    {
-      course: "",
-      number: "",
-    },
-  ]);
-  const [inputAnsA, setInputAnsA] = useState([
-    {
-      course: "",
-      number: "",
-    },
-  ]);
-  const [inputAnsB, setInputAnsB] = useState([
-    {
-      course: "",
-      number: "",
-    },
-  ]);
-  const [inputScrA, setInputScrA] = useState([
-    {
-      course: "",
-      number: "",
-    },
-  ]);
-  const [inputScrB, setInputScrB] = useState([
-    {
-      course: "",
-      number: "",
-    },
-  ]);
-  const [inputPrac, setInputPrac] = useState([
-    {
-      course: "",
-      number: "",
-    },
-  ]);
-  const [inputViva, setInputViva] = useState([
-    {
-      course: "",
-      number: "",
-    },
-  ]);
-  const [exam, setExam] = useState({
-    session: "",
-    semester: "",
-    dept: "",
-  });
-  const deptTitle = "Department";
 
-  console.log(exam);
+const TeacherBill = () => {
+  const [listOfCourses, setListOfCourses] = useState([{
+    id: "",
+    code: ""
+  }])
+  const [termTestData, setTermTestData] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+  const [answerPaperCheckingDataPartA, setAnswerPaperCheckingDataPartA] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+  const [answerPaperCheckingDataPartB, setAnswerPaperCheckingDataPartB] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+  const [scrutinyDataPartA, setScrutinyDataPartA] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+  const [scrutinyDataPartB, setScrutinyDataPartB] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+  const [practicalExamData, setPracticalExamData] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+  const [vivaExamData, setVivaExamData] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+  const [selectedDepartment, setSelectedDepartment] = useState([""])
+  const [selectedSession, setSelectedSession] = useState([""])
+  const [selectedSemester, setSelectedSemester] = useState([""])
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
   const submit = async () => {
-    console.log(inputTerm);
-    console.log(inputAnsA);
-    console.log(inputAnsB);
-    console.log(inputScrA);
-    console.log(inputScrB);
-    console.log(inputPrac);
-    console.log(inputViva);
-    console.log(exam);
-  };
+    console.log(termTestData);
+    console.log(answerPaperCheckingDataPartA);
+    console.log(answerPaperCheckingDataPartB);
+    console.log(scrutinyDataPartA);
+    console.log(scrutinyDataPartB);
+    console.log(practicalExamData);
+    console.log(vivaExamData);
+    
+  }
   return (
     <>
       <div>
@@ -88,71 +97,87 @@ const TeacherBill = () => {
               <Dropdown
                 options={sessionOptions}
                 dropdownTitle={sessionTitle}
-                handleData={(child) => HandleSem(child, exam, setExam)}
+                selected={selectedSession}
+                setSelected={setSelectedSession}
               />
             </div>
             <div className="FormSubRow1">
               <Dropdown
                 options={semesterOptions}
                 dropdownTitle={semesterTitle}
-                handleData={(child) => HandleSem(child, exam, setExam)}
+                selected={selectedSemester}
+                setSelected={setSelectedSemester}
               />
             </div>
             <div className="FormSubRow1">
               <Dropdown
                 options={deptOptions}
-                dropdownTitle={deptTitle}
-                handleData={(child) => HandleSem(child, exam, setExam)}
+                dropdownTitle={"Department"}
+                selected={selectedDepartment}
+                setSelected={setSelectedDepartment}
               />
             </div>
           </div>
+
           <div className="formRow">
             <label className="Label">Term Test</label>
             <StudentCount
-              inputFields={inputTerm}
-              setInputFields={setInputTerm}
+              options={listOfCourses}
+              existingData={termTestData}
+              setExistingData={setTermTestData}
             />
           </div>
+
           <div className="formRow">
             <label className="Label">Answerpaper Checking</label>
             <h4 className="subLabel">Part - A</h4>
             <StudentCount
-              inputFields={inputAnsA}
-              setInputFields={setInputAnsA}
+              options={listOfCourses}
+              existingData={answerPaperCheckingDataPartA}
+              setExistingData={setAnswerPaperCheckingDataPartA}
             />
             <h4 className="subLabel">Part - B</h4>
             <StudentCount
-              inputFields={inputAnsB}
-              setInputFields={setInputAnsB}
+              options={listOfCourses}
+              existingData={answerPaperCheckingDataPartB}
+              setExistingData={setAnswerPaperCheckingDataPartB}
             />
           </div>
+
           <div className="formRow">
             <label className="Label">Scrutiny</label>
             <h4 className="subLabel">Part - A</h4>
             <StudentCount
-              inputFields={inputScrA}
-              setInputFields={setInputScrA}
+              options={listOfCourses}
+              existingData={scrutinyDataPartA}
+              setExistingData={setScrutinyDataPartA}
             />
             <h4 className="subLabel">Part - B</h4>
             <StudentCount
-              inputFields={inputScrB}
-              setInputFields={setInputScrB}
+              options={listOfCourses}
+              existingData={scrutinyDataPartB}
+              setExistingData={setScrutinyDataPartB}
             />
           </div>
+
           <div className="formRow">
             <label className="Label">Practical Exam</label>
             <StudentCount
-              inputFields={inputPrac}
-              setInputFields={setInputPrac}
+              options={listOfCourses}
+              existingData={practicalExamData}
+              setExistingData={setPracticalExamData}
             />
           </div>
+
           <div className="formRow">
             <label className="Label">Viva</label>
             <StudentCount
-              inputFields={inputViva}
-              setInputFields={setInputViva}
+              options={listOfCourses}
+              existingData={vivaExamData}
+              setExistingData={setVivaExamData}
             />
           </div>
+
           <div className="formRow SubmitRow">
             <button type="submit" className="submitButton" onClick={submit}>
               Submit
@@ -162,6 +187,6 @@ const TeacherBill = () => {
       </div>
     </>
   );
-};
+}
 
 export default TeacherBill;

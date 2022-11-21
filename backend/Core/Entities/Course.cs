@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,10 +7,11 @@ using Microsoft.EntityFrameworkCore;
 public class Course : BaseEntity
 {
     public Guid DepartmentId { get; set; }
-    public Department? Department { get; set; } = null!;
+    [JsonIgnore]public Department? Department { get; set; } = null!;
     [MinLength(6), MaxLength(7)]
     public string Code { get; set; }
     public string Title { get; set; }
     public Decimal Credit { get; set; }
     public string Type { get; set; } // Theory or Lab
+    public string? Level { get; set; } = "Undergrad";
 }

@@ -1,51 +1,119 @@
 import React, { useState } from "react";
-import { Button } from "../../Buttons/Button";
-import SimpleButton from "../../Buttons/SimpleButton";
+import DropdownNoTitleTeacher from "../../../Functions/DropdownNoTitleTeacher";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { instance as axios } from "../../axios";
 import "./CreateAccount.css";
 
 const CreateAccount = () => {
+  // Store things
+  const [instituteList, setInstituteList] = useState([]);
+  const [deptList, setDeptList] = useState([]);
+  const [selectedInstitute, setSelectedInstitute] = useState("");
+  const [selectedDept, setSelectedDept] = useState("");
+  const [insTituteAvailable, setInsTituteAvailable] = useState(false);
   const [data, setData] = useState({
+    id: "",
     institute: "",
     department: "",
     members: [
       {
-        id: "",
+        name: "",
+        email: "",
         password: "",
+        departmentId: "",
       },
     ],
   });
 
-  const handleMainData = (property, value) => {
+  //Fetching institute data
+  const fetchInstitute = async () => {
+    const response = await axios.get("/institute");
+    return response;
+  };
+
+  useQuery(["institution-list"], async () => {
+    const store = await fetchInstitute();
+    setInstituteList(store.data.data);
+    return store;
+  });
+
+  //Fetching department data
+
+  const fetchDept = async (id) => {
+    const response = await axios.get(`/department?institute=${id}`);
+    console.log(response);
+    setDeptList(response.data.data);
+    return response;
+  };
+
+  useQuery(["dept-list", data.id], () => fetchDept(data.id), {
+    enabled: !!insTituteAvailable,
+  });
+
+  // Handle institute data
+
+  const handleInstitute = (propName, option) => {
     const newData = { ...data };
-    newData[property] = value;
+    newData.institute = option;
+    newData.id = option.id;
+    setInsTituteAvailable(true);
     setData(newData);
   };
 
-  const handleInstitute = (e) => {
-    const { name, value } = e.target;
+  // Handle department data
+
+  const handleDepartment = (propName, option) => {
     const newData = { ...data };
-    newData[name] = value;
+    newData.department = option;
+    newData.id = option.id;
     setData(newData);
-    console.log(newData);
   };
+
+  // handle member data
 
   const handlememberid = (e, index) => {
     const { name, value } = e.target;
     const newData = { ...data };
-    newData.members[index].id = value;
-    console.log(newData.members[index]);
+    newData.members[index].email = value;
     setData(newData);
-    console.log(newData);
   };
 
   const handlememberpass = (e, index) => {
     const { name, value } = e.target;
     const newData = { ...data };
     newData.members[index].password = value;
-    console.log(newData.members[index]);
+    newData.members[index].departmentId = data.id;
     setData(newData);
-    console.log(newData);
   };
+  const handlemembername = (e, index) => {
+    const { name, value } = e.target;
+    const newData = { ...data };
+    newData.members[index].name = value;
+    newData.members[index].departmentId = data.id;
+    setData(newData);
+  };
+
+  // Adding new teacher
+
+  const addTeacher = async (info) => {
+    console.log(info.teachers);
+    const response = await axios.post("/Admin/teacher/register", info.teachers);
+    return response;
+  };
+
+  const {
+    mutate: TeacherMutate,
+    isError,
+    error,
+  } = useMutation(addTeacher, {
+    onSuccess: (success) => {
+      console.log(success);
+      window.location.reload(false);
+    },
+  });
+  if (isError) {
+    console.log(error);
+  }
 
   const addMembers = () => {
     const newData = { ...data };
@@ -68,24 +136,22 @@ const CreateAccount = () => {
         <h1 className="AccountHeader">Create Accounts</h1>
         <div className="AccountInputFields">
           <label className="AccountLabel">Institute</label>
-          <input
-            type="text"
-            name="institute"
-            onChange={(evnt) => handleInstitute(evnt)}
-            value={data.institute}
-            className="AccountInput"
-            placeholder="Institute"
+          <DropdownNoTitleTeacher
+            options={instituteList}
+            propName="institute"
+            handleData={handleInstitute}
+            selected={selectedInstitute}
+            setSelected={setSelectedInstitute}
           />
         </div>
         <div className="AccountInputFields">
           <label className="AccountLabel">Department</label>
-          <input
-            type="text"
-            name="department"
-            onChange={(evnt) => handleInstitute(evnt)}
-            value={data.department}
-            className="AccountInput"
-            placeholder="department"
+          <DropdownNoTitleTeacher
+            options={deptList}
+            propName="department"
+            handleData={handleDepartment}
+            selected={selectedDept}
+            setSelected={setSelectedDept}
           />
         </div>
 
@@ -93,20 +159,33 @@ const CreateAccount = () => {
           return (
             <div className="InsedAccountWrap">
               <div className="InsideAccountContainer" key={index}>
-                <div className="AccountInputFields" key={index}>
+                <div className="AccountInputFields">
                   {index === 0 && (
-                    <label className="AccountLabel">Teacher ID</label>
+                    <label className="AccountLabel">Teacher Name</label>
                   )}
                   <input
                     type="text"
-                    name="id"
-                    onChange={(evnt) => handlememberid(evnt, index)}
-                    value={info.id}
+                    name="name"
+                    onChange={(evnt) => handlemembername(evnt, index)}
+                    value={data.members.name}
                     className="AccountInput"
-                    placeholder="userID"
+                    placeholder="Name"
                   />
                 </div>
-                <div className="AccountInputFields  " key={index}>
+                <div className="AccountInputFields">
+                  {index === 0 && (
+                    <label className="AccountLabel">Teacher Email</label>
+                  )}
+                  <input
+                    type="text"
+                    name="email"
+                    onChange={(evnt) => handlememberid(evnt, index)}
+                    value={data.members.email}
+                    className="AccountInput"
+                    placeholder="Email"
+                  />
+                </div>
+                <div className="AccountInputFields">
                   {index === 0 && (
                     <label className="AccountLabel">Password</label>
                   )}
@@ -114,35 +193,41 @@ const CreateAccount = () => {
                     type="text"
                     name="password"
                     onChange={(evnt) => handlememberpass(evnt, index)}
-                    value={info.password}
+                    value={data.members.password}
                     className="AccountInput"
                     placeholder="password"
                   />
                 </div>
               </div>
 
+              {data.members.length !== 1 && (
+                <button
+                  className="AdminButton"
+                  onClick={() => deleteMembers(index)}
+                >
+                  Remove
+                </button>
+              )}
               <div className="InsideAccountContainer">
                 {index === data.members.length - 1 && (
-                  <button
-                    className="AccountButton"
-                    onClick={() => addMembers()}
-                  >
+                  <button className="AdminButton" onClick={() => addMembers()}>
                     Add
-                  </button>
-                )}
-                {data.members.length !== 1 && (
-                  <button
-                    className="AccountButton"
-                    onClick={() => deleteMembers(index)}
-                  >
-                    Remove
                   </button>
                 )}
               </div>
             </div>
           );
         })}
-        <button className="AccountButton AccountSubmit">Submit</button>
+        <button
+          className="AdminButton AdminSubmit"
+          onClick={() =>
+            TeacherMutate({
+              teachers: data.members,
+            })
+          }
+        >
+          Submit
+        </button>
       </div>
     </div>
   );

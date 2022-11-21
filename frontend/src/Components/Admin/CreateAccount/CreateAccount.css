@@ -16,23 +16,19 @@
   padding-bottom: 5%;
   flex-wrap: wrap;
   border-radius: 10px;
-  max-width: 1000px;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .AccountHeader {
   padding: 2%;
-  font-family: "Raleway", sans-serif;
   font-weight: 300;
   font-size: 40px;
   color: #080808;
   text-align: center;
-
   text-transform: uppercase;
   font-size: 1.7rem;
   letter-spacing: 1px;
-
   content: " ";
   display: block;
   border-bottom: 2px solid rgb(179, 174, 174);
@@ -46,7 +42,7 @@
 }
 
 .AccountLabel {
-  max-width: 100px;
+  max-width: 150px;
   margin-top: 2%;
   width: 100%;
   font-family: "Bitter", serif;
@@ -76,20 +72,26 @@
   font-size: 1rem;
 }
 
+.AccountInput:hover{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: all .4s ease;
+}
+
 .InsideAccountContainer {
   display: flex;
   flex-direction: row;
-  gap: 2%;
+  flex-wrap: wrap;
+  gap: 2px;
 }
 
-.AccountButton {
-  background-color: #2eb9cc;
+.AdminButton {
+  background-color: #fff;
   border-radius: 6px;
   border-width: 0;
   box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
     rgba(50, 50, 93, 0.1) 0 2px 5px 0, rgba(0, 0, 0, 0.07) 0 1px 1px 0;
   box-sizing: border-box;
-  color: #fff;
+  color: #000000;
   cursor: pointer;
   font-size: 100%;
   height: 44px;
@@ -103,16 +105,17 @@
   touch-action: manipulation;
   width: 14%;
   scale: 0.9;
+  border: 1px solid #B9DFFF;
 }
 
-.AccountButton:focus {
+.AdminButton:hover {
+  background-color: #B9DFFF;
   box-shadow: rgba(50, 50, 93, 0.1) 0 0 0 1px inset,
     rgba(50, 50, 93, 0.2) 0 6px 15px 0, rgba(0, 0, 0, 0.1) 0 2px 2px 0,
     rgba(50, 151, 211, 0.3) 0 0 0 4px;
 }
 
-.AccountSubmit{
+.AdminSubmit{
   align-self: flex-end;
   margin-right: 5%;
-  background-color: #7A89C2;
 }

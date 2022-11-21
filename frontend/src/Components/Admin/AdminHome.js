@@ -36,7 +36,7 @@ function AdminHome() {
       </div>
       <div className="IndCreateCard">
       <i class="fa-solid fa-star-of-life Admin-icons"></i>
-        <Link to="/viewaccounts">
+        <Link to="/updaterole">
           <SimpleButton buttonName="Update Role" />
         </Link>
         <p className="Card-text">

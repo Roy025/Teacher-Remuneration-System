@@ -1,24 +1,58 @@
 import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
+import { instance as axios } from "../Components/axios";
 
-const ThreeFields = ({ options, propName, handleData }) => {
+const ThreeFields = ({ options, propName, handleData, existingData = [], setExistingData }) => {
   const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([[{}]]);
+  
   const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([[{}]]);
-  const [selectedTeachers, setSelectedTeachers] = useState([{
+  
+  const [selectedTeachers, setSelectedTeachers] = useState(existingData ? existingData : [{
     id: '',
     name: '',
   }])
 
-  const handleInstitute = (property, value, index) => {
+  const [selectedInstitute, setSelectedInstitute] = useState(existingData ? existingData.map(x => x.institute) : ['']);
+  const [selectedDepartment, setSelectedDepartment] = useState(existingData ? existingData.map(x => x.department) : ['']);
+  const [selectedMembers, setSelectedMembers] = useState(existingData ? existingData.map(x => x.name) : ['']);
+
+  useEffect(() => {
+    setSelectedInstitute(existingData ? existingData.map(x => {
+      if (x.department && x.department.institute.name)
+        return x.department.institute.name
+      else
+        return ''
+    }) : ['']);
+
+    setSelectedDepartment(existingData ? existingData.map(x => {
+      if (x.department && x.department.name)
+        return x.department.name
+      else
+        return ''
+    }) : ['']);
+
+    
+    setSelectedMembers(existingData ? existingData.map(x => x.name) : ['']);
+    
+    setSelectedTeachers(existingData ? existingData : [{
+      id: '',
+      name: '',
+    }])
+  }, [existingData]);
+
+
+  const handleInstitute = async (property, value, index) => {
     const departments = [...filteredListOfDepartments];
-    departments[index] = value.departments;
+    const res = await axios.get(`/department?institute=${value.id}`);
+    departments[index] = res.data.data;
     setFilteredListOfDepartments(departments);
   };
 
-  const handleDepartment = (property, value, index) => {
+  const handleDepartment = async (property, value, index) => {
     const teachers = [...filteredListOfTeachers];
-    teachers[index] = value.teachers;
+    const res = await axios.get(`/teacher?department=${value.id}`);
+    teachers[index] = res.data.data;
     setFilteredListOfTeachers(teachers);
   };
 
@@ -28,10 +62,9 @@ const ThreeFields = ({ options, propName, handleData }) => {
     setSelectedTeachers(newSelectedTeachers);
   };
 
-  // useEffect(() => {
-  //   // handleData(propName, selectedTeachers);
-  //   console.log(selectedTeachers);
-  // }, [selectedTeachers]);
+  useEffect(() => {
+    setExistingData(selectedTeachers);
+  }, [selectedTeachers]);
 
   const addInputField = () => {
     const departments = [...filteredListOfDepartments];
@@ -45,6 +78,11 @@ const ThreeFields = ({ options, propName, handleData }) => {
     setSelectedTeachers([
       ...selectedTeachers,
       {},
+    ]);
+
+    setSelectedMembers([
+      ...selectedMembers,
+      '',
     ]);
   };
 
@@ -61,11 +99,12 @@ const ThreeFields = ({ options, propName, handleData }) => {
     const teachersList = [...filteredListOfTeachers];
     teachersList.splice(index, 1);
     setFilteredListOfTeachers(teachersList);
-  };
 
-  useEffect(() => {
-    handleData(propName, selectedTeachers);
-  }, [selectedTeachers]);
+    const members = [...selectedMembers];
+    members.splice(index, 1);
+    setSelectedMembers(members);
+
+  };
 
   return (
     <div className="Container">
@@ -84,6 +123,9 @@ const ThreeFields = ({ options, propName, handleData }) => {
                   propName="institute"
                   handleData={handleInstitute}
                   index={index}
+                  selected={selectedInstitute}
+                  setSelected={setSelectedInstitute}
+
                 />
               </div>
               <div className="threeFormRowElement">
@@ -93,6 +135,8 @@ const ThreeFields = ({ options, propName, handleData }) => {
                   propName="department"
                   handleData={handleDepartment}
                   index={index}
+                  selected={selectedDepartment}
+                  setSelected={setSelectedDepartment}
                 />
               </div>
               <div className="threeFormRowElement">
@@ -102,6 +146,8 @@ const ThreeFields = ({ options, propName, handleData }) => {
                   propName="teacher"
                   handleData={handleTeacher}
                   index={index}
+                  selected={selectedMembers}
+                  setSelected={setSelectedMembers}
                 />
               </div>
               {selectedTeachers.length !== 1 && (

@@ -1,10 +1,12 @@
 using AutoMapper;
+using Business.Specifications.GeneralSpecifications;
 using Business.Specifications.TeacherSpecifications;
 using Core.DTOs.TeacherDTOs;
 using Core.Entities;
 using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.Params;
+using Core.Utils;
 
 namespace Business.Services;
 public class TeacherService : ITeacherService
@@ -29,13 +31,14 @@ public class TeacherService : ITeacherService
         return GetTeacherLoginDto(teacherEntity);
     }
 
-
-
-    public async Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id)
+    public async Task<TeacherOwnResponseDto> GetTeacherByIdAsync(Guid id)
     {
-        var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(id);
+        var spec = new TeacherByIdSpec(id);
 
-        return _mapper.Map<TeacherResponseDto>(teacher);
+        var teachers = await _unitOfWork.Repository<Teacher>().ListAllAsyncWithSpec(spec);
+        var teacher = teachers.FirstOrDefault();
+        if (teacher == null) throw new NotFoundException("Teacher not found");
+        return _mapper.Map<TeacherOwnResponseDto>(teacher);
     }
 
     public async Task<IReadOnlyList<TeacherResponseDto>> GetTeachersAsync(TeacherReqParams teacherParams)
@@ -51,15 +54,15 @@ public class TeacherService : ITeacherService
 
     public async Task<TeacherLoginDto> LoginTeacherAsync(TeacherLoginReqDto teacher)
     {
-        var teacherEntity = await _unitOfWork.Repository<Teacher>().ListAllAsync();
-        var teacherToLogin = teacherEntity.FirstOrDefault(t => t.Email == teacher.Email);
-        if (teacherEntity == null) return null;
-        if (!BCrypt.Net.BCrypt.Verify(teacher.Password, teacherToLogin.Password)) return null;
-        return GetTeacherLoginDto(teacherToLogin);
-        throw new NotImplementedException();
+        var spec = new TeacherByEmailSpec(teacher.Email);
+        var teacherEntities = await _unitOfWork.Repository<Teacher>().ListAllAsyncWithSpec(spec);
+        var teacherEntity = teacherEntities.FirstOrDefault();
+        if(teacherEntity == null) throw new NotFoundException("Teacher not found");
+        if (!BCrypt.Net.BCrypt.Verify(teacher.Password, teacherEntity.Password)) throw new UnAuthorizedException("Invalid password");
+        return GetTeacherLoginDto(teacherEntity);        
     }
 
-    public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherUpdateDto teacher)
+    public async Task<TeacherResponseDto> UpdateTeacherAsync(Guid id, TeacherOwnUpdateDto teacher)
     {
         var teacherEntity = await _unitOfWork.Repository<Teacher>().GetByIdAsync(id);
 
@@ -76,11 +79,9 @@ public class TeacherService : ITeacherService
         return _mapper.Map<TeacherResponseDto>(teacherEntity);
     }
 
-    private void TeacherUpdateDtoToTeacher(TeacherUpdateDto teacher, Teacher teacherEntity)
+    private void TeacherUpdateDtoToTeacher(TeacherOwnUpdateDto teacher, Teacher teacherEntity)
     {
         teacherEntity.Name = !String.IsNullOrEmpty(teacher.Name) ? teacher.Name : teacherEntity.Name;
-        teacherEntity.Email = !String.IsNullOrEmpty(teacher.Email) ? teacher.Email : teacherEntity.Email;
-        teacherEntity.Password = !String.IsNullOrEmpty(teacher.Password) ? BCrypt.Net.BCrypt.HashPassword(teacher.Password) : teacherEntity.Password;
         teacherEntity.BankAccount = !String.IsNullOrEmpty(teacher.BankAccount) ? teacher.BankAccount : teacherEntity.BankAccount;
         teacherEntity.Designation = !String.IsNullOrEmpty(teacher.Designation) ? teacher.Designation : teacherEntity.Designation;
     }
@@ -90,7 +91,7 @@ public class TeacherService : ITeacherService
         return new TeacherLoginDto
         {
             Email = teacherEntity.Email,
-            Designation = teacherEntity.Designation,
+            Role = teacherEntity.Role,
             Image = teacherEntity.Image,
             Token = _tokenService.CreateToken(teacherEntity),
         };

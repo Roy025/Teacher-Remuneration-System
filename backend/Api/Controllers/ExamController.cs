@@ -2,6 +2,7 @@ using Core.DTOs.ExamDTOs;
 using Core.Interfaces.Services;
 using Core.Models;
 using Core.Params;
+using Core.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -24,17 +25,25 @@ public class ExamController : BaseApiController
     // }
 
     // Director Section
-    [HttpGet("/director")]
+    [HttpGet("director")]
     public async Task<ActionResult<ApiDataResponse<ExamResponseDtoDirector>>> GetExamsForDirector([FromQuery] ExamReqParams examParams)
     {
+        if (!Request.Headers.ContainsKey("Authorization"))
+        {
+            throw new UnAuthorizedException();
+        }
         var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
         var exam = await _examService.GetExamsForDirectorAsync(examParams, user);
         return StatusCode(200, new ApiDataResponse<ExamResponseDtoDirector>(exam, 200, "Exams fetched successfully"));
     }
     
-    [HttpPost("/director")]
+    [HttpPost("director")]
     public async Task<ActionResult<ApiDataResponse<ExamResponseDtoDirector>>> CreateExamsFromDirector([FromBody] ExamCreateFromDirectorDto examCreateFromDirectorDto)
     {
+        if (!Request.Headers.ContainsKey("Authorization"))
+        {
+            throw new UnAuthorizedException();
+        }
         var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
         var exams = await _examService.CreateExamsFromDirector(examCreateFromDirectorDto, user);
 
@@ -44,9 +53,13 @@ public class ExamController : BaseApiController
     //////////////////////////////////
 
     // Chairman Section
-    [HttpGet("/chairman")]
+    [HttpGet("chairman")]
     public Task<ActionResult<ApiDataResponse<IEnumerable<string>>>> GetExamSessionsForChairman([FromQuery] ExamReqParams examReqParams)
     {
+        if (!Request.Headers.ContainsKey("Authorization"))
+        {
+            throw new UnAuthorizedException();
+        }
         var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
         var sessions = _examService.GetExamSessionsForChairman(examReqParams, user);
 

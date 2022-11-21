@@ -1,5 +1,6 @@
 using AutoMapper;
 using Business.Specifications.ExamSpecifications;
+using Core.DTOs.CourseDTOs;
 using Core.DTOs.ExamDTOs;
 using Core.Entities;
 using Core.Interfaces.Repositories;
@@ -21,7 +22,7 @@ public class ExamService : IExamService
 
     public async Task<ExamResponseDtoDirector> CreateExamsFromDirector(ExamCreateFromDirectorDto examCreateFromDirectorDto, UserFromToken user)
     {
-        if (user.Designation != "Director")
+        if (user.Role != "Director")
         {
             throw new UnAuthorizedException("You are not authorized to perform this action");
         }
@@ -49,6 +50,28 @@ public class ExamService : IExamService
                     exam.Members.Add(teacher);
                 }
             }
+            foreach (var course in examCreateFromDirectorDto.Courses)
+            {
+                var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
+                if(courseExam != null)
+                {
+                    if(courseExam.Type.Equals("Theory"))
+                    {
+                        var theoryCourse = new TheoryCourseResponsibles();
+                        theoryCourse.Course = courseExam;
+                        // theoryCourse.Exam = exam;
+                        exam.TheoryCourses.Add(theoryCourse);
+                    }
+                    else
+                    {
+                        var labCourses = new LabCourseResponsibles();
+                        labCourses.Course = courseExam;
+                        exam.LabCourses.Add(labCourses);
+                    }
+                }
+                
+            }
+
             _unitOfWork.Repository<Exam>().Update(exam);
         }
         else
@@ -78,12 +101,14 @@ public class ExamService : IExamService
         {
             throw new("Failed to create exam");
         }
-        return _mapper.Map<Exam, ExamResponseDtoDirector>(exam);
+        var res = _mapper.Map<Exam, ExamResponseDtoDirector>(exam);
+        res.Courses = examCreateFromDirectorDto.Courses;
+        return res;
     }
 
     public async Task<ExamResponseDtoDirector> GetExamsForDirectorAsync(ExamReqParams examParams, UserFromToken user)
     {
-        if (user.Designation != "Director")
+        if (user.Role != "Director")
             throw new UnAuthorizedException("You are not authorized to perform this action");
         examParams.DepartmentId = user.DepartmentId;
 
@@ -93,6 +118,16 @@ public class ExamService : IExamService
             throw new NotFoundException("No exam found");
         var exam = exams.FirstOrDefault();
         var examResponseDto = _mapper.Map<ExamResponseDtoDirector>(exam);
+        foreach (var course in exam.TheoryCourses)
+        {
+            var courseDto = _mapper.Map<CourseFromDirectorDto>(course.Course);
+            examResponseDto.Courses.Add(courseDto);
+        }
+        foreach (var course in exam.LabCourses)
+        {
+            var courseDto = _mapper.Map<CourseFromDirectorDto>(course.Course);
+            examResponseDto.Courses.Add(courseDto);
+        }
         return examResponseDto;
     }
 

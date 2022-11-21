@@ -22,6 +22,31 @@ namespace Business.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Core.Entities.Admin", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Admins");
+                });
+
             modelBuilder.Entity("Core.Entities.Department", b =>
                 {
                     b.Property<Guid>("Id")
@@ -94,6 +119,9 @@ namespace Business.Data.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Institutes");
                 });
@@ -171,6 +199,29 @@ namespace Business.Data.Migrations
                     b.ToTable("LabCoursesResponsibles");
                 });
 
+            modelBuilder.Entity("Core.Entities.Student", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("DepartmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RegistraionNo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Students");
+                });
+
             modelBuilder.Entity("Core.Entities.Teacher", b =>
                 {
                     b.Property<Guid>("Id")
@@ -194,16 +245,14 @@ namespace Business.Data.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("text");
 
-                    b.Property<string>("Institute")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -321,6 +370,9 @@ namespace Business.Data.Migrations
 
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Level")
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -461,6 +513,17 @@ namespace Business.Data.Migrations
                     b.Navigation("VivaExaminer");
                 });
 
+            modelBuilder.Entity("Core.Entities.Student", b =>
+                {
+                    b.HasOne("Core.Entities.Department", "Department")
+                        .WithMany("Students")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
             modelBuilder.Entity("Core.Entities.Teacher", b =>
                 {
                     b.HasOne("Core.Entities.Department", "Department")
@@ -586,6 +649,8 @@ namespace Business.Data.Migrations
             modelBuilder.Entity("Core.Entities.Department", b =>
                 {
                     b.Navigation("Courses");
+
+                    b.Navigation("Students");
 
                     b.Navigation("Teachers");
                 });

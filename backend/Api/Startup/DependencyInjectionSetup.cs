@@ -49,8 +49,13 @@ public static class DependencyInjectionSetup
         }
     });
         });
-        // services.AddCorsToService();
+        services.AddCorsToService();
         services.AddDb(config);
+
+    //     services.(options =>
+    // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+// );
+        
 
         services.Configure<ApiBehaviorOptions>(options =>
         {
@@ -88,6 +93,8 @@ public static class DependencyInjectionSetup
         services.AddScoped<ITeacherService, TeacherService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IExamService, ExamService>();
+        services.AddScoped<IAdminService, AdminService>();
+        services.AddScoped<IGeneralService, GeneralService>();
 
         // Automapper configuration
         services.AddAutoMapper(typeof(MappingProfiles));
@@ -103,7 +110,7 @@ public static class DependencyInjectionSetup
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
-                .WithOrigins("http://localhost:4200");
+                .WithOrigins("http://localhost:3000");
         }));
         return services;
     }

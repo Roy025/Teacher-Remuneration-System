@@ -17,182 +17,171 @@ import ThesisComp from "../../Functions/ThesisComp";
 import ThreeFields from "../../Functions/ThreeFields";
 
 const ChairmanBill = () => {
-  const localTeacherDB = [
+  const [selectedSession, setSelectedSession] = useState("");
+  const [selectedSemester, setSelectedSemester] = useState("");
+  const [listOfInstitutes, setListOfInstitutes] = useState([{}]);
+  const [listOfTeachers, setListOfTeachers] = useState([{}]);
+  const [listOfCourses, setListOfCourses] = useState(
+    [
+      {
+        id: "1", title: "", code: "SWE321"
+      }, {
+        id: "2", title: "", code: "SWE322"
+      }
+    ]);
+  const [listOfQuestionSetters, setListOfQuestionSetters] = useState([
     {
+      course: {
+        id: "",
+        title: "",
+        code: ""
+      },
+      teacher: {
+        id: "",
+        name: "",
+      },
+    },
+  ]);
+  const [listOfQuestionModerators, setListOfQuestionModerators] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
       id: "",
       name: "",
-      email: "",
-      institute: "",
-      department: "",
-      designation: "",
-      image: "",
     },
-  ];
-
-
-  const [inputSet, setInputSet] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputMod, setInputMod] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputAnsA, setInputAnsA] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputAnsB, setInputAnsB] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputTerm, setInputTerm] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputPrac, setInputPrac] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputTab, setInputTab] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputViva, setInputViva] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputScrA, setInputScrA] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputScrB, setInputScrB] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputType, setInputType] = useState([
-    {
-      name: "",
-      course: "",
-    },
-  ]);
-  const [inputStudentReg, setInputStudentReg] = useState([
-    {
-      course: "",
-      number: "",
-    },
-  ]);
-
-  const [exam, setExam] = useState({
-    session: "",
-    semester: "",
-  });
-  const [TermPaper, setTermPaper] = useState([
-    {
-      course: "",
-      super: [""],
-      examiner: [""],
-      committee: false,
-    },
-  ]);
-  const [inputInvi, setInvi] = useState([
-    {
-      institute: "",
-      department: "",
-      name: "",
-    },
-  ]);
-
-  const [inputVivaBoard, setVivaBoard] = useState([
-    {
-      institute: "",
-      department: "",
-      name: "",
-    },
-  ]);
-
-  const [inputThesisSuper, setThesisSuper] = useState([
-    {
-      institute: "",
-      department: "",
-      name: "",
-    },
-  ]);
-
-  const [inputThesisCoSuper, setThesisCoSuper] = useState([
-    {
-      institute: "",
-      department: "",
-      name: "",
-    },
-  ]);
-
-  const [inputThesisAssess, setThesisAssess] = useState([
-    {
-      institute: "",
-      department: "",
-      name: "",
-    },
-  ]);
-
-  const [inputThesisManagers, setThesisManagers] = useState([{
-    course: "",
-    supers: [
-      {
-        name: "",
-        stdntID: "",
-      },
-    ],
-    cosuper: [
-      {
-        name: "",
-        stdntID: "",
-      },
-    ],
-    assess: [
-      {
-        name: "",
-        stdntID: "",
-      },
-    ],
   }]);
+  const [listOfAnswerpaperCheckersPartA, setListOfAnswerpaperCheckersPartA] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [listOfAnswerpaperCheckersPartB, setListOfAnswerpaperCheckersPartB] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [listOfTermTestAnswerCheckers, setListOfTermTestAnswerCheckers] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [listOfLabExaminer, setListOfLabExaminer] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [listOfTabulators, setListOfTabulators] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [listOfVivaExaminers, setListOfVivaExaminers] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [listOfScrutinizersPartA, setListOfScrutinizersPartA] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [listOfScrutinizersPartB, setListOfScrutinizersPartB] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [listOfQuestionTypers, setListOfQuestionTypers] = useState([{
+    course: {
+      id: "",
+      title: "",
+      code: ""
+    },
+    teacher: {
+      id: "",
+      name: "",
+    },
+  }]);
+  const [registeredStudentsData, setRegisteredStudentsData] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+  const [listOfInvigilators, setListOfInvigilators] = useState([{ id: "", name: "", department: "", institute: "" }]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
   const submit = async () => {
-    console.log(exam);
-    console.log(inputSet);
-    console.log(inputMod);
-    console.log(inputAnsA);
-    console.log(inputAnsB);
-    console.log(inputScrA);
-    console.log(inputScrB);
-    console.log(inputTerm);
-    console.log(inputTab);
-    console.log(inputPrac);
-    console.log(inputViva);
-    console.log(inputType);
-    console.log(inputStudentReg);
+    const body = {
+      session: selectedSession,
+      semester: selectedSemester,
+      questionSetters: listOfQuestionSetters,
+      questionModerators: listOfQuestionModerators,
+      answerpaperCheckersPartA: listOfAnswerpaperCheckersPartA,
+      answerpaperCheckersPartB: listOfAnswerpaperCheckersPartB,
+      termTestAnswerCheckers: listOfTermTestAnswerCheckers,
+      labExaminer: listOfLabExaminer,
+      tabulators: listOfTabulators,
+      vivaExaminers: listOfVivaExaminers,
+      scrutinizersPartA: listOfScrutinizersPartA,
+      scrutinizersPartB: listOfScrutinizersPartB,
+      questionTypers: listOfQuestionTypers,
+      invigilators: listOfInvigilators,
+    }
+    console.log(body);
   };
   return (
     <>
@@ -206,76 +195,159 @@ const ChairmanBill = () => {
               <Dropdown
                 options={sessionOptions}
                 dropdownTitle={sessionTitle}
-                handleData={(child) => HandleSem(child, exam, setExam)}
+                selected={selectedSession}
+                setSelected={setSelectedSession}
               />
             </div>
+
             <div className="FormSubRow">
               <Dropdown
                 options={semesterOptions}
                 dropdownTitle={semesterTitle}
-                handleData={(child) => HandleSem(child, exam, setExam)}
+                selected={selectedSemester}
+                setSelected={setSelectedSemester}
               />
             </div>
           </div>
+
           <div className="formRow">
             <label className="Label"> Question Setting</label>
-            <TwoField inputFields={inputSet} setInputFields={setInputSet} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfQuestionSetters}
+              setExistingData={setListOfQuestionSetters}
+            />
           </div>
+
           <div className="formRow">
-            <label className="Label">Question Moderation</label>
-            <TwoField inputFields={inputMod} setInputFields={setInputMod} />
+            <label className="Label"> Question Moderation</label>
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfQuestionModerators}
+              setExistingData={setListOfQuestionModerators}
+            />
           </div>
+
           <div className="formRow">
             <label className="Label">Answerpaper Checking</label>
             <h4 className="subLabel">Part - A</h4>
-            <TwoField inputFields={inputAnsA} setInputFields={setInputAnsA} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfAnswerpaperCheckersPartA}
+              setExistingData={setListOfAnswerpaperCheckersPartA}
+            />
+
             <h4 className="subLabel">Part - B</h4>
-            <TwoField inputFields={inputAnsB} setInputFields={setInputAnsB} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfAnswerpaperCheckersPartB}
+              setExistingData={setListOfAnswerpaperCheckersPartB}
+            />
           </div>
+
           <div className="formRow">
             <label className="Label">Term Test / Internal Assessment</label>
-            <TwoField inputFields={inputTerm} setInputFields={setInputTerm} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfTermTestAnswerCheckers}
+              setExistingData={setListOfTermTestAnswerCheckers}
+            />
           </div>
+
           <div className="formRow">
-            <label className="Label">
-              Practical Exam / Sessional Assessment / LAB
-            </label>
-            <TwoField inputFields={inputPrac} setInputFields={setInputPrac} />
+            <label className="Label">Practical Exam / Sessional Assessment / LAB</label>
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfLabExaminer}
+              setExistingData={setListOfLabExaminer}
+            />
           </div>
+
           <div className="formRow">
             <label className="Label">Tabulation</label>
-            <TwoField inputFields={inputTab} setInputFields={setInputTab} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfTabulators}
+              setExistingData={setListOfTabulators}
+            />
           </div>
+
           <div className="formRow">
             <label className="Label">Viva</label>
-            <TwoField inputFields={inputViva} setInputFields={setInputViva} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfVivaExaminers}
+              setExistingData={setListOfVivaExaminers}
+            />
           </div>
+
           <div className="formRow">
-            <label className="Label">Scrutineer</label>
+            <label className="Label">Scrutiny</label>
             <h4 className="subLabel">Part - A</h4>
-            <TwoField inputFields={inputScrA} setInputFields={setInputScrA} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfScrutinizersPartA}
+              setExistingData={setListOfScrutinizersPartA}
+            />
             <h4 className="subLabel">Part - B</h4>
-            <TwoField inputFields={inputScrB} setInputFields={setInputScrB} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfScrutinizersPartB}
+              setExistingData={setListOfScrutinizersPartB}
+            />
           </div>
-          <div className="formRow">
+
+          {/* <div className="formRow">
             <label className="Label">
               Term Paper / Seminar Paper / Field Work / MonoGraph / Study Tour /
               Content Analysis / Workshop / Project / Thesis(Under-graduate) /
               Internship / Research Planning
             </label>
             <TermPaperComp TermPaper={TermPaper} setTermPaper={setTermPaper} />
-          </div>
+          </div> */}
+
           <div className="formRow">
             <label className="Label">Question Type</label>
-            <TwoField inputFields={inputType} setInputFields={setInputType} />
+            <TwoField
+              courses={listOfCourses}
+              teachers={listOfTeachers}
+              // handleData={handleData}
+              existingData={listOfQuestionTypers}
+              setExistingData={setListOfQuestionTypers}
+            />
           </div>
 
           <div className="formRow">
-            <label className="Label">Invigilators</label>
-            <ThreeFields inputFields={inputInvi} setInputFields={setInvi} />
+            <label className="Label">Invigilation</label>
+            <ThreeFields
+              options={listOfInstitutes}
+              propName="members"
+              existingData={listOfInvigilators}
+              setExistingData={setListOfInvigilators}
+            />
           </div>
 
-          <div className="formRow">
+          {/* <div className="formRow">
             <label className="Label">Thesis(Post-graduate)</label>
             <ThesisComp
               inputVivaBoard={inputVivaBoard}
@@ -290,13 +362,14 @@ const ChairmanBill = () => {
               setThesisManagers={setThesisManagers}
               localTeacherDB={localTeacherDB}
             />
-          </div>
+          </div> */}
 
           <div className="formRow">
             <label className="Label">Student Registration</label>
             <StudentCount
-              inputFields={inputStudentReg}
-              setInputFields={setInputStudentReg}
+              options={listOfCourses}
+              existingData={registeredStudentsData}
+              setExistingData={setRegisteredStudentsData}
             />
           </div>
 
