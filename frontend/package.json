@@ -21,6 +21,7 @@
 		"react-icons": "^4.6.0",
 		"react-router-dom": "^6.4.0",
 		"react-scripts": "5.0.1",
+		"react-to-print": "^2.14.10",
 		"sassy-datepicker": "^0.10.1",
 		"web-vitals": "^2.1.4",
 		"webfontloader": "^1.6.28"
