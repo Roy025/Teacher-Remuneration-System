@@ -14,11 +14,22 @@ import '../SampleDropdown/styles.css';
 import ThreeFieldsNoAdd from '../../Functions/ThreeFieldsNoAdd';
 import ThreeFields from '../../Functions/ThreeFields';
 import { instance as axios } from '../axios';
+import DropdownNoTitleTeacher from '../../Functions/DropdownNoTitleTeacher';
 const DirectorsBill = () => {
 	const [selectedSemester, setSelectedSemester] = useState('');
 	const [selectedSession, setSelectedSession] = useState('');
 	const [selectedChairman, setSelectedChairman] = useState('');
 	const [selectedChiefInvigilator, setSelectedChiefInvigilator] = useState('');
+	const [selectedCourses, setSelectedCourses] = useState([{}]);
+	const [courses, setCourses] = useState([""]);
+	const [courseList, setCourseList] = useState([{
+		id: "1",
+		code: "Swe123",
+	},
+		{
+			id: "2",
+			code: "swe111"
+	}]);
 	const [selectedMembers, setSelectedMembers] = useState([
 		{
 			id: '',
@@ -72,6 +83,7 @@ const DirectorsBill = () => {
 		newData.chairman = selectedChairman;
 		newData.cheifInvigilator = selectedChiefInvigilator;
 		newData.members = selectedMembers;
+		newData.courses = selectedCourses;
 		console.log(newData);
 		setSelectedSession('');
 		setSelectedSemester('');
@@ -107,33 +119,56 @@ const DirectorsBill = () => {
 		// const res = await axios.post
 	};
 
-	// useEffect(() => {
-	//   console.log(selectedSession);
-	//   console.log(selectedSemester);
-	//   console.log(selectedChairman);
-	//   console.log(selectedChiefInvigilator);
-	//   console.log(selectedMembers);
-
-	// }, [selectedSemester, selectedSession, selectedChairman, selectedChiefInvigilator, selectedMembers]);
 	const [institutes, setInstitutes] = useState([]);
 
 	const fetchInstitute = async () => {
 		const response = await axios.get('/institute');
 		return response;
 	};
+	const departmentId = 'deb3b16b-e983-4b20-87ba-991e5d81b544';
+	const fetchCourse = async () => {
+		const response = await axios.get(`/course?departmentId=${departmentId}`);
+		return response;
+	};
 
 	useQuery(['institution-list'], async () => {
+		const store = await fetchCourse();
+		setCourseList(store.data.data);
+		return store;
+	});
+
+	useQuery(['course-list'], async () => {
 		const store = await fetchInstitute();
 		setInstitutes(store.data.data);
 		return store;
 	});
 
-	// useEffect(async () => {
-	//   console.log(data);
-	// }, [data]);
+
+
+	const handleCourses = (propName, option, index) => {
+		const newCourses = [...selectedCourses];
+		newCourses[index] = option;
+		setSelectedCourses(newCourses);
+	}
+
+	const removeInputFields = (evnt, index) => {
+		const values = [...selectedCourses];
+		values.splice(index, 1);
+		setSelectedCourses(values);
+
+		const tmp = [...courses];
+		tmp.splice(index, 1);
+		setCourses(tmp);
+	}
+	const addInputField = () => {
+		setCourses([...courses, ""]);
+		setSelectedCourses([...selectedCourses, {
+			id: '',
+			code: '',
+		}]);
+	}
 
 	const fetchPrevData = async () => {
-		// console.log(selectedSession, selectedSemester);
 		if (selectedSemester && selectedSession) {
 			console.log('fetching');
 			const res = await axios.get(
@@ -147,11 +182,11 @@ const DirectorsBill = () => {
 			);
 			console.log(res.data.data);
 			if (res.data.data) {
-				// setSelectedSession(res.data.data.session)
-				// setSelectedSemester(res.data.data.semester)
 				setSelectedChairman(res.data.data.chairman);
 				setSelectedChiefInvigilator(res.data.data.cheifInvigilator);
 				setSelectedMembers(res.data.data.members);
+				setSelectedCourses(res.data.data.courses);
+				setCourses(res.data.data.courses.map((course) => course.code));
 				// setData(res.data.data)
 			} else {
 				setSelectedChairman('');
@@ -170,6 +205,7 @@ const DirectorsBill = () => {
 						},
 					},
 				]);
+				setSelectedCourses([{}]);
 			}
 		}
 	};
@@ -236,17 +272,55 @@ const DirectorsBill = () => {
 							existingData={selectedMembers}
 							setExistingData={setSelectedMembers}
 						/>
-						<div className="formRow SubmitRow">
-							<button
-								type="submit"
-								className="submitButton"
-								onClick={save}>
-								Submit
-							</button>
-						</div>
+					</div>
+
+					<label className="Label">Courses</label>
+					{courses.map((course, index) => {
+						return (
+							<div>
+								<div className="threeFormRowElement">
+									<DropdownNoTitleTeacher
+										options={courseList}
+										propName="course"
+										selected={courses}
+										setSelected={setCourses}
+										handleData={handleCourses}
+										index={index}
+									/>
+									{courses.length !== 1 && (
+										<div className="FormRowElement">
+											<button
+												className={`crossButton ${index === 0 && "crossButton-first"}`}
+												onClick={(evnt) => removeInputFields(evnt, index)}
+											>x</button>
+										</div>
+									)}
+								</div>
+								{courses.length - 1 === index && (
+									<div className="FormRowElement">
+										<button
+											className="addButton"
+											onClick={() => addInputField()}
+											type="button"
+										>
+											<i className="fa-sharp fa-solid fa-plus "></i>
+										</button>
+									</div>
+								)}
+							</div>
+
+						)
+					})}
+					<div className="formRow SubmitRow">
+						<button
+							type="submit"
+							className="submitButton"
+							onClick={save}>
+							Submit
+						</button>
 					</div>
 				</form>
-			</div>
+			</div >
 		</>
 	);
 };

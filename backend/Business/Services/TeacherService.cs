@@ -1,4 +1,5 @@
 using AutoMapper;
+using Business.Specifications.GeneralSpecifications;
 using Business.Specifications.TeacherSpecifications;
 using Core.DTOs.TeacherDTOs;
 using Core.Entities;
@@ -30,11 +31,14 @@ public class TeacherService : ITeacherService
         return GetTeacherLoginDto(teacherEntity);
     }
 
-    public async Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id)
+    public async Task<TeacherOwnResponseDto> GetTeacherByIdAsync(Guid id)
     {
-        var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(id);
+        var spec = new TeacherByIdSpec(id);
 
-        return _mapper.Map<TeacherResponseDto>(teacher);
+        var teachers = await _unitOfWork.Repository<Teacher>().ListAllAsyncWithSpec(spec);
+        var teacher = teachers.FirstOrDefault();
+        if (teacher == null) throw new NotFoundException("Teacher not found");
+        return _mapper.Map<TeacherOwnResponseDto>(teacher);
     }
 
     public async Task<IReadOnlyList<TeacherResponseDto>> GetTeachersAsync(TeacherReqParams teacherParams)

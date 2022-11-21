@@ -13,8 +13,6 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
 
   const handleChange = (evnt, index) => {
     const tmp = evnt.target.value;
-    // console.log(existingData);
-    // console.log(tmp);
     const list = [...numberOfStudents];
     list[index] = tmp;
     setNumberOfStudents(list);
@@ -22,6 +20,7 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
     tmp2[index].numberOfStudents = tmp;
     setExistingData(tmp2);
   }
+
   const removeInputFields = (e, index) => {
     e.preventDefault();
     const courses = [...selectedCourses];
@@ -41,6 +40,13 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
     setNumberOfStudents([...numberOfStudents, ""]);
     setExistingData([...existingData, {}]);
   };
+
+  const handleCourse = (propName, option, index) => {
+    const tmp = [...existingData];
+    tmp[index].course = option;
+    setExistingData(tmp);
+  }
+  
   useEffect(() => {
     setSelectedData(existingData);
   }, [existingData]);
@@ -57,6 +63,7 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
                   options={options}
                   propName="course"
                   index={index}
+                  handleData={handleCourse}
                   selected={selectedCourses}
                   setSelected={setSelectedCourses}
                 />
