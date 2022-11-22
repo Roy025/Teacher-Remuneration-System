@@ -2,125 +2,186 @@ import React, { useEffect } from 'react';
 import './ProfilePage.css';
 import { useState } from 'react';
 import { instance as axios } from '../axios';
+import { useNavigate } from 'react-router-dom';
 
 function ProfilePage() {
+	const navigate = useNavigate();
 	const [objs, setObjs] = useState([]);
+	const [department, setdepartment] = useState([]);
 	const [disableButton, setDisableButton] = useState(false);
-	const [disableButton1, setDisableButton1] = useState(false);
-	const [inputFields, setInputFields] = useState([
-		{
-			account: '',
-			designation: '',
-		},
-	]);
-	const handleChange = (evnt, index) => {
+	const [inputFields, setInputFields] = useState({
+		name: '',
+		account: '',
+		designation: '',
+	});
+	const handleChange = (evnt) => {
 		const { name, value } = evnt.target;
 		console.log(name);
 		console.log(value);
-		const list = [...inputFields];
-		list[index][name] = value;
+		const list = { ...inputFields };
+		list[name] = value;
 		setInputFields(list);
 	};
+
 	// const { id } = useParams();
-	const id = "d006c9f0-e5df-4604-afd5-b74e57655e09";
+	const id = '6261b8f4-1115-429f-a430-cca305c2ffb4';
 	useEffect(() => {
 		axios
 			.get(`/Teacher/${id}`)
 			.then((response) => {
 				const object = response.data;
-				console.log(object);				
-				setObjs(object.data);		
+				console.log(object);
+				console.log(object.data);
+				const dept = object.data;
+				console.log(dept.department);
+				setdepartment(dept.department);
+				setObjs(object.data);
 			})
 			.catch((err) => {
-				console.log(err.response)
+				console.log(err.response);
 				console.log(id);
-			}
-			);
+			});
 	}, []);
-	console.log(objs);
-	
+	const { name, account, designation } = inputFields;
+	console.log(inputFields);
+	console.log(name);
+
+	const update = async () => {
+		try {
+			await axios
+				.patch(`/Teacher/${id}`, {
+					name: name,
+					bankAccount: account,
+					designation: designation,
+				})
+				.then((response) => {
+					setTimeout(() => {
+						navigate(`/profile`);
+					}, 3000);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} catch (err) {
+			console.log(err);
+		}
+		window.location.reload(false);
+	};
+
 	return (
 		<div className="profile">
-			{inputFields.map((data, index) => {
-				const { account, designation } = data;
-				return (
-					<div className="shadow">
-						<p className="heading-1">Profile</p>
-						<div className="card">
-							<div className="containerA">
-								<img
-									src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
-									alt="Avatar"
-									className="profile-image"
+			<div className="shadow">
+				<p className="heading-1">Profile</p>
+				<div className="card">
+					<div className="containerA">
+						<img
+							src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
+							alt="Avatar"
+							className="profile-image"
+						/>
+						{/* <h2>{objs.name}</h2> */}
+
+						<div>
+							{disableButton ? (
+								<input
+									className="input"
+									type="text"
+									name="name"
+									value={name}
+									// onChange={(evnt) => handleChange(evnt, index)}
+									onChange={(evnt) => handleChange(evnt)}
+									onKeyDown={(e) => {
+										if (e.key === 'Enter') setDisableButton(false);
+									}}
 								/>
-								<h2>{objs.name}</h2>
-							</div>
-							<div className="containerB">
-								<div>
-									<p className="para">Email</p>
-									<h4 className="h4">{objs.email}</h4>
-								</div>
-								<div>
-									<div className="edit">
-										<p className="para">Bank Account</p>
-										<i className="far fa-edit mb-5 editbtn"></i>
-									</div>
-									{disableButton1 ? (
-										<input
-											className="input"
-											type="text"
-											name="account"
-											value={account}
-											onChange={(evnt) => handleChange(evnt, index)}
-											onKeyDown={(e) => {
-												if (e.key === 'Enter') setDisableButton1(false);
-											}}
-										/>
-									) : (
-										<h4
-											className="h4"
-											onClick={() => setDisableButton1(true)}>
-											{account}
-										</h4>
-									)}{' '}
-								</div>
-								<div>
-									<div className="edit">
-										<p className="para">Designation</p>
-										<i className="far fa-edit mb-5 editbtn"></i>
-									</div>
-									{disableButton ? (
-										<input
-											className="input"
-											type="text"
-											name="designation"
-											value={designation}
-											onChange={(evnt) => handleChange(evnt, index)}
-											onKeyDown={(e) => {
-												if (e.key === 'Enter') setDisableButton(false);
-											}}
-										/>
-									) : (
-										<h4
-											className="h4"
-											onClick={() => setDisableButton(true)}>
-											{objs.designation}
-										</h4>
-									)}{' '}
-								</div>
-								<div>
-									<p className="para">Department</p>
-									<h4 className="h4">{objs.department}</h4>
-								</div>
-								<div>
-									<p className="para">Institute</p>
-									<h4 className="h4">SUSt</h4>
-								</div>
-							</div>
+							) : (
+								<h4
+									className="h4"
+									onClick={() => setDisableButton(true)}>
+									{objs.name}
+								</h4>
+							)}{' '}
+							<i className="far fa-edit mb-5 editbtn"></i>
 						</div>
 					</div>
-				);
-			})}
+					<div className="containerB">
+						<div>
+							<p className="para">Email</p>
+							<h4 className="h4">{objs.email}</h4>
+						</div>
+						<div>
+							<p className="para">Bank Account</p>
+							<div className="edit">
+								{disableButton ? (
+									<input
+										className="input"
+										type="text"
+										name="account"
+										value={account}
+										onChange={(evnt) => handleChange(evnt)}
+										onKeyDown={(e) => {
+											if (e.key === 'Enter') setDisableButton(false);
+										}}
+									/>
+								) : (
+									<h4
+										className="h4"
+										onClick={() => setDisableButton(true)}>
+										{objs.bankAccount}
+									</h4>
+								)}
+								<i className="far fa-edit mb-5 editbtn"></i>
+							</div>
+						</div>
+						<div>
+							<p className="para">Designation</p>
+
+							<div className="edit">
+								{disableButton ? (
+									<input
+										className="input"
+										type="text"
+										name="designation"
+										value={designation}
+										onChange={(evnt) => handleChange(evnt)}
+										onKeyDown={(e) => {
+											if (e.key === 'Enter') setDisableButton(false);
+										}}
+									/>
+								) : (
+									<h4
+										className="h4"
+										onClick={() => setDisableButton(true)}>
+										{objs.designation}
+									</h4>
+								)}
+								<i className="far fa-edit mb-5 editbtn"></i>
+							</div>
+						</div>
+						<div>
+							<p className="para">Department</p>
+							<h4 className="h4">{department.name}</h4>
+						</div>
+						<div>
+							<p className="para">Institute</p>
+							<h4 className="h4">SUSt</h4>
+							{/* <h4 className="h4">{department.institute}</h4> */}
+						</div>
+						<div>
+							{disableButton ? (
+								<button
+									type="submit"
+									className="submitButton"
+									onClick={update}>
+									Update
+								</button>
+							) : (
+								''
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }

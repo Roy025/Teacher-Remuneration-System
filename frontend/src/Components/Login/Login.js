@@ -1,19 +1,82 @@
 import React, { useState } from 'react';
 import './login.css';
 import '../ProfilePage/ProfilePage.css';
+import { useNavigate } from 'react-router-dom';
+import { instance as axios } from '../axios';
+
 const Login = () => {
 	const [loginData, setloginData] = useState({
 		email: '',
 		password: '',
 	});
+	const [checked, setChecked] = useState(false);
 	const { email, password } = loginData;
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};
+	const navigate = useNavigate();
 	const login = async () => {
-		console.log(loginData);
+		if (checked) {
+			try {
+				await axios
+					.post('/Admin/login', {
+						email: email,
+						password: password,
+					})
+					.then((response) => {
+						console.log(response);
+						const obj = response.data;
+						console.log(obj.data.token);
+
+						// localStorage.setItem('accesstoken', obj.data.token);
+						// localStorage.setItem('username', response.data.username);
+
+						if (response.data.statusCode === 200) {
+							setTimeout(() => {
+								navigate('/AdminHome');
+							}, 3000);
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			} catch (err) {
+				console.log(err);
+			}
+		} else {
+			try {
+				await axios
+					.post('/Teacher/login', {
+						email: email,
+						password: password,
+					})
+					.then((response) => {
+						console.log(response);
+						const obj = response.data;
+						console.log(obj.data.role);
+						console.log(obj.data.token);
+
+						// localStorage.setItem('accesstoken', obj.data.token);
+						localStorage.setItem('role', obj.data.role);
+						console.log(response.data.statusCode);
+
+						if (response.data.statusCode === 200) {
+							setTimeout(() => {
+								navigate('/');
+							}, 3000);
+						}
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			} catch (err) {
+				console.log(err);
+			}
+		}
 	};
+
+	console.log(checked);
 
 	const handleChange = (e) => {
 		const log = e.target.name;
@@ -43,6 +106,16 @@ const Login = () => {
 						placeholder="Password"
 						onChange={handleChange}
 					/>
+
+					<label class="mylabel">
+						<input
+							type="checkbox"
+							className="checkbox"
+							checked={checked}
+							onChange={() => setChecked(!checked)}
+						/>
+						<span>Admin</span>
+					</label>
 					<button
 						type="submit"
 						onClick={login}>
