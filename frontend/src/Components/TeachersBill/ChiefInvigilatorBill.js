@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Links from "./Links";
 import "./TeachersBill.css";
 import "./FormButton.css";
@@ -10,8 +10,6 @@ import Dropdown, {
   sessionOptions,
 } from "../SampleDropdown/Dropdown";
 import "../SampleDropdown/styles.css";
-import HandleSem from "../../Functions/HandleSem";
-import { useState } from "react";
 import InvigilationComp from "./InvigilationComp";
 
 const ChiefInvigilatorBill = () => {

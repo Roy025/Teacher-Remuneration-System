@@ -3,44 +3,73 @@ import "../Components/SampleDropdown/styles.css";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 import { instance as axios } from "../Components/axios";
 
-const ThreeFields = ({ options, propName, handleData, existingData = [], setExistingData }) => {
-  const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([[{}]]);
-  
-  const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([[{}]]);
-  
-  const [selectedTeachers, setSelectedTeachers] = useState(existingData ? existingData : [{
-    id: '',
-    name: '',
-  }])
+const ThreeFields = ({
+  options,
+  propName,
+  handleData,
+  existingData = [],
+  setExistingData,
+}) => {
+  const [filteredListOfDepartments, setFilteredListOfDepartments] = useState([
+    [{}],
+  ]);
 
-  const [selectedInstitute, setSelectedInstitute] = useState(existingData ? existingData.map(x => x.institute) : ['']);
-  const [selectedDepartment, setSelectedDepartment] = useState(existingData ? existingData.map(x => x.department) : ['']);
-  const [selectedMembers, setSelectedMembers] = useState(existingData ? existingData.map(x => x.name) : ['']);
+  const [filteredListOfTeachers, setFilteredListOfTeachers] = useState([[{}]]);
+
+  const [selectedTeachers, setSelectedTeachers] = useState(
+    existingData
+      ? existingData
+      : [
+          {
+            id: "",
+            name: "",
+          },
+        ]
+  );
+
+  const [selectedInstitute, setSelectedInstitute] = useState(
+    existingData ? existingData.map((x) => x.institute) : [""]
+  );
+  const [selectedDepartment, setSelectedDepartment] = useState(
+    existingData ? existingData.map((x) => x.department) : [""]
+  );
+  const [selectedMembers, setSelectedMembers] = useState(
+    existingData ? existingData.map((x) => x.name) : [""]
+  );
 
   useEffect(() => {
-    setSelectedInstitute(existingData ? existingData.map(x => {
-      if (x.department && x.department.institute.name)
-        return x.department.institute.name
-      else
-        return ''
-    }) : ['']);
+    setSelectedInstitute(
+      existingData
+        ? existingData.map((x) => {
+            if (x.department && x.department.institute.name)
+              return x.department.institute.name;
+            else return "";
+          })
+        : [""]
+    );
 
-    setSelectedDepartment(existingData ? existingData.map(x => {
-      if (x.department && x.department.name)
-        return x.department.name
-      else
-        return ''
-    }) : ['']);
+    setSelectedDepartment(
+      existingData
+        ? existingData.map((x) => {
+            if (x.department && x.department.name) return x.department.name;
+            else return "";
+          })
+        : [""]
+    );
 
-    
-    setSelectedMembers(existingData ? existingData.map(x => x.name) : ['']);
-    
-    setSelectedTeachers(existingData ? existingData : [{
-      id: '',
-      name: '',
-    }])
+    setSelectedMembers(existingData ? existingData.map((x) => x.name) : [""]);
+
+    setSelectedTeachers(
+      existingData
+        ? existingData
+        : [
+            {
+              id: "",
+              name: "",
+            },
+          ]
+    );
   }, [existingData]);
-
 
   const handleInstitute = async (property, value, index) => {
     const departments = [...filteredListOfDepartments];
@@ -75,15 +104,9 @@ const ThreeFields = ({ options, propName, handleData, existingData = [], setExis
     teachers.push([{}]);
     setFilteredListOfTeachers(teachers);
 
-    setSelectedTeachers([
-      ...selectedTeachers,
-      {},
-    ]);
+    setSelectedTeachers([...selectedTeachers, {}]);
 
-    setSelectedMembers([
-      ...selectedMembers,
-      '',
-    ]);
+    setSelectedMembers([...selectedMembers, ""]);
   };
 
   const removeInputFields = (e, index) => {
@@ -103,20 +126,20 @@ const ThreeFields = ({ options, propName, handleData, existingData = [], setExis
     const members = [...selectedMembers];
     members.splice(index, 1);
     setSelectedMembers(members);
-
   };
 
   return (
     <div className="Container">
       {selectedTeachers.map((data, index) => {
-
         return (
           <div className="ParentFormRow">
             <div
-              className={`FormRow ${selectedTeachers.length !== 1 && "CrossFormRow"}`}
+              className={`FormRow ${
+                selectedTeachers.length !== 1 && "CrossFormRow"
+              }`}
               key={index}
             >
-              <div className="threeFormRowElement">
+              <div className="threeFormRowElementWithAdd">
                 {index === 0 && <label>Institute</label>}
                 <DropdownNoTitleTeacher
                   options={options}
@@ -125,10 +148,9 @@ const ThreeFields = ({ options, propName, handleData, existingData = [], setExis
                   index={index}
                   selected={selectedInstitute}
                   setSelected={setSelectedInstitute}
-
                 />
               </div>
-              <div className="threeFormRowElement">
+              <div className="threeFormRowElementWithAdd">
                 {index === 0 && <label>Department</label>}
                 <DropdownNoTitleTeacher
                   options={filteredListOfDepartments[index]}
@@ -139,7 +161,7 @@ const ThreeFields = ({ options, propName, handleData, existingData = [], setExis
                   setSelected={setSelectedDepartment}
                 />
               </div>
-              <div className="threeFormRowElement">
+              <div className="threeFormRowElementWithAdd">
                 {index === 0 && <label>Teacher</label>}
                 <DropdownNoTitleTeacher
                   options={filteredListOfTeachers[index]}
@@ -153,9 +175,13 @@ const ThreeFields = ({ options, propName, handleData, existingData = [], setExis
               {selectedTeachers.length !== 1 && (
                 <div className="FormRowElement">
                   <button
-                    className={`crossButton ${index === 0 && "crossButton-first"}`}
+                    className={`crossButton ${
+                      index === 0 && "threefieldsCrossButton-first"
+                    }`}
                     onClick={(evnt) => removeInputFields(evnt, index)}
-                  >x</button>
+                  >
+                    x
+                  </button>
                 </div>
               )}
             </div>
@@ -171,11 +197,10 @@ const ThreeFields = ({ options, propName, handleData, existingData = [], setExis
               </div>
             )}
           </div>
-
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
 export default ThreeFields;
