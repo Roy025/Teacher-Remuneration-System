@@ -44,32 +44,6 @@ const DirectorsBill = () => {
 			},
 		},
 	]);
-
-	// const [data, setData] = useState({
-	//   session: "",
-	//   semester: "",
-	//   chairman: {
-	//     id: "",
-	//     name: "",
-	//     institute: "",
-	//     department: "",
-	//   },
-	//   cheifInvigilator: {
-	//     id: "",
-	//     name: "",
-	//     institute: "",
-	//     department: "",
-	//   },
-	//   members: [
-	//     {
-	//       id: "",
-	//       name: "",
-	//       institute: "",
-	//       department: "",
-	//     },
-	//   ],
-	// })
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 	};

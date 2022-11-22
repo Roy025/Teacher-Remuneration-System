@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import DropdownNoTitleTeacher from "../../../Functions/DropdownNoTitleTeacher";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { instance as axios } from "../../axios";
-import "./ViewAccount.css";
 
-function ViewAccount() {
+function UpdateRole() {
   const [instituteList, setInstituteList] = useState([]);
   const [deptList, setDeptList] = useState([]);
   const [teacherList, setTeacherList] = useState([]);
+  const [roleList, setRoleList] = useState([
+    {
+      name: "Director",
+    },
+    {
+      name: "Teacher",
+    },
+  ]);
   const [selectedInstitute, setSelectedInstitute] = useState("");
   const [selectedDept, setSelectedDept] = useState("");
+  const [selectedTeacher, setSelectedTeacher] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
   const [insTituteAvailable, setInsTituteAvailable] = useState(false);
   const [deptAvailable, setDeptAvailable] = useState(false);
 
@@ -17,6 +26,8 @@ function ViewAccount() {
     id: "",
     institute: "",
     department: "",
+    teacher: "",
+    role: "",
   });
 
   //Fetching institute data
@@ -60,7 +71,7 @@ function ViewAccount() {
 
   const handleInstitute = (propName, option) => {
     const newData = { ...data };
-    newData.institute = option;
+    newData.institute = option.name;
     newData.id = option.id;
     setInsTituteAvailable(true);
     setData(newData);
@@ -70,16 +81,57 @@ function ViewAccount() {
 
   const handleDepartment = (propName, option) => {
     const newData = { ...data };
-    newData.department = option;
+    newData.department = option.name;
     newData.id = option.id;
     setDeptAvailable(true);
     setData(newData);
   };
 
+  // Handle teacher data
+
+  const handleTeacher = (propName, option) => {
+    const newData = { ...data };
+    newData.teacher = option.name;
+    newData.id = option.id;
+    setData(newData);
+  };
+
+  // Handle teacher data
+
+  const handleRole = (propName, option) => {
+    const newData = { ...data };
+    newData.role = option.name;
+    setData(newData);
+  };
+
+  // Update role
+
+  const updateRole = async (info) => {
+    console.log(info.teachers);
+    const response = await axios.patch(`/Admin/teacher/${data.id}`, {
+      role: info.role,
+    });
+    return response;
+  };
+
+  const {
+    mutate: RoleMutate,
+    isError,
+    error,
+  } = useMutation(updateRole, {
+    onSuccess: (success) => {
+      console.log(success);
+      window.location.reload(false);
+    },
+  });
+  if (isError) {
+    console.log(error);
+  }
+
   return (
     <div className="ViewAccountWrap">
       <div className="ViewAccountSelection">
-        <h1 className="ViewHeader">View accounts</h1>
+        <h1 className="ViewHeader">Assign Director Role</h1>
         <div className="ViewSelectionElements">
           <div className="AccountInputFields">
             <label className="AccountLabel">Institute</label>
@@ -101,25 +153,42 @@ function ViewAccount() {
               setSelected={setSelectedDept}
             />
           </div>
+          <div className="AccountInputFields">
+            <label className="AccountLabel">Teacher</label>
+            <DropdownNoTitleTeacher
+              options={teacherList}
+              propName="teacher"
+              handleData={handleTeacher}
+              selected={selectedTeacher}
+              setSelected={setSelectedTeacher}
+            />
+          </div>
         </div>
-      </div>
 
-      <div className="ViewTeacherWrap">
-        {teacherList.map((info, index) => {
-          return (
-            <div className="ViewTeacherCard">
-              <h3 className="ViewTeacherName">{info.name}</h3>
-              <h4 className="ViewTeacherInfo">{info.email}</h4>
-              <h4 className="ViewTeacherInfo">{info.department.name}</h4>
-              <h4 className="ViewTeacherInfo">
-                {info.department.institute.name}
-              </h4>
-            </div>
-          );
-        })}
+        <div className="AccountInputFields">
+          <label className="AccountLabel">Department</label>
+          <DropdownNoTitleTeacher
+            options={roleList}
+            propName="role"
+            handleData={handleRole}
+            selected={selectedRole}
+            setSelected={setSelectedRole}
+          />
+        </div>
+
+        <button
+          className="AdminButton AdminSubmit"
+          onClick={() =>
+            RoleMutate({
+              role: data.role,
+            })
+          }
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
 }
 
-export default ViewAccount;
+export default UpdateRole;

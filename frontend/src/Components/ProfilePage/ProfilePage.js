@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './ProfilePage.css';
-import DatePicker from 'sassy-datepicker';
 import { useState } from 'react';
+import { instance as axios } from '../axios';
 
 function ProfilePage() {
-	const [date, setDate] = useState(new Date());
-
+	const [objs, setObjs] = useState([]);
 	const [disableButton, setDisableButton] = useState(false);
 	const [disableButton1, setDisableButton1] = useState(false);
 	const [inputFields, setInputFields] = useState([
 		{
-			account: '23456',
-			designation: 'sdfghj',
+			account: '',
+			designation: '',
 		},
 	]);
 	const handleChange = (evnt, index) => {
@@ -22,27 +21,44 @@ function ProfilePage() {
 		list[index][name] = value;
 		setInputFields(list);
 	};
-
+	// const { id } = useParams();
+	const id = "d006c9f0-e5df-4604-afd5-b74e57655e09";
+	useEffect(() => {
+		axios
+			.get(`/Teacher/${id}`)
+			.then((response) => {
+				const object = response.data;
+				console.log(object);				
+				setObjs(object.data);		
+			})
+			.catch((err) => {
+				console.log(err.response)
+				console.log(id);
+			}
+			);
+	}, []);
+	console.log(objs);
+	
 	return (
 		<div className="profile">
 			{inputFields.map((data, index) => {
 				const { account, designation } = data;
 				return (
 					<div className="shadow">
-						<h1 className="heading-1">Profile</h1>
+						<p className="heading-1">Profile</p>
 						<div className="card">
 							<div className="containerA">
 								<img
 									src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
 									alt="Avatar"
-									className="img-fluid my-5 pro-4 image"
+									className="profile-image"
 								/>
-								<h2>Mr. AHsan Habib</h2>
+								<h2>{objs.name}</h2>
 							</div>
 							<div className="containerB">
 								<div>
 									<p className="para">Email</p>
-									<h4 className="h4">asdfgh@gmail.com</h4>
+									<h4 className="h4">{objs.email}</h4>
 								</div>
 								<div>
 									<div className="edit">
@@ -52,16 +68,13 @@ function ProfilePage() {
 									{disableButton1 ? (
 										<input
 											className="input"
-											type="number"
+											type="text"
 											name="account"
 											value={account}
 											onChange={(evnt) => handleChange(evnt, index)}
 											onKeyDown={(e) => {
 												if (e.key === 'Enter') setDisableButton1(false);
 											}}
-											onKeyPress={(e) =>
-												!/[0-9]/.test(e.key) && e.preventDefault()
-											}
 										/>
 									) : (
 										<h4
@@ -91,17 +104,17 @@ function ProfilePage() {
 										<h4
 											className="h4"
 											onClick={() => setDisableButton(true)}>
-											{designation}
+											{objs.designation}
 										</h4>
 									)}{' '}
 								</div>
 								<div>
 									<p className="para">Department</p>
-									<h4 className="h4">SWE</h4>
+									<h4 className="h4">{objs.department}</h4>
 								</div>
 								<div>
 									<p className="para">Institute</p>
-									<h4 className="h4">SUST</h4>
+									<h4 className="h4">SUSt</h4>
 								</div>
 							</div>
 						</div>
@@ -113,4 +126,3 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
-

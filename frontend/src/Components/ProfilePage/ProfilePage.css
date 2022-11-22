@@ -10,7 +10,7 @@
 	display: flex;
 }
 
-.Profile-image {
+.profile-image {
 	padding: 2rem;
 	width: 70%;
 	height: 400px;
@@ -24,7 +24,7 @@
 }
 .containerA {
 	text-align: center;
-	font-size: 150%;
+	font-size: 120%;
 	margin: auto;
 	margin-bottom: 5%;
 	font-style: italic;
@@ -61,6 +61,7 @@
 .heading-1 {
 	font-size: 200%;
 	font-style: italic;
+	font-weight: bolder;
 	text-align: center;
 	padding-top: 2%;
 	color: rgb(11, 34, 91);
