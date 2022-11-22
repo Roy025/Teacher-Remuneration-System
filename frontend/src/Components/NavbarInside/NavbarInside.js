@@ -4,12 +4,11 @@ import './NavbarInside.css';
 import { Link } from 'react-router-dom';
 
 function NavbarInside() {
-	// 	const logOut = () => {
-	// 		localStorage.removeItem('accesstoken');
-	// 		localStorage.removeItem('username');
-	// 		navigate('/');
-	// 		console.log('Logged Out');
-	// 	};
+	const logOut = () => {
+		localStorage.removeItem('role');
+		// localStorage.removeItem('username');
+		console.log('Logged Out');
+	};
 	return (
 		<nav className="navbar navbar-expand-lg  NavbarItems">
 			<h1 className="navbar-brand text-light navbar-logo">
@@ -33,6 +32,12 @@ function NavbarInside() {
 					);
 				})}
 			</ul>
+			<Link
+				to="/login"
+				className="nav-links logout"
+				onClick={logOut}>
+				Logout
+			</Link>
 		</nav>
 	);
 }
