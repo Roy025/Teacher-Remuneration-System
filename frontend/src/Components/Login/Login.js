@@ -54,10 +54,11 @@ const Login = () => {
 					.then((response) => {
 						console.log(response);
 						const obj = response.data;
+						console.log(obj.data.role);
 						console.log(obj.data.token);
 
 						// localStorage.setItem('accesstoken', obj.data.token);
-						// localStorage.setItem('username', response.data.username);
+						localStorage.setItem('role', obj.data.role);
 						console.log(response.data.statusCode);
 
 						if (response.data.statusCode === 200) {
