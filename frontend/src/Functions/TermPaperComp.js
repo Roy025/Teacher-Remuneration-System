@@ -60,6 +60,11 @@ const TermPaperComp = ({ options, propName, handleData, existingData, setExistin
     }]]);
 
   }
+  const setCommitteeStatus = (e, index) => {
+    const newData = [...existingData]; 
+    newData[index].isIncludedInExamCommittee = e.target.checked;
+    setExistingData(newData);
+  };
 
   const removeInputFieldsCourse = (evnt, index) => {
     const newData = [...existingData];
@@ -122,7 +127,19 @@ const TermPaperComp = ({ options, propName, handleData, existingData, setExistin
                   setExistingData={setSelectedExaminers}
                 />
 
+                <div className="FormRowNoCross">
+                  <label class="Form-control">
+                    <input
+                      type="checkbox"
+                      name="checkbox"
+                      checked={data.isIncludedInExamCommittee}
+                      onChange={(evnt) => setCommitteeStatus(evnt, index)}
+                    />
+                    Exam committee
+                  </label>
+                </div>
               </div>
+
               {existingData.length !== 1 ? (
                 <div className="FormRowElement">
                   <button

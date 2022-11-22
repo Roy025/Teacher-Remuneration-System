@@ -152,13 +152,7 @@ const ChairmanBill = () => {
       name: "",
     },
   }]);
-  const [registeredStudentsData, setRegisteredStudentsData] = useState([{
-    course: {
-      id: "",
-      code: ""
-    },
-    numberOfStudents: "",
-  }]);
+  
   const [listOfInvigilators, setListOfInvigilators] = useState([{ id: "", name: "", department: "", institute: "" }]);
 
   const [termPaperData, setTermPaperData] = useState([
@@ -179,7 +173,7 @@ const ChairmanBill = () => {
           name: "",
         }
       ],
-      includedInExamCommittee: false,
+      isIncludedInExamCommittee: false,
     }
   ]);
 
@@ -203,7 +197,7 @@ const ChairmanBill = () => {
       answerpaperCheckersPartA: listOfAnswerpaperCheckersPartA,
       answerpaperCheckersPartB: listOfAnswerpaperCheckersPartB,
       termTestAnswerCheckers: listOfTermTestAnswerCheckers,
-      labExaminer: listOfLabExaminer,
+      labExaminers: listOfLabExaminer,
       tabulators: listOfTabulators,
       vivaExaminers: listOfVivaExaminers,
       scrutinizersPartA: listOfScrutinizersPartA,
