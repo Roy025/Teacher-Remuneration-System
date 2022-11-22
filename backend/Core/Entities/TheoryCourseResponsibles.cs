@@ -40,5 +40,8 @@ public class TheoryCourseResponsibles : BaseEntity
     public int? NumberOfExamineePartB { get; set; } = null;
     public int? NumberOfTermTestParticipants { get; set; } = null;
     public int? NumberOfVivaParticipants { get; set; } = null;
+    public int? NumberOfStudentsScrutinizedPartA { get; set; } = null;
+    public int? NumberOfStudentsScrutinizedPartB { get; set; } = null;
+    public int? NumberOfPracticalExamParticipants { get; set; } = null;
     /////////////////////////////////////////////
 }

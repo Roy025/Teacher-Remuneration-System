@@ -17,4 +17,7 @@ public class Teacher : BaseEntity
     
     public ICollection<Exam> ChairmanOfExams { get; set; } = new List<Exam>();
     public ICollection<Exam> ChiefInvigilatorOfExams { get; set; } = new List<Exam>();
+    public ICollection<TermPaperResponsibilities> SupervisorOfTermPapers { get; set; } = new List<TermPaperResponsibilities>();
+    public ICollection<TermPaperResponsibilities> ExaminerOfTermPapers { get; set; } = new List<TermPaperResponsibilities>();
+
 }

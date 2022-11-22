@@ -18,5 +18,6 @@ public class Exam : BaseEntity
     public ICollection<Teacher> Members { get; set; } = new List<Teacher>();
     public ICollection<TheoryCourseResponsibles> TheoryCourses { get; set; } = new List<TheoryCourseResponsibles>();
     public ICollection<LabCourseResponsibles> LabCourses { get; set; } = new List<LabCourseResponsibles>();
-    public ICollection<Invigilator> Invigilators { get; set; }
+    public ICollection<Invigilator> Invigilators { get; set; } = new List<Invigilator>();
+    public ICollection<TermPaperResponsibilities> TermPapers { get; set; } = new List<TermPaperResponsibilities>();
 }
