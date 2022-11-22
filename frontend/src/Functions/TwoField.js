@@ -35,6 +35,7 @@ const TwoField = ({
     setSelectedCourses([...selectedCourses, ""]);
     setSelectedTeachers([...selectedTeachers, ""]);
     setSelectedResponsibilities([...selectedResponsibilities, {}]);
+    setExistingData([...existingData, {}]);
   };
 
   const removeInputFields = (e, index) => {
@@ -42,6 +43,7 @@ const TwoField = ({
     const rows = [...selectedResponsibilities];
     rows.splice(index, 1);
     setSelectedResponsibilities(rows);
+    // console.log(rows);
 
     const courses = [...selectedCourses];
     courses.splice(index, 1);
@@ -68,14 +70,12 @@ const TwoField = ({
 
   return (
     <div className="Container">
-      {selectedResponsibilities.map((data, index) => {
+      {existingData.map((data, index) => {
         return (
           <div className="ParentFormRow">
             <div
               className={
-                selectedResponsibilities.length === 1
-                  ? "FormRow"
-                  : "FormRow CrossFormRow"
+                existingData.length === 1 ? "FormRow" : "FormRow CrossFormRow"
               }
               key={index}
             >
@@ -102,7 +102,7 @@ const TwoField = ({
                   setSelected={setSelectedCourses}
                 />
               </div>
-              {selectedResponsibilities.length !== 1 ? (
+              {existingData.length !== 1 ? (
                 <div className="FormRowElement">
                   <button
                     className={`crossButton ${
@@ -117,7 +117,7 @@ const TwoField = ({
                 ""
               )}
             </div>
-            {selectedResponsibilities.length - 1 === index && (
+            {existingData.length - 1 === index && (
               <div className="FormRowElement">
                 <button
                   className="addButton"
