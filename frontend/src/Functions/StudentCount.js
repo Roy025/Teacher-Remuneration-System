@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from "react";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
-const StudentCount = ({ options, propName, handeData, existingData, setExistingData }) => {
+const StudentCount = ({
+  options,
+  propName,
+  handeData,
+  existingData,
+  setExistingData,
+}) => {
   const [selectedData, setSelectedData] = useState([{}]);
-  const [selectedCourses, setSelectedCourses] = useState(existingData ? existingData.map(x => {
-    return (x.course && x.course.code) ? x.course.code : "";
-  }) : [""]);
+  const [selectedCourses, setSelectedCourses] = useState(
+    existingData
+      ? existingData.map((x) => {
+          return x.course && x.course.code ? x.course.code : "";
+        })
+      : [""]
+  );
 
-  const [numberOfStudents, setNumberOfStudents] = useState(existingData ? existingData.map(x => {
-    return x.numberOfStudents ? x.numberOfStudents : ``;
-  }) : [""]);
+  const [numberOfStudents, setNumberOfStudents] = useState(
+    existingData
+      ? existingData.map((x) => {
+          return x.numberOfStudents ? x.numberOfStudents : ``;
+        })
+      : [""]
+  );
 
   const handleChange = (evnt, index) => {
     const tmp = evnt.target.value;
@@ -19,7 +33,7 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
     const tmp2 = [...existingData];
     tmp2[index].numberOfStudents = tmp;
     setExistingData(tmp2);
-  }
+  };
 
   const removeInputFields = (e, index) => {
     e.preventDefault();
@@ -45,18 +59,23 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
     const tmp = [...existingData];
     tmp[index].course = option;
     setExistingData(tmp);
-  }
-  
+  };
+
   useEffect(() => {
     setSelectedData(existingData);
   }, [existingData]);
 
   return (
-    <div className="Container" >
+    <div className="Container">
       {selectedData.map((data, index) => {
         return (
           <div className="ParentFormRow">
-            <div className={`FormRow ${selectedData.length === 1 ? "" : "CrossFormRow"}`} key={index}>
+            <div
+              className={`FormRow ${
+                selectedData.length === 1 ? "" : "CrossFormRow"
+              }`}
+              key={index}
+            >
               <div className="TwoFormRowElementWithAdd">
                 {index === 0 ? <label>Course ID</label> : ""}
                 <DropdownNoTitleTeacher
@@ -76,7 +95,7 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
                   name="numberOfStudents"
                   onChange={(evnt) => handleChange(evnt, index)}
                   value={numberOfStudents[index]}
-                  className="FormControl number"
+                  className="numberFormControl"
                   placeholder="Number"
                   onKeyPress={(e) => !/[0-9]/.test(e.key) && e.preventDefault()}
                 />
@@ -85,11 +104,9 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
               {selectedData.length !== 1 ? (
                 <div className="FormRowElement">
                   <button
-                    className={
-                      index === 0
-                        ? "crossButton crossButton-first"
-                        : "crossButton"
-                    }
+                    className={`crossButton ${
+                      index === 0 && "studentcountCrossButton-first"
+                    }`}
                     onClick={(evnt) => removeInputFields(evnt, index)}
                   >
                     x
@@ -114,7 +131,7 @@ const StudentCount = ({ options, propName, handeData, existingData, setExistingD
         );
       })}
     </div>
-  )
-}
+  );
+};
 
 export default StudentCount;

@@ -1,19 +1,35 @@
 import "../Components/SampleDropdown/styles.css";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import DropdownNoTitleTeacher from "./DropdownNoTitleTeacher";
 
-const TwoField = ({ courses, teachers, handleData, existingData = [], setExistingData }) => {
-  const [selectedResponsibilities, setSelectedResponsibilities] = useState([{}]);
+const TwoField = ({
+  courses,
+  teachers,
+  handleData,
+  existingData = [],
+  setExistingData,
+}) => {
+  const [selectedResponsibilities, setSelectedResponsibilities] = useState([
+    {},
+  ]);
 
-  const [selectedCourses, setSelectedCourses] = useState(existingData ? existingData.map(x => {
-    if (x.course && x.course.code) return x.course.code;
-    else return "";
-  }) : [""]);
+  const [selectedCourses, setSelectedCourses] = useState(
+    existingData
+      ? existingData.map((x) => {
+          if (x.course && x.course.code) return x.course.code;
+          else return "";
+        })
+      : [""]
+  );
 
-  const [selectedTeachers, setSelectedTeachers] = useState(existingData ? existingData.map(x => {
-    if (x.teacher && x.teacher.name) return x.teacher.name;
-    else return "";
-  }) : [""]);
+  const [selectedTeachers, setSelectedTeachers] = useState(
+    existingData
+      ? existingData.map((x) => {
+          if (x.teacher && x.teacher.name) return x.teacher.name;
+          else return "";
+        })
+      : [""]
+  );
 
   const addInputField = () => {
     setSelectedCourses([...selectedCourses, ""]);
@@ -38,17 +54,17 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
     const existing = [...existingData];
     existing.splice(index, 1);
     setExistingData(existing);
-  }
+  };
 
   const handleChange = (property, value, index) => {
     const tmp = [...existingData];
     tmp[index] = { ...tmp[index], [property]: value };
     setExistingData(tmp);
-  }
+  };
 
   useEffect(() => {
     setSelectedResponsibilities(existingData);
-  }, [existingData])
+  }, [existingData]);
 
   return (
     <div className="Container">
@@ -57,7 +73,9 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
           <div className="ParentFormRow">
             <div
               className={
-                selectedResponsibilities.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+                selectedResponsibilities.length === 1
+                  ? "FormRow"
+                  : "FormRow CrossFormRow"
               }
               key={index}
             >
@@ -87,7 +105,9 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
               {selectedResponsibilities.length !== 1 ? (
                 <div className="FormRowElement">
                   <button
-                    className={index === 0 ? "crossButton crossButton-first" : "crossButton"}
+                    className={`crossButton ${
+                      index === 0 && "twofieldCrossButton-first"
+                    }`}
                     onClick={(e) => removeInputFields(e, index)}
                   >
                     x
@@ -99,7 +119,11 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
             </div>
             {selectedResponsibilities.length - 1 === index && (
               <div className="FormRowElement">
-                <button className="addButton" onClick={() => addInputField()} type="button">
+                <button
+                  className="addButton"
+                  onClick={() => addInputField()}
+                  type="button"
+                >
                   <i className="fa-sharp fa-solid fa-plus"></i>
                 </button>
               </div>
