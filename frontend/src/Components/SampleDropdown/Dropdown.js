@@ -1,7 +1,6 @@
 import React,{ useState } from "react";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.css";
+import { FaAngleDown } from "react-icons/fa";
 
 
 function Dropdown({ options, dropdownTitle, handleData, selected, setSelected }) {
@@ -27,7 +26,7 @@ function Dropdown({ options, dropdownTitle, handleData, selected, setSelected })
 					value={selected}
 					placeholder="Select"
 				/>
-				<FontAwesomeIcon icon={faCaretDown} />
+				<FaAngleDown />
 			</div>
 			{isActive && (
 				<div className="Dropdown-content">
