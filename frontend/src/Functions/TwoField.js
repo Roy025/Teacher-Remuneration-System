@@ -19,6 +19,7 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
     setSelectedCourses([...selectedCourses, ""]);
     setSelectedTeachers([...selectedTeachers, ""]);
     setSelectedResponsibilities([...selectedResponsibilities, {}]);
+    setExistingData([...existingData, {}]);
   };
 
   const removeInputFields = (e, index) => {
@@ -26,6 +27,7 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
     const rows = [...selectedResponsibilities];
     rows.splice(index, 1);
     setSelectedResponsibilities(rows);
+    // console.log(rows);
 
     const courses = [...selectedCourses];
     courses.splice(index, 1);
@@ -45,6 +47,9 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
     tmp[index] = { ...tmp[index], [property]: value };
     setExistingData(tmp);
   }
+  useEffect(() => {
+    console.log(selectedResponsibilities);
+  }, [selectedResponsibilities]);
 
   useEffect(() => {
     setSelectedResponsibilities(existingData);
@@ -52,12 +57,12 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
 
   return (
     <div className="Container">
-      {selectedResponsibilities.map((data, index) => {
+      {existingData.map((data, index) => {
         return (
           <div className="ParentFormRow">
             <div
               className={
-                selectedResponsibilities.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+                existingData.length === 1 ? "FormRow" : "FormRow CrossFormRow"
               }
               key={index}
             >
@@ -84,7 +89,7 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
                   setSelected={setSelectedCourses}
                 />
               </div>
-              {selectedResponsibilities.length !== 1 ? (
+              {existingData.length !== 1 ? (
                 <div className="FormRowElement">
                   <button
                     className={index === 0 ? "crossButton crossButton-first" : "crossButton"}
@@ -97,7 +102,7 @@ const TwoField = ({ courses, teachers, handleData, existingData = [], setExistin
                 ""
               )}
             </div>
-            {selectedResponsibilities.length - 1 === index && (
+            {existingData.length - 1 === index && (
               <div className="FormRowElement">
                 <button className="addButton" onClick={() => addInputField()} type="button">
                   <i className="fa-sharp fa-solid fa-plus"></i>
