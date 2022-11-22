@@ -154,6 +154,36 @@ const ChairmanBill = () => {
   }]);
   const [listOfInvigilators, setListOfInvigilators] = useState([{ id: "", name: "", department: "", institute: "" }]);
 
+  const [termPaperData, setTermPaperData] = useState([
+    {
+      course: {
+        id: "",
+        code: "",
+      },
+      supervisors: [
+        {
+          id: "",
+          name: "",
+        }
+      ],
+      examiners: [
+        {
+          id: "",
+          name: "",
+        }
+      ],
+      includedInExamCommittee: false,
+    }
+  ]);
+
+  const [regisretedStudents, setRegisretedStudents] = useState([{
+    course: {
+      id: "",
+      code: ""
+    },
+    numberOfStudents: "",
+  }]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -173,6 +203,8 @@ const ChairmanBill = () => {
       scrutinizersPartB: listOfScrutinizersPartB,
       questionTypers: listOfQuestionTypers,
       invigilators: listOfInvigilators,
+      termPaperData: termPaperData,
+      regisretedStudents: regisretedStudents,
     }
     console.log(body);
   };
@@ -208,7 +240,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfQuestionSetters}
               setExistingData={setListOfQuestionSetters}
             />
@@ -219,7 +250,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfQuestionModerators}
               setExistingData={setListOfQuestionModerators}
             />
@@ -231,7 +261,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfAnswerpaperCheckersPartA}
               setExistingData={setListOfAnswerpaperCheckersPartA}
             />
@@ -240,7 +269,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfAnswerpaperCheckersPartB}
               setExistingData={setListOfAnswerpaperCheckersPartB}
             />
@@ -251,7 +279,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfTermTestAnswerCheckers}
               setExistingData={setListOfTermTestAnswerCheckers}
             />
@@ -262,7 +289,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfLabExaminer}
               setExistingData={setListOfLabExaminer}
             />
@@ -273,7 +299,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfTabulators}
               setExistingData={setListOfTabulators}
             />
@@ -284,7 +309,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfVivaExaminers}
               setExistingData={setListOfVivaExaminers}
             />
@@ -296,7 +320,6 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfScrutinizersPartA}
               setExistingData={setListOfScrutinizersPartA}
             />
@@ -304,27 +327,30 @@ const ChairmanBill = () => {
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfScrutinizersPartB}
               setExistingData={setListOfScrutinizersPartB}
             />
           </div>
 
-          {/* <div className="formRow">
+          <div className="formRow">
             <label className="Label">
               Term Paper / Seminar Paper / Field Work / MonoGraph / Study Tour /
               Content Analysis / Workshop / Project / Thesis(Under-graduate) /
               Internship / Research Planning
             </label>
-            <TermPaperComp TermPaper={TermPaper} setTermPaper={setTermPaper} />
-          </div> */}
+            <TermPaperComp
+              options={listOfCourses}
+              existingData={termPaperData}
+              setExistingData={setTermPaperData}
+            />
+          </div>
+          
 
           <div className="formRow">
             <label className="Label">Question Type</label>
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
-              // handleData={handleData}
               existingData={listOfQuestionTypers}
               setExistingData={setListOfQuestionTypers}
             />
@@ -357,13 +383,14 @@ const ChairmanBill = () => {
             />
           </div> */}
 
-          {/* <div className="formRow">
+          <div className="formRow">
             <label className="Label">Student Registration</label>
             <StudentCount
-              inputFields={inputStudentReg}
-              setInputFields={setInputStudentReg}
+              options={listOfCourses}
+              existingData={regisretedStudents}
+              setExistingData={setRegisretedStudents}
             />
-          </div>  */}
+          </div> 
 
           <div className="formRow SubmitRow">
             <button type="submit" className="submitButton" onClick={submit}>

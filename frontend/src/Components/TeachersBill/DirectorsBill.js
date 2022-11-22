@@ -277,9 +277,9 @@ const DirectorsBill = () => {
 					<label className="Label">Courses</label>
 					{courses.map((course, index) => {
 						return (
-							<div className={`FormRow ${courses.length !== 1 && "CrossFormRow"}`}
-								key={index}>
-								<div className="threeFormRowElement">
+							<div className='formRow'>
+								<div className={`FormRow ${courses.length !== 1 && "CrossFormRow"}`}
+									key={index}>
 									<DropdownNoTitleTeacher
 										options={courseList}
 										propName="course"
