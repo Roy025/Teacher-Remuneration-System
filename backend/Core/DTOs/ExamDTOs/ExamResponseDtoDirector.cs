@@ -9,6 +9,6 @@ namespace Core.DTOs.ExamDTOs
         public TeacherResponseDto? Chairman { get; set; }
         public TeacherResponseDto? CheifInvigilator { get; set; }
         public ICollection<TeacherResponseDto> Members { get; set; } = new List<TeacherResponseDto>();
-        public ICollection<CourseFromDirectorDto> Courses { get; set; } = new List<CourseFromDirectorDto>();
+        public ICollection<CourseForExamDto> Courses { get; set; } = new List<CourseForExamDto>();
     }
 }

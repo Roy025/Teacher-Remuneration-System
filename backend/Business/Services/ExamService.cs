@@ -39,40 +39,7 @@ public class ExamService : IExamService
         if (exams.Count() > 0)
         {
             //update first
-            exam.Chairman = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id);
-            exam.CheifInvigilator = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.CheifInvigilator.Id);
-            exam.Members = new List<Teacher>();
-            foreach (var member in examCreateFromDirectorDto.Members)
-            {
-                var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(member.Id);
-                if(teacher != null)
-                {
-                    exam.Members.Add(teacher);
-                }
-            }
-            foreach (var course in examCreateFromDirectorDto.Courses)
-            {
-                var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
-                if(courseExam != null)
-                {
-                    if(courseExam.Type.Equals("Theory"))
-                    {
-                        var theoryCourse = new TheoryCourseResponsibles();
-                        theoryCourse.Course = courseExam;
-                        // theoryCourse.Exam = exam;
-                        exam.TheoryCourses.Add(theoryCourse);
-                    }
-                    else
-                    {
-                        var labCourses = new LabCourseResponsibles();
-                        labCourses.Course = courseExam;
-                        exam.LabCourses.Add(labCourses);
-                    }
-                }
-                
-            }
-
-            _unitOfWork.Repository<Exam>().Update(exam);
+            _unitOfWork.Repository<Exam>().Delete(exam);
         }
         else
         {
@@ -120,12 +87,12 @@ public class ExamService : IExamService
         var examResponseDto = _mapper.Map<ExamResponseDtoDirector>(exam);
         foreach (var course in exam.TheoryCourses)
         {
-            var courseDto = _mapper.Map<CourseFromDirectorDto>(course.Course);
+            var courseDto = _mapper.Map<CourseForExamDto>(course.Course);
             examResponseDto.Courses.Add(courseDto);
         }
         foreach (var course in exam.LabCourses)
         {
-            var courseDto = _mapper.Map<CourseFromDirectorDto>(course.Course);
+            var courseDto = _mapper.Map<CourseForExamDto>(course.Course);
             examResponseDto.Courses.Add(courseDto);
         }
         return examResponseDto;
@@ -152,6 +119,11 @@ public class ExamService : IExamService
 
         // var spec  = new ExamSpecificationForChairman(examReqParams);
 
+        throw new NotImplementedException();
+    }
+
+    public Task<ExamResponseDtoChairman> UpdateExamFromChairman(ExamUpdateFromChairmanDto examUpdateFromChairmanDto, UserFromToken user)
+    {
         throw new NotImplementedException();
     }
 }

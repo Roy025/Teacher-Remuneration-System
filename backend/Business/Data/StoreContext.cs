@@ -28,5 +28,12 @@ public class StoreContext : DbContext
         modelBuilder.Entity<Exam>()
             .HasOne(e => e.CheifInvigilator)
             .WithMany(c => c.ChiefInvigilatorOfExams);
+
+        modelBuilder.Entity<Teacher>()
+            .HasMany(t=>t.SupervisorOfTermPapers)
+            .WithMany(t=>t.Supervisors);
+        modelBuilder.Entity<Teacher>()
+            .HasMany(t=>t.ExaminerOfTermPapers)
+            .WithMany(t=>t.Examiner);
     }
 }

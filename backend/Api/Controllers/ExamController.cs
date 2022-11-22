@@ -28,15 +28,11 @@ public class ExamController : BaseApiController
     [HttpGet("director")]
     public async Task<ActionResult<ApiDataResponse<ExamResponseDtoDirector>>> GetExamsForDirector([FromQuery] ExamReqParams examParams)
     {
-        if (!Request.Headers.ContainsKey("Authorization"))
-        {
-            throw new UnAuthorizedException();
-        }
-        var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
+        var user = GetUserFromToken();
         var exam = await _examService.GetExamsForDirectorAsync(examParams, user);
         return StatusCode(200, new ApiDataResponse<ExamResponseDtoDirector>(exam, 200, "Exams fetched successfully"));
     }
-    
+
     [HttpPost("director")]
     public async Task<ActionResult<ApiDataResponse<ExamResponseDtoDirector>>> CreateExamsFromDirector([FromBody] ExamCreateFromDirectorDto examCreateFromDirectorDto)
     {
@@ -53,16 +49,47 @@ public class ExamController : BaseApiController
     //////////////////////////////////
 
     // Chairman Section
-    [HttpGet("chairman")]
-    public Task<ActionResult<ApiDataResponse<IEnumerable<string>>>> GetExamSessionsForChairman([FromQuery] ExamReqParams examReqParams)
+    
+    // [HttpGet("chairman")]
+    // public Task<ActionResult<ApiDataResponse<IEnumerable<string>>>> GetExamSessionsForChairman([FromQuery] ExamReqParams examReqParams)
+    // {
+    //     if (!Request.Headers.ContainsKey("Authorization"))
+    //     {
+    //         throw new UnAuthorizedException();
+    //     }
+    //     var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
+    //     var sessions = _examService.GetExamSessionsForChairman(examReqParams, user);
+
+    //     throw new NotImplementedException();
+    // }
+
+    [HttpPut("chairman")]
+    public async Task<ActionResult<ApiDataResponse<ExamResponseDtoChairman>>> UpdateExamFromChairman([FromBody] ExamUpdateFromChairmanDto examUpdateFromChairmanDto)
+    {
+        var user = GetUserFromToken();
+        var exam = await _examService.UpdateExamFromChairman(examUpdateFromChairmanDto, user);
+        if(exam == null)
+        {
+            throw new NotFoundException();
+        }
+        return StatusCode(200, new ApiDataResponse<ExamResponseDtoChairman>(exam, 200, "Exam updated successfully"));
+    } 
+    
+    
+    private UserFromToken? GetUserFromToken()
     {
         if (!Request.Headers.ContainsKey("Authorization"))
         {
             throw new UnAuthorizedException();
         }
-        var user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
-        var sessions = _examService.GetExamSessionsForChairman(examReqParams, user);
-
-        throw new NotImplementedException();
+        try
+        {
+            var _user = _tokenService.GetUserFromToken(Request.Headers["Authorization"]);
+            return _user;
+        }
+        catch (Exception e)
+        {
+            throw new UnAuthorizedException();
+        }
     }
 }
