@@ -21,6 +21,8 @@ import CreateDept from "./Components/Admin/CreateDept/CreateDept";
 import Login from "./Components/Login/Login";
 import ViewAccount from "./Components/Admin/ViewAccount/ViewAccount";
 import UpdateRole from "./Components/Admin/UpdateRole/UpdateRole";
+import CreateCourse from "./Components/Admin/CreateCourse/CreateCourse";
+import AddStudents from "./Components/Admin/AddStudents/AddStudents";
 
 function App() {
   return (
@@ -56,6 +58,8 @@ function App() {
         <Route exact path="/viewaccounts" element={<ViewAccount />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/updaterole" element={<UpdateRole />}></Route>
+        <Route exact path="/createcourse" element={<CreateCourse />}></Route>
+        <Route exact path="/addstudents" element={<AddStudents />}></Route>
       </Routes>
     </>
   );

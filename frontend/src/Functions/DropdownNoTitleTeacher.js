@@ -1,5 +1,5 @@
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaAngleDown } from "react-icons/fa";
 import React, { useEffect, useState } from "react";
 import "../Components/SampleDropdown/styles.css";
 
@@ -61,7 +61,7 @@ const DropdownNoTitleTeacher = ({
           value={index !== undefined ? selected[index] : selected}
           placeholder="Select"
         />
-        <FontAwesomeIcon icon={faCaretDown} />
+        <FaAngleDown />
       </div>
       {isActive && (
         <div className="Dropdown-content">
