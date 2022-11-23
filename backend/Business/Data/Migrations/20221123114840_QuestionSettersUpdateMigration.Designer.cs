@@ -3,6 +3,7 @@ using System;
 using Business.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221123114840_QuestionSettersUpdateMigration")]
+    partial class QuestionSettersUpdateMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,7 +134,7 @@ namespace Business.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("CourseId")
+                    b.Property<Guid>("CourseId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("ExamId")
@@ -282,19 +284,11 @@ namespace Business.Data.Migrations
                     b.Property<bool>("IsIncludedInExamCommittee")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("NumberOfRegisteredStudents")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("TabulatorId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
                     b.HasIndex("ExamId");
-
-                    b.HasIndex("TabulatorId");
 
                     b.ToTable("TermPaperResponsibilities");
                 });
@@ -359,6 +353,9 @@ namespace Business.Data.Migrations
                     b.Property<Guid?>("TermTestAnswerCheckerId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("VivaExaminerId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AnswerPaperCheckerPartAId");
@@ -378,6 +375,8 @@ namespace Business.Data.Migrations
                     b.HasIndex("TabulatorId");
 
                     b.HasIndex("TermTestAnswerCheckerId");
+
+                    b.HasIndex("VivaExaminerId");
 
                     b.HasIndex("ExamId", "CourseId")
                         .IsUnique();
@@ -453,15 +452,15 @@ namespace Business.Data.Migrations
 
             modelBuilder.Entity("TeacherTermPaperResponsibilities1", b =>
                 {
+                    b.Property<Guid>("ExaminerId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("ExaminerOfTermPapersId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ExaminersId")
-                        .HasColumnType("uuid");
+                    b.HasKey("ExaminerId", "ExaminerOfTermPapersId");
 
-                    b.HasKey("ExaminerOfTermPapersId", "ExaminersId");
-
-                    b.HasIndex("ExaminersId");
+                    b.HasIndex("ExaminerOfTermPapersId");
 
                     b.ToTable("TeacherTermPaperResponsibilities1");
                 });
@@ -508,7 +507,9 @@ namespace Business.Data.Migrations
                 {
                     b.HasOne("Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Core.Entities.Exam", "Exam")
                         .WithMany("Invigilators")
@@ -610,13 +611,7 @@ namespace Business.Data.Migrations
                         .WithMany("TermPapers")
                         .HasForeignKey("ExamId");
 
-                    b.HasOne("Core.Entities.Teacher", "Tabulator")
-                        .WithMany()
-                        .HasForeignKey("TabulatorId");
-
                     b.Navigation("Course");
-
-                    b.Navigation("Tabulator");
                 });
 
             modelBuilder.Entity("Core.Entities.TheoryCourseResponsibles", b =>
@@ -665,6 +660,10 @@ namespace Business.Data.Migrations
                         .WithMany()
                         .HasForeignKey("TermTestAnswerCheckerId");
 
+                    b.HasOne("Core.Entities.Teacher", "VivaExaminer")
+                        .WithMany()
+                        .HasForeignKey("VivaExaminerId");
+
                     b.Navigation("AnswerPaperCheckerPartA");
 
                     b.Navigation("AnswerPaperCheckerPartB");
@@ -684,6 +683,8 @@ namespace Business.Data.Migrations
                     b.Navigation("Tabulator");
 
                     b.Navigation("TermTestAnswerChecker");
+
+                    b.Navigation("VivaExaminer");
                 });
 
             modelBuilder.Entity("Course", b =>
@@ -729,15 +730,15 @@ namespace Business.Data.Migrations
 
             modelBuilder.Entity("TeacherTermPaperResponsibilities1", b =>
                 {
-                    b.HasOne("Core.Entities.TermPaperResponsibilities", null)
+                    b.HasOne("Core.Entities.Teacher", null)
                         .WithMany()
-                        .HasForeignKey("ExaminerOfTermPapersId")
+                        .HasForeignKey("ExaminerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Teacher", null)
+                    b.HasOne("Core.Entities.TermPaperResponsibilities", null)
                         .WithMany()
-                        .HasForeignKey("ExaminersId")
+                        .HasForeignKey("ExaminerOfTermPapersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

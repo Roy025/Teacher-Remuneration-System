@@ -205,7 +205,7 @@ const ChairmanBill = () => {
       questionTypers: listOfQuestionTypers,
       invigilators: listOfInvigilators,
       termPaperData: termPaperData,
-      regisretedStudents: regisretedStudents,
+      registeredStudents: regisretedStudents,
     }
     console.log(body);
   };
