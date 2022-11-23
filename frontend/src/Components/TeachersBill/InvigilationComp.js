@@ -49,14 +49,13 @@ function InvigilationComp({ tag, invigilation, setInvigilation }) {
 
   return (
     <div className="Container">
-      {invigilation.map((data, index) => {
-        const course = data;
+      {data.map((data, index) => {
         console.log(course);
         return (
           <div className="ParentFormRow">
             <div
               className={
-                invigilation.length === 1 ? "FormRow" : "FormRow CrossFormRow"
+                data.length === 1 ? "FormRow" : "FormRow CrossFormRow"
               }
               key={index}
             >
@@ -67,14 +66,12 @@ function InvigilationComp({ tag, invigilation, setInvigilation }) {
                     type="text"
                     name="course"
                     onChange={(evnt) => handleChangeCourse(evnt, index)}
-                    value={course.course}
+                    value={data.courseID}
                     className="FormControl"
                     placeholder="Course"
                   />
                 </div>
 
-                {data.names.map((info, ind) => {
-                  return (
                     <div
                       classname="childFormRowElementWithCrossAndAdd"
                       key={ind}
@@ -103,9 +100,8 @@ function InvigilationComp({ tag, invigilation, setInvigilation }) {
                             x
                           </button>
                         </div>
-                      )}
 
-                      {data.names.length - 1 === ind && (
+                      {data.length - 1 === ind && (
                         <div className="childAdd">
                           <button
                             className="childAddButton"
@@ -118,7 +114,6 @@ function InvigilationComp({ tag, invigilation, setInvigilation }) {
                       )}
                     </div>
                   );
-                })}
               </div>
 
               {invigilation.length !== 1 ? (
