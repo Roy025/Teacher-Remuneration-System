@@ -3,6 +3,7 @@ using System;
 using Business.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221123134616_LabUpdateUpdate")]
+    partial class LabUpdateUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -466,21 +468,6 @@ namespace Business.Data.Migrations
                     b.ToTable("TeacherTermPaperResponsibilities1");
                 });
 
-            modelBuilder.Entity("TeacherTheoryCourseResponsibles", b =>
-                {
-                    b.Property<Guid>("QuestionSettersId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("QuestionSettersOfCoursesId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("QuestionSettersId", "QuestionSettersOfCoursesId");
-
-                    b.HasIndex("QuestionSettersOfCoursesId");
-
-                    b.ToTable("TeacherTheoryCourseResponsibles");
-                });
-
             modelBuilder.Entity("Core.Entities.Department", b =>
                 {
                     b.HasOne("Core.Entities.Institute", "Institute")
@@ -747,23 +734,6 @@ namespace Business.Data.Migrations
                     b.HasOne("Core.Entities.Teacher", null)
                         .WithMany()
                         .HasForeignKey("ExaminersId")
-
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("TeacherTheoryCourseResponsibles", b =>
-                {
-                    b.HasOne("Core.Entities.Teacher", null)
-                        .WithMany()
-                        .HasForeignKey("QuestionSettersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entities.TheoryCourseResponsibles", null)
-                        .WithMany()
-                        .HasForeignKey("QuestionSettersOfCoursesId")
-
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

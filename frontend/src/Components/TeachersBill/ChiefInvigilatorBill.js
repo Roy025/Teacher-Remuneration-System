@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Links from "./Links";
 import "./TeachersBill.css";
 import "./FormButton.css";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { instance as axios } from "../axios";
 import DropdownNoTitleTeacher from "../../Functions/DropdownNoTitleTeacher";
 
 const ChiefInvigilatorBill = () => {
@@ -27,24 +29,9 @@ const ChiefInvigilatorBill = () => {
     { name: "8th" },
   ]);
 
-  const [courseOptions, setCourseOptions] = useState([
-    { name: "SWE121" },
-    { name: "SWE122" },
-    { name: "SWE123" },
-    { name: "SWE124" },
-    { name: "SWE125" },
-    { name: "SWE126" },
-    { name: "SWE126" },
-    { name: "SWE127" },
-  ]);
+  const [courseOptions, setCourseOptions] = useState([]);
 
-  const [teacherList, setTeacherList] = useState([
-    { name: "Dr. Ahsan Habib" },
-    { name: "Raihan Ullah" },
-    { name: "Saima Sultana" },
-    { name: "ParthaPratim Paul" },
-    { name: "Fazle Tawsif" },
-  ]);
+  const [teacherList, setTeacherList] = useState([]);
 
   const [data, setData] = useState([
     {
@@ -66,6 +53,39 @@ const ChiefInvigilatorBill = () => {
   const [exam, setExam] = useState({
     session: "",
     semester: "",
+  });
+
+  //Fetching teacher data
+
+  const fetchTeachers = async (id) => {
+    const response = await axios.get(`/department?institute=${id}`);
+    console.log(response);
+    setTeacherList(response.data.data);
+    return response;
+  };
+  useQuery(["teacher-list", data.id], () => fetchTeachers(data.id), {
+    enabled: !!sessionAvailable && !!semesterAvailable,
+  });
+
+  //Fetching course data
+
+  const fetchCourse = async (id) => {
+    console.log(localStorage.getItem("accesstoken"))
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.get(
+      `/Exam/chairman/course?Semester=${selectedSession}&Session=${selectedSemester}`,
+      config
+    );
+    console.log(response);
+    setCourseOptions(response.data.data);
+    return response;
+  };
+  useQuery(["course-list", data.id], () => fetchCourse(data.id), {
+    enabled: !!sessionAvailable && !!semesterAvailable,
   });
 
   // handle session & semester

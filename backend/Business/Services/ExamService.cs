@@ -42,60 +42,59 @@ public class ExamService : IExamService
             //update first
             _unitOfWork.Repository<Exam>().Delete(exam);
         }
-        else
+
+        //create new
+        exam = new Exam
         {
-            //create new
-            exam = new Exam
+            Session = examCreateFromDirectorDto.Session,
+            Semester = examCreateFromDirectorDto.Semester,
+            DepartmentId = user.DepartmentId,
+            Chairman = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id),
+            CheifInvigilator = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.CheifInvigilator.Id),
+            Members = new List<Teacher>()
+        };
+        foreach (var member in examCreateFromDirectorDto.Members)
+        {
+            var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(member.Id);
+            if (teacher != null)
             {
-                Session = examCreateFromDirectorDto.Session,
-                Semester = examCreateFromDirectorDto.Semester,
-                DepartmentId = user.DepartmentId,
-                Chairman = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id),
-                CheifInvigilator = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.CheifInvigilator.Id),
-                Members = new List<Teacher>()
-            };
-            foreach (var member in examCreateFromDirectorDto.Members)
-            {
-                var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(member.Id);
-                if (teacher != null)
-                {
-                    exam.Members.Add(teacher);
-                }
+                exam.Members.Add(teacher);
             }
-            foreach (var course in examCreateFromDirectorDto.Courses)
-            {
-                var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
-                if (courseExam != null)
-                {
-                    if (courseExam.Type.Equals("Theory"))
-                    {
-                        var theoryCourse = new TheoryCourseResponsibles();
-                        theoryCourse.Course = courseExam;
-                        // theoryCourse.Exam = exam;
-                        exam.TheoryCourses.Add(theoryCourse);
-                    }
-                    else if (courseExam.Type.Equals("Lab"))
-                    {
-                        var labCourse = new LabCourseResponsibles();
-                        labCourse.Course = courseExam;
-                        // labCourse.Exam = exam;
-                        exam.LabCourses.Add(labCourse);
-                    }
-                    else if(courseExam.Type.Equals("TermPaper"))
-                    {
-                        var termPaper = new TermPaperResponsibilities();
-                        termPaper.Course = courseExam;
-                        // termPaper.Exam = exam;
-                        exam.TermPapers.Add(termPaper);
-                    }
-                    else 
-                    {
-                        throw new BadRequestException("Course type is not valid");
-                    }
-                }
-            }
-            _unitOfWork.Repository<Exam>().Add(exam);
         }
+        foreach (var course in examCreateFromDirectorDto.Courses)
+        {
+            var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
+            if (courseExam != null)
+            {
+                if (courseExam.Type.Equals("Theory"))
+                {
+                    var theoryCourse = new TheoryCourseResponsibles();
+                    theoryCourse.Course = courseExam;
+                    // theoryCourse.Exam = exam;
+                    exam.TheoryCourses.Add(theoryCourse);
+                }
+                else if (courseExam.Type.Equals("Lab"))
+                {
+                    var labCourse = new LabCourseResponsibles();
+                    labCourse.Course = courseExam;
+                    // labCourse.Exam = exam;
+                    exam.LabCourses.Add(labCourse);
+                }
+                else if (courseExam.Type.Equals("TermPaper"))
+                {
+                    var termPaper = new TermPaperResponsibilities();
+                    termPaper.Course = courseExam;
+                    // termPaper.Exam = exam;
+                    exam.TermPapers.Add(termPaper);
+                }
+                else
+                {
+                    throw new BadRequestException("Course type is not valid");
+                }
+            }
+        }
+        _unitOfWork.Repository<Exam>().Add(exam);
+
         var result = await _unitOfWork.Complete();
         if (result <= 0)
         {
@@ -110,7 +109,7 @@ public class ExamService : IExamService
     {
         if (user.Role != "Director")
             throw new UnAuthorizedException("You are not authorized to perform this action");
-        
+
         examParams.DepartmentId = user.DepartmentId;
         var spec = new ExamForDirectorSpecification(examParams);
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
@@ -162,11 +161,21 @@ public class ExamService : IExamService
     public async Task<IReadOnlyList<CourseForExamDto>> GetCoursesForChairman(ExamReqParams examParams, UserFromToken user)
     {
         examParams.DepartmentId = user.DepartmentId;
+        System.Console.WriteLine("------------------");
+        System.Console.WriteLine("------------------");
+        System.Console.WriteLine("------------------");
+        System.Console.WriteLine("------------------");
+        System.Console.WriteLine("------------------");
+        System.Console.WriteLine(examParams.DepartmentId);
+        System.Console.WriteLine(examParams.Session);
+        System.Console.WriteLine(examParams.Semester);
         var spec = new ExamForDirectorSpecification(examParams);
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
         if (exams == null)
             throw new NotFoundException("No exam found");
         var exam = exams.FirstOrDefault();
+        if (exam == null)
+            throw new NotFoundException("No exam found");
         var labCourses = exam.LabCourses.Select(x => x.Course);
         var theoryCourse = exam.TheoryCourses.Select(x => x.Course);
         var termPaperCourses = exam.TermPapers.Select(x => x.Course);
@@ -190,7 +199,9 @@ public class ExamService : IExamService
 
     public async Task<ExamResponseDtoChairman> UpdateExamFromChairman(ExamUpdateFromChairmanDto examUpdateFromChairmanDto, UserFromToken user)
     {
-        var examParams = new ExamReqParams{
+        var examParams = new ExamReqParams
+        {
+
             Session = examUpdateFromChairmanDto.Session,
             Semester = examUpdateFromChairmanDto.Semester,
             DepartmentId = user.DepartmentId
@@ -202,118 +213,180 @@ public class ExamService : IExamService
             throw new NotFoundException("No exam found");
         var exam = exams.FirstOrDefault();
 
-        if(exam.ChairmanId != user.UserId)
+        if (exam.ChairmanId != user.UserId)
             throw new UnAuthorizedException("You are not authorized to perform this action");
         // Question Setter
-        foreach (var data in examUpdateFromChairmanDto.QuestionSetters)
+        if (examUpdateFromChairmanDto.QuestionSetters != null)
         {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionSetters = new List<Teacher>();
-        }
-        foreach (var data in examUpdateFromChairmanDto.QuestionSetters)
-        {
-            var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(data.Teacher.Id);
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionSetters.Add(teacher);
+            foreach (var data in examUpdateFromChairmanDto.QuestionSetters)
+            {
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionSetters = new List<Teacher>();
+            }
+            foreach (var data in examUpdateFromChairmanDto.QuestionSetters)
+            {
+                var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(data.Teacher.Id);
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionSetters.Add(teacher);
+            }
         }
 
         // Moderator
-        foreach (var data in examUpdateFromChairmanDto.QuestionModerators)
-        {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionModeratorId = data.Teacher.Id;
-        }
+        if (examUpdateFromChairmanDto.QuestionModerators != null)
+            foreach (var data in examUpdateFromChairmanDto.QuestionModerators)
+            {
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionModeratorId = data.Teacher.Id;
+            }
 
         // AnswerPaperChecker PartA
-        foreach (var data in examUpdateFromChairmanDto.AnswerpaperCheckersPartA)
+        if (examUpdateFromChairmanDto.AnswerpaperCheckersPartA != null)
         {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).AnswerPaperCheckerPartAId = data.Teacher.Id;
+            foreach (var data in examUpdateFromChairmanDto.AnswerpaperCheckersPartA)
+            {
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).AnswerPaperCheckerPartAId = data.Teacher.Id;
+            }
         }
-
         // AnswerPaperChecker PartB
-        foreach (var data in examUpdateFromChairmanDto.AnswerpaperCheckersPartB)
+        if (examUpdateFromChairmanDto.AnswerpaperCheckersPartB != null)
         {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).AnswerPaperCheckerPartBId = data.Teacher.Id;
+            foreach (var data in examUpdateFromChairmanDto.AnswerpaperCheckersPartB)
+            {
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).AnswerPaperCheckerPartBId = data.Teacher.Id;
+            }
         }
-
         // TermTestAnswerCheckers
-        foreach (var data in examUpdateFromChairmanDto.TermTestAnswerCheckers)
+        if (examUpdateFromChairmanDto.TermTestAnswerCheckers != null)
         {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).TermTestAnswerCheckerId = data.Teacher.Id;
+            foreach (var data in examUpdateFromChairmanDto.TermTestAnswerCheckers)
+            {
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).TermTestAnswerCheckerId = data.Teacher.Id;
+            }
         }
 
         // LabExaminers
-        foreach (var data in examUpdateFromChairmanDto.LabExaminers)
+        if (examUpdateFromChairmanDto.LabExaminers != null)
         {
-            exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).ExaminerId = data.Teacher.Id;
+
+            foreach (var data in examUpdateFromChairmanDto.LabExaminers)
+            {
+                var course = exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (course != null)
+                    course.ExaminerId = data.Teacher.Id;
+            }
         }
 
         // Tabulators
-        foreach (var data in examUpdateFromChairmanDto.Tabulators)
+        if (examUpdateFromChairmanDto.Tabulators != null)
         {
-            exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).TabulatorId = data.Teacher.Id;
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).TabulatorId = data.Teacher.Id;
-            exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id).TabulatorId = data.Teacher.Id;
+
+            foreach (var data in examUpdateFromChairmanDto.Tabulators)
+            {
+                var labcourse = exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (labcourse != null)
+                    labcourse.TabulatorId = data.Teacher.Id;
+                var theory = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (theory != null)
+                    theory.TabulatorId = data.Teacher.Id;
+                var term = exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (term != null)
+                    term.TabulatorId = data.Teacher.Id;
+            }
         }
 
         // VivaExaminers
-        foreach (var data in examUpdateFromChairmanDto.VivaExaminers)
+        if (examUpdateFromChairmanDto.VivaExaminers != null)
         {
-            exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).VivaExaminerId = data.Teacher.Id;
+
+            foreach (var data in examUpdateFromChairmanDto.VivaExaminers)
+            {
+                var lab = exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (lab != null)
+                    lab.VivaExaminerId = data.Teacher.Id;
+            }
         }
 
         // ScrutinizersPartA
-        foreach (var data in examUpdateFromChairmanDto.ScrutinizersPartA)
+        if (examUpdateFromChairmanDto.ScrutinizersPartA != null)
         {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionScrutinizerPartAId = data.Teacher.Id;
+
+            foreach (var data in examUpdateFromChairmanDto.ScrutinizersPartA)
+            {
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionScrutinizerPartAId = data.Teacher.Id;
+            }
         }
 
-        // ScrutinizersPartA
-        foreach (var data in examUpdateFromChairmanDto.ScrutinizersPartB)
+        // ScrutinizersPartB
+        if (examUpdateFromChairmanDto.ScrutinizersPartB != null)
         {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionScrutinizerPartBId = data.Teacher.Id;
+
+            foreach (var data in examUpdateFromChairmanDto.ScrutinizersPartB)
+            {
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionScrutinizerPartBId = data.Teacher.Id;
+            }
         }
 
         // QuestionTypers
-        foreach (var data in examUpdateFromChairmanDto.QuestionTypers)
-        {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionTyperId = data.Teacher.Id;
-        }
+        if (examUpdateFromChairmanDto.QuestionTypers != null)
+            foreach (var data in examUpdateFromChairmanDto.QuestionTypers)
+            {
+                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionTyperId = data.Teacher.Id;
+            }
 
         // Invigilators
-        exam.Invigilators = new List<Invigilator>();
-        foreach (var data in examUpdateFromChairmanDto.Invigilators)
+        if (examUpdateFromChairmanDto.Invigilators != null)
         {
-            var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(data.Id);
-            var invigilator = new Invigilator{
-                Teacher = teacher,
-                ExamId = exam.Id
-            };
-            exam.Invigilators.Add(invigilator);
-        }
 
+            exam.Invigilators = new List<Invigilator>();
+            foreach (var data in examUpdateFromChairmanDto.Invigilators)
+            {
+                var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(data.Id);
+                var invigilator = new Invigilator
+                {
+                    Teacher = teacher,
+                    ExamId = exam.Id
+                };
+                exam.Invigilators.Add(invigilator);
+            }
+
+        }
         // TermPaperData
-        foreach (var data in examUpdateFromChairmanDto.TermPaperData)
+        if (examUpdateFromChairmanDto.TermPaperData != null)
         {
-            var supervisors = new List<Teacher>();
-            foreach (var supervisor in data.Supervisors)
+
+            foreach (var data in examUpdateFromChairmanDto.TermPaperData)
             {
-                var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(supervisor.Id);
-                supervisors.Add(teacher);
+                var supervisors = new List<Teacher>();
+                foreach (var supervisor in data.Supervisors)
+                {
+                    var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(supervisor.Id);
+                    supervisors.Add(teacher);
+                }
+                exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id).Supervisors = supervisors;
+                var examiners = new List<Teacher>();
+                foreach (var examiner in data.Examiners)
+                {
+                    var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examiner.Id);
+                    examiners.Add(teacher);
+                }
+                exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id).Examiners = examiners;
             }
-            exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id).Supervisors = supervisors;
-            var examiners = new List<Teacher>();
-            foreach (var examiner in data.Examiners)
-            {
-                var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examiner.Id);
-                examiners.Add(teacher);
-            }
-            exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id).Examiners = examiners;
         }
 
         // regisretedStudents
-        foreach (var data in examUpdateFromChairmanDto.RegisteredStudents)
+        if (examUpdateFromChairmanDto.RegisteredStudents != null)
         {
-            exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).NumberOfRegisteredStudents = data.NumberOfStudents;
-            exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).NumberOfRegisteredStudents = data.NumberOfStudents;
-            exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id).NumberOfRegisteredStudents = data.NumberOfStudents;
+
+            foreach (var data in examUpdateFromChairmanDto.RegisteredStudents)
+            {
+                var theory = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (theory != null)
+                    theory.NumberOfRegisteredStudents = data.NumberOfStudents;
+                var lab = exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (lab != null)
+                    lab.NumberOfRegisteredStudents = data.NumberOfStudents;
+                var term = exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (term != null)
+                    term.NumberOfRegisteredStudents = data.NumberOfStudents;
+            }
+
         }
 
         _unitOfWork.Repository<Exam>().Update(exam);
@@ -323,7 +396,7 @@ public class ExamService : IExamService
 
         var res = _mapper.Map<ExamResponseDtoChairman>(examUpdateFromChairmanDto);
         return res;
-        
+
     }
 
     public async Task<ExamResponseDtoChairman> GetExamsForChairmanAsync(ExamReqParams examParams, UserFromToken user)

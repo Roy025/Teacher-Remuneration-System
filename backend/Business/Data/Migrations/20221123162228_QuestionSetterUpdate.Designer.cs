@@ -3,6 +3,7 @@ using System;
 using Business.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Business.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221123162228_QuestionSetterUpdate")]
+    partial class QuestionSetterUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,14 +257,9 @@ namespace Business.Data.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("TheoryCourseResponsiblesId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("TheoryCourseResponsiblesId");
 
                     b.ToTable("Teachers");
                 });
@@ -600,10 +597,6 @@ namespace Business.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.TheoryCourseResponsibles", null)
-                        .WithMany("QuestionSetters")
-                        .HasForeignKey("TheoryCourseResponsiblesId");
-
                     b.Navigation("Department");
                 });
 
@@ -747,7 +740,6 @@ namespace Business.Data.Migrations
                     b.HasOne("Core.Entities.Teacher", null)
                         .WithMany()
                         .HasForeignKey("ExaminersId")
-
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -763,7 +755,6 @@ namespace Business.Data.Migrations
                     b.HasOne("Core.Entities.TheoryCourseResponsibles", null)
                         .WithMany()
                         .HasForeignKey("QuestionSettersOfCoursesId")
-
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -798,11 +789,6 @@ namespace Business.Data.Migrations
                     b.Navigation("ChairmanOfExams");
 
                     b.Navigation("ChiefInvigilatorOfExams");
-                });
-
-            modelBuilder.Entity("Core.Entities.TheoryCourseResponsibles", b =>
-                {
-                    b.Navigation("QuestionSetters");
                 });
 #pragma warning restore 612, 618
         }

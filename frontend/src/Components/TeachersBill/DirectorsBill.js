@@ -40,6 +40,7 @@ const DirectorsBill = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+  
 
   const save = async () => {
     const newData = {};
@@ -56,6 +57,7 @@ const DirectorsBill = () => {
     setSelectedSemester("");
     setSelectedChairman("");
     setSelectedChiefInvigilator("");
+    window.location.reload(true);
     setSelectedMembers([
       {
         id: "",
@@ -70,7 +72,7 @@ const DirectorsBill = () => {
         },
       },
     ]);
-    setSelectedCourses({});
+    setSelectedCourses([{}]);
     // setData(newData);
     try {
       const res = await axios.post("/Exam/director", newData, {
@@ -89,10 +91,19 @@ const DirectorsBill = () => {
 
   const [institutes, setInstitutes] = useState([]);
 
+  // fetch institute data
   const fetchInstitute = async () => {
     const response = await axios.get("/institute");
     return response;
   };
+  useQuery(["institute-list"], async () => {
+    const store = await fetchInstitute();
+    setInstitutes(store.data.data);
+    return store;
+  });
+
+  //fetch course data
+
   const fetchCourse = async () => {
     const departmentId = localStorage.getItem("departmentID");
     console.log(departmentId);
@@ -107,11 +118,6 @@ const DirectorsBill = () => {
     return store;
   });
 
-  useQuery(["institute-list"], async () => {
-    const store = await fetchInstitute();
-    setInstitutes(store.data.data);
-    return store;
-  });
 
   const handleCourses = (propName, option, index) => {
     const newCourses = [...selectedCourses];

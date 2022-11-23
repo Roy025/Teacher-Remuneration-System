@@ -2,39 +2,53 @@ import React, { useState } from "react";
 import Links from "./Links";
 import "./TeachersBill.css";
 import "./FormButton.css";
-import Dropdown, {
-  semesterOptions,
-  semesterTitle,
-  sessionTitle,
-  sessionOptions,
-} from "../SampleDropdown/Dropdown";
 import "../SampleDropdown/styles.css";
 import TwoField from "../../Functions/TwoField";
 import StudentCount from "../../Functions/StudentCount";
-import HandleSem from "../../Functions/HandleSem";
 import TermPaperComp from "../../Functions/TermPaperComp";
-import ThesisComp from "../../Functions/ThesisComp";
 import ThreeFields from "../../Functions/ThreeFields";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { instance as axios } from "../axios";
+import DropdownNoTitleTeacher from "../../Functions/DropdownNoTitleTeacher";
 
 const ChairmanBill = () => {
+  const [sessionOptions, setSessionOptions] = useState([
+    { name: "2016-17" },
+    { name: "2017-18" },
+    { name: "2018-19" },
+    { name: "2019-20" },
+    { name: "2020-21" },
+  ]);
+
+  const [semesterOptions, setSemesterOptions] = useState([
+    { name: "1st" },
+    { name: "2nd" },
+    { name: "3rd" },
+    { name: "4th" },
+    { name: "5th" },
+    { name: "6th" },
+    { name: "7th" },
+    { name: "8th" },
+  ]);
+
+  const [sessionAvailable, setSessionAvailable] = useState(false);
+  const [semesterAvailable, setSemesterAvailable] = useState(false);
+
+  const [exam, setExam] = useState({
+    session: "",
+    semester: "",
+  });
   const [selectedSession, setSelectedSession] = useState("");
   const [selectedSemester, setSelectedSemester] = useState("");
   const [listOfInstitutes, setListOfInstitutes] = useState([{}]);
   const [listOfTeachers, setListOfTeachers] = useState([{}]);
-  const [listOfCourses, setListOfCourses] = useState(
-    [
-      {
-        id: "1", title: "", code: "SWE321"
-      }, {
-        id: "2", title: "", code: "SWE322"
-      }
-    ]);
+  const [listOfCourses, setListOfCourses] = useState([{}]);
   const [listOfQuestionSetters, setListOfQuestionSetters] = useState([
     {
       course: {
         id: "",
         title: "",
-        code: ""
+        code: "",
       },
       teacher: {
         id: "",
@@ -42,118 +56,143 @@ const ChairmanBill = () => {
       },
     },
   ]);
-  const [listOfQuestionModerators, setListOfQuestionModerators] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
+  const [listOfQuestionModerators, setListOfQuestionModerators] = useState([
+    {
+      course: {
+        id: "",
+        title: "",
+        code: "",
+      },
+      teacher: {
+        id: "",
+        name: "",
+      },
     },
-    teacher: {
-      id: "",
-      name: "",
+  ]);
+  const [listOfAnswerpaperCheckersPartA, setListOfAnswerpaperCheckersPartA] =
+    useState([
+      {
+        course: {
+          id: "",
+          title: "",
+          code: "",
+        },
+        teacher: {
+          id: "",
+          name: "",
+        },
+      },
+    ]);
+  const [listOfAnswerpaperCheckersPartB, setListOfAnswerpaperCheckersPartB] =
+    useState([
+      {
+        course: {
+          id: "",
+          title: "",
+          code: "",
+        },
+        teacher: {
+          id: "",
+          name: "",
+        },
+      },
+    ]);
+  const [listOfTermTestAnswerCheckers, setListOfTermTestAnswerCheckers] =
+    useState([
+      {
+        course: {
+          id: "",
+          title: "",
+          code: "",
+        },
+        teacher: {
+          id: "",
+          name: "",
+        },
+      },
+    ]);
+  const [listOfLabExaminer, setListOfLabExaminer] = useState([
+    {
+      course: {
+        id: "",
+        title: "",
+        code: "",
+      },
+      teacher: {
+        id: "",
+        name: "",
+      },
     },
-  }]);
-  const [listOfAnswerpaperCheckersPartA, setListOfAnswerpaperCheckersPartA] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
+  ]);
+  const [listOfTabulators, setListOfTabulators] = useState([
+    {
+      course: {
+        id: "",
+        title: "",
+        code: "",
+      },
+      teacher: {
+        id: "",
+        name: "",
+      },
     },
-    teacher: {
-      id: "",
-      name: "",
+  ]);
+  const [listOfVivaExaminers, setListOfVivaExaminers] = useState([
+    {
+      course: {
+        id: "",
+        title: "",
+        code: "",
+      },
+      teacher: {
+        id: "",
+        name: "",
+      },
     },
-  }]);
-  const [listOfAnswerpaperCheckersPartB, setListOfAnswerpaperCheckersPartB] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
+  ]);
+  const [listOfScrutinizersPartA, setListOfScrutinizersPartA] = useState([
+    {
+      course: {
+        id: "",
+        title: "",
+        code: "",
+      },
+      teacher: {
+        id: "",
+        name: "",
+      },
     },
-    teacher: {
-      id: "",
-      name: "",
+  ]);
+  const [listOfScrutinizersPartB, setListOfScrutinizersPartB] = useState([
+    {
+      course: {
+        id: "",
+        title: "",
+        code: "",
+      },
+      teacher: {
+        id: "",
+        name: "",
+      },
     },
-  }]);
-  const [listOfTermTestAnswerCheckers, setListOfTermTestAnswerCheckers] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
+  ]);
+  const [listOfQuestionTypers, setListOfQuestionTypers] = useState([
+    {
+      course: {
+        id: "",
+        title: "",
+        code: "",
+      },
+      teacher: {
+        id: "",
+        name: "",
+      },
     },
-    teacher: {
-      id: "",
-      name: "",
-    },
-  }]);
-  const [listOfLabExaminer, setListOfLabExaminer] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
-    },
-    teacher: {
-      id: "",
-      name: "",
-    },
-  }]);
-  const [listOfTabulators, setListOfTabulators] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
-    },
-    teacher: {
-      id: "",
-      name: "",
-    },
-  }]);
-  const [listOfVivaExaminers, setListOfVivaExaminers] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
-    },
-    teacher: {
-      id: "",
-      name: "",
-    },
-  }]);
-  const [listOfScrutinizersPartA, setListOfScrutinizersPartA] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
-    },
-    teacher: {
-      id: "",
-      name: "",
-    },
-  }]);
-  const [listOfScrutinizersPartB, setListOfScrutinizersPartB] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
-    },
-    teacher: {
-      id: "",
-      name: "",
-    },
-  }]);
-  const [listOfQuestionTypers, setListOfQuestionTypers] = useState([{
-    course: {
-      id: "",
-      title: "",
-      code: ""
-    },
-    teacher: {
-      id: "",
-      name: "",
-    },
-  }]);
-  
-  const [listOfInvigilators, setListOfInvigilators] = useState([{ id: "", name: "", department: "", institute: "" }]);
+  ]);
+
+  const [listOfInvigilators, setListOfInvigilators] = useState([
+    { id: "", name: "", department: "", institute: "" },
+  ]);
 
   const [termPaperData, setTermPaperData] = useState([
     {
@@ -165,25 +204,27 @@ const ChairmanBill = () => {
         {
           id: "",
           name: "",
-        }
+        },
       ],
       examiners: [
         {
           id: "",
           name: "",
-        }
+        },
       ],
       isIncludedInExamCommittee: false,
-    }
+    },
   ]);
 
-  const [regisretedStudents, setRegisretedStudents] = useState([{
-    course: {
-      id: "",
-      code: ""
+  const [regisretedStudents, setRegisretedStudents] = useState([
+    {
+      course: {
+        id: "",
+        code: "",
+      },
+      numberOfStudents: "",
     },
-    numberOfStudents: "",
-  }]);
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -206,9 +247,112 @@ const ChairmanBill = () => {
       invigilators: listOfInvigilators,
       termPaperData: termPaperData,
       registeredStudents: regisretedStudents,
-    }
+    };
+
     console.log(body);
   };
+
+  ///Fetching teacher data
+
+  const fetchTeachers = async () => {
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.get(
+      `/Exam/chairman/teacher?Semester=${selectedSemester}&Session=${selectedSession}`,
+      config
+    );
+    console.log(response);
+    setListOfTeachers(response.data.data);
+    return response;
+  };
+  useQuery(["teacher-list"], () => fetchTeachers(), {
+    enabled: !!sessionAvailable && !!semesterAvailable,
+  });
+
+  //Fetching course data
+
+  const fetchCourse = async () => {
+    //console.log(localStorage.getItem("accesstoken"));
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.get(
+      `/Exam/chairman/course?Semester=${selectedSemester}&Session=${selectedSession}`,
+      config
+    );
+    console.log(response);
+    setListOfCourses(response.data.data);
+    return response;
+  };
+  useQuery(["course-list"], () => fetchCourse(), {
+    enabled: !!sessionAvailable && !!semesterAvailable,
+  });
+
+  //Fetching institute data
+  const fetchInstitute = async () => {
+    const response = await axios.get("/institute");
+    return response;
+  };
+
+  useQuery(["institution-list"], async () => {
+    const store = await fetchInstitute();
+    setListOfInstitutes(store.data.data);
+    return store;
+  });
+
+  //handle semester and session
+
+  const handleSession = (propName, option) => {
+    const newData = { ...exam };
+    newData.session = option.name;
+    setExam(newData);
+    setSessionAvailable(true);
+  };
+
+  const handleSemester = (propName, option) => {
+    const newData = { ...exam };
+    newData.semester = option.name;
+    setExam(newData);
+    setSemesterAvailable(true);
+  };
+
+  //sending data to backend
+
+  const addChairmanInfo = async (info) => {
+    console.log(info);
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.put(
+      "/Exam/chairman",
+      info,
+      config
+    );
+    console.log(response);
+    return response;
+  };
+
+  const {
+    mutate: ChairmanMutate,
+    isError,
+    error,
+  } = useMutation(addChairmanInfo, {
+    onSuccess: (success) => {
+      console.log(success);
+      window.location.reload(false);
+    },
+  });
+  if (isError) {
+    console.log(error);
+  }
+
   return (
     <>
       <div>
@@ -218,18 +362,21 @@ const ChairmanBill = () => {
         <form className="Form" onSubmit={handleSubmit}>
           <div className="DropdownformRow">
             <div className="FormSubRow">
-              <Dropdown
+              <label className="Label">Session</label>
+              <DropdownNoTitleTeacher
                 options={sessionOptions}
-                dropdownTitle={sessionTitle}
+                propName="session"
+                handleData={handleSession}
                 selected={selectedSession}
                 setSelected={setSelectedSession}
               />
             </div>
-
             <div className="FormSubRow">
-              <Dropdown
+              <label className="Label">Semester</label>
+              <DropdownNoTitleTeacher
                 options={semesterOptions}
-                dropdownTitle={semesterTitle}
+                propName="semester"
+                handleData={handleSemester}
                 selected={selectedSemester}
                 setSelected={setSelectedSemester}
               />
@@ -286,7 +433,9 @@ const ChairmanBill = () => {
           </div>
 
           <div className="formRow">
-            <label className="Label">Practical Exam / Sessional Assessment / LAB</label>
+            <label className="Label">
+              Practical Exam / Sessional Assessment / LAB
+            </label>
             <TwoField
               courses={listOfCourses}
               teachers={listOfTeachers}
@@ -343,9 +492,9 @@ const ChairmanBill = () => {
               options={listOfCourses}
               existingData={termPaperData}
               setExistingData={setTermPaperData}
+              teacherList={listOfTeachers}
             />
           </div>
-          
 
           <div className="formRow">
             <label className="Label">Question Type</label>
@@ -391,10 +540,33 @@ const ChairmanBill = () => {
               existingData={regisretedStudents}
               setExistingData={setRegisretedStudents}
             />
-          </div> 
+          </div>
 
           <div className="formRow SubmitRow">
-            <button type="submit" className="submitButton" onClick={submit}>
+            <button
+              type="submit"
+              className="submitButton"
+              onClick={() =>
+                ChairmanMutate({
+                  session: selectedSession,
+                  semester: selectedSemester,
+                  questionSetters: listOfQuestionSetters[0].course.id === "" ? undefined : listOfQuestionSetters,
+                  questionModerators: listOfQuestionModerators[0].course.id === "" ? undefined : listOfQuestionModerators,
+                  answerpaperCheckersPartA: listOfAnswerpaperCheckersPartA[0].course.id === "" ? undefined : listOfAnswerpaperCheckersPartA,
+                  answerpaperCheckersPartB: listOfAnswerpaperCheckersPartB[0].course.id === "" ? undefined : listOfAnswerpaperCheckersPartB,
+                  termTestAnswerCheckers: listOfTermTestAnswerCheckers[0].course.id === "" ? undefined : listOfTermTestAnswerCheckers,
+                  labExaminers: listOfLabExaminer[0].course.id === "" ? undefined : listOfLabExaminer,
+                  tabulators: listOfTabulators[0].course.id === "" ? undefined : listOfTabulators,
+                  vivaExaminers: listOfVivaExaminers[0].course.id === "" ? undefined : listOfVivaExaminers,
+                  scrutinizersPartA: listOfScrutinizersPartA[0].course.id === "" ? undefined : listOfScrutinizersPartA,
+                  scrutinizersPartB: listOfScrutinizersPartB[0].course.id === "" ? undefined : listOfScrutinizersPartB,
+                  questionTypers: listOfQuestionTypers[0].course.id === "" ? undefined : listOfQuestionTypers,
+                  invigilators: listOfInvigilators[0].id === "" ? undefined : listOfInvigilators,
+                  termPaperData: termPaperData[0].course.id === "" ? undefined : termPaperData,
+                  registeredStudents: regisretedStudents[0].course.id === "" ? undefined : regisretedStudents,
+                })
+              }
+            >
               Submit
             </button>
           </div>
