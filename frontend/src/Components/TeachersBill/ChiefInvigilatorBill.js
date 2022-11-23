@@ -10,6 +10,7 @@ const ChiefInvigilatorBill = () => {
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedSession, setSelectedSession] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [selectedInvigilator, setSelectedInvigilator] = useState("");
   const [sessionOptions, setSessionOptions] = useState([
     { name: "2016-17" },
     { name: "2017-18" },
@@ -31,7 +32,7 @@ const ChiefInvigilatorBill = () => {
 
   const [courseOptions, setCourseOptions] = useState([]);
 
-  const [teacherList, setTeacherList] = useState([]);
+  const [invigilatorList, setInvigilatorList] = useState([]);
 
   const [data, setData] = useState([
     {
@@ -58,9 +59,14 @@ const ChiefInvigilatorBill = () => {
   //Fetching teacher data
 
   const fetchTeachers = async (id) => {
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
     const response = await axios.get(`/department?institute=${id}`);
     console.log(response);
-    setTeacherList(response.data.data);
+    setInvigilatorList(response.data.data);
     return response;
   };
   useQuery(["teacher-list", data.id], () => fetchTeachers(data.id), {
@@ -70,7 +76,6 @@ const ChiefInvigilatorBill = () => {
   //Fetching course data
 
   const fetchCourse = async (id) => {
-    console.log(localStorage.getItem("accesstoken"))
     const config = {
       headers: {
         Authorization: localStorage.getItem("accesstoken"),
@@ -103,10 +108,32 @@ const ChiefInvigilatorBill = () => {
     setSemesterAvailable(true);
   };
 
+  //handle invigilator
+  const handleInvigilator = (propName, option, currentIndex) => {
+    const newData = { ...data };
+    newData[currentIndex].teacherID = option.id;
+    setData(newData);
+    console.log(data);
+  };
+
+  const deleteInvigilator = (index) => {
+    const newData = { ...data };
+    newData.splice(index, 1);
+    setData(newData);
+  };
+
+  const addInvigilator = () => {
+    const newData = { ...data };
+    newData.push({
+      courseID: "",
+      teacherID: "",
+    });
+  };
+
   // Have to update ID
   const handleCourse = (propName, option) => {
     const newData = { ...data };
-    newData.courseID = option.name;
+    newData.courseID = option.id;
     setData(newData);
   };
 
@@ -147,14 +174,46 @@ const ChiefInvigilatorBill = () => {
               selected={selectedCourse}
               setSelected={setSelectedCourse}
             />
-            <label className="AccountLabel">Invigilator</label>
-            <DropdownNoTitleTeacher
-              options={teacherList}
-              propName="teacher"
-              handleData={handleSemester}
-              selected={selectedSemester}
-              setSelected={setSelectedSemester}
-            />
+            {data.map((info, index) => {
+              return (
+                <div className="InsedCourseInputWrap">
+                  <div className="InsideCourseContainer" key={index}>
+                    <div className="AccountInputFields">
+                      {index === 0 && (
+                        <label className="AccountLabel">Invigilators</label>
+                      )}
+                      <DropdownNoTitleTeacher
+                        options={invigilatorList}
+                        propName="invigilator"
+                        handleData={handleInvigilator}
+                        selected={selectedInvigilator}
+                        setSelected={setSelectedInvigilator}
+                        index={index}
+                      />
+                    </div>
+                  </div>
+
+                  {data.length !== 1 && (
+                    <button
+                      className="AdminButton"
+                      onClick={() => deleteInvigilator(index)}
+                    >
+                      Remove
+                    </button>
+                  )}
+                  <div className="InsideAccountContainer">
+                    {index === data.length - 1 && (
+                      <button
+                        className="AdminButton"
+                        onClick={() => addInvigilator()}
+                      >
+                        Add
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="formRow SubmitRow">
