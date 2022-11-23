@@ -75,7 +75,7 @@ function ProfilePage() {
 				<div className="card">
 					<div className="containerA">
 						<img
-							src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
+							src=""
 							alt="Avatar"
 							className="profile-image"
 						/>
