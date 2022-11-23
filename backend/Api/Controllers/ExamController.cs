@@ -1,4 +1,6 @@
+using Core.DTOs.CourseDTOs;
 using Core.DTOs.ExamDTOs;
+using Core.DTOs.TeacherDTOs;
 using Core.Interfaces.Services;
 using Core.Models;
 using Core.Params;
@@ -62,7 +64,7 @@ public class ExamController : BaseApiController
 
     //     throw new NotImplementedException();
     // }
-
+    
     [HttpPut("chairman")]
     public async Task<ActionResult<ApiDataResponse<ExamResponseDtoChairman>>> UpdateExamFromChairman([FromBody] ExamUpdateFromChairmanDto examUpdateFromChairmanDto)
     {
@@ -73,7 +75,31 @@ public class ExamController : BaseApiController
             throw new NotFoundException();
         }
         return StatusCode(200, new ApiDataResponse<ExamResponseDtoChairman>(exam, 200, "Exam updated successfully"));
-    } 
+    }
+
+    [HttpGet("chairman")]
+    public async Task<ActionResult<ApiDataResponse<ExamResponseDtoChairman>>> GetExamsForChairman([FromQuery] ExamReqParams examParams)
+    {
+        var user = GetUserFromToken();
+        var exam = await _examService.GetExamsForChairmanAsync(examParams, user);
+        return StatusCode(200, new ApiDataResponse<ExamResponseDtoChairman>(exam, 200, "Exams fetched successfully"));
+    }
+
+    [HttpGet("chairman/course")]
+    public async Task<ActionResult<ApiDataResponse<IReadOnlyList<CourseForExamDto>>>> GetCoursesForChairman([FromQuery] ExamReqParams examParams)
+    {
+        var user = GetUserFromToken();
+        var courses = await _examService.GetCoursesForChairman(examParams, user);
+        return StatusCode(200, new ApiDataResponse<IReadOnlyList<CourseForExamDto>>(courses, 200, "Courses fetched successfully"));
+    }
+
+    [HttpGet("chairman/teacher")]
+    public async Task<ActionResult<ApiDataResponse<IReadOnlyList<TeacherResponseDto>>>> GetTeachersForChairman([FromQuery] ExamReqParams examParams)
+    {
+        var user = GetUserFromToken();
+        var teachers = await _examService.GetTeachersForChairman(examParams, user);
+        return StatusCode(200, new ApiDataResponse<IReadOnlyList<TeacherResponseDto>>(teachers, 200, "Teachers fetched successfully"));
+    }
     
     
     private UserFromToken? GetUserFromToken()

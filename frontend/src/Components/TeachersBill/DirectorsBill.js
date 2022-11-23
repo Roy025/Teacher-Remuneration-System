@@ -79,6 +79,7 @@ const DirectorsBill = () => {
         },
       },
     ]);
+    setSelectedCourses({});
     // setData(newData);
     try {
       const res = await axios.post("/Exam/director", newData, {
