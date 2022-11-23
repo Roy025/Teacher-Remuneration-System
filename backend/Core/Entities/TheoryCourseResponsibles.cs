@@ -25,7 +25,7 @@ public class TheoryCourseResponsibles : BaseEntity
     public Teacher? QuestionScrutinizerPartB { get; set; } = null;
     public Guid? QuestionTyperId { get; set; } = null;
     public Teacher? QuestionTyper { get; set; } = null;
-    public int? NumberOfRegisteredStudents { get; set; } = null;
+    public int? NumberOfRegisteredStudents { get; set; } = 0!;
     // public Guid? QuestionSetter1Id { get; set; } = null;
     // public Teacher? QuestionSetter1 { get; set; } = null;
     // public Guid? QuestionSetter2Id { get; set; } = null;
