@@ -37,7 +37,7 @@ function NavbarInside() {
 						})}
 					</ul>
 					<Link
-						to="/login"
+						to="/"
 						className="nav-links logout"
 						onClick={logOut}>
 						Logout
