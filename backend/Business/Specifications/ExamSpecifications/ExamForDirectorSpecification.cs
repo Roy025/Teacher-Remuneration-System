@@ -14,5 +14,7 @@ public class ExamForDirectorSpecification : BaseSpecification<Exam>
         AddInclude(x => x.Include(x => x.Chairman).ThenInclude(c=> c.Department).ThenInclude(d=>d.Institute));
         AddInclude(x => x.Include(x => x.CheifInvigilator).ThenInclude(c => c.Department).ThenInclude(d => d.Institute));
         AddInclude(x => x.Include(x => x.Members).ThenInclude(c => c.Department).ThenInclude(d => d.Institute));
+        AddInclude(x => x.Include(x => x.LabCourses));
+        AddInclude(x => x.Include(x => x.TheoryCourses));
     }
 }
