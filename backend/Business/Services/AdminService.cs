@@ -115,7 +115,7 @@ public class AdminService : IAdminService
         var admin = admins.FirstOrDefault();
         if (admin == null) return null;
 
-        if (!BCrypt.Net.BCrypt.Verify(adminLoginDTO.Password, admin.Password)) return null;
+        if (!BCrypt.Net.BCrypt.Verify(adminLoginDTO.Password, admin.Password)) throw new UnAuthorizedException("Invalid password");
 
         return new AdminLoginResDto
         {
