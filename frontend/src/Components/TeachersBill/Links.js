@@ -1,5 +1,4 @@
 import React from 'react';
-// import { ReactDOM } from "react-dom";
 import { Link } from 'react-router-dom';
 
 import './Links.css';
@@ -36,6 +35,7 @@ class Links extends React.Component {
 
 	render() {
 		const role = localStorage.getItem('role');
+
 		let director;
 		if (role === 'Director') {
 			director = <DirectorLink />;
