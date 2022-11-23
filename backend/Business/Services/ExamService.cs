@@ -162,11 +162,14 @@ public class ExamService : IExamService
     public async Task<IReadOnlyList<CourseForExamDto>> GetCoursesForChairman(ExamReqParams examParams, UserFromToken user)
     {
         examParams.DepartmentId = user.DepartmentId;
+        System.Console.WriteLine(examParams.DepartmentId);
+        System.Console.WriteLine(examParams.Session);
+        System.Console.WriteLine(examParams.Semester);
         var spec = new ExamForDirectorSpecification(examParams);
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
-        if (exams == null)
-            throw new NotFoundException("No exam found");
         var exam = exams.FirstOrDefault();
+        if (exam == null)
+            throw new NotFoundException("No exam found");
         var labCourses = exam.LabCourses.Select(x => x.Course);
         var theoryCourse = exam.TheoryCourses.Select(x => x.Course);
         var termPaperCourses = exam.TermPapers.Select(x => x.Course);
