@@ -3,6 +3,7 @@ import './login.css';
 import '../ProfilePage/ProfilePage.css';
 import { useNavigate } from 'react-router-dom';
 import { instance as axios } from '../axios';
+import { FaWindows } from 'react-icons/fa';
 
 const Login = () => {
 	const [loginData, setloginData] = useState({
@@ -16,6 +17,7 @@ const Login = () => {
 		e.preventDefault();
 	};
 	const navigate = useNavigate();
+
 	const login = async () => {
 		if (checked) {
 			try {
@@ -28,9 +30,6 @@ const Login = () => {
 						console.log(response);
 						const obj = response.data;
 						console.log(obj.data.token);
-
-						// localStorage.setItem('accesstoken', obj.data.token);
-						// localStorage.setItem('username', response.data.username);
 
 						if (response.data.statusCode === 200) {
 							setTimeout(() => {
@@ -57,14 +56,20 @@ const Login = () => {
 						console.log(obj.data.role);
 						console.log(obj.data.token);
 
-						localStorage.setItem('accesstoken', obj.data.token);
-						localStorage.setItem('id', obj.data.id);
-						localStorage.setItem('role', obj.data.role);
-						console.log(response.data.statusCode);
+						const teacher = {
+							role: obj.data.role,
+							teacherID: obj.data.id,
+							departmentId: obj.data.departmentId,
+							token: obj.data.token,
+						};
+						console.log(response);
+
+						localStorage.setItem('teacher', JSON.stringify(teacher));
 
 						if (response.data.statusCode === 200) {
 							setTimeout(() => {
 								navigate('/');
+								window.location.reload(false);
 							}, 3000);
 						}
 					})
