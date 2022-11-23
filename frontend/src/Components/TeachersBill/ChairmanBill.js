@@ -330,11 +330,7 @@ const ChairmanBill = () => {
         Authorization: localStorage.getItem("accesstoken"),
       },
     };
-    const response = await axios.put(
-      "/Exam/chairman",
-      info,
-      config
-    );
+    const response = await axios.put("/Exam/chairman", info, config);
     console.log(response);
     return response;
   };
@@ -352,6 +348,216 @@ const ChairmanBill = () => {
   if (isError) {
     console.log(error);
   }
+
+  const fetchPrevData = async () => {
+    if (selectedSemester && selectedSession) {
+      console.log("fetching");
+      const res = await axios.get(
+        `Exam/chairman?Semester=${selectedSemester}&Session=${selectedSession}`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("accesstoken"),
+          },
+        }
+      );
+      console.log(res.data.data);
+      if (res.data.data) {
+        const examinfo = res.data.data;
+        setListOfQuestionSetters(examinfo.questionSetters);
+        setListOfQuestionModerators(examinfo.questionModerators);
+        setListOfAnswerpaperCheckersPartA(examinfo.answerpaperCheckersPartA);
+        setListOfAnswerpaperCheckersPartB(examinfo.answerpaperCheckersPartB);
+        setListOfTermTestAnswerCheckers(examinfo.termTestAnswerCheckers);
+        setListOfLabExaminer(examinfo.labExaminers);
+        setListOfTabulators(examinfo.tabulators);
+        setListOfVivaExaminers(examinfo.vivaExaminers);
+        setListOfScrutinizersPartA(examinfo.scrutinizersPartA);
+        setListOfScrutinizersPartB(examinfo.scrutinizersPartB);
+        setListOfQuestionTypers(examinfo.questionTypers);
+        setListOfInvigilators(examinfo.invigilators);
+        setTermPaperData(examinfo.termPaperData);
+        setRegisretedStudents(examinfo.registeredStudents);
+        // setData(res.data.data)
+      } else {
+        setListOfQuestionSetters([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfQuestionModerators([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfAnswerpaperCheckersPartA([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfAnswerpaperCheckersPartB([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfTermTestAnswerCheckers([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfLabExaminer([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfTabulators([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfVivaExaminers([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfScrutinizersPartA([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfScrutinizersPartB([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfQuestionTypers([
+          {
+            course: {
+              id: "",
+              title: "",
+              code: "",
+            },
+            teacher: {
+              id: "",
+              name: "",
+            },
+          },
+        ]);
+        setListOfInvigilators([
+          { id: "", name: "", department: "", institute: "" },
+        ]);
+        setTermPaperData([
+          {
+            course: {
+              id: "",
+              code: "",
+            },
+            supervisors: [
+              {
+                id: "",
+                name: "",
+              },
+            ],
+            examiners: [
+              {
+                id: "",
+                name: "",
+              },
+            ],
+            isIncludedInExamCommittee: false,
+          },
+        ]);
+        setRegisretedStudents([
+          {
+            course: {
+              id: "",
+              code: "",
+            },
+            numberOfStudents: "",
+          },
+        ]);
+      }
+    }
+  };
 
   return (
     <>
@@ -550,20 +756,62 @@ const ChairmanBill = () => {
                 ChairmanMutate({
                   session: selectedSession,
                   semester: selectedSemester,
-                  questionSetters: listOfQuestionSetters[0].course.id === "" ? undefined : listOfQuestionSetters,
-                  questionModerators: listOfQuestionModerators[0].course.id === "" ? undefined : listOfQuestionModerators,
-                  answerpaperCheckersPartA: listOfAnswerpaperCheckersPartA[0].course.id === "" ? undefined : listOfAnswerpaperCheckersPartA,
-                  answerpaperCheckersPartB: listOfAnswerpaperCheckersPartB[0].course.id === "" ? undefined : listOfAnswerpaperCheckersPartB,
-                  termTestAnswerCheckers: listOfTermTestAnswerCheckers[0].course.id === "" ? undefined : listOfTermTestAnswerCheckers,
-                  labExaminers: listOfLabExaminer[0].course.id === "" ? undefined : listOfLabExaminer,
-                  tabulators: listOfTabulators[0].course.id === "" ? undefined : listOfTabulators,
-                  vivaExaminers: listOfVivaExaminers[0].course.id === "" ? undefined : listOfVivaExaminers,
-                  scrutinizersPartA: listOfScrutinizersPartA[0].course.id === "" ? undefined : listOfScrutinizersPartA,
-                  scrutinizersPartB: listOfScrutinizersPartB[0].course.id === "" ? undefined : listOfScrutinizersPartB,
-                  questionTypers: listOfQuestionTypers[0].course.id === "" ? undefined : listOfQuestionTypers,
-                  invigilators: listOfInvigilators[0].id === "" ? undefined : listOfInvigilators,
-                  termPaperData: termPaperData[0].course.id === "" ? undefined : termPaperData,
-                  registeredStudents: regisretedStudents[0].course.id === "" ? undefined : regisretedStudents,
+                  questionSetters:
+                    listOfQuestionSetters[0].course.id === ""
+                      ? undefined
+                      : listOfQuestionSetters,
+                  questionModerators:
+                    listOfQuestionModerators[0].course.id === ""
+                      ? undefined
+                      : listOfQuestionModerators,
+                  answerpaperCheckersPartA:
+                    listOfAnswerpaperCheckersPartA[0].course.id === ""
+                      ? undefined
+                      : listOfAnswerpaperCheckersPartA,
+                  answerpaperCheckersPartB:
+                    listOfAnswerpaperCheckersPartB[0].course.id === ""
+                      ? undefined
+                      : listOfAnswerpaperCheckersPartB,
+                  termTestAnswerCheckers:
+                    listOfTermTestAnswerCheckers[0].course.id === ""
+                      ? undefined
+                      : listOfTermTestAnswerCheckers,
+                  labExaminers:
+                    listOfLabExaminer[0].course.id === ""
+                      ? undefined
+                      : listOfLabExaminer,
+                  tabulators:
+                    listOfTabulators[0].course.id === ""
+                      ? undefined
+                      : listOfTabulators,
+                  vivaExaminers:
+                    listOfVivaExaminers[0].course.id === ""
+                      ? undefined
+                      : listOfVivaExaminers,
+                  scrutinizersPartA:
+                    listOfScrutinizersPartA[0].course.id === ""
+                      ? undefined
+                      : listOfScrutinizersPartA,
+                  scrutinizersPartB:
+                    listOfScrutinizersPartB[0].course.id === ""
+                      ? undefined
+                      : listOfScrutinizersPartB,
+                  questionTypers:
+                    listOfQuestionTypers[0].course.id === ""
+                      ? undefined
+                      : listOfQuestionTypers,
+                  invigilators:
+                    listOfInvigilators[0].id === ""
+                      ? undefined
+                      : listOfInvigilators,
+                  termPaperData:
+                    termPaperData[0].course.id === ""
+                      ? undefined
+                      : termPaperData,
+                  registeredStudents:
+                    regisretedStudents[0].course.id === ""
+                      ? undefined
+                      : regisretedStudents,
                 })
               }
             >
