@@ -151,8 +151,10 @@ public class AdminService : IAdminService
     public async Task<IReadOnlyList<TeacherResponseDto>> RegisterTeacherAsync(IReadOnlyList<TeacherCreateDto> teachers)
     {
         var teacherEntities = _mapper.Map<IReadOnlyList<Teacher>>(teachers);
+        
         foreach (var teacher in teacherEntities)
         {
+            teacher.Role = string.IsNullOrEmpty(teacher.Role)?  "Teacher" : teacher.Role;
             teacher.Password = BCrypt.Net.BCrypt.HashPassword(teacher.Password);
             _unitOfWork.Repository<Teacher>().Add(teacher);
         }

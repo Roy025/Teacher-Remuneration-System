@@ -26,7 +26,7 @@ public class TokenService : ITokenService
         {
             new("email", teacher.Email),
             new("userId", teacher.Id.ToString()),
-            new("role", teacher.Role),
+            new("role", String.IsNullOrEmpty(teacher.Role)?"Teacher":teacher.Role),
             new("departmentId", teacher.DepartmentId.ToString()),
         };
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
