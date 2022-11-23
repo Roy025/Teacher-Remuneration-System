@@ -38,6 +38,14 @@ const ChiefInvigilatorBill = () => {
     { name: "SWE127" },
   ]);
 
+  const [teacherList, setTeacherList] = useState([
+    { name: "Dr. Ahsan Habib" },
+    { name: "Raihan Ullah" },
+    { name: "Saima Sultana" },
+    { name: "ParthaPratim Paul" },
+    { name: "Fazle Tawsif" },
+  ]);
+
   const [data, setData] = useState([
     {
       courseID: "",
@@ -121,8 +129,8 @@ const ChiefInvigilatorBill = () => {
             />
             <label className="AccountLabel">Invigilator</label>
             <DropdownNoTitleTeacher
-              options={courseOptions}
-              propName="course"
+              options={teacherList}
+              propName="teacher"
               handleData={handleSemester}
               selected={selectedSemester}
               setSelected={setSelectedSemester}

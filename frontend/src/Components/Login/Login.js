@@ -57,9 +57,10 @@ const Login = () => {
 						console.log(obj.data.role);
 						console.log(obj.data.token);
 
-						localStorage.setItem('accesstoken', obj.data.token);
+						localStorage.setItem('accesstoken', `Bearer ${obj.data.token}`);
 						localStorage.setItem('id', obj.data.id);
 						localStorage.setItem('role', obj.data.role);
+						localStorage.setItem('departmentID', obj.data.departmentId)
 						console.log(response.data.statusCode);
 
 						if (response.data.statusCode === 200) {

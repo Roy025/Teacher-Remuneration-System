@@ -117,16 +117,20 @@ public class ExamService : IExamService
         if (exams == null)
             throw new NotFoundException("No exam found");
         var exam = exams.FirstOrDefault();
+        if (exam == null)
+            throw new NotFoundException("No exam found");
         var examResponseDto = _mapper.Map<ExamResponseDtoDirector>(exam);
         foreach (var course in exam.TheoryCourses)
         {
             var courseDto = _mapper.Map<CourseForExamDto>(course.Course);
             examResponseDto.Courses.Add(courseDto);
+            System.Console.WriteLine(course.Course.Code);
         }
         foreach (var course in exam.LabCourses)
         {
             var courseDto = _mapper.Map<CourseForExamDto>(course.Course);
             examResponseDto.Courses.Add(courseDto);
+            System.Console.WriteLine(courseDto.Code);
         }
         return examResponseDto;
     }
