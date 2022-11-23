@@ -56,7 +56,7 @@ function App() {
 				<Route
 					exact
 					path="/teacher"
-					element={<PrivateRouteLogin Component={DirectorsBill} />}></Route>
+					element={<PrivateRouteLogin Component={TeacherBill} />}></Route>
 				<Route
 					exact
 					path="/chief-invigilator"
