@@ -40,6 +40,7 @@ const DirectorsBill = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+  
 
   const save = async () => {
     const newData = {};
@@ -56,6 +57,7 @@ const DirectorsBill = () => {
     setSelectedSemester("");
     setSelectedChairman("");
     setSelectedChiefInvigilator("");
+    window.location.reload(true);
     setSelectedMembers([
       {
         id: "",
@@ -70,7 +72,7 @@ const DirectorsBill = () => {
         },
       },
     ]);
-    setSelectedCourses({});
+    setSelectedCourses([{}]);
     // setData(newData);
     try {
       const res = await axios.post("/Exam/director", newData, {

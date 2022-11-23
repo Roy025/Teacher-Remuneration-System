@@ -8,15 +8,15 @@ public class LabCourseResponsibles : BaseEntity
 {
     // Chairman's responsibility
     public Guid ExamId { get; set; }
-    public Exam Exam { get; set; }
+    public Exam? Exam { get; set; }
     public Guid CourseId { get; set; }
-    public Course Course { get; set; }
-    public Guid ExaminerId { get; set; }
-    public Teacher Examiner { get; set; }
-    public Guid TabulatorId { get; set; }
-    public Teacher Tabulator { get; set; }
-    public Guid VivaExaminerId { get; set; }
-    public Teacher VivaExaminer { get; set; }
+    public Course? Course { get; set; }
+    public Guid? ExaminerId { get; set; }
+    public Teacher? Examiner { get; set; }
+    public Guid? TabulatorId { get; set; }
+    public Teacher? Tabulator { get; set; }
+    public Guid? VivaExaminerId { get; set; }
+    public Teacher? VivaExaminer { get; set; }
     public int? NumberOfRegisteredStudents { get; set; } = null;
     /////////////////////////////////////////////
 

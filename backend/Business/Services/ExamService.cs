@@ -42,60 +42,59 @@ public class ExamService : IExamService
             //update first
             _unitOfWork.Repository<Exam>().Delete(exam);
         }
-        else
+
+        //create new
+        exam = new Exam
         {
-            //create new
-            exam = new Exam
+            Session = examCreateFromDirectorDto.Session,
+            Semester = examCreateFromDirectorDto.Semester,
+            DepartmentId = user.DepartmentId,
+            Chairman = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id),
+            CheifInvigilator = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.CheifInvigilator.Id),
+            Members = new List<Teacher>()
+        };
+        foreach (var member in examCreateFromDirectorDto.Members)
+        {
+            var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(member.Id);
+            if (teacher != null)
             {
-                Session = examCreateFromDirectorDto.Session,
-                Semester = examCreateFromDirectorDto.Semester,
-                DepartmentId = user.DepartmentId,
-                Chairman = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id),
-                CheifInvigilator = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.CheifInvigilator.Id),
-                Members = new List<Teacher>()
-            };
-            foreach (var member in examCreateFromDirectorDto.Members)
-            {
-                var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(member.Id);
-                if (teacher != null)
-                {
-                    exam.Members.Add(teacher);
-                }
+                exam.Members.Add(teacher);
             }
-            foreach (var course in examCreateFromDirectorDto.Courses)
-            {
-                var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
-                if (courseExam != null)
-                {
-                    if (courseExam.Type.Equals("Theory"))
-                    {
-                        var theoryCourse = new TheoryCourseResponsibles();
-                        theoryCourse.Course = courseExam;
-                        // theoryCourse.Exam = exam;
-                        exam.TheoryCourses.Add(theoryCourse);
-                    }
-                    else if (courseExam.Type.Equals("Lab"))
-                    {
-                        var labCourse = new LabCourseResponsibles();
-                        labCourse.Course = courseExam;
-                        // labCourse.Exam = exam;
-                        exam.LabCourses.Add(labCourse);
-                    }
-                    else if(courseExam.Type.Equals("TermPaper"))
-                    {
-                        var termPaper = new TermPaperResponsibilities();
-                        termPaper.Course = courseExam;
-                        // termPaper.Exam = exam;
-                        exam.TermPapers.Add(termPaper);
-                    }
-                    else 
-                    {
-                        throw new BadRequestException("Course type is not valid");
-                    }
-                }
-            }
-            _unitOfWork.Repository<Exam>().Add(exam);
         }
+        foreach (var course in examCreateFromDirectorDto.Courses)
+        {
+            var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
+            if (courseExam != null)
+            {
+                if (courseExam.Type.Equals("Theory"))
+                {
+                    var theoryCourse = new TheoryCourseResponsibles();
+                    theoryCourse.Course = courseExam;
+                    // theoryCourse.Exam = exam;
+                    exam.TheoryCourses.Add(theoryCourse);
+                }
+                else if (courseExam.Type.Equals("Lab"))
+                {
+                    var labCourse = new LabCourseResponsibles();
+                    labCourse.Course = courseExam;
+                    // labCourse.Exam = exam;
+                    exam.LabCourses.Add(labCourse);
+                }
+                else if (courseExam.Type.Equals("TermPaper"))
+                {
+                    var termPaper = new TermPaperResponsibilities();
+                    termPaper.Course = courseExam;
+                    // termPaper.Exam = exam;
+                    exam.TermPapers.Add(termPaper);
+                }
+                else
+                {
+                    throw new BadRequestException("Course type is not valid");
+                }
+            }
+        }
+        _unitOfWork.Repository<Exam>().Add(exam);
+
         var result = await _unitOfWork.Complete();
         if (result <= 0)
         {
@@ -110,7 +109,7 @@ public class ExamService : IExamService
     {
         if (user.Role != "Director")
             throw new UnAuthorizedException("You are not authorized to perform this action");
-        
+
         examParams.DepartmentId = user.DepartmentId;
         var spec = new ExamForDirectorSpecification(examParams);
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
@@ -193,7 +192,8 @@ public class ExamService : IExamService
 
     public async Task<ExamResponseDtoChairman> UpdateExamFromChairman(ExamUpdateFromChairmanDto examUpdateFromChairmanDto, UserFromToken user)
     {
-        var examParams = new ExamReqParams{
+        var examParams = new ExamReqParams
+        {
             Session = examUpdateFromChairmanDto.Session,
             Semester = examUpdateFromChairmanDto.Semester,
             DepartmentId = user.DepartmentId
@@ -205,7 +205,7 @@ public class ExamService : IExamService
             throw new NotFoundException("No exam found");
         var exam = exams.FirstOrDefault();
 
-        if(exam.ChairmanId != user.UserId)
+        if (exam.ChairmanId != user.UserId)
             throw new UnAuthorizedException("You are not authorized to perform this action");
         // Question Setter
         foreach (var data in examUpdateFromChairmanDto.QuestionSetters)
@@ -285,7 +285,8 @@ public class ExamService : IExamService
         foreach (var data in examUpdateFromChairmanDto.Invigilators)
         {
             var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(data.Id);
-            var invigilator = new Invigilator{
+            var invigilator = new Invigilator
+            {
                 Teacher = teacher,
                 ExamId = exam.Id
             };
@@ -326,7 +327,7 @@ public class ExamService : IExamService
 
         var res = _mapper.Map<ExamResponseDtoChairman>(examUpdateFromChairmanDto);
         return res;
-        
+
     }
 
     public async Task<ExamResponseDtoChairman> GetExamsForChairmanAsync(ExamReqParams examParams, UserFromToken user)

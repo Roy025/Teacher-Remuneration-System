@@ -11,10 +11,10 @@ import Dropdown, {
 import "../SampleDropdown/styles.css";
 import TwoField from "../../Functions/TwoField";
 import StudentCount from "../../Functions/StudentCount";
-import HandleSem from "../../Functions/HandleSem";
 import TermPaperComp from "../../Functions/TermPaperComp";
-import ThesisComp from "../../Functions/ThesisComp";
 import ThreeFields from "../../Functions/ThreeFields";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { instance as axios } from "../axios";
 
 const ChairmanBill = () => {
   const [selectedSession, setSelectedSession] = useState("");
