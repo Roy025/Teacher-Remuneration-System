@@ -14,6 +14,7 @@ public class ExamForTeacherSpec : BaseSpecification <Exam>
     {
         AddInclude(x => x.Include(y => y.TheoryCourses).ThenInclude(c => c.Course));
         AddInclude(x => x.Include(y => y.LabCourses).ThenInclude(c => c.Course));
+        AddInclude(x => x.Include(y => y.Department));
     }
 
 }
