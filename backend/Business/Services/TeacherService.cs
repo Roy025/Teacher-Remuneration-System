@@ -90,6 +90,7 @@ public class TeacherService : ITeacherService
     {
         return new TeacherLoginDto
         {
+            Id = teacherEntity.Id,
             Email = teacherEntity.Email,
             Role = teacherEntity.Role,
             Image = teacherEntity.Image,
