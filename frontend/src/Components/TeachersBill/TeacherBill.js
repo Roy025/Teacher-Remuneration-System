@@ -145,7 +145,7 @@ const TeacherBill = () => {
 
   const handleDepartment = (propName, option) => {
     const newData = { ...exam };
-    newData.semester = option.name;
+    newData.department = option;
     newData.deptID = option.id;
     setExam(newData);
     setDepartmentAvailable(true);
@@ -176,7 +176,10 @@ const TeacherBill = () => {
         Authorization: localStorage.getItem("accesstoken"),
       },
     };
-    const response = await axios.get(`/department?institute=${exam.deptID}`, config);
+    const response = await axios.get(
+      `/department?institute=${exam.deptID}`,
+      config
+    );
     console.log(response);
     setDepartmentList(response.data.data);
     return response;
@@ -205,19 +208,46 @@ const TeacherBill = () => {
     enabled: !!sessionAvailable && !!semesterAvailable && !!departmentAvailable,
   });
 
+  //put teacher form
+  const addTeacherForm = async (info) => {
+    console.log(info);
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.put("/Exam/teacher", info, config);
+    console.log(response);
+    return response;
+  };
+
+  const {
+    mutate: TeacherMutate,
+    isError,
+    error,
+  } = useMutation(addTeacherForm, {
+    onSuccess: (success) => {
+      console.log(success);
+      window.location.reload(false);
+    },
+  });
+  if (isError) {
+    console.log(error);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
-  const submit = async () => {
-    console.log(termTestData);
-    console.log(answerPaperCheckingDataPartA);
-    console.log(answerPaperCheckingDataPartB);
-    console.log(scrutinyDataPartA);
-    console.log(scrutinyDataPartB);
-    console.log(practicalExamData);
-    console.log(vivaExamData);
-  };
+  // const submit = async () => {
+  //   console.log(termTestData);
+  //   console.log(answerPaperCheckingDataPartA);
+  //   console.log(answerPaperCheckingDataPartB);
+  //   console.log(scrutinyDataPartA);
+  //   console.log(scrutinyDataPartB);
+  //   console.log(practicalExamData);
+  //   console.log(vivaExamData);
+  // };
   return (
     <>
       <div>
@@ -225,6 +255,28 @@ const TeacherBill = () => {
       </div>
       <div className="FullFormPage">
         <form className="Form" onSubmit={handleSubmit}>
+          <div className="DropdownformRow">
+            <div className="FormSubRow">
+              <label className="Label">Institute</label>
+              <DropdownNoTitleTeacher
+                options={instituteList}
+                propName="institute"
+                handleData={handleInstitute}
+                selected={selectedInstitute}
+                setSelected={setSelectedInstitute}
+              />
+            </div>
+            <div className="FormSubRow">
+              <label className="Label">Department</label>
+              <DropdownNoTitleTeacher
+                options={departmentList}
+                propName="department"
+                handleData={handleDepartment}
+                selected={selectedDepartment}
+                setSelected={setSelectedDepartment}
+              />
+            </div>
+          </div>
           <div className="DropdownformRow">
             <div className="FormSubRow">
               <label className="Label">Session</label>
@@ -244,29 +296,6 @@ const TeacherBill = () => {
                 handleData={handleSemester}
                 selected={selectedSemester}
                 setSelected={setSelectedSemester}
-              />
-            </div>
-          </div>
-
-          <div className="DropdownformRow">
-          <div className="FormSubRow">
-              <label className="Label">Institute</label>
-              <DropdownNoTitleTeacher
-                options={instituteList}
-                propName="institute"
-                handleData={handleInstitute}
-                selected={selectedInstitute}
-                setSelected={setSelectedInstitute}
-              />
-            </div>
-            <div className="FormSubRow">
-              <label className="Label">Department</label>
-              <DropdownNoTitleTeacher
-                options={departmentList}
-                propName="department"
-                handleData={handleDepartment}
-                selected={selectedDepartment}
-                setSelected={setSelectedDepartment}
               />
             </div>
           </div>
@@ -331,7 +360,24 @@ const TeacherBill = () => {
           </div>
 
           <div className="formRow SubmitRow">
-            <button type="submit" className="submitButton" onClick={submit}>
+            <button
+              type="submit"
+              className="submitButton"
+              onClick={() =>
+                TeacherMutate({
+                  session: selectedSession,
+                  semester: selectedSemester,
+                  department: exam.department,
+                  termTestData: termTestData[0].course.id === "" ? undefined : termTestData,
+                  answerPaperCheckingDataPartA: answerPaperCheckingDataPartA[0].course.id === "" ? undefined : answerPaperCheckingDataPartA,
+                  answerPaperCheckingDataPartA: answerPaperCheckingDataPartB[0].course.id === "" ? undefined : answerPaperCheckingDataPartB,
+                  scrutinyDataPartA: scrutinyDataPartA[0].course.id === "" ? undefined : scrutinyDataPartA,
+                  scrutinyDataPartB: scrutinyDataPartB[0].course.id === "" ? undefined : scrutinyDataPartB,
+                  practicalExamData: practicalExamData[0].course.id === "" ? undefined : practicalExamData,
+                  vivaExamData: vivaExamData[0].course.id === "" ? undefined : vivaExamData,
+                })
+              }
+            >
               Submit
             </button>
           </div>
