@@ -9,6 +9,7 @@ function NavbarInside() {
 		localStorage.removeItem('role');
 		localStorage.removeItem('accesstoken');
 		localStorage.removeItem('id');
+		navigate('/login');
 		console.log('Logged Out');
 	};
 	return (
@@ -37,7 +38,7 @@ function NavbarInside() {
 						})}
 					</ul>
 					<Link
-						to="/login"
+						// to="/login"
 						className="nav-links logout"
 						onClick={logOut}>
 						Logout
