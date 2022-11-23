@@ -112,6 +112,22 @@ public class ExamController : BaseApiController
         }
         return StatusCode(200, new ApiDataResponse<ExamUpdateFromTeacherDto>(exam, 200, "Exam updated successfully"));
     }
+
+    [HttpGet("teacher")]
+    public async Task<ActionResult<ApiDataResponse<ExamUpdateFromTeacherDto>>> GetExamsForTeacher([FromQuery] ExamReqParams examParams)
+    {
+        var user = GetUserFromToken();
+        var exam = await _examService.GetExamsForTeacherAsync(examParams, user);
+        return StatusCode(200, new ApiDataResponse<ExamUpdateFromTeacherDto>(exam, 200, "Exams fetched successfully"));
+    }
+
+    [HttpGet("teacher/course")]
+    public async Task<ActionResult<ApiDataResponse<CourseResponseForTeacher>>> GetCoursesForTeacher([FromQuery] ExamReqParams examParams)
+    {
+        var user = GetUserFromToken();
+        var courses = await _examService.GetCoursesForTeacher(examParams, user);
+        return StatusCode(200, new ApiDataResponse<CourseResponseForTeacher>(courses, 200, "Courses fetched successfully"));
+    }
     
     private UserFromToken? GetUserFromToken()
     {

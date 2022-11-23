@@ -784,4 +784,192 @@ public class ExamService : IExamService
 
         return examUpdateFromTeacher;
     }
+
+    public async Task<ExamUpdateFromTeacherDto> GetExamsForTeacherAsync(ExamReqParams examParams, UserFromToken user)
+    {
+        var spec = new ExamForTeacherSpec(examParams);
+        var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
+        if (exams == null)
+            throw new NotFoundException("No exam found");
+        var exam = exams.FirstOrDefault();
+        if (exam == null)
+            throw new NotFoundException("Exam not found");
+        var res = new ExamUpdateFromTeacherDto();
+        res.Session = exam.Session;
+        res.Semester = exam.Semester;
+        res.Department = exam.Department;
+
+        res.TermTestData = new List<CourseNumberOfStdntsPair>();
+
+        res.AnswerPaperCheckingDataPartA = new List<CourseNumberOfStdntsPair>();
+
+        res.AnswerPaperCheckingDataPartB = new List<CourseNumberOfStdntsPair>();
+
+        res.ScrutinyDataPartA = new List<CourseNumberOfStdntsPair>();
+
+        res.ScrutinyDataPartB = new List<CourseNumberOfStdntsPair>();
+
+        res.PracticalExamData = new List<CourseNumberOfStdntsPair>();
+
+        res.VivaExamData = new List<CourseNumberOfStdntsPair>();
+        
+        // foreach (var course in exam.TheoryCourses)
+        // {
+        //     if (course.TermTestAnswerCheckerId == user.UserId)
+        //     {
+        //         var pair = new CourseNumberOfStdntsPair
+        //         {
+        //             Course = new CourseForExamDto
+        //             {
+        //                 Id = course.CourseId,
+        //                 Code = course.Course.Code,
+        //                 Title = course.Course.Title
+        //             },
+        //             NumberOfStudents = (course.NumberOfTermTestParticipants != 0) ? course.NumberOfTermTestParticipants.Value : 0
+        //         };
+        //         res.TermTestData.Add(pair);
+        //     }
+
+        //     if (course.AnswerPaperCheckerPartAId == user.UserId)
+        //     {
+        //         res.AnswerPaperCheckingDataPartA.Add(new CourseNumberOfStdntsPair
+        //         {
+        //             Course = new CourseDto
+        //             {
+        //                 Id = course.CourseId,
+        //                 Code = course.Course.Code,
+        //                 Title = course.Course.Title
+        //             },
+        //             NumberOfStudents = course.NumberOfExamineePartA
+        //         });
+        //     }
+
+        //     if (course.AnswerPaperCheckerPartBId == user.UserId)
+        //     {
+        //         res.AnswerPaperCheckingDataPartB.Add(new CourseNumberOfStdntsPair
+        //         {
+        //             Course = new CourseDto
+        //             {
+        //                 Id = course.CourseId,
+        //                 Code = course.Course.Code,
+        //                 Title = course.Course.Title
+        //             },
+        //             NumberOfStudents = course.NumberOfExamineePartB
+        //         });
+        //     }
+
+        //     if (course.QuestionScrutinizerPartAId == user.UserId)
+        //     {
+        //         res.ScrutinyDataPartA.Add(new CourseNumberOfStdntsPair
+        //         {
+        //             Course = new CourseDto
+        //             {
+        //                 Id = course.CourseId,
+        //                 Code = course.Course.Code,
+        //                 Title = course.Course.Title
+        //             },
+        //             NumberOfStudents = course.NumberOfStudentsScrutinizedPartA
+        //         });
+        //     }
+
+        //     if (course.QuestionScrutinizerPartBId == user.UserId)
+        //     {
+        //         res.ScrutinyDataPartB.Add(new CourseNumberOfStdntsPair
+        //         {
+        //             Course = new CourseDto
+        //             {
+        //                 Id = course.CourseId,
+        //                 Code = course.Course.Code,
+        //                 Title = course.Course.Title
+        //             },
+        //             NumberOfStudents = course.NumberOfStudentsScrutinizedPartB
+        //         });
+        //     }
+        // }
+
+        throw new NotImplementedException();
+    }
+
+    public async Task<CourseResponseForTeacher> GetCoursesForTeacher(ExamReqParams examParams, UserFromToken user)
+    {
+        var spec = new ExamForTeacherSpec(examParams);
+        var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
+        if (exams == null)
+            throw new NotFoundException("No exam found");
+        var exam = exams.FirstOrDefault();
+        if (exam == null)
+            throw new NotFoundException("Exam not found");
+
+        var res = new CourseResponseForTeacher();
+        foreach (var course in exam.TheoryCourses)
+        {
+            if(course.AnswerPaperCheckerPartAId == user.UserId){
+                res.AnswerPaperCheckingPartACourses.Append(new CourseForExamDto
+                {
+                    Id = course.CourseId,
+                    Code = course.Course.Code,
+                    Title = course.Course.Title
+                });
+            }
+            if(course.AnswerPaperCheckerPartBId == user.UserId){
+                res.AnswerPaperCheckingPartBCourses.Append(new CourseForExamDto
+                {
+                    Id = course.CourseId,
+                    Code = course.Course.Code,
+                    Title = course.Course.Title
+                });
+            }
+            if(course.TermTestAnswerCheckerId == user.UserId){
+                res.TermTestCourses.Append(new CourseForExamDto
+                {
+                    Id = course.CourseId,
+                    Code = course.Course.Code,
+                    Title = course.Course.Title
+                });
+            }
+            if(course.QuestionScrutinizerPartAId == user.UserId){
+                res.ScrutinyCoursesPartA.Append(new CourseForExamDto
+                {
+                    Id = course.CourseId,
+                    Code = course.Course.Code,
+                    Title = course.Course.Title
+                });
+            }
+
+            if(course.QuestionScrutinizerPartBId == user.UserId){
+                res.ScrutinyCoursesPartB.Append(new CourseForExamDto
+                {
+                    Id = course.CourseId,
+                    Code = course.Course.Code,
+                    Title = course.Course.Title
+                });
+            }
+
+        }
+        
+        foreach (var course in exam.LabCourses)
+        {
+            if (course.ExaminerId == user.UserId)
+            {
+                res.PracticalExamCourses.Append(new CourseForExamDto
+                {
+                    Id = course.CourseId,
+                    Code = course.Course.Code,
+                    Title = course.Course.Title
+                });
+            }
+
+            if (course.VivaExaminerId == user.UserId)
+            {
+                res.VivaExamCourses.Append(new CourseForExamDto
+                {
+                    Id = course.CourseId,
+                    Code = course.Course.Code,
+                    Title = course.Course.Title
+                });
+            }
+        }
+        
+        return res;
+    }
 }

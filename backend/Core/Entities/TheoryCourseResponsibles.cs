@@ -38,7 +38,7 @@ public class TheoryCourseResponsibles : BaseEntity
     // Teacher Invigilator's responsibility
     public int? NumberOfExamineePartA { get; set; } = null;
     public int? NumberOfExamineePartB { get; set; } = null;
-    public int? NumberOfTermTestParticipants { get; set; } = null;
+    public int? NumberOfTermTestParticipants { get; set; } = 0;
     public int? NumberOfVivaParticipants { get; set; } = null;
     public int? NumberOfStudentsScrutinizedPartA { get; set; } = null;
     public int? NumberOfStudentsScrutinizedPartB { get; set; } = null;
