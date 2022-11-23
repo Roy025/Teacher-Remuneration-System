@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 
@@ -23,6 +23,9 @@ import ViewAccount from './Components/Admin/ViewAccount/ViewAccount';
 import UpdateRole from './Components/Admin/UpdateRole/UpdateRole';
 import CreateCourse from './Components/Admin/CreateCourse/CreateCourse';
 import AddStudents from './Components/Admin/AddStudents/AddStudents';
+import PrivateRouteDirector from './Functions/PrivateRouteDirector';
+import PrivateRouteLogin from './Functions/PrivateRouteLogin';
+import PrivateRouteAdmin from './Functions/PrivateRouteAdmin';
 
 function App() {
 	return (
@@ -37,7 +40,7 @@ function App() {
 				<Route
 					exact
 					path="/home"
-					element={<LandingPage />}></Route>
+					element={<PrivateRouteLogin Component={LandingPage} />}></Route>
 				<Route
 					exact
 					path="/faq"
@@ -45,19 +48,21 @@ function App() {
 				<Route
 					exact
 					path="/director"
-					element={<DirectorsBill />}></Route>
+					element={<PrivateRouteDirector Component={DirectorsBill} />}></Route>
 				<Route
 					exact
 					path="/committee-chairman"
-					element={<ChairmanBill />}></Route>
+					element={<PrivateRouteLogin Component={ChairmanBill} />}></Route>
 				<Route
 					exact
 					path="/teacher"
-					element={<TeacherBill />}></Route>
+					element={<PrivateRouteLogin Component={DirectorsBill} />}></Route>
 				<Route
 					exact
 					path="/chief-invigilator"
-					element={<ChiefInvigilatorBill />}></Route>
+					element={
+						<PrivateRouteLogin Component={ChiefInvigilatorBill} />
+					}></Route>
 				<Route
 					exact
 					path="/notifications"
@@ -65,43 +70,43 @@ function App() {
 				<Route
 					exact
 					path="/uncleared_catalogues"
-					element={<FinalTeacherBill />}></Route>
+					element={<PrivateRouteLogin Component={FinalTeacherBill} />}></Route>
 				<Route
 					exact
 					path="/profile"
-					element={<ProfilePage />}></Route>
+					element={<PrivateRouteLogin Component={ProfilePage} />}></Route>
 				<Route
 					exact
 					path="/AdminHome"
-					element={<AdminHome />}></Route>
+					element={<PrivateRouteAdmin Component={AdminHome} />}></Route>
 				<Route
 					exact
 					path="/createaccount"
-					element={<CreateAccount />}></Route>
+					element={<PrivateRouteAdmin Component={CreateAccount} />}></Route>
 				<Route
 					exact
 					path="/addinstitute"
-					element={<AddInstitute />}></Route>
+					element={<PrivateRouteAdmin Component={AddInstitute} />}></Route>
 				<Route
 					exact
 					path="/adddepartment"
-					element={<CreateDept />}></Route>
+					element={<PrivateRouteAdmin Component={CreateDept} />}></Route>
 				<Route
 					exact
 					path="/viewaccounts"
-					element={<ViewAccount />}></Route>
+					element={<PrivateRouteAdmin Component={ViewAccount} />}></Route>
 				<Route
 					exact
 					path="/createcourse"
-					element={<CreateCourse />}></Route>
+					element={<PrivateRouteAdmin Component={CreateCourse} />}></Route>
 				<Route
 					exact
 					path="/addstudents"
-					element={<AddStudents />}></Route>
+					element={<PrivateRouteAdmin Component={AddStudents} />}></Route>
 				<Route
 					exact
 					path="/updaterole"
-					element={<UpdateRole />}></Route>
+					element={<PrivateRouteAdmin Component={UpdateRole} />}></Route>
 			</Routes>
 		</>
 	);

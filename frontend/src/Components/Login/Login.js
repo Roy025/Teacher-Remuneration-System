@@ -26,9 +26,10 @@ const Login = () => {
 						password: password,
 					})
 					.then((response) => {
-						console.log(response);
 						const obj = response.data;
-						console.log(obj.data.token);
+
+						localStorage.setItem('accesstoken', `Bearer ${obj.data.token}`);
+						localStorage.setItem('role', obj.data.role);
 
 						if (response.data.statusCode === 200) {
 							setTimeout(() => {
