@@ -92,7 +92,7 @@ public class ExamService : IExamService
                         throw new BadRequestException("Course type is not valid");
                     }
                 }
-                
+
             }
             _unitOfWork.Repository<Exam>().Add(exam);
         }
@@ -196,15 +196,8 @@ public class ExamService : IExamService
 
     public async Task<IReadOnlyList<CourseForExamDto>> GetCoursesForChairman(ExamReqParams examParams, UserFromToken user)
     {
-        examParams.DepartmentId = user.DepartmentId;
-        System.Console.WriteLine("------------------");
-        System.Console.WriteLine("------------------");
-        System.Console.WriteLine("------------------");
-        System.Console.WriteLine("------------------");
-        System.Console.WriteLine("------------------");
-        System.Console.WriteLine(examParams.DepartmentId);
-        System.Console.WriteLine(examParams.Session);
-        System.Console.WriteLine(examParams.Semester);
+        if (examParams.DepartmentId == null)
+            examParams.DepartmentId = user.DepartmentId;
         var spec = new ExamForDirectorSpecification(examParams);
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
         if (exams == null)
@@ -290,7 +283,7 @@ public class ExamService : IExamService
                     ans.AnswerPaperCheckerPartAId = data.Teacher.Id;
             }
         }
-        
+
         // AnswerPaperChecker PartB
         if (examUpdateFromChairmanDto.AnswerpaperCheckersPartB != null)
         {
@@ -301,7 +294,7 @@ public class ExamService : IExamService
                     course.AnswerPaperCheckerPartBId = data.Teacher.Id;
             }
         }
-        
+
         // TermTestAnswerCheckers
         if (examUpdateFromChairmanDto.TermTestAnswerCheckers != null)
         {
@@ -406,7 +399,7 @@ public class ExamService : IExamService
             }
 
         }
-        
+
         // TermPaperData
         if (examUpdateFromChairmanDto.TermPaperData != null)
         {
@@ -641,7 +634,8 @@ public class ExamService : IExamService
         res.Invigilators = new List<TeacherResponseDto>();
         foreach (var invigilator in exam.Invigilators)
         {
-            var data = new TeacherResponseDto{
+            var data = new TeacherResponseDto
+            {
                 Id = invigilator.TeacherId,
                 Name = invigilator.Teacher.Name,
                 Department = invigilator.Teacher.Department
