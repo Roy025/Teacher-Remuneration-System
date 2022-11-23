@@ -3,6 +3,7 @@ import './ProfilePage.css';
 import { useState } from 'react';
 import { instance as axios } from '../axios';
 import { useNavigate } from 'react-router-dom';
+import { teacher } from '../../Functions/Get';
 
 function ProfilePage() {
 	const navigate = useNavigate();
@@ -23,8 +24,10 @@ function ProfilePage() {
 		setInputFields(list);
 	};
 
-	// const { id } = useParams();
-	const id = '6261b8f4-1115-429f-a430-cca305c2ffb4';
+	const teacherToken = teacher();
+	const id = teacherToken.teacherID;
+	console.log(id);
+
 	useEffect(() => {
 		axios
 			.get(`/Teacher/${id}`)
@@ -75,7 +78,7 @@ function ProfilePage() {
 				<div className="card">
 					<div className="containerA">
 						<img
-							src="https://hitechwindows.ca/wp-content/uploads/2016/03/funny-animals-licking-glass-11__700.jpg"
+							src=""
 							alt="Avatar"
 							className="profile-image"
 						/>

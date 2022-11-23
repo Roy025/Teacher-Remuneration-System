@@ -95,6 +95,7 @@ public class TeacherService : ITeacherService
             Role = teacherEntity.Role,
             Image = teacherEntity.Image,
             Token = _tokenService.CreateToken(teacherEntity),
+            DepartmentId = teacherEntity.DepartmentId
         };
     }
 }

@@ -1,13 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactToPrint from "react-to-print";
-import Dropdown, {
-  semesterOptions,
-  semesterTitle,
-  sessionTitle,
-  sessionOptions,
-} from "../SampleDropdown/Dropdown";
 import "./FinalTeacherBill.css";
-
 import DropdownNoTitleTeacher from "../../Functions/DropdownNoTitleTeacher";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { instance as axios } from "../axios";
@@ -34,8 +27,8 @@ const FinalTeacherBill = () => {
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedSession, setSelectedSession] = useState("");
 
-  const tableData = [
-    {
+  const [tableData, setTableData] = useState({
+    qSetting: {
       criteria: "Question setting",
       courses: [
         {
@@ -44,7 +37,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    qMod: {
       criteria: "Question moderation",
       courses: [
         {
@@ -53,7 +46,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    ansCheck: {
       criteria: "Answerpaper checking",
       courses: [
         {
@@ -62,7 +55,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    termTest: {
       criteria: "Termtest",
       courses: [
         {
@@ -71,7 +64,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    practical: {
       criteria: "Practical exam",
       courses: [
         {
@@ -80,7 +73,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    tabulation: {
       criteria: "Tabulation",
       courses: [
         {
@@ -89,7 +82,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    viva: {
       criteria: "Viva",
       courses: [
         {
@@ -98,7 +91,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    scrutiny: {
       criteria: "Scrutiny",
       courses: [
         {
@@ -107,7 +100,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    ecmMember: {
       criteria: "Exam committee member payment",
       courses: [
         {
@@ -116,7 +109,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    qTyping: {
       criteria: "Question typing",
       courses: [
         {
@@ -125,7 +118,7 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-    {
+    termPaper: {
       criteria: "Field work/ Project/ Term paper/ Seminar/ Monograph/ Thesis",
       courses: [
         {
@@ -134,11 +127,34 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
-  ];
+  });
+  const [rows, setRows] = useState([]);
+  const updateTable = (tableData) => {
+    const temp = []
+    for (let prop in tableData) {
+      const data = tableData[prop];
+      temp.push(
+        <tr>
+          <td className="criteriaCol">{data.criteria}</td>
+          <td className="coursesCol">
+            {data.courses.map((info, ind) => {
+              return <p className="courses">{info.name}" "</p>;
+            })}
+          </td>
+          <td className="amountCol">৳{data.amount}</td>
+        </tr>
+      );
+    }
+    setRows(temp)
+  };
+
+  useEffect(() => {
+    updateTable(tableData);
+  }, [tableData]);
 
   const [data, setData] = useState({
     session: "",
-    semester: ""
+    semester: "",
   });
 
   const [sessionAvailable, setSessionAvailable] = useState(false);
@@ -168,18 +184,17 @@ const FinalTeacherBill = () => {
     const newData = { ...data };
     newData.session = option.name;
     setData(newData);
-    setSessionAvailable(true)
+    setSessionAvailable(true);
   };
 
   const handleSemester = (propName, option) => {
     const newData = { ...data };
     newData.semester = option.name;
     setData(newData);
-    setSemesterAvailable(true)
+    setSemesterAvailable(true);
   };
 
   const ref = useRef();
-
   return (
     <>
       <div>
@@ -256,20 +271,7 @@ const FinalTeacherBill = () => {
                   <th>Amount(BDT)</th>
                 </thead>
                 <tbody>
-                  {tableData.map((data, index) => {
-                    const course = data.state;
-                    return (
-                      <tr>
-                        <td className="criteriaCol">{data.criteria}</td>
-                        <td className="coursesCol">
-                          {data.courses.map((info, ind) => {
-                            return <p className="courses">{info.name}" "</p>;
-                          })}
-                        </td>
-                        <td className="amountCol">৳{data.amount}</td>
-                      </tr>
-                    );
-                  })}
+                  {rows}
                   <tr>
                     <td></td>
                     <td className="netAmount">Total</td>
