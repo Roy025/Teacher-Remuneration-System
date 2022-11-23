@@ -9,7 +9,7 @@ namespace Core.Entities
         public Exam? Exam { get; set; } = null!;
         public Guid TeacherId { get; set; } = Guid.Empty;
         public Teacher Teacher { get; set; } = null!;
-        public Guid CourseId { get; set; }
+        public Guid? CourseId { get; set; } = null;
         public Course? Course { get; set; } = null!;
     }
 }
