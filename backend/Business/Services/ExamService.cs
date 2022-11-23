@@ -1,4 +1,5 @@
 using AutoMapper;
+using Business.Data.Migrations;
 using Business.Specifications.ExamSpecifications;
 using Core.DTOs.CourseDTOs;
 using Core.DTOs.ExamDTOs;
@@ -60,9 +61,44 @@ public class ExamService : IExamService
             {
                 exam.Members.Add(teacher);
             }
+            foreach (var course in examCreateFromDirectorDto.Courses)
+            {
+                var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
+                if (courseExam != null)
+                {
+                    if (courseExam.Type.Equals("Theory"))
+                    {
+                        var theoryCourse = new TheoryCourseResponsibles();
+                        theoryCourse.Course = courseExam;
+                        // theoryCourse.Exam = exam;
+                        exam.TheoryCourses.Add(theoryCourse);
+                    }
+                    else if (courseExam.Type.Equals("Lab"))
+                    {
+                        var labCourse = new LabCourseResponsibles();
+                        labCourse.Course = courseExam;
+                        // labCourse.Exam = exam;
+                        exam.LabCourses.Add(labCourse);
+                    }
+                    else if (courseExam.Type.Equals("TermPaper"))
+                    {
+                        var termPaper = new TermPaperResponsibilities();
+                        termPaper.Course = courseExam;
+                        // termPaper.Exam = exam;
+                        exam.TermPapers.Add(termPaper);
+                    }
+                    else
+                    {
+                        throw new BadRequestException("Course type is not valid");
+                    }
+                }
+                
+            }
+            _unitOfWork.Repository<Exam>().Add(exam);
         }
         foreach (var course in examCreateFromDirectorDto.Courses)
         {
+            
             var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
             if (courseExam != null)
             {
@@ -201,7 +237,6 @@ public class ExamService : IExamService
     {
         var examParams = new ExamReqParams
         {
-
             Session = examUpdateFromChairmanDto.Session,
             Semester = examUpdateFromChairmanDto.Semester,
             DepartmentId = user.DepartmentId
@@ -212,7 +247,8 @@ public class ExamService : IExamService
         if (exams == null)
             throw new NotFoundException("No exam found");
         var exam = exams.FirstOrDefault();
-
+        if (exam == null)
+            throw new NotFoundException("Exam not found");
         if (exam.ChairmanId != user.UserId)
             throw new UnAuthorizedException("You are not authorized to perform this action");
         // Question Setter
@@ -407,6 +443,208 @@ public class ExamService : IExamService
         if (exams == null)
             throw new NotFoundException("No exam found");
         var exam = exams.FirstOrDefault();
-        throw new NotImplementedException();
+        if (exam == null)
+            throw new NotFoundException("Exam not found");
+        // if (exam.ChairmanId != user.UserId)
+        //     throw new UnAuthorizedException("You are not authorized to perform this action");
+
+        var res = new ExamResponseDtoChairman();
+        res.Session = exam.Session;
+        res.Semester = exam.Semester;
+
+        // QuestionSetters
+        res.QuestionSetters = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.TheoryCourses)
+        {
+            foreach (var teacher in course.QuestionSetters)
+            {
+                var data = new TeacherCoursePairDto
+                {
+                    Course = _mapper.Map<CourseForExamDto>(course.Course),
+                    Teacher = _mapper.Map<TeacherResponseDto>(teacher)
+                };
+                res.QuestionSetters.Add(data);
+            }
+        }
+
+        // QuestionModerators
+        res.QuestionModerators = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.TheoryCourses)
+        {
+
+            // var teacher
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.QuestionModerator)
+            };
+            res.QuestionModerators.Add(data);
+
+        }
+
+        // AnswerpaperCheckersPartA
+        res.AnswerpaperCheckersPartA = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.TheoryCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.AnswerPaperCheckerPartA)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+        // AnswerpaperCheckersPartB
+        res.AnswerpaperCheckersPartB = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.TheoryCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.AnswerPaperCheckerPartB)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+
+        // TermTestAnswerCheckers
+        res.TermTestAnswerCheckers = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.TheoryCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.TermTestAnswerChecker)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+        // LabExaminers
+        res.LabExaminers = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.LabCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.Examiner)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+        // Tabulators
+        res.Tabulators = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.LabCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.Tabulator)
+            };
+            res.QuestionModerators.Add(data);
+        }
+        foreach (var course in exam.TheoryCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.Tabulator)
+            };
+            res.QuestionModerators.Add(data);
+        }
+        foreach (var course in exam.TermPapers)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.Tabulator)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+        // VivaExaminers
+        res.VivaExaminers = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.LabCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.VivaExaminer)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+        // ScrutinizersPartA
+        res.ScrutinizersPartA = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.TheoryCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.QuestionScrutinizerPartA)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+        // ScrutinizersPartB
+        res.ScrutinizersPartB = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.TheoryCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.QuestionScrutinizerPartB)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+        // QuestionTypers
+        res.QuestionTypers = new List<TeacherCoursePairDto>();
+        foreach (var course in exam.TheoryCourses)
+        {
+            var data = new TeacherCoursePairDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                Teacher = _mapper.Map<TeacherResponseDto>(course.QuestionTyper)
+            };
+            res.QuestionModerators.Add(data);
+        }
+
+        // Invigilators
+        res.Invigilators = new List<TeacherResponseDto>();
+        foreach (var invigilator in exam.Invigilators)
+        {
+            var data = new TeacherResponseDto{
+                Id = invigilator.TeacherId,
+                Name = invigilator.Teacher.Name,
+                Department = invigilator.Teacher.Department
+            };
+            res.Invigilators.Add(data);
+        }
+
+        // TermPaperData
+        res.TermPaperData = new List<TermPaperDto>();
+        foreach (var termPaper in exam.TermPapers)
+        {
+            var data = new TermPaperDto
+            {
+                Course = _mapper.Map<CourseForExamDto>(termPaper.Course),
+                Examiners = _mapper.Map<List<TeacherResponseDto>>(termPaper.Examiners),
+                Supervisors = _mapper.Map<List<TeacherResponseDto>>(termPaper.Supervisors),
+            };
+            res.TermPaperData.Add(data);
+        }
+
+        // RegisteredStudents
+        res.RegisteredStudents = new List<CourseNumberOfStdntsPair>();
+        foreach (var course in exam.TheoryCourses)
+        {
+            var data = new CourseNumberOfStdntsPair
+            {
+                Course = _mapper.Map<CourseForExamDto>(course.Course),
+                NumberOfStudents = course.NumberOfRegisteredStudents == null ? 0 : course.NumberOfRegisteredStudents.Value
+            };
+            res.RegisteredStudents.Add(data);
+        }
+        return res;
     }
 }
