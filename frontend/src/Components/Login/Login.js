@@ -57,7 +57,8 @@ const Login = () => {
 						console.log(obj.data.role);
 						console.log(obj.data.token);
 
-						// localStorage.setItem('accesstoken', obj.data.token);
+						localStorage.setItem('accesstoken', obj.data.token);
+						localStorage.setItem('id', obj.data.id);
 						localStorage.setItem('role', obj.data.role);
 						console.log(response.data.statusCode);
 
