@@ -43,12 +43,7 @@ const TeacherBill = () => {
     institute: "",
   });
 
-  const [listOfCourses, setListOfCourses] = useState([
-    {
-      id: "",
-      code: "",
-    },
-  ]);
+  const [listOfCourses, setListOfCourses] = useState([{}]);
   const [termTestData, setTermTestData] = useState([
     {
       course: {
@@ -145,7 +140,7 @@ const TeacherBill = () => {
 
   const handleDepartment = (propName, option) => {
     const newData = { ...exam };
-    newData.semester = option.name;
+    newData.department = option;
     newData.deptID = option.id;
     setExam(newData);
     setDepartmentAvailable(true);
@@ -176,7 +171,10 @@ const TeacherBill = () => {
         Authorization: localStorage.getItem("accesstoken"),
       },
     };
-    const response = await axios.get(`/department?institute=${exam.deptID}`, config);
+    const response = await axios.get(
+      `/department?institute=${exam.deptID}`,
+      config
+    );
     console.log(response);
     setDepartmentList(response.data.data);
     return response;
@@ -194,30 +192,57 @@ const TeacherBill = () => {
       },
     };
     const response = await axios.get(
-      `/Exam/chairman/course?Semester=${selectedSemester}&Session=${selectedSession}&DepartmentId=${exam.deptID}`,
+      `/Exam/teacher/course?Semester=${selectedSemester}&Session=${selectedSession}&DepartmentId=${exam.deptID}`,
       config
     );
     console.log(response);
-    setListOfCourses(response.data.data);
+    setListOfCourses(response.data.data)
     return response;
   };
   useQuery(["course-list"], () => fetchCourse(), {
     enabled: !!sessionAvailable && !!semesterAvailable && !!departmentAvailable,
   });
 
+  //put teacher form
+  const addTeacherForm = async (info) => {
+    console.log(info);
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.put("/Exam/teacher", info, config);
+    console.log(response);
+    return response;
+  };
+
+  const {
+    mutate: TeacherMutate,
+    isError,
+    error,
+  } = useMutation(addTeacherForm, {
+    onSuccess: (success) => {
+      console.log(success);
+      window.location.reload(false);
+    },
+  });
+  if (isError) {
+    console.log(error);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
-  const submit = async () => {
-    console.log(termTestData);
-    console.log(answerPaperCheckingDataPartA);
-    console.log(answerPaperCheckingDataPartB);
-    console.log(scrutinyDataPartA);
-    console.log(scrutinyDataPartB);
-    console.log(practicalExamData);
-    console.log(vivaExamData);
-  };
+  // const submit = async () => {
+  //   console.log(termTestData);
+  //   console.log(answerPaperCheckingDataPartA);
+  //   console.log(answerPaperCheckingDataPartB);
+  //   console.log(scrutinyDataPartA);
+  //   console.log(scrutinyDataPartB);
+  //   console.log(practicalExamData);
+  //   console.log(vivaExamData);
+  // };
   return (
     <>
       <div>
@@ -225,6 +250,28 @@ const TeacherBill = () => {
       </div>
       <div className="FullFormPage">
         <form className="Form" onSubmit={handleSubmit}>
+          <div className="DropdownformRow">
+            <div className="FormSubRow">
+              <label className="Label">Institute</label>
+              <DropdownNoTitleTeacher
+                options={instituteList}
+                propName="institute"
+                handleData={handleInstitute}
+                selected={selectedInstitute}
+                setSelected={setSelectedInstitute}
+              />
+            </div>
+            <div className="FormSubRow">
+              <label className="Label">Department</label>
+              <DropdownNoTitleTeacher
+                options={departmentList}
+                propName="department"
+                handleData={handleDepartment}
+                selected={selectedDepartment}
+                setSelected={setSelectedDepartment}
+              />
+            </div>
+          </div>
           <div className="DropdownformRow">
             <div className="FormSubRow">
               <label className="Label">Session</label>
@@ -248,33 +295,10 @@ const TeacherBill = () => {
             </div>
           </div>
 
-          <div className="DropdownformRow">
-          <div className="FormSubRow">
-              <label className="Label">Institute</label>
-              <DropdownNoTitleTeacher
-                options={instituteList}
-                propName="institute"
-                handleData={handleInstitute}
-                selected={selectedInstitute}
-                setSelected={setSelectedInstitute}
-              />
-            </div>
-            <div className="FormSubRow">
-              <label className="Label">Department</label>
-              <DropdownNoTitleTeacher
-                options={departmentList}
-                propName="department"
-                handleData={handleDepartment}
-                selected={selectedDepartment}
-                setSelected={setSelectedDepartment}
-              />
-            </div>
-          </div>
-
           <div className="formRow">
             <label className="Label">Term Test</label>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.termTestCourses}
               existingData={termTestData}
               setExistingData={setTermTestData}
             />
@@ -284,13 +308,13 @@ const TeacherBill = () => {
             <label className="Label">Answerpaper Checking</label>
             <h4 className="subLabel">Part - A</h4>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.answerPaperCheckingPartACourses}
               existingData={answerPaperCheckingDataPartA}
               setExistingData={setAnswerPaperCheckingDataPartA}
             />
             <h4 className="subLabel">Part - B</h4>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.answerPaperCheckingPartBCourses}
               existingData={answerPaperCheckingDataPartB}
               setExistingData={setAnswerPaperCheckingDataPartB}
             />
@@ -300,13 +324,13 @@ const TeacherBill = () => {
             <label className="Label">Scrutiny</label>
             <h4 className="subLabel">Part - A</h4>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.scrutinyCoursesPartA}
               existingData={scrutinyDataPartA}
               setExistingData={setScrutinyDataPartA}
             />
             <h4 className="subLabel">Part - B</h4>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.scrutinyCoursesPartB}
               existingData={scrutinyDataPartB}
               setExistingData={setScrutinyDataPartB}
             />
@@ -315,7 +339,7 @@ const TeacherBill = () => {
           <div className="formRow">
             <label className="Label">Practical Exam</label>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.practicalExamCourses}
               existingData={practicalExamData}
               setExistingData={setPracticalExamData}
             />
@@ -324,14 +348,31 @@ const TeacherBill = () => {
           <div className="formRow">
             <label className="Label">Viva</label>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.vivaExamCourses}
               existingData={vivaExamData}
               setExistingData={setVivaExamData}
             />
           </div>
 
           <div className="formRow SubmitRow">
-            <button type="submit" className="submitButton" onClick={submit}>
+            <button
+              type="submit"
+              className="submitButton"
+              onClick={() =>
+                TeacherMutate({
+                  session: selectedSession,
+                  semester: selectedSemester,
+                  department: exam.department,
+                  termTestData: termTestData[0].course.id === "" ? undefined : termTestData,
+                  answerPaperCheckingDataPartA: answerPaperCheckingDataPartA[0].course.id === "" ? undefined : answerPaperCheckingDataPartA,
+                  answerPaperCheckingDataPartA: answerPaperCheckingDataPartB[0].course.id === "" ? undefined : answerPaperCheckingDataPartB,
+                  scrutinyDataPartA: scrutinyDataPartA[0].course.id === "" ? undefined : scrutinyDataPartA,
+                  scrutinyDataPartB: scrutinyDataPartB[0].course.id === "" ? undefined : scrutinyDataPartB,
+                  practicalExamData: practicalExamData[0].course.id === "" ? undefined : practicalExamData,
+                  vivaExamData: vivaExamData[0].course.id === "" ? undefined : vivaExamData,
+                })
+              }
+            >
               Submit
             </button>
           </div>

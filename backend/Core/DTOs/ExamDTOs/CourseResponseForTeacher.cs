@@ -8,12 +8,12 @@ namespace Core.DTOs.ExamDTOs
 {
     public class CourseResponseForTeacher
     {
-        public IReadOnlyList<CourseForExamDto> TermTestCourses { get; set; } = new List<CourseForExamDto>();
-        public IReadOnlyList<CourseForExamDto> AnswerPaperCheckingPartACourses { get; set; } = new List<CourseForExamDto>();
-        public IReadOnlyList<CourseForExamDto> AnswerPaperCheckingPartBCourses { get; set; } = new List<CourseForExamDto>();
-        public IReadOnlyList<CourseForExamDto> ScrutinyCoursesPartA { get; set; } = new List<CourseForExamDto>();
-        public IReadOnlyList<CourseForExamDto> ScrutinyCoursesPartB { get; set; } = new List<CourseForExamDto>();
-        public IReadOnlyList<CourseForExamDto> PracticalExamCourses { get; set; } = new List<CourseForExamDto>();
-        public IReadOnlyList<CourseForExamDto> VivaExamCourses { get; set; } = new List<CourseForExamDto>();
+        public ICollection<CourseForExamDto> AnswerPaperCheckingPartACourses { get; set; } = new List<CourseForExamDto>();
+        public ICollection<CourseForExamDto> AnswerPaperCheckingPartBCourses { get; set; } = new List<CourseForExamDto>();
+        public ICollection<CourseForExamDto> ScrutinyCoursesPartA { get; set; } = new List<CourseForExamDto>();
+        public ICollection<CourseForExamDto> ScrutinyCoursesPartB { get; set; } = new List<CourseForExamDto>();
+        public ICollection<CourseForExamDto> PracticalExamCourses { get; set; } = new List<CourseForExamDto>();
+        public ICollection<CourseForExamDto> VivaExamCourses { get; set; } = new List<CourseForExamDto>();
+        public ICollection<CourseForExamDto> TermTestCourses { get; set; } = new List<CourseForExamDto>();
     }
 }
