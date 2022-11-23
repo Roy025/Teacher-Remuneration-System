@@ -1,75 +1,209 @@
 import React, { useState } from "react";
-import HandleSem from "../../Functions/HandleSem";
 import StudentCount from "../../Functions/StudentCount";
 import "./TeachersBill.css";
 import "./FormButton.css";
-import Dropdown, {
-  semesterOptions,
-  semesterTitle,
-  sessionOptions,
-  sessionTitle,
-  deptOptions,
-} from "../SampleDropdown/Dropdown";
 import Links from "./Links";
-
+import DropdownNoTitleTeacher from "../../Functions/DropdownNoTitleTeacher";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { instance as axios } from "../axios";
 
 const TeacherBill = () => {
-  const [listOfCourses, setListOfCourses] = useState([{
-    id: "",
-    code: ""
-  }])
-  const [termTestData, setTermTestData] = useState([{
-    course: {
+  const [sessionOptions, setSessionOptions] = useState([
+    { name: "2016-17" },
+    { name: "2017-18" },
+    { name: "2018-19" },
+    { name: "2019-20" },
+    { name: "2020-21" },
+  ]);
+
+  const [semesterOptions, setSemesterOptions] = useState([
+    { name: "1st" },
+    { name: "2nd" },
+    { name: "3rd" },
+    { name: "4th" },
+    { name: "5th" },
+    { name: "6th" },
+    { name: "7th" },
+    { name: "8th" },
+  ]);
+
+  const [departmentList, setDepartmentList] = useState([]);
+  const [instituteList, setInstituteList] = useState([]);
+
+  const [sessionAvailable, setSessionAvailable] = useState(false);
+  const [semesterAvailable, setSemesterAvailable] = useState(false);
+  const [departmentAvailable, setDepartmentAvailable] = useState(false);
+  const [insTituteAvailable, setInsTituteAvailable] = useState(false);
+
+  const [exam, setExam] = useState({
+    deptID: "",
+    session: "",
+    semester: "",
+    department: "",
+    institute: "",
+  });
+
+  const [listOfCourses, setListOfCourses] = useState([
+    {
       id: "",
-      code: ""
+      code: "",
     },
-    numberOfStudents: "",
-  }]);
-  const [answerPaperCheckingDataPartA, setAnswerPaperCheckingDataPartA] = useState([{
-    course: {
-      id: "",
-      code: ""
+  ]);
+  const [termTestData, setTermTestData] = useState([
+    {
+      course: {
+        id: "",
+        code: "",
+      },
+      numberOfStudents: "",
     },
-    numberOfStudents: "",
-  }]);
-  const [answerPaperCheckingDataPartB, setAnswerPaperCheckingDataPartB] = useState([{
-    course: {
-      id: "",
-      code: ""
+  ]);
+  const [answerPaperCheckingDataPartA, setAnswerPaperCheckingDataPartA] =
+    useState([
+      {
+        course: {
+          id: "",
+          code: "",
+        },
+        numberOfStudents: "",
+      },
+    ]);
+  const [answerPaperCheckingDataPartB, setAnswerPaperCheckingDataPartB] =
+    useState([
+      {
+        course: {
+          id: "",
+          code: "",
+        },
+        numberOfStudents: "",
+      },
+    ]);
+  const [scrutinyDataPartA, setScrutinyDataPartA] = useState([
+    {
+      course: {
+        id: "",
+        code: "",
+      },
+      numberOfStudents: "",
     },
-    numberOfStudents: "",
-  }]);
-  const [scrutinyDataPartA, setScrutinyDataPartA] = useState([{
-    course: {
-      id: "",
-      code: ""
+  ]);
+  const [scrutinyDataPartB, setScrutinyDataPartB] = useState([
+    {
+      course: {
+        id: "",
+        code: "",
+      },
+      numberOfStudents: "",
     },
-    numberOfStudents: "",
-  }]);
-  const [scrutinyDataPartB, setScrutinyDataPartB] = useState([{
-    course: {
-      id: "",
-      code: ""
+  ]);
+  const [practicalExamData, setPracticalExamData] = useState([
+    {
+      course: {
+        id: "",
+        code: "",
+      },
+      numberOfStudents: "",
     },
-    numberOfStudents: "",
-  }]);
-  const [practicalExamData, setPracticalExamData] = useState([{
-    course: {
-      id: "",
-      code: ""
+  ]);
+  const [vivaExamData, setVivaExamData] = useState([
+    {
+      course: {
+        id: "",
+        code: "",
+      },
+      numberOfStudents: "",
     },
-    numberOfStudents: "",
-  }]);
-  const [vivaExamData, setVivaExamData] = useState([{
-    course: {
-      id: "",
-      code: ""
-    },
-    numberOfStudents: "",
-  }]);
-  const [selectedDepartment, setSelectedDepartment] = useState([""])
-  const [selectedSession, setSelectedSession] = useState([""])
-  const [selectedSemester, setSelectedSemester] = useState([""])
+  ]);
+  const [selectedInstitute, setSelectedInstitute] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState([""]);
+  const [selectedSession, setSelectedSession] = useState([""]);
+  const [selectedSemester, setSelectedSemester] = useState([""]);
+
+  //handle semester and session
+
+  const handleSession = (propName, option) => {
+    const newData = { ...exam };
+    newData.session = option.name;
+    setExam(newData);
+    setSessionAvailable(true);
+  };
+
+  const handleSemester = (propName, option) => {
+    const newData = { ...exam };
+    newData.semester = option.name;
+    setExam(newData);
+    setSemesterAvailable(true);
+  };
+
+  const handleInstitute = (propName, option) => {
+    const newData = { ...exam };
+    newData.institute = option.name;
+    newData.deptID = option.id;
+    setExam(newData);
+    setInsTituteAvailable(true);
+  };
+
+  const handleDepartment = (propName, option) => {
+    const newData = { ...exam };
+    newData.semester = option.name;
+    newData.deptID = option.id;
+    setExam(newData);
+    setDepartmentAvailable(true);
+  };
+
+  //Fetching institute data
+  const fetchInstitute = async () => {
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.get("/institute", config);
+    return response;
+  };
+
+  useQuery(["institution-list"], async () => {
+    const store = await fetchInstitute();
+    setInstituteList(store.data.data);
+    return store;
+  });
+
+  //Fetching department data
+
+  const fetchDept = async (id) => {
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.get(`/department?institute=${exam.deptID}`, config);
+    console.log(response);
+    setDepartmentList(response.data.data);
+    return response;
+  };
+  useQuery(["dept-list"], () => fetchDept(), {
+    enabled: !!insTituteAvailable,
+  });
+
+  //Fetching course data
+
+  const fetchCourse = async () => {
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.get(
+      `/Exam/chairman/course?Semester=${selectedSemester}&Session=${selectedSession}&DepartmentId=${exam.deptID}`,
+      config
+    );
+    console.log(response);
+    setListOfCourses(response.data.data);
+    return response;
+  };
+  useQuery(["course-list"], () => fetchCourse(), {
+    enabled: !!sessionAvailable && !!semesterAvailable && !!departmentAvailable,
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -83,8 +217,7 @@ const TeacherBill = () => {
     console.log(scrutinyDataPartB);
     console.log(practicalExamData);
     console.log(vivaExamData);
-    
-  }
+  };
   return (
     <>
       <div>
@@ -93,26 +226,45 @@ const TeacherBill = () => {
       <div className="FullFormPage">
         <form className="Form" onSubmit={handleSubmit}>
           <div className="DropdownformRow">
-            <div className="FormSubRow1">
-              <Dropdown
+            <div className="FormSubRow">
+              <label className="Label">Session</label>
+              <DropdownNoTitleTeacher
                 options={sessionOptions}
-                dropdownTitle={sessionTitle}
+                propName="session"
+                handleData={handleSession}
                 selected={selectedSession}
                 setSelected={setSelectedSession}
               />
             </div>
-            <div className="FormSubRow1">
-              <Dropdown
+            <div className="FormSubRow">
+              <label className="Label">Semester</label>
+              <DropdownNoTitleTeacher
                 options={semesterOptions}
-                dropdownTitle={semesterTitle}
+                propName="semester"
+                handleData={handleSemester}
                 selected={selectedSemester}
                 setSelected={setSelectedSemester}
               />
             </div>
-            <div className="FormSubRow1">
-              <Dropdown
-                options={deptOptions}
-                dropdownTitle={"Department"}
+          </div>
+
+          <div className="DropdownformRow">
+          <div className="FormSubRow">
+              <label className="Label">Institute</label>
+              <DropdownNoTitleTeacher
+                options={instituteList}
+                propName="institute"
+                handleData={handleInstitute}
+                selected={selectedInstitute}
+                setSelected={setSelectedInstitute}
+              />
+            </div>
+            <div className="FormSubRow">
+              <label className="Label">Department</label>
+              <DropdownNoTitleTeacher
+                options={departmentList}
+                propName="department"
+                handleData={handleDepartment}
                 selected={selectedDepartment}
                 setSelected={setSelectedDepartment}
               />
@@ -187,6 +339,6 @@ const TeacherBill = () => {
       </div>
     </>
   );
-}
+};
 
 export default TeacherBill;
