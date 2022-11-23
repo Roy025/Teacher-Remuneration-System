@@ -98,7 +98,7 @@ public class ExamService : IExamService
         }
         foreach (var course in examCreateFromDirectorDto.Courses)
         {
-            
+
             var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
             if (courseExam != null)
             {
@@ -251,6 +251,7 @@ public class ExamService : IExamService
             throw new NotFoundException("Exam not found");
         if (exam.ChairmanId != user.UserId)
             throw new UnAuthorizedException("You are not authorized to perform this action");
+        
         // Question Setter
         if (examUpdateFromChairmanDto.QuestionSetters != null)
         {
@@ -280,6 +281,7 @@ public class ExamService : IExamService
                 exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).AnswerPaperCheckerPartAId = data.Teacher.Id;
             }
         }
+        
         // AnswerPaperChecker PartB
         if (examUpdateFromChairmanDto.AnswerpaperCheckersPartB != null)
         {
@@ -288,6 +290,7 @@ public class ExamService : IExamService
                 exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).AnswerPaperCheckerPartBId = data.Teacher.Id;
             }
         }
+        
         // TermTestAnswerCheckers
         if (examUpdateFromChairmanDto.TermTestAnswerCheckers != null)
         {
@@ -383,6 +386,7 @@ public class ExamService : IExamService
             }
 
         }
+        
         // TermPaperData
         if (examUpdateFromChairmanDto.TermPaperData != null)
         {
@@ -445,8 +449,8 @@ public class ExamService : IExamService
         var exam = exams.FirstOrDefault();
         if (exam == null)
             throw new NotFoundException("Exam not found");
-        // if (exam.ChairmanId != user.UserId)
-        //     throw new UnAuthorizedException("You are not authorized to perform this action");
+        if (exam.ChairmanId != user.UserId)
+            throw new UnAuthorizedException("You are not authorized to perform this action");
 
         var res = new ExamResponseDtoChairman();
         res.Session = exam.Session;
