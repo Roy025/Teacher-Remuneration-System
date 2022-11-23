@@ -246,6 +246,9 @@ public class ExamService : IExamService
             throw new UnAuthorizedException("You are not authorized to perform this action");
         if (exam != null) _unitOfWork.Repository<Exam>().Delete(exam);
 
+        var resultDelete = await _unitOfWork.Complete();
+        if (resultDelete <= 0)
+            throw new BadRequestException("Exam update failed");
         // Question Setter
         if (examUpdateFromChairmanDto.QuestionSetters != null)
         {
@@ -693,8 +696,8 @@ public class ExamService : IExamService
                 var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == termTestData.Course.Id);
                 if (course == null)
                     throw new NotFoundException("Course not found");
-                if (course.TermTestAnswerCheckerId != user.UserId)
-                    throw new UnAuthorizedException("You are not authorized");
+                if (course.TermTestAnswerCheckerId == user.UserId)
+                    
                 course.NumberOfTermTestParticipants = termTestData.NumberOfStudents;
             }
         }
@@ -706,9 +709,8 @@ public class ExamService : IExamService
                 var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
                 if (course == null)
                     throw new NotFoundException("Course not found");
-                if (course.AnswerPaperCheckerPartAId != user.UserId)
-                    throw new UnAuthorizedException("You are not authorized");
-                course.NumberOfExamineePartA = item.NumberOfStudents;
+                if (course.AnswerPaperCheckerPartAId == user.UserId)
+                    course.NumberOfExamineePartA = item.NumberOfStudents;
             }
         }
 
@@ -719,8 +721,8 @@ public class ExamService : IExamService
                 var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
                 if (course == null)
                     throw new NotFoundException("Course not found");
-                if (course.AnswerPaperCheckerPartBId != user.UserId)
-                    throw new UnAuthorizedException("You are not authorized");
+                if (course.AnswerPaperCheckerPartBId == user.UserId)
+                    
                 course.NumberOfExamineePartB = item.NumberOfStudents;
             }
         }
@@ -732,8 +734,8 @@ public class ExamService : IExamService
                 var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
                 if (course == null)
                     throw new NotFoundException("Course not found");
-                if (course.QuestionScrutinizerPartAId != user.UserId)
-                    throw new UnAuthorizedException("You are not authorized");
+                if (course.QuestionScrutinizerPartAId == user.UserId)
+                    
                 course.NumberOfStudentsScrutinizedPartA = item.NumberOfStudents;
             }
         }
@@ -745,8 +747,8 @@ public class ExamService : IExamService
                 var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
                 if (course == null)
                     throw new NotFoundException("Course not found");
-                if (course.QuestionScrutinizerPartBId != user.UserId)
-                    throw new UnAuthorizedException("You are not authorized");
+                if (course.QuestionScrutinizerPartBId == user.UserId)
+                    
                 course.NumberOfStudentsScrutinizedPartB = item.NumberOfStudents;
             }
         }
@@ -758,8 +760,8 @@ public class ExamService : IExamService
                 var course = exam.LabCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
                 if (course == null)
                     throw new NotFoundException("Course not found");
-                if (course.ExaminerId != user.UserId)
-                    throw new UnAuthorizedException("You are not authorized");
+                if (course.ExaminerId == user.UserId)
+                    
                 course.NumberOfExaminee = item.NumberOfStudents;
             }
         }
@@ -771,8 +773,8 @@ public class ExamService : IExamService
                 var course = exam.LabCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
                 if (course == null)
                     throw new NotFoundException("Course not found");
-                if (course.VivaExaminerId != user.UserId)
-                    throw new UnAuthorizedException("You are not authorized");
+                if (course.VivaExaminerId == user.UserId)
+                    
                 course.NumberOfVivaParticipants = item.NumberOfStudents;
             }
         }
@@ -812,7 +814,7 @@ public class ExamService : IExamService
         res.PracticalExamData = new List<CourseNumberOfStdntsPair>();
 
         res.VivaExamData = new List<CourseNumberOfStdntsPair>();
-        
+
         // foreach (var course in exam.TheoryCourses)
         // {
         //     if (course.TermTestAnswerCheckerId == user.UserId)
@@ -903,32 +905,41 @@ public class ExamService : IExamService
         var res = new CourseResponseForTeacher();
         foreach (var course in exam.TheoryCourses)
         {
-            if(course.AnswerPaperCheckerPartAId == user.UserId){
-                res.AnswerPaperCheckingPartACourses.Append(new CourseForExamDto
+            System.Console.WriteLine(course.AnswerPaperCheckerPartAId);
+            System.Console.WriteLine(course.AnswerPaperCheckerPartBId);
+            System.Console.WriteLine(course.TermTestAnswerCheckerId);
+            System.Console.WriteLine(course.QuestionScrutinizerPartAId);
+            System.Console.WriteLine(user.UserId);
+            if (course.AnswerPaperCheckerPartAId == user.UserId)
+            {
+                res.AnswerPaperCheckingPartACourses.Add(new CourseForExamDto
                 {
                     Id = course.CourseId,
                     Code = course.Course.Code,
                     Title = course.Course.Title
                 });
             }
-            if(course.AnswerPaperCheckerPartBId == user.UserId){
-                res.AnswerPaperCheckingPartBCourses.Append(new CourseForExamDto
+            if (course.AnswerPaperCheckerPartBId == user.UserId)
+            {
+                res.AnswerPaperCheckingPartBCourses.Add(new CourseForExamDto
                 {
                     Id = course.CourseId,
                     Code = course.Course.Code,
                     Title = course.Course.Title
                 });
             }
-            if(course.TermTestAnswerCheckerId == user.UserId){
-                res.TermTestCourses.Append(new CourseForExamDto
+            if (course.TermTestAnswerCheckerId == user.UserId)
+            {
+                res.TermTestCourses.Add(new CourseForExamDto
                 {
                     Id = course.CourseId,
                     Code = course.Course.Code,
                     Title = course.Course.Title
                 });
             }
-            if(course.QuestionScrutinizerPartAId == user.UserId){
-                res.ScrutinyCoursesPartA.Append(new CourseForExamDto
+            if (course.QuestionScrutinizerPartAId == user.UserId)
+            {
+                res.ScrutinyCoursesPartA.Add(new CourseForExamDto
                 {
                     Id = course.CourseId,
                     Code = course.Course.Code,
@@ -936,8 +947,9 @@ public class ExamService : IExamService
                 });
             }
 
-            if(course.QuestionScrutinizerPartBId == user.UserId){
-                res.ScrutinyCoursesPartB.Append(new CourseForExamDto
+            if (course.QuestionScrutinizerPartBId == user.UserId)
+            {
+                res.ScrutinyCoursesPartB.Add(new CourseForExamDto
                 {
                     Id = course.CourseId,
                     Code = course.Course.Code,
@@ -946,12 +958,12 @@ public class ExamService : IExamService
             }
 
         }
-        
+
         foreach (var course in exam.LabCourses)
         {
             if (course.ExaminerId == user.UserId)
             {
-                res.PracticalExamCourses.Append(new CourseForExamDto
+                res.PracticalExamCourses.Add(new CourseForExamDto
                 {
                     Id = course.CourseId,
                     Code = course.Course.Code,
@@ -961,7 +973,7 @@ public class ExamService : IExamService
 
             if (course.VivaExaminerId == user.UserId)
             {
-                res.VivaExamCourses.Append(new CourseForExamDto
+                res.VivaExamCourses.Add(new CourseForExamDto
                 {
                     Id = course.CourseId,
                     Code = course.Course.Code,
@@ -969,7 +981,7 @@ public class ExamService : IExamService
                 });
             }
         }
-        
+
         return res;
     }
 }
