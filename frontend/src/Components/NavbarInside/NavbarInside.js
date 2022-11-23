@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 function NavbarInside() {
 	const logOut = () => {
 		localStorage.removeItem('role');
-		// localStorage.removeItem('username');
+		localStorage.removeItem('accesstoken');
+		localStorage.removeItem('id');
 		console.log('Logged Out');
 	};
 	return (

@@ -5,14 +5,11 @@ import GetRole from '../../Functions/GetRole';
 import './Links.css';
 function DirectorLink() {
 	return (
-		<>
-			<Link
-				className="rolelink"
-				to="/director">
-				Director
-			</Link>
-			;
-		</>
+		<Link
+			className="rolelink"
+			to="/director">
+			Director
+		</Link>
 	);
 }
 
