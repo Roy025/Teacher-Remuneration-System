@@ -15,6 +15,8 @@ public interface IExamService
     Task<IReadOnlyList<TeacherResponseDto>> GetTeachersForChairman(ExamReqParams examParams, UserFromToken user);
     Task<ExamResponseDtoChairman> UpdateExamFromChairman(ExamUpdateFromChairmanDto examUpdateFromChairmanDto, UserFromToken user);
     Task<ExamUpdateFromTeacherDto> UpdateExamFromTeacher(ExamUpdateFromTeacherDto examUpdateFromTeacher, UserFromToken user);
+    Task<ExamUpdateFromTeacherDto> GetExamsForTeacherAsync(ExamReqParams examParams, UserFromToken user);
     Task<ExamResponseDtoChairman> GetExamsForChairmanAsync(ExamReqParams examParams, UserFromToken user);
+    Task<CourseResponseForTeacher> GetCoursesForTeacher(ExamReqParams examParams, UserFromToken user);
 
 }
