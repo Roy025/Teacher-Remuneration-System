@@ -1,15 +1,15 @@
 import React from 'react';
 import { Items } from './NavbarInsideItems';
 import './NavbarInside.css';
-import { Link } from 'react-router-dom';
-import { teacher } from '../../Functions/Get';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function NavbarInside() {
-	const teacherToken = teacher();
+	const teacherToken = localStorage.getItem('id');
+	const navigate = useNavigate();
 	const logOut = () => {
 		localStorage.removeItem('role');
 		localStorage.removeItem('accesstoken');
 		localStorage.removeItem('id');
+		navigate('/login');
 		console.log('Logged Out');
 	};
 	return (
@@ -38,7 +38,7 @@ function NavbarInside() {
 						})}
 					</ul>
 					<Link
-						to="/login"
+						// to="/login"
 						className="nav-links logout"
 						onClick={logOut}>
 						Logout

@@ -1,7 +1,5 @@
 import React from 'react';
-// import { ReactDOM } from "react-dom";
 import { Link } from 'react-router-dom';
-import { teacher } from '../../Functions/Get';
 
 import './Links.css';
 function DirectorLink() {
@@ -13,7 +11,6 @@ function DirectorLink() {
 		</Link>
 	);
 }
-const teachers = teacher();
 class Links extends React.Component {
 	constructor() {
 		super();
@@ -37,9 +34,10 @@ class Links extends React.Component {
 	};
 
 	render() {
-		console.log(teachers.role);
+		const role = localStorage.getItem('role');
+
 		let director;
-		if (teachers.role === 'Director') {
+		if (role === 'Director') {
 			director = <DirectorLink />;
 		}
 		return (

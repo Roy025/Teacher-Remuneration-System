@@ -3,7 +3,6 @@ import './login.css';
 import '../ProfilePage/ProfilePage.css';
 import { useNavigate } from 'react-router-dom';
 import { instance as axios } from '../axios';
-import { FaWindows } from 'react-icons/fa';
 
 const Login = () => {
 	const [loginData, setloginData] = useState({

@@ -3,7 +3,6 @@ import './ProfilePage.css';
 import { useState } from 'react';
 import { instance as axios } from '../axios';
 import { useNavigate } from 'react-router-dom';
-import { teacher } from '../../Functions/Get';
 
 function ProfilePage() {
 	const navigate = useNavigate();
@@ -24,8 +23,7 @@ function ProfilePage() {
 		setInputFields(list);
 	};
 
-	const teacherToken = teacher();
-	const id = teacherToken.teacherID;
+	const id = localStorage.getItem('id');
 	console.log(id);
 
 	useEffect(() => {
