@@ -56,15 +56,12 @@ const Login = () => {
 						console.log(obj.data.role);
 						console.log(obj.data.token);
 
-						const teacher = {
-							role: obj.data.role,
-							teacherID: obj.data.id,
-							departmentId: obj.data.departmentId,
-							token: obj.data.token,
-						};
-						console.log(response);
+						localStorage.setItem('accesstoken', `Bearer ${obj.data.token}`);
+						localStorage.setItem('id', obj.data.id);
+						localStorage.setItem('role', obj.data.role);
+						localStorage.setItem('departmentID', obj.data.departmentId)
+						console.log(response.data.statusCode);
 
-						localStorage.setItem('teacher', JSON.stringify(teacher));
 
 						if (response.data.statusCode === 200) {
 							setTimeout(() => {

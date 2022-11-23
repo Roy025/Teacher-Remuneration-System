@@ -22,16 +22,7 @@ const DirectorsBill = () => {
   const [selectedChiefInvigilator, setSelectedChiefInvigilator] = useState("");
   const [selectedCourses, setSelectedCourses] = useState([{}]);
   const [courses, setCourses] = useState([""]);
-  const [courseList, setCourseList] = useState([
-    {
-      id: "1",
-      code: "Swe123",
-    },
-    {
-      id: "2",
-      code: "swe111",
-    },
-  ]);
+  const [courseList, setCourseList] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([
     {
       id: "",
@@ -85,7 +76,7 @@ const DirectorsBill = () => {
       const res = await axios.post("/Exam/director", newData, {
         headers: {
           // 'Content-Type': 'application/json',
-          Authorization: `Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFoc2FuLWlpY3RAc3VzdC5lZHUiLCJ1c2VySWQiOiJkMDA2YzlmMC1lNWRmLTQ2MDQtYWZkNS1iNzRlNTc2NTVlMDkiLCJyb2xlIjoiRGlyZWN0b3IiLCJkZXBhcnRtZW50SWQiOiJmYzUwZjJkOC0yZDRhLTRiYzctOGNkNy02ZGY5OTU1YjRiMzIiLCJuYmYiOjE2Njg4Njg4MjksImV4cCI6MTY3NzUwODgyOSwiaWF0IjoxNjY4ODY4ODI5LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.JJZpdw6zrX_5SUQeeZpRpNd3N-HGfhpbHtWHkinS3L1SXF7gQKq1piPpKqSp-N9F7QW_mDF36Hi9z778AtzPEw`,
+          Authorization: localStorage.getItem("accesstoken"),
         },
       });
       console.log(res);
@@ -102,19 +93,21 @@ const DirectorsBill = () => {
     const response = await axios.get("/institute");
     return response;
   };
-  const departmentId = "deb3b16b-e983-4b20-87ba-991e5d81b544";
   const fetchCourse = async () => {
-    const response = await axios.get(`/course?departmentId=${departmentId}`);
+    const departmentId = localStorage.getItem("departmentID");
+    console.log(departmentId);
+    const response = await axios.get(`/course?department=${departmentId}`);
+    console.log(response.data.data);
     return response;
   };
 
-  useQuery(["institution-list"], async () => {
+  useQuery(["course-list"], async () => {
     const store = await fetchCourse();
     setCourseList(store.data.data);
     return store;
   });
 
-  useQuery(["course-list"], async () => {
+  useQuery(["institute-list"], async () => {
     const store = await fetchInstitute();
     setInstitutes(store.data.data);
     return store;
@@ -154,7 +147,7 @@ const DirectorsBill = () => {
         {
           headers: {
             // 'Content-Type': 'application/json',
-            Authorization: `Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFoc2FuLWlpY3RAc3VzdC5lZHUiLCJ1c2VySWQiOiJkMDA2YzlmMC1lNWRmLTQ2MDQtYWZkNS1iNzRlNTc2NTVlMDkiLCJyb2xlIjoiRGlyZWN0b3IiLCJkZXBhcnRtZW50SWQiOiJmYzUwZjJkOC0yZDRhLTRiYzctOGNkNy02ZGY5OTU1YjRiMzIiLCJuYmYiOjE2Njg4Njg4MjksImV4cCI6MTY3NzUwODgyOSwiaWF0IjoxNjY4ODY4ODI5LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.JJZpdw6zrX_5SUQeeZpRpNd3N-HGfhpbHtWHkinS3L1SXF7gQKq1piPpKqSp-N9F7QW_mDF36Hi9z778AtzPEw`,
+            Authorization: localStorage.getItem("accesstoken"),
           },
         }
       );

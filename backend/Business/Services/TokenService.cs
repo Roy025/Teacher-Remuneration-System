@@ -85,6 +85,10 @@ public class TokenService : ITokenService
                 Role = tokenObj.Claims.First(c => c.Type == "role").Value,
                 DepartmentId = Guid.Parse(tokenObj.Claims.First(c => c.Type == "departmentId").Value),
             };
+            System.Console.WriteLine(user.Email);
+            System.Console.WriteLine(user.UserId);
+            System.Console.WriteLine(user.Role);
+            System.Console.WriteLine(user.DepartmentId);
             return user;
         }
         catch (Exception e)

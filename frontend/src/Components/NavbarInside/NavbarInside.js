@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 function NavbarInside() {
 	const teacherToken = teacher();
 	const logOut = () => {
-		localStorage.removeItem('teacher');
+		localStorage.removeItem('role');
+		localStorage.removeItem('accesstoken');
+		localStorage.removeItem('id');
 		console.log('Logged Out');
 	};
 	return (
