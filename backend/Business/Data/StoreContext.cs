@@ -30,13 +30,42 @@ public class StoreContext : DbContext
             .WithMany(c => c.ChiefInvigilatorOfExams);
 
         modelBuilder.Entity<Teacher>()
-            .HasMany(t=>t.SupervisorOfTermPapers)
-            .WithMany(t=>t.Supervisors);
+            .HasMany(t => t.SupervisorOfTermPapers)
+            .WithMany(t => t.Supervisors);
         modelBuilder.Entity<Teacher>()
-            .HasMany(t=>t.ExaminerOfTermPapers)
-            .WithMany(t=>t.Examiners);
+            .HasMany(t => t.ExaminerOfTermPapers)
+            .WithMany(t => t.Examiners);
 
         modelBuilder.Entity<TermPaperResponsibilities>()
             .HasOne(t => t.Tabulator);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+        .HasMany(t => t.QuestionSetters)
+        .WithMany(t => t.QuestionSettersOfCourses);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+        .HasOne(t => t.AnswerPaperCheckerPartA);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+        .HasOne(t => t.AnswerPaperCheckerPartB);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+        .HasOne(t => t.TermTestAnswerChecker);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+        .HasOne(t => t.Tabulator);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+                    .HasOne(t => t.QuestionScrutinizerPartA);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+                    .HasOne(t => t.QuestionScrutinizerPartB);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+                    .HasOne(t => t.QuestionTyper);
+
+        modelBuilder.Entity<TheoryCourseResponsibles>()
+        .HasOne(t => t.QuestionModerator);
+
     }
 }

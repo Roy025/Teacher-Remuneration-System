@@ -9,16 +9,17 @@ const TermPaperComp = ({
   handleData,
   existingData,
   setExistingData,
+  teacherList
 }) => {
   const [selectedCourses, setSelectedCourses] = useState([
     existingData ? existingData.map((data) => data.course.title) : "",
   ]);
-  const [teacherList, setTeacherList] = useState([
-    {
-      id: "",
-      name: "",
-    },
-  ]);
+  // const [teacherList, setTeacherList] = useState([
+  //   {
+  //     id: "",
+  //     name: "",
+  //   },
+  // ]);
   const [selectedSupervisors, setSelectedSupervisors] = useState(
     existingData ? existingData.map((data) => data.supervisors) : [[]]
   );
