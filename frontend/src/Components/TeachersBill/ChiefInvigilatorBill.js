@@ -5,9 +5,9 @@ import "./FormButton.css";
 import DropdownNoTitleTeacher from "../../Functions/DropdownNoTitleTeacher";
 
 const ChiefInvigilatorBill = () => {
-
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedSession, setSelectedSession] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState("");
   const [sessionOptions, setSessionOptions] = useState([
     { name: "2016-17" },
     { name: "2017-18" },
@@ -27,7 +27,25 @@ const ChiefInvigilatorBill = () => {
     { name: "8th" },
   ]);
 
+  const [courseOptions, setCourseOptions] = useState([
+    { name: "SWE121" },
+    { name: "SWE122" },
+    { name: "SWE123" },
+    { name: "SWE124" },
+    { name: "SWE125" },
+    { name: "SWE126" },
+    { name: "SWE126" },
+    { name: "SWE127" },
+  ]);
+
   const [data, setData] = useState([
+    {
+      courseID: "",
+      teacherID: "",
+    },
+  ]);
+
+  const [termdata, setTermdata] = useState([
     {
       courseID: "",
       teacherID: "",
@@ -41,34 +59,34 @@ const ChiefInvigilatorBill = () => {
     session: "",
     semester: "",
   });
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-  const submit = async () => {
-    console.log(exam);
-  };
 
   // handle session & semester
   const handleSession = (propName, option) => {
-    const newData = { ...data };
+    const newData = { ...exam };
     newData.session = option.name;
-    setData(newData);
-    setSessionAvailable(true)
+    setExam(newData);
+    setSessionAvailable(true);
   };
 
   const handleSemester = (propName, option) => {
-    const newData = { ...data };
+    const newData = { ...exam };
     newData.semester = option.name;
-    setData(newData);
-    setSemesterAvailable(true)
+    setExam(newData);
+    setSemesterAvailable(true);
   };
 
+  // Have to update ID
+  const handleCourse = (propName, option) => {
+    const newData = { ...data };
+    newData.courseID = option.name;
+    setData(newData);
+  };
 
   return (
     <>
       <Links />
       <div className="FullFormPage">
-        <form className="Form" onSubmit={handleSubmit}>
+        <form className="Form">
           <div className="DropdownformRow">
             <div className="FormSubRow">
               <label className="AccountLabel">Session</label>
@@ -92,12 +110,27 @@ const ChiefInvigilatorBill = () => {
             </div>
           </div>
 
-          <div className="formRow">
-            <label className="Label">Invigilation</label>
-            
+          <div className="FormSubRow">
+            <label className="AccountLabel">Courses</label>
+            <DropdownNoTitleTeacher
+              options={courseOptions}
+              propName="course"
+              handleData={handleCourse}
+              selected={selectedCourse}
+              setSelected={setSelectedCourse}
+            />
+            <label className="AccountLabel">Invigilator</label>
+            <DropdownNoTitleTeacher
+              options={courseOptions}
+              propName="course"
+              handleData={handleSemester}
+              selected={selectedSemester}
+              setSelected={setSelectedSemester}
+            />
           </div>
+
           <div className="formRow SubmitRow">
-            <button type="submit" className="submitButton" onClick={submit}>
+            <button type="submit" className="submitButton">
               Submit
             </button>
           </div>
