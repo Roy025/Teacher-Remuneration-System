@@ -118,6 +118,15 @@ const FinalTeacherBill = () => {
       ],
       amount: "",
     },
+    invi: {
+      criteria: "Invigilation",
+      courses: [
+        {
+          name: "",
+        },
+      ],
+      amount: "",
+    },
     termPaper: {
       criteria: "Field work/ Project/ Term paper/ Seminar/ Monograph/ Thesis",
       courses: [

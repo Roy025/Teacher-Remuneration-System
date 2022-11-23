@@ -43,12 +43,7 @@ const TeacherBill = () => {
     institute: "",
   });
 
-  const [listOfCourses, setListOfCourses] = useState([
-    {
-      id: "",
-      code: "",
-    },
-  ]);
+  const [listOfCourses, setListOfCourses] = useState([{}]);
   const [termTestData, setTermTestData] = useState([
     {
       course: {
@@ -197,11 +192,11 @@ const TeacherBill = () => {
       },
     };
     const response = await axios.get(
-      `/Exam/chairman/course?Semester=${selectedSemester}&Session=${selectedSession}&DepartmentId=${exam.deptID}`,
+      `/Exam/teacher/course?Semester=${selectedSemester}&Session=${selectedSession}&DepartmentId=${exam.deptID}`,
       config
     );
     console.log(response);
-    setListOfCourses(response.data.data);
+    setListOfCourses(response.data.data)
     return response;
   };
   useQuery(["course-list"], () => fetchCourse(), {
@@ -303,7 +298,7 @@ const TeacherBill = () => {
           <div className="formRow">
             <label className="Label">Term Test</label>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.termTestCourses}
               existingData={termTestData}
               setExistingData={setTermTestData}
             />
@@ -313,13 +308,13 @@ const TeacherBill = () => {
             <label className="Label">Answerpaper Checking</label>
             <h4 className="subLabel">Part - A</h4>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.answerPaperCheckingPartACourses}
               existingData={answerPaperCheckingDataPartA}
               setExistingData={setAnswerPaperCheckingDataPartA}
             />
             <h4 className="subLabel">Part - B</h4>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.answerPaperCheckingPartBCourses}
               existingData={answerPaperCheckingDataPartB}
               setExistingData={setAnswerPaperCheckingDataPartB}
             />
@@ -329,13 +324,13 @@ const TeacherBill = () => {
             <label className="Label">Scrutiny</label>
             <h4 className="subLabel">Part - A</h4>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.scrutinyCoursesPartA}
               existingData={scrutinyDataPartA}
               setExistingData={setScrutinyDataPartA}
             />
             <h4 className="subLabel">Part - B</h4>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.scrutinyCoursesPartB}
               existingData={scrutinyDataPartB}
               setExistingData={setScrutinyDataPartB}
             />
@@ -344,7 +339,7 @@ const TeacherBill = () => {
           <div className="formRow">
             <label className="Label">Practical Exam</label>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.practicalExamCourses}
               existingData={practicalExamData}
               setExistingData={setPracticalExamData}
             />
@@ -353,7 +348,7 @@ const TeacherBill = () => {
           <div className="formRow">
             <label className="Label">Viva</label>
             <StudentCount
-              options={listOfCourses}
+              options={listOfCourses.vivaExamCourses}
               existingData={vivaExamData}
               setExistingData={setVivaExamData}
             />
