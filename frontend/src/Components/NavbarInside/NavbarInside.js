@@ -2,10 +2,8 @@ import React from 'react';
 import { Items } from './NavbarInsideItems';
 import './NavbarInside.css';
 import { Link } from 'react-router-dom';
-import { teacher } from '../../Functions/Get';
-import { useNavigate } from 'react-router-dom';
 function NavbarInside() {
-	const teacherToken = teacher();
+	const teacherToken = localStorage.getItem('id');
 	const logOut = () => {
 		localStorage.removeItem('role');
 		localStorage.removeItem('accesstoken');
