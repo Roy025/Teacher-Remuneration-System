@@ -66,6 +66,5 @@ public class StoreContext : DbContext
 
         modelBuilder.Entity<TheoryCourseResponsibles>()
         .HasOne(t => t.QuestionModerator);
-
     }
 }

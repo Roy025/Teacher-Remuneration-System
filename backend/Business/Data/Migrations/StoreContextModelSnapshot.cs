@@ -255,9 +255,14 @@ namespace Business.Data.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("TheoryCourseResponsiblesId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("TheoryCourseResponsiblesId");
 
                     b.ToTable("Teachers");
                 });
@@ -595,6 +600,10 @@ namespace Business.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Entities.TheoryCourseResponsibles", null)
+                        .WithMany("QuestionSetters")
+                        .HasForeignKey("TheoryCourseResponsiblesId");
+
                     b.Navigation("Department");
                 });
 
@@ -738,6 +747,7 @@ namespace Business.Data.Migrations
                     b.HasOne("Core.Entities.Teacher", null)
                         .WithMany()
                         .HasForeignKey("ExaminersId")
+
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -753,6 +763,7 @@ namespace Business.Data.Migrations
                     b.HasOne("Core.Entities.TheoryCourseResponsibles", null)
                         .WithMany()
                         .HasForeignKey("QuestionSettersOfCoursesId")
+
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -787,6 +798,11 @@ namespace Business.Data.Migrations
                     b.Navigation("ChairmanOfExams");
 
                     b.Navigation("ChiefInvigilatorOfExams");
+                });
+
+            modelBuilder.Entity("Core.Entities.TheoryCourseResponsibles", b =>
+                {
+                    b.Navigation("QuestionSetters");
                 });
 #pragma warning restore 612, 618
         }

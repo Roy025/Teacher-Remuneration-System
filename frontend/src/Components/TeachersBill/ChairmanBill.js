@@ -248,6 +248,7 @@ const ChairmanBill = () => {
       termPaperData: termPaperData,
       registeredStudents: regisretedStudents,
     };
+
     console.log(body);
   };
 

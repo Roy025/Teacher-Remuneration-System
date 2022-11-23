@@ -201,6 +201,7 @@ public class ExamService : IExamService
     {
         var examParams = new ExamReqParams
         {
+
             Session = examUpdateFromChairmanDto.Session,
             Semester = examUpdateFromChairmanDto.Semester,
             DepartmentId = user.DepartmentId
@@ -385,6 +386,7 @@ public class ExamService : IExamService
                 if (term != null)
                     term.NumberOfRegisteredStudents = data.NumberOfStudents;
             }
+
         }
 
         _unitOfWork.Repository<Exam>().Update(exam);
