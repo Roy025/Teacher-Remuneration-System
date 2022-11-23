@@ -459,7 +459,7 @@ public class ExamService : IExamService
     public async Task<ExamResponseDtoChairman> GetExamsForChairmanAsync(ExamReqParams examParams, UserFromToken user)
     {
         examParams.DepartmentId = user.DepartmentId;
-        var spec = new ExamForDirectorSpecification(examParams);
+        var spec = new ExamSpecificationForChairman(examParams);
         var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
         if (exams == null)
             throw new NotFoundException("No exam found");
@@ -668,5 +668,120 @@ public class ExamService : IExamService
             res.RegisteredStudents.Add(data);
         }
         return res;
+    }
+
+    public async Task<ExamUpdateFromTeacherDto> UpdateExamFromTeacher(ExamUpdateFromTeacherDto examUpdateFromTeacher, UserFromToken user)
+    {
+        var examParam = new ExamReqParams
+        {
+            Session = examUpdateFromTeacher.Session,
+            Semester = examUpdateFromTeacher.Semester,
+            DepartmentId = examUpdateFromTeacher.Department.Id
+        };
+        var spec = new ExamForTeacherSpec(examParam);
+        var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
+        if (exams == null)
+            throw new NotFoundException("No exam found");
+        var exam = exams.FirstOrDefault();
+        if (exam == null)
+            throw new NotFoundException("Exam not found");
+
+        if (examUpdateFromTeacher.TermTestData != null)
+        {
+            foreach (var termTestData in examUpdateFromTeacher.TermTestData)
+            {
+                var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == termTestData.Course.Id);
+                if (course == null)
+                    throw new NotFoundException("Course not found");
+                if (course.TermTestAnswerCheckerId != user.UserId)
+                    throw new UnAuthorizedException("You are not authorized");
+                course.NumberOfTermTestParticipants = termTestData.NumberOfStudents;
+            }
+        }
+
+        if (examUpdateFromTeacher.AnswerPaperCheckingDataPartA != null)
+        {
+            foreach (var item in examUpdateFromTeacher.AnswerPaperCheckingDataPartA)
+            {
+                var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
+                if (course == null)
+                    throw new NotFoundException("Course not found");
+                if (course.AnswerPaperCheckerPartAId != user.UserId)
+                    throw new UnAuthorizedException("You are not authorized");
+                course.NumberOfExamineePartA = item.NumberOfStudents;
+            }
+        }
+
+        if (examUpdateFromTeacher.AnswerPaperCheckingDataPartB != null)
+        {
+            foreach (var item in examUpdateFromTeacher.AnswerPaperCheckingDataPartB)
+            {
+                var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
+                if (course == null)
+                    throw new NotFoundException("Course not found");
+                if (course.AnswerPaperCheckerPartBId != user.UserId)
+                    throw new UnAuthorizedException("You are not authorized");
+                course.NumberOfExamineePartB = item.NumberOfStudents;
+            }
+        }
+
+        if (examUpdateFromTeacher.ScrutinyDataPartA != null)
+        {
+            foreach (var item in examUpdateFromTeacher.ScrutinyDataPartA)
+            {
+                var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
+                if (course == null)
+                    throw new NotFoundException("Course not found");
+                if (course.QuestionScrutinizerPartAId != user.UserId)
+                    throw new UnAuthorizedException("You are not authorized");
+                course.NumberOfStudentsScrutinizedPartA = item.NumberOfStudents;
+            }
+        }
+
+        if (examUpdateFromTeacher.ScrutinyDataPartB != null)
+        {
+            foreach (var item in examUpdateFromTeacher.ScrutinyDataPartB)
+            {
+                var course = exam.TheoryCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
+                if (course == null)
+                    throw new NotFoundException("Course not found");
+                if (course.QuestionScrutinizerPartBId != user.UserId)
+                    throw new UnAuthorizedException("You are not authorized");
+                course.NumberOfStudentsScrutinizedPartB = item.NumberOfStudents;
+            }
+        }
+
+        if (examUpdateFromTeacher.PracticalExamData != null)
+        {
+            foreach (var item in examUpdateFromTeacher.PracticalExamData)
+            {
+                var course = exam.LabCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
+                if (course == null)
+                    throw new NotFoundException("Course not found");
+                if (course.ExaminerId != user.UserId)
+                    throw new UnAuthorizedException("You are not authorized");
+                course.NumberOfExaminee = item.NumberOfStudents;
+            }
+        }
+
+        if (examUpdateFromTeacher.VivaExamData != null)
+        {
+            foreach (var item in examUpdateFromTeacher.VivaExamData)
+            {
+                var course = exam.LabCourses.FirstOrDefault(c => c.CourseId == item.Course.Id);
+                if (course == null)
+                    throw new NotFoundException("Course not found");
+                if (course.VivaExaminerId != user.UserId)
+                    throw new UnAuthorizedException("You are not authorized");
+                course.NumberOfVivaParticipants = item.NumberOfStudents;
+            }
+        }
+
+        _unitOfWork.Repository<Exam>().Update(exam);
+        var result = await _unitOfWork.Complete();
+        if (result <= 0)
+            throw new Exception("Error while updating exam");
+
+        return examUpdateFromTeacher;
     }
 }

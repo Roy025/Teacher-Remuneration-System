@@ -101,6 +101,17 @@ public class ExamController : BaseApiController
         return StatusCode(200, new ApiDataResponse<IReadOnlyList<TeacherResponseDto>>(teachers, 200, "Teachers fetched successfully"));
     }
     
+    [HttpPut("teacher")]
+    public async Task<ActionResult<ApiDataResponse<ExamUpdateFromTeacherDto>>> UpdateExamFromTeacher([FromBody] ExamUpdateFromTeacherDto examUpdateFromTeacherDto)
+    {
+        var user = GetUserFromToken();
+        var exam = await _examService.UpdateExamFromTeacher(examUpdateFromTeacherDto, user);
+        if(exam == null)
+        {
+            throw new NotFoundException();
+        }
+        return StatusCode(200, new ApiDataResponse<ExamUpdateFromTeacherDto>(exam, 200, "Exam updated successfully"));
+    }
     
     private UserFromToken? GetUserFromToken()
     {
