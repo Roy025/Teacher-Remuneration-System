@@ -1,7 +1,8 @@
 import React from 'react';
 // import { ReactDOM } from "react-dom";
 import { Link } from 'react-router-dom';
-import GetRole from '../../Functions/GetRole';
+import { teacher } from '../../Functions/Get';
+
 import './Links.css';
 function DirectorLink() {
 	return (
@@ -12,10 +13,8 @@ function DirectorLink() {
 		</Link>
 	);
 }
-
+const teachers = teacher();
 class Links extends React.Component {
-	role = GetRole();
-
 	constructor() {
 		super();
 		this.state = {
@@ -38,9 +37,9 @@ class Links extends React.Component {
 	};
 
 	render() {
-		console.log(this.role);
+		console.log(teachers.role);
 		let director;
-		if (this.role === 'Director') {
+		if (teachers.role === 'Director') {
 			director = <DirectorLink />;
 		}
 		return (

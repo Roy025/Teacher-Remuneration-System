@@ -30,13 +30,16 @@
 .FormSubRow {
   width: 46%;
 }
+
 .FormSubRow1 {
   width: 30%;
 }
+
 .FormRow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  margin-top: 1%;
   margin-bottom: 1%;
 }
 
@@ -65,10 +68,6 @@
   border-radius: 0.375rem;
 }
 
-/* .FormControl:focus {
-  outline-color: rgb(37, 136, 175);
-} */
-
 .Label {
   font-size: 1.3rem;
   font-weight: 600;
@@ -94,6 +93,42 @@
 
 .CrossFormRow .threeFormRowElementWithAdd {
   width: 31%;
+}
+
+/* Chairman form */
+.FormRowNoCrossContainer {
+  margin-top: 1%;
+  width: 100%;
+  border: 1px solid rgb(209, 206, 206);
+  box-shadow: 1px 1px 2px 2px rgb(207, 224, 247);
+  border-radius: 0.7rem;
+  margin-bottom: 1.5%;
+}
+
+.CrossFormRow .FormRowNoCrossContainer {
+  width: 90%;
+}
+
+.FormRowNoCross {
+  margin-left: 5px;
+  margin-top: 5px;
+  width: 51%;
+}
+
+.firstTermpaperCompElement {
+  width: 90%;
+}
+
+.CrossFormRow .firstTermpaperCompElement {
+  width: 98%;
+}
+
+.labelTermpaperCompElement {
+  width: 75%;
+}
+
+.CrossFormRow .labelTermpaperCompElement {
+  width: 80%;
 }
 
 /* ChairmanForm & TeacherForm */
@@ -128,7 +163,7 @@
 .childFormRowElementWithCrossAndAdd {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: flex-start;
   gap: 2%;
 }
 

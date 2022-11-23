@@ -27,7 +27,7 @@ function ThesisComp({
 
   return (
     <div className="Container">
-      <div className="labelFlex TermpaperCompElement TermPaperCourse">
+      <div className="labelFlex labelTermpaperCompElement">
         <label>Course ID</label>
         <input
           type="text"
@@ -97,7 +97,6 @@ function ThesisComp({
           setInputFields={setThesisManagers}
         />
       </div>
-
     </div>
   );
 }
