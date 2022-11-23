@@ -96,3 +96,6 @@
 	margin-left: 0.5rem;
 	font-size: 1rem;
 }
+.logout {
+	border: 2px solid rgb(102, 116, 118);
+}

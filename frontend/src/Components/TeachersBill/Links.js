@@ -1,9 +1,24 @@
 import React from 'react';
 // import { ReactDOM } from "react-dom";
 import { Link } from 'react-router-dom';
+import GetRole from '../../Functions/GetRole';
 import './Links.css';
+function DirectorLink() {
+	return (
+		<>
+			<Link
+				className="rolelink"
+				to="/director">
+				Director
+			</Link>
+			;
+		</>
+	);
+}
 
 class Links extends React.Component {
+	role = GetRole();
+
 	constructor() {
 		super();
 		this.state = {
@@ -26,14 +41,16 @@ class Links extends React.Component {
 	};
 
 	render() {
+		console.log(this.role);
+		let director;
+		if (this.role === 'Director') {
+			director = <DirectorLink />;
+		}
 		return (
 			<>
 				<div className={this.state.show ? 'Link active' : 'Link hidden'}>
-					<Link
-						className="rolelink"
-						to="/director">
-						Director
-					</Link>
+					{director}
+
 					<Link
 						className="rolelink"
 						to="/committee-chairman">

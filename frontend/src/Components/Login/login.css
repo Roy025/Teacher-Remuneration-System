@@ -42,3 +42,13 @@
 	font-size: 220%;
 	color: #115514;
 }
+.mylabel {
+	display: flex;
+	gap: 5px;
+	text-align: center;
+	margin: 2px;
+	width: 0.5%;
+}
+.mylabel span {
+	padding-top: 0.5rem;
+}
