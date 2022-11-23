@@ -63,7 +63,7 @@ const Login = () => {
 
 						if (response.data.statusCode === 200) {
 							setTimeout(() => {
-								navigate('/');
+								navigate('/home');
 								window.location.reload(false);
 							}, 3000);
 						}
