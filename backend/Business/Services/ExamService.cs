@@ -251,18 +251,23 @@ public class ExamService : IExamService
             throw new NotFoundException("Exam not found");
         if (exam.ChairmanId != user.UserId)
             throw new UnAuthorizedException("You are not authorized to perform this action");
-        
+        if (exam != null) _unitOfWork.Repository<Exam>().Delete(exam);
+
         // Question Setter
         if (examUpdateFromChairmanDto.QuestionSetters != null)
         {
             foreach (var data in examUpdateFromChairmanDto.QuestionSetters)
             {
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionSetters = new List<Teacher>();
+                var theory = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (theory != null)
+                    theory.QuestionSetters = new List<Teacher>();
             }
             foreach (var data in examUpdateFromChairmanDto.QuestionSetters)
             {
                 var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(data.Teacher.Id);
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionSetters.Add(teacher);
+                var course = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (course != null)
+                    course.QuestionSetters.Add(teacher);
             }
         }
 
@@ -270,7 +275,9 @@ public class ExamService : IExamService
         if (examUpdateFromChairmanDto.QuestionModerators != null)
             foreach (var data in examUpdateFromChairmanDto.QuestionModerators)
             {
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionModeratorId = data.Teacher.Id;
+                var mod = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (mod != null)
+                    mod.QuestionModeratorId = data.Teacher.Id;
             }
 
         // AnswerPaperChecker PartA
@@ -278,7 +285,9 @@ public class ExamService : IExamService
         {
             foreach (var data in examUpdateFromChairmanDto.AnswerpaperCheckersPartA)
             {
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).AnswerPaperCheckerPartAId = data.Teacher.Id;
+                var ans = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (ans != null)
+                    ans.AnswerPaperCheckerPartAId = data.Teacher.Id;
             }
         }
         
@@ -287,7 +296,9 @@ public class ExamService : IExamService
         {
             foreach (var data in examUpdateFromChairmanDto.AnswerpaperCheckersPartB)
             {
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).AnswerPaperCheckerPartBId = data.Teacher.Id;
+                var course = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (course != null)
+                    course.AnswerPaperCheckerPartBId = data.Teacher.Id;
             }
         }
         
@@ -296,7 +307,9 @@ public class ExamService : IExamService
         {
             foreach (var data in examUpdateFromChairmanDto.TermTestAnswerCheckers)
             {
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).TermTestAnswerCheckerId = data.Teacher.Id;
+                var course = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (course != null)
+                    course.TermTestAnswerCheckerId = data.Teacher.Id;
             }
         }
 
@@ -306,6 +319,7 @@ public class ExamService : IExamService
 
             foreach (var data in examUpdateFromChairmanDto.LabExaminers)
             {
+
                 var course = exam.LabCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
                 if (course != null)
                     course.ExaminerId = data.Teacher.Id;
@@ -348,7 +362,9 @@ public class ExamService : IExamService
 
             foreach (var data in examUpdateFromChairmanDto.ScrutinizersPartA)
             {
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionScrutinizerPartAId = data.Teacher.Id;
+                var course = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (course != null)
+                    course.QuestionScrutinizerPartAId = data.Teacher.Id;
             }
         }
 
@@ -358,7 +374,9 @@ public class ExamService : IExamService
 
             foreach (var data in examUpdateFromChairmanDto.ScrutinizersPartB)
             {
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionScrutinizerPartBId = data.Teacher.Id;
+                var course = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (course != null)
+                    course.QuestionScrutinizerPartBId = data.Teacher.Id;
             }
         }
 
@@ -366,7 +384,9 @@ public class ExamService : IExamService
         if (examUpdateFromChairmanDto.QuestionTypers != null)
             foreach (var data in examUpdateFromChairmanDto.QuestionTypers)
             {
-                exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id).QuestionTyperId = data.Teacher.Id;
+                var course = exam.TheoryCourses.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (course != null)
+                    course.QuestionTyperId = data.Teacher.Id;
             }
 
         // Invigilators
@@ -399,14 +419,18 @@ public class ExamService : IExamService
                     var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(supervisor.Id);
                     supervisors.Add(teacher);
                 }
-                exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id).Supervisors = supervisors;
+                var course = exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (course != null)
+                    course.Supervisors = supervisors;
                 var examiners = new List<Teacher>();
                 foreach (var examiner in data.Examiners)
                 {
                     var teacher = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examiner.Id);
                     examiners.Add(teacher);
                 }
-                exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id).Examiners = examiners;
+                var term = exam.TermPapers.FirstOrDefault(x => x.CourseId == data.Course.Id);
+                if (term != null)
+                    term.Examiners = examiners;
             }
         }
 
@@ -429,7 +453,7 @@ public class ExamService : IExamService
 
         }
 
-        _unitOfWork.Repository<Exam>().Update(exam);
+        _unitOfWork.Repository<Exam>().Add(exam);
         var result = await _unitOfWork.Complete();
         if (result <= 0)
             throw new BadRequestException("Failed to update exam");

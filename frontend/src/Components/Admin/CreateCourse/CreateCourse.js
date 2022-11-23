@@ -24,6 +24,9 @@ function CreateCourse() {
     {
       name: 4,
     },
+    {
+      name: 18,
+    },
   ]);
   const [typeList, setTypeList] = useState([
     {
