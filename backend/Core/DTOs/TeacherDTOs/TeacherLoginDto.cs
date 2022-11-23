@@ -7,6 +7,7 @@ namespace Core.DTOs.TeacherDTOs
 {
     public class TeacherLoginDto
     {
+        public Guid Id { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
         public string Role { get; set; }
