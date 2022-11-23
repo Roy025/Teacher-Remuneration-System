@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Business.Specifications.ExamSpecifications;
 public class ExamSpecificationForChairman : BaseSpecification<Exam>
 {
-    protected ExamSpecificationForChairman(ExamReqParams examReqParams) : base(x =>
+    public ExamSpecificationForChairman(ExamReqParams examReqParams) : base(x =>
         (string.IsNullOrEmpty(examReqParams.Session) || x.Session == examReqParams.Session) &&
         (string.IsNullOrEmpty(examReqParams.Semester) || x.Semester == examReqParams.Semester) &&
         (examReqParams.DepartmentId == null || x.DepartmentId == examReqParams.DepartmentId)

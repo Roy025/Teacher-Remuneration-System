@@ -18,5 +18,5 @@ public class ExamUpdateFromChairmanDto
     public ICollection<TeacherCoursePairDto>? QuestionTypers { get; set; } = null;
     public ICollection<TeacherResponseDto>? Invigilators { get; set; } = null;
     public ICollection<TermPaperDto>? TermPaperData { get; set; } = null;
-    public ICollection<CourseNumberOfStdntsPair>? regisretedStudents { get; set; } = null;
+    public ICollection<CourseNumberOfStdntsPair>? RegisteredStudents { get; set; } = null;
 }

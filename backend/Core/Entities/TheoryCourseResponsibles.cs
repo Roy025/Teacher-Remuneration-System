@@ -9,10 +9,6 @@ public class TheoryCourseResponsibles : BaseEntity
     public Exam Exam { get; set; }
     public Guid CourseId { get; set; }
     public Course Course { get; set; }
-    public Guid? QuestionSetter1Id { get; set; } = null;
-    public Teacher? QuestionSetter1 { get; set; } = null;
-    public Guid? QuestionSetter2Id { get; set; } = null;
-    public Teacher? QuestionSetter2 { get; set; } = null;
     public Guid? QuestionModeratorId { get; set; } = null;
     public Teacher? QuestionModerator { get; set; } = null;
     public Guid? AnswerPaperCheckerPartAId { get; set; } = null;
@@ -23,8 +19,6 @@ public class TheoryCourseResponsibles : BaseEntity
     public Teacher? TermTestAnswerChecker { get; set; } = null;
     public Guid? TabulatorId { get; set; } = null;
     public Teacher? Tabulator { get; set; } = null;
-    public Guid? VivaExaminerId { get; set; } = null;
-    public Teacher? VivaExaminer { get; set; } = null;
     public Guid? QuestionScrutinizerPartAId { get; set; } = null;
     public Teacher? QuestionScrutinizerPartA { get; set; } = null;
     public Guid? QuestionScrutinizerPartBId { get; set; } = null;
@@ -32,6 +26,12 @@ public class TheoryCourseResponsibles : BaseEntity
     public Guid? QuestionTyperId { get; set; } = null;
     public Teacher? QuestionTyper { get; set; } = null;
     public int? NumberOfRegisteredStudents { get; set; } = null;
+    // public Guid? QuestionSetter1Id { get; set; } = null;
+    // public Teacher? QuestionSetter1 { get; set; } = null;
+    // public Guid? QuestionSetter2Id { get; set; } = null;
+    // public Teacher? QuestionSetter2 { get; set; } = null;
+    public ICollection<Teacher>? QuestionSetters { get; set; } = new List<Teacher>();
+    
     /////////////////////////////////////////
     /////////////////////////////////////////////
     

@@ -34,6 +34,9 @@ public class StoreContext : DbContext
             .WithMany(t=>t.Supervisors);
         modelBuilder.Entity<Teacher>()
             .HasMany(t=>t.ExaminerOfTermPapers)
-            .WithMany(t=>t.Examiner);
+            .WithMany(t=>t.Examiners);
+
+        modelBuilder.Entity<TermPaperResponsibilities>()
+            .HasOne(t => t.Tabulator);
     }
 }
