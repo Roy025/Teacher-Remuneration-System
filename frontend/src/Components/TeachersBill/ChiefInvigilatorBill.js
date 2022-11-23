@@ -30,6 +30,9 @@ const ChiefInvigilatorBill = () => {
   const submit = async () => {
     console.log(exam);
   };
+  const HandleSem = (child, exam, setExam) => {
+    
+  }
   return (
     <>
       <Links />
