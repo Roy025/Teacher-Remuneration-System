@@ -32,6 +32,9 @@ function CreateCourse() {
     {
       name: "Theory",
     },
+    {
+      name: "TermPaper",
+    },
   ]);
   const [levelList, setLevelList] = useState([
     {

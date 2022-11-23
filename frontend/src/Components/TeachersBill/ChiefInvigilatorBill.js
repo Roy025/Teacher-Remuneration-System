@@ -1,70 +1,110 @@
-// import React, {useState} from 'react';
-// import Links from "./Links";
-// import "./TeachersBill.css";
-// import "./FormButton.css";
+import React, { useState } from "react";
+import Links from "./Links";
+import "./TeachersBill.css";
+import "./FormButton.css";
+import DropdownNoTitleTeacher from "../../Functions/DropdownNoTitleTeacher";
 
-// import Dropdown, {
-//   semesterOptions,
-//   semesterTitle,
-//   sessionTitle,
-//   sessionOptions,
-// } from "../SampleDropdown/Dropdown";
-// import "../SampleDropdown/styles.css";
-// import InvigilationComp from "./InvigilationComp";
+const ChiefInvigilatorBill = () => {
 
-// const ChiefInvigilatorBill = () => {
-//   const [invigilation, setInvigilation] = useState([
-//     {
-//       course: "",
-//       names: [""],
-//     },
-//   ]);
+  const [selectedSemester, setSelectedSemester] = useState("");
+  const [selectedSession, setSelectedSession] = useState("");
+  const [sessionOptions, setSessionOptions] = useState([
+    { name: "2016-17" },
+    { name: "2017-18" },
+    { name: "2018-19" },
+    { name: "2019-20" },
+    { name: "2020-21" },
+  ]);
 
-//   const [exam, setExam] = useState({
-//     session: "",
-//     semester: "",
-//   });
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//   };
-//   const submit = async () => {
-//     console.log(exam);
-//   };
-//   return (
-//     <>
-//       <Links />
-//       <div className="FullFormPage">
-//         <form className="Form" onSubmit={handleSubmit}>
-//           <div className="DropdownformRow">
-//             <div className="FormSubRow">
-//               <Dropdown
-//                 options={sessionOptions}
-//                 dropdownTitle={sessionTitle}
-//                 handleData={(child) => HandleSem(child, exam, setExam)}
-//               />
-//             </div>
-//             <div className="FormSubRow">
-//               <Dropdown
-//                 options={semesterOptions}
-//                 dropdownTitle={semesterTitle}
-//                 handleData={(child) => HandleSem(child, exam, setExam)}
-//               />
-//             </div>
-//           </div>
+  const [semesterOptions, setSemesterOptions] = useState([
+    { name: "1st" },
+    { name: "2nd" },
+    { name: "3rd" },
+    { name: "4th" },
+    { name: "5th" },
+    { name: "6th" },
+    { name: "7th" },
+    { name: "8th" },
+  ]);
 
-//           <div className="formRow">
-//             <label className="Label">Invigilation</label>
-//             <InvigilationComp tag={"Invigilator's name"} invigilation={invigilation} setInvigilation={setInvigilation}/>
-//           </div>
-//           <div className="formRow SubmitRow">
-//             <button type="submit" className="submitButton" onClick={submit}>
-//               Submit
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </>
-//   );
-// };
+  const [data, setData] = useState([
+    {
+      courseID: "",
+      teacherID: "",
+    },
+  ]);
 
-// export default ChiefInvigilatorBill;
+  const [sessionAvailable, setSessionAvailable] = useState(false);
+  const [semesterAvailable, setSemesterAvailable] = useState(false);
+
+  const [exam, setExam] = useState({
+    session: "",
+    semester: "",
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+  const submit = async () => {
+    console.log(exam);
+  };
+
+  // handle session & semester
+  const handleSession = (propName, option) => {
+    const newData = { ...data };
+    newData.session = option.name;
+    setData(newData);
+    setSessionAvailable(true)
+  };
+
+  const handleSemester = (propName, option) => {
+    const newData = { ...data };
+    newData.semester = option.name;
+    setData(newData);
+    setSemesterAvailable(true)
+  };
+
+
+  return (
+    <>
+      <Links />
+      <div className="FullFormPage">
+        <form className="Form" onSubmit={handleSubmit}>
+          <div className="DropdownformRow">
+            <div className="FormSubRow">
+              <label className="AccountLabel">Session</label>
+              <DropdownNoTitleTeacher
+                options={sessionOptions}
+                propName="session"
+                handleData={handleSession}
+                selected={selectedSession}
+                setSelected={setSelectedSession}
+              />
+            </div>
+            <div className="FormSubRow">
+              <label className="AccountLabel">Semester</label>
+              <DropdownNoTitleTeacher
+                options={semesterOptions}
+                propName="semester"
+                handleData={handleSemester}
+                selected={selectedSemester}
+                setSelected={setSelectedSemester}
+              />
+            </div>
+          </div>
+
+          <div className="formRow">
+            <label className="Label">Invigilation</label>
+            
+          </div>
+          <div className="formRow SubmitRow">
+            <button type="submit" className="submitButton" onClick={submit}>
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
+  );
+};
+
+export default ChiefInvigilatorBill;
