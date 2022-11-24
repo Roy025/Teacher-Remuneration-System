@@ -95,6 +95,7 @@ public static class DependencyInjectionSetup
         services.AddScoped<IExamService, ExamService>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<IGeneralService, GeneralService>();
+        services.AddScoped<IBillService, BillService>();
 
         // Automapper configuration
         services.AddAutoMapper(typeof(MappingProfiles));

@@ -32,7 +32,7 @@ const FinalTeacherBill = () => {
       criteria: "Question setting",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -41,7 +41,7 @@ const FinalTeacherBill = () => {
       criteria: "Question moderation",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -50,7 +50,7 @@ const FinalTeacherBill = () => {
       criteria: "Answerpaper checking",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -59,7 +59,7 @@ const FinalTeacherBill = () => {
       criteria: "Termtest",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -68,7 +68,7 @@ const FinalTeacherBill = () => {
       criteria: "Practical exam",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -77,7 +77,7 @@ const FinalTeacherBill = () => {
       criteria: "Tabulation",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -86,7 +86,7 @@ const FinalTeacherBill = () => {
       criteria: "Viva",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -95,7 +95,7 @@ const FinalTeacherBill = () => {
       criteria: "Scrutiny",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -104,7 +104,7 @@ const FinalTeacherBill = () => {
       criteria: "Exam committee member payment",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -113,7 +113,7 @@ const FinalTeacherBill = () => {
       criteria: "Question typing",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -122,7 +122,7 @@ const FinalTeacherBill = () => {
       criteria: "Invigilation",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -131,7 +131,7 @@ const FinalTeacherBill = () => {
       criteria: "Field work/ Project/ Term paper/ Seminar/ Monograph/ Thesis",
       courses: [
         {
-          name: "",
+          code: "",
         },
       ],
       amount: "",
@@ -147,7 +147,7 @@ const FinalTeacherBill = () => {
           <td className="criteriaCol">{data.criteria}</td>
           <td className="coursesCol">
             {data.courses.map((info, ind) => {
-              return <p className="courses">{info.name}" "</p>;
+              return <p className="courses">{info.code}" "</p>;
             })}
           </td>
           <td className="amountCol">৳{data.amount}</td>
