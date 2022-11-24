@@ -199,7 +199,7 @@ const TeacherBill = () => {
     setListOfCourses(response.data.data)
     return response;
   };
-  useQuery(["course-list"], () => fetchCourse(), {
+  useQuery(["nohomo-list"], () => fetchCourse(), {
     enabled: !!sessionAvailable && !!semesterAvailable && !!departmentAvailable,
   });
 

@@ -1,5 +1,4 @@
 using AutoMapper;
-using Business.Data.Migrations;
 using Business.Specifications.ExamSpecifications;
 using Core.DTOs.CourseDTOs;
 using Core.DTOs.ExamDTOs;
@@ -42,6 +41,11 @@ public class ExamService : IExamService
         {
             //update first
             _unitOfWork.Repository<Exam>().Delete(exam);
+            var uOW = await _unitOfWork.Complete();
+            if (uOW <= 0)
+            {
+                throw new BadRequestException();
+            }
         }
 
         //create new
@@ -52,7 +56,10 @@ public class ExamService : IExamService
             DepartmentId = user.DepartmentId,
             Chairman = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.Chairman.Id),
             CheifInvigilator = await _unitOfWork.Repository<Teacher>().GetByIdAsync(examCreateFromDirectorDto.CheifInvigilator.Id),
-            Members = new List<Teacher>()
+            Members = new List<Teacher>(),
+            LabCourses = new List<LabCourseResponsibles>(),
+            TheoryCourses = new List<TheoryCourseResponsibles>(),
+            TermPapers = new List<TermPaperResponsibilities>()
         };
         foreach (var member in examCreateFromDirectorDto.Members)
         {
@@ -61,40 +68,7 @@ public class ExamService : IExamService
             {
                 exam.Members.Add(teacher);
             }
-            foreach (var course in examCreateFromDirectorDto.Courses)
-            {
-                var courseExam = await _unitOfWork.Repository<Course>().GetByIdAsync(course.Id);
-                if (courseExam != null)
-                {
-                    if (courseExam.Type.Equals("Theory"))
-                    {
-                        var theoryCourse = new TheoryCourseResponsibles();
-                        theoryCourse.Course = courseExam;
-                        // theoryCourse.Exam = exam;
-                        exam.TheoryCourses.Add(theoryCourse);
-                    }
-                    else if (courseExam.Type.Equals("Lab"))
-                    {
-                        var labCourse = new LabCourseResponsibles();
-                        labCourse.Course = courseExam;
-                        // labCourse.Exam = exam;
-                        exam.LabCourses.Add(labCourse);
-                    }
-                    else if (courseExam.Type.Equals("TermPaper"))
-                    {
-                        var termPaper = new TermPaperResponsibilities();
-                        termPaper.Course = courseExam;
-                        // termPaper.Exam = exam;
-                        exam.TermPapers.Add(termPaper);
-                    }
-                    else
-                    {
-                        throw new BadRequestException("Course type is not valid");
-                    }
-                }
 
-            }
-            _unitOfWork.Repository<Exam>().Add(exam);
         }
         foreach (var course in examCreateFromDirectorDto.Courses)
         {
@@ -697,8 +671,8 @@ public class ExamService : IExamService
                 if (course == null)
                     throw new NotFoundException("Course not found");
                 if (course.TermTestAnswerCheckerId == user.UserId)
-                    
-                course.NumberOfTermTestParticipants = termTestData.NumberOfStudents;
+
+                    course.NumberOfTermTestParticipants = termTestData.NumberOfStudents;
             }
         }
 
@@ -722,8 +696,8 @@ public class ExamService : IExamService
                 if (course == null)
                     throw new NotFoundException("Course not found");
                 if (course.AnswerPaperCheckerPartBId == user.UserId)
-                    
-                course.NumberOfExamineePartB = item.NumberOfStudents;
+
+                    course.NumberOfExamineePartB = item.NumberOfStudents;
             }
         }
 
@@ -735,8 +709,8 @@ public class ExamService : IExamService
                 if (course == null)
                     throw new NotFoundException("Course not found");
                 if (course.QuestionScrutinizerPartAId == user.UserId)
-                    
-                course.NumberOfStudentsScrutinizedPartA = item.NumberOfStudents;
+
+                    course.NumberOfStudentsScrutinizedPartA = item.NumberOfStudents;
             }
         }
 
@@ -748,8 +722,8 @@ public class ExamService : IExamService
                 if (course == null)
                     throw new NotFoundException("Course not found");
                 if (course.QuestionScrutinizerPartBId == user.UserId)
-                    
-                course.NumberOfStudentsScrutinizedPartB = item.NumberOfStudents;
+
+                    course.NumberOfStudentsScrutinizedPartB = item.NumberOfStudents;
             }
         }
 
@@ -761,8 +735,8 @@ public class ExamService : IExamService
                 if (course == null)
                     throw new NotFoundException("Course not found");
                 if (course.ExaminerId == user.UserId)
-                    
-                course.NumberOfExaminee = item.NumberOfStudents;
+
+                    course.NumberOfExaminee = item.NumberOfStudents;
             }
         }
 
@@ -774,8 +748,8 @@ public class ExamService : IExamService
                 if (course == null)
                     throw new NotFoundException("Course not found");
                 if (course.VivaExaminerId == user.UserId)
-                    
-                course.NumberOfVivaParticipants = item.NumberOfStudents;
+
+                    course.NumberOfVivaParticipants = item.NumberOfStudents;
             }
         }
 

@@ -20,7 +20,7 @@ public class BillResponseDto
 public class BillRow
 {
     public string Criteria { get; set; }  
-    ICollection<string> Courses { get; set; } = new List<string>();
+    public ICollection<string> Courses { get; set; } = new List<string>();
     public Double Amount { get; set; } = 0;
 }
 

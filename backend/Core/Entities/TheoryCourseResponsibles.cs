@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.Entities;
-[Index(nameof(ExamId), nameof(CourseId), IsUnique = true)]
+// [Index(nameof(ExamId), nameof(CourseId), IsUnique = true)]
 public class TheoryCourseResponsibles : BaseEntity
 {
     // Chairman's responsibility

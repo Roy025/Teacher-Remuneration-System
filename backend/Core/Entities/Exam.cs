@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.Entities;
 
-[Index(nameof(DepartmentId), nameof(Session), nameof(Semester), IsUnique = true)]
+// [Index(nameof(DepartmentId), nameof(Session), nameof(Semester), IsUnique = true)]
 public class Exam : BaseEntity
 {
     public Guid DepartmentId { get; set; }

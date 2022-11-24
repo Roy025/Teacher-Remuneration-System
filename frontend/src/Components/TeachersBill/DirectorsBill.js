@@ -57,7 +57,6 @@ const DirectorsBill = () => {
     setSelectedSemester("");
     setSelectedChairman("");
     setSelectedChiefInvigilator("");
-    window.location.reload(true);
     setSelectedMembers([
       {
         id: "",

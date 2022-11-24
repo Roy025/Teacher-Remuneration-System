@@ -99,8 +99,7 @@ namespace Business.Data.Migrations
 
                     b.HasIndex("CheifInvigilatorId");
 
-                    b.HasIndex("DepartmentId", "Session", "Semester")
-                        .IsUnique();
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Exams");
                 });
@@ -145,10 +144,9 @@ namespace Business.Data.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("ExamId");
 
-                    b.HasIndex("ExamId", "CourseId", "TeacherId")
-                        .IsUnique();
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Invigilators");
                 });
@@ -187,14 +185,13 @@ namespace Business.Data.Migrations
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("ExamId");
+
                     b.HasIndex("ExaminerId");
 
                     b.HasIndex("TabulatorId");
 
                     b.HasIndex("VivaExaminerId");
-
-                    b.HasIndex("ExamId", "CourseId")
-                        .IsUnique();
 
                     b.ToTable("LabCoursesResponsibles");
                 });
@@ -255,14 +252,9 @@ namespace Business.Data.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("TheoryCourseResponsiblesId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("TheoryCourseResponsiblesId");
 
                     b.ToTable("Teachers");
                 });
@@ -367,6 +359,8 @@ namespace Business.Data.Migrations
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("ExamId");
+
                     b.HasIndex("QuestionModeratorId");
 
                     b.HasIndex("QuestionScrutinizerPartAId");
@@ -378,9 +372,6 @@ namespace Business.Data.Migrations
                     b.HasIndex("TabulatorId");
 
                     b.HasIndex("TermTestAnswerCheckerId");
-
-                    b.HasIndex("ExamId", "CourseId")
-                        .IsUnique();
 
                     b.ToTable("TheoryCoursesResponsibles");
                 });
@@ -415,8 +406,7 @@ namespace Business.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId", "Code")
-                        .IsUnique();
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Courses");
                 });
@@ -600,10 +590,6 @@ namespace Business.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.TheoryCourseResponsibles", null)
-                        .WithMany("QuestionSetters")
-                        .HasForeignKey("TheoryCourseResponsiblesId");
-
                     b.Navigation("Department");
                 });
 
@@ -747,7 +733,6 @@ namespace Business.Data.Migrations
                     b.HasOne("Core.Entities.Teacher", null)
                         .WithMany()
                         .HasForeignKey("ExaminersId")
-
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -763,7 +748,6 @@ namespace Business.Data.Migrations
                     b.HasOne("Core.Entities.TheoryCourseResponsibles", null)
                         .WithMany()
                         .HasForeignKey("QuestionSettersOfCoursesId")
-
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -798,11 +782,6 @@ namespace Business.Data.Migrations
                     b.Navigation("ChairmanOfExams");
 
                     b.Navigation("ChiefInvigilatorOfExams");
-                });
-
-            modelBuilder.Entity("Core.Entities.TheoryCourseResponsibles", b =>
-                {
-                    b.Navigation("QuestionSetters");
                 });
 #pragma warning restore 612, 618
         }

@@ -26,134 +26,115 @@ const FinalTeacherBill = () => {
   ]);
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedSession, setSelectedSession] = useState("");
+  
 
   const [tableData, setTableData] = useState({
     qSetting: {
       criteria: "Question setting",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     qMod: {
       criteria: "Question moderation",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     ansCheck: {
       criteria: "Answerpaper checking",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     termTest: {
       criteria: "Termtest",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     practical: {
       criteria: "Practical exam",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     tabulation: {
       criteria: "Tabulation",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     viva: {
       criteria: "Viva",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     scrutiny: {
       criteria: "Scrutiny",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     ecmMember: {
       criteria: "Exam committee member payment",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     qTyping: {
       criteria: "Question typing",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     invi: {
       criteria: "Invigilation",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
     termPaper: {
       criteria: "Field work/ Project/ Term paper/ Seminar/ Monograph/ Thesis",
       courses: [
-        {
-          code: "",
-        },
+        "",
       ],
       amount: "",
     },
   });
   const [rows, setRows] = useState([]);
+  const [total, settotal] = useState(0);
   const updateTable = (tableData) => {
     const temp = []
+    let count = 0;
     for (let prop in tableData) {
       const data = tableData[prop];
+      count += data.amount
       temp.push(
         <tr>
           <td className="criteriaCol">{data.criteria}</td>
           <td className="coursesCol">
             {data.courses.map((info, ind) => {
-              return <p className="courses">{info.code}" "</p>;
+              return <p className="courses">{info} </p>;
             })}
           </td>
           <td className="amountCol">৳{data.amount}</td>
         </tr>
       );
     }
+    settotal(count);
     setRows(temp)
   };
 
@@ -174,19 +155,24 @@ const FinalTeacherBill = () => {
   const teachername = "Ahsan Habib";
   const teachertitle = "Assistant professor";
   const teacherdepartment = "Software Engineering";
-  const teacheraddress = "Surma";
 
   //fetch and update final bill
 
-  // const fetchPaymentData = async (id) => {
-  //   const response = await axios.get(`/department?institute=${id}`);
-  //   console.log(response.data.data);
-  //   return response;
-  // };
+  const fetchPaymentData = async (id) => {
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.get(`Bill?Semester=${selectedSemester}&Session=${selectedSession}`, config);
+    console.log(response.data.data);
+    setTableData(response.data.data)
+    return response;
+  };
 
-  // useQuery(["dept-list", data.id], () => fetchPaymentData(data.id), {
-  //   enabled: !!semesterAvailable && !!sessionAvailable,
-  // });
+  useQuery(["payment-data", data.id], () => fetchPaymentData(data.id), {
+    enabled: !!semesterAvailable && !!sessionAvailable,
+  });
 
   // handle session & semester
   const handleSession = (propName, option) => {
@@ -202,6 +188,27 @@ const FinalTeacherBill = () => {
     setData(newData);
     setSemesterAvailable(true);
   };
+
+  const [richData, setRichData] = useState({});
+
+  //fetch teacher data
+
+  const fetchRich = async () => {
+    const id = localStorage.getItem("id");
+    const config = {
+      headers: {
+        Authorization: localStorage.getItem("accesstoken"),
+      },
+    };
+    const response = await axios.get(`/Teacher/${id}`);
+    console.log(response.data.data);
+    setRichData(response.data.data)
+    return response;
+  };
+
+  useQuery(["rich-data"], () => fetchRich(), {
+    enabled: !!semesterAvailable && !!sessionAvailable,
+  });
 
   const ref = useRef();
   return (
@@ -245,31 +252,19 @@ const FinalTeacherBill = () => {
             <div className="smallTitle">
               <p>
                 <b>Session:</b>
-                {` ${session}`} <b>Semester:</b>
-                {` ${semester}`}
+                {` ${selectedSession}`} <b>Semester:</b>
+                {` ${selectedSemester}`}
               </p>
             </div>
             <div className="TeacherInfo">
               <div>
-                <b>Name: </b> {` ${teachername}`}
+                <b>Name: </b> {richData.name ? richData.name : ""}
               </div>
               <div>
-                <b>Designation: </b> {` ${teachertitle}`}
+                <b>Designation: </b> {richData.designation ? richData.designation : ""}
               </div>
               <div>
-                <b>Institute: </b> {` ${teacherdepartment}`}
-              </div>
-              <div>
-                <b>Department: </b> {` ${teacherdepartment}`}
-              </div>
-              <div>
-                <b>Address: </b> {` ${teacheraddress}`}
-              </div>
-              <div>
-                <b>Bank Account no.: </b> {` ${teacheraddress}`}
-              </div>
-              <div>
-                <b>Invoice ID: </b> {` ${teacheraddress}`}
+                <b>Department: </b> {richData.department ? richData.department.name : ""}
               </div>
             </div>
             <div>
@@ -284,7 +279,7 @@ const FinalTeacherBill = () => {
                   <tr>
                     <td></td>
                     <td className="netAmount">Total</td>
-                    <td className="amountCol">200 taka</td>
+                    <td className="amountCol">৳{total}</td>
                   </tr>
                 </tbody>
               </table>

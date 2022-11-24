@@ -712,15 +712,15 @@ const ChairmanBill = () => {
             />
           </div>
 
-          <div className="formRow">
-            <label className="Label">Invigilation</label>
-            <ThreeFields
-              options={listOfInstitutes}
-              propName="members"
-              existingData={listOfInvigilators}
-              setExistingData={setListOfInvigilators}
-            />
-          </div>
+              {/* <div className="formRow">
+                <label className="Label">Invigilation</label>
+                <ThreeFields
+                  options={listOfInstitutes}
+                  propName="members"
+                  existingData={listOfInvigilators}
+                  setExistingData={setListOfInvigilators}
+                />
+              </div> */}
 
           {/* <div className="formRow">
             <label className="Label">Thesis(Post-graduate)</label>

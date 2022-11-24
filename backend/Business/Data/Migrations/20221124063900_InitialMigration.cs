@@ -10,6 +10,21 @@ namespace Business.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Role = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Institutes",
                 columns: table => new
                 {
@@ -51,7 +66,8 @@ namespace Business.Data.Migrations
                     Code = table.Column<string>(type: "character varying(7)", maxLength: 7, nullable: false),
                     Title = table.Column<string>(type: "text", nullable: false),
                     Credit = table.Column<decimal>(type: "numeric", nullable: false),
-                    Type = table.Column<string>(type: "text", nullable: false)
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    Level = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,14 +81,34 @@ namespace Business.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    RegistraionNo = table.Column<string>(type: "text", nullable: false),
+                    DepartmentId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teachers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: false),
+                    Role = table.Column<string>(type: "text", nullable: true),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    Institute = table.Column<string>(type: "text", nullable: false),
                     DepartmentId = table.Column<Guid>(type: "uuid", nullable: false),
                     BankAccount = table.Column<string>(type: "text", nullable: true),
                     Designation = table.Column<string>(type: "text", nullable: false),
@@ -124,13 +160,37 @@ namespace Business.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExamTeacher",
+                columns: table => new
+                {
+                    ExamsId = table.Column<Guid>(type: "uuid", nullable: false),
+                    MembersId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExamTeacher", x => new { x.ExamsId, x.MembersId });
+                    table.ForeignKey(
+                        name: "FK_ExamTeacher_Exams_ExamsId",
+                        column: x => x.ExamsId,
+                        principalTable: "Exams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExamTeacher_Teachers_MembersId",
+                        column: x => x.MembersId,
+                        principalTable: "Teachers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Invigilators",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ExamId = table.Column<Guid>(type: "uuid", nullable: false),
                     TeacherId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CourseId = table.Column<Guid>(type: "uuid", nullable: false)
+                    CourseId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -139,8 +199,7 @@ namespace Business.Data.Migrations
                         name: "FK_Invigilators_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Invigilators_Exams_ExamId",
                         column: x => x.ExamId,
@@ -162,9 +221,9 @@ namespace Business.Data.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ExamId = table.Column<Guid>(type: "uuid", nullable: false),
                     CourseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ExaminerId = table.Column<Guid>(type: "uuid", nullable: false),
-                    TabulatorId = table.Column<Guid>(type: "uuid", nullable: false),
-                    VivaExaminerId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ExaminerId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TabulatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    VivaExaminerId = table.Column<Guid>(type: "uuid", nullable: true),
                     NumberOfRegisteredStudents = table.Column<int>(type: "integer", nullable: true),
                     NumberOfExaminee = table.Column<int>(type: "integer", nullable: true),
                     NumberOfVivaParticipants = table.Column<int>(type: "integer", nullable: true)
@@ -188,20 +247,49 @@ namespace Business.Data.Migrations
                         name: "FK_LabCoursesResponsibles_Teachers_ExaminerId",
                         column: x => x.ExaminerId,
                         principalTable: "Teachers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_LabCoursesResponsibles_Teachers_TabulatorId",
                         column: x => x.TabulatorId,
                         principalTable: "Teachers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_LabCoursesResponsibles_Teachers_VivaExaminerId",
                         column: x => x.VivaExaminerId,
                         principalTable: "Teachers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TermPaperResponsibilities",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TabulatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsIncludedInExamCommittee = table.Column<bool>(type: "boolean", nullable: false),
+                    NumberOfRegisteredStudents = table.Column<int>(type: "integer", nullable: true),
+                    ExamId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TermPaperResponsibilities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TermPaperResponsibilities_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TermPaperResponsibilities_Exams_ExamId",
+                        column: x => x.ExamId,
+                        principalTable: "Exams",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TermPaperResponsibilities_Teachers_TabulatorId",
+                        column: x => x.TabulatorId,
+                        principalTable: "Teachers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -211,14 +299,11 @@ namespace Business.Data.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ExamId = table.Column<Guid>(type: "uuid", nullable: false),
                     CourseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    QuestionSetter1Id = table.Column<Guid>(type: "uuid", nullable: true),
-                    QuestionSetter2Id = table.Column<Guid>(type: "uuid", nullable: true),
                     QuestionModeratorId = table.Column<Guid>(type: "uuid", nullable: true),
                     AnswerPaperCheckerPartAId = table.Column<Guid>(type: "uuid", nullable: true),
                     AnswerPaperCheckerPartBId = table.Column<Guid>(type: "uuid", nullable: true),
                     TermTestAnswerCheckerId = table.Column<Guid>(type: "uuid", nullable: true),
                     TabulatorId = table.Column<Guid>(type: "uuid", nullable: true),
-                    VivaExaminerId = table.Column<Guid>(type: "uuid", nullable: true),
                     QuestionScrutinizerPartAId = table.Column<Guid>(type: "uuid", nullable: true),
                     QuestionScrutinizerPartBId = table.Column<Guid>(type: "uuid", nullable: true),
                     QuestionTyperId = table.Column<Guid>(type: "uuid", nullable: true),
@@ -226,7 +311,10 @@ namespace Business.Data.Migrations
                     NumberOfExamineePartA = table.Column<int>(type: "integer", nullable: true),
                     NumberOfExamineePartB = table.Column<int>(type: "integer", nullable: true),
                     NumberOfTermTestParticipants = table.Column<int>(type: "integer", nullable: true),
-                    NumberOfVivaParticipants = table.Column<int>(type: "integer", nullable: true)
+                    NumberOfVivaParticipants = table.Column<int>(type: "integer", nullable: true),
+                    NumberOfStudentsScrutinizedPartA = table.Column<int>(type: "integer", nullable: true),
+                    NumberOfStudentsScrutinizedPartB = table.Column<int>(type: "integer", nullable: true),
+                    NumberOfPracticalExamParticipants = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -269,16 +357,6 @@ namespace Business.Data.Migrations
                         principalTable: "Teachers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_TheoryCoursesResponsibles_Teachers_QuestionSetter1Id",
-                        column: x => x.QuestionSetter1Id,
-                        principalTable: "Teachers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_TheoryCoursesResponsibles_Teachers_QuestionSetter2Id",
-                        column: x => x.QuestionSetter2Id,
-                        principalTable: "Teachers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_TheoryCoursesResponsibles_Teachers_QuestionTyperId",
                         column: x => x.QuestionTyperId,
                         principalTable: "Teachers",
@@ -293,18 +371,84 @@ namespace Business.Data.Migrations
                         column: x => x.TermTestAnswerCheckerId,
                         principalTable: "Teachers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeacherTermPaperResponsibilities",
+                columns: table => new
+                {
+                    SupervisorOfTermPapersId = table.Column<Guid>(type: "uuid", nullable: false),
+                    SupervisorsId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherTermPaperResponsibilities", x => new { x.SupervisorOfTermPapersId, x.SupervisorsId });
                     table.ForeignKey(
-                        name: "FK_TheoryCoursesResponsibles_Teachers_VivaExaminerId",
-                        column: x => x.VivaExaminerId,
+                        name: "FK_TeacherTermPaperResponsibilities_Teachers_SupervisorsId",
+                        column: x => x.SupervisorsId,
                         principalTable: "Teachers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherTermPaperResponsibilities_TermPaperResponsibilities_~",
+                        column: x => x.SupervisorOfTermPapersId,
+                        principalTable: "TermPaperResponsibilities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeacherTermPaperResponsibilities1",
+                columns: table => new
+                {
+                    ExaminerOfTermPapersId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ExaminersId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherTermPaperResponsibilities1", x => new { x.ExaminerOfTermPapersId, x.ExaminersId });
+                    table.ForeignKey(
+                        name: "FK_TeacherTermPaperResponsibilities1_Teachers_ExaminersId",
+                        column: x => x.ExaminersId,
+                        principalTable: "Teachers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherTermPaperResponsibilities1_TermPaperResponsibilities~",
+                        column: x => x.ExaminerOfTermPapersId,
+                        principalTable: "TermPaperResponsibilities",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeacherTheoryCourseResponsibles",
+                columns: table => new
+                {
+                    QuestionSettersId = table.Column<Guid>(type: "uuid", nullable: false),
+                    QuestionSettersOfCoursesId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherTheoryCourseResponsibles", x => new { x.QuestionSettersId, x.QuestionSettersOfCoursesId });
+                    table.ForeignKey(
+                        name: "FK_TeacherTheoryCourseResponsibles_Teachers_QuestionSettersId",
+                        column: x => x.QuestionSettersId,
+                        principalTable: "Teachers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherTheoryCourseResponsibles_TheoryCoursesResponsibles_Q~",
+                        column: x => x.QuestionSettersOfCoursesId,
+                        principalTable: "TheoryCoursesResponsibles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_DepartmentId_Code",
+                name: "IX_Courses_DepartmentId",
                 table: "Courses",
-                columns: new[] { "DepartmentId", "Code" },
-                unique: true);
+                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_InstituteId",
@@ -322,9 +466,19 @@ namespace Business.Data.Migrations
                 column: "CheifInvigilatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exams_DepartmentId_Session_Semester",
+                name: "IX_Exams_DepartmentId",
                 table: "Exams",
-                columns: new[] { "DepartmentId", "Session", "Semester" },
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExamTeacher_MembersId",
+                table: "ExamTeacher",
+                column: "MembersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Institutes_Name",
+                table: "Institutes",
+                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -333,10 +487,9 @@ namespace Business.Data.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invigilators_ExamId_CourseId_TeacherId",
+                name: "IX_Invigilators_ExamId",
                 table: "Invigilators",
-                columns: new[] { "ExamId", "CourseId", "TeacherId" },
-                unique: true);
+                column: "ExamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invigilators_TeacherId",
@@ -349,10 +502,9 @@ namespace Business.Data.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LabCoursesResponsibles_ExamId_CourseId",
+                name: "IX_LabCoursesResponsibles_ExamId",
                 table: "LabCoursesResponsibles",
-                columns: new[] { "ExamId", "CourseId" },
-                unique: true);
+                column: "ExamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LabCoursesResponsibles_ExaminerId",
@@ -370,9 +522,44 @@ namespace Business.Data.Migrations
                 column: "VivaExaminerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Students_DepartmentId",
+                table: "Students",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Teachers_DepartmentId",
                 table: "Teachers",
                 column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherTermPaperResponsibilities_SupervisorsId",
+                table: "TeacherTermPaperResponsibilities",
+                column: "SupervisorsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherTermPaperResponsibilities1_ExaminersId",
+                table: "TeacherTermPaperResponsibilities1",
+                column: "ExaminersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherTheoryCourseResponsibles_QuestionSettersOfCoursesId",
+                table: "TeacherTheoryCourseResponsibles",
+                column: "QuestionSettersOfCoursesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TermPaperResponsibilities_CourseId",
+                table: "TermPaperResponsibilities",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TermPaperResponsibilities_ExamId",
+                table: "TermPaperResponsibilities",
+                column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TermPaperResponsibilities_TabulatorId",
+                table: "TermPaperResponsibilities",
+                column: "TabulatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TheoryCoursesResponsibles_AnswerPaperCheckerPartAId",
@@ -390,10 +577,9 @@ namespace Business.Data.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TheoryCoursesResponsibles_ExamId_CourseId",
+                name: "IX_TheoryCoursesResponsibles_ExamId",
                 table: "TheoryCoursesResponsibles",
-                columns: new[] { "ExamId", "CourseId" },
-                unique: true);
+                column: "ExamId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TheoryCoursesResponsibles_QuestionModeratorId",
@@ -411,16 +597,6 @@ namespace Business.Data.Migrations
                 column: "QuestionScrutinizerPartBId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TheoryCoursesResponsibles_QuestionSetter1Id",
-                table: "TheoryCoursesResponsibles",
-                column: "QuestionSetter1Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TheoryCoursesResponsibles_QuestionSetter2Id",
-                table: "TheoryCoursesResponsibles",
-                column: "QuestionSetter2Id");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TheoryCoursesResponsibles_QuestionTyperId",
                 table: "TheoryCoursesResponsibles",
                 column: "QuestionTyperId");
@@ -434,20 +610,36 @@ namespace Business.Data.Migrations
                 name: "IX_TheoryCoursesResponsibles_TermTestAnswerCheckerId",
                 table: "TheoryCoursesResponsibles",
                 column: "TermTestAnswerCheckerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TheoryCoursesResponsibles_VivaExaminerId",
-                table: "TheoryCoursesResponsibles",
-                column: "VivaExaminerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Admins");
+
+            migrationBuilder.DropTable(
+                name: "ExamTeacher");
+
+            migrationBuilder.DropTable(
                 name: "Invigilators");
 
             migrationBuilder.DropTable(
                 name: "LabCoursesResponsibles");
+
+            migrationBuilder.DropTable(
+                name: "Students");
+
+            migrationBuilder.DropTable(
+                name: "TeacherTermPaperResponsibilities");
+
+            migrationBuilder.DropTable(
+                name: "TeacherTermPaperResponsibilities1");
+
+            migrationBuilder.DropTable(
+                name: "TeacherTheoryCourseResponsibles");
+
+            migrationBuilder.DropTable(
+                name: "TermPaperResponsibilities");
 
             migrationBuilder.DropTable(
                 name: "TheoryCoursesResponsibles");

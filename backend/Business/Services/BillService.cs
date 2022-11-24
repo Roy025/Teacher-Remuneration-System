@@ -26,13 +26,16 @@ namespace Business.Services
             var exams = await _unitOfWork.Repository<Exam>().ListAllAsyncWithSpec(spec);
             var bill = new BillResponseDto();
 
+
             //QuestionSetting
+            ICollection<string> courseList = new List<string>();
             var amountForQSetting = 0m;
             foreach (var exam in exams)
             {
                 var courses = exam.TheoryCourses.Where(x => x.QuestionSetters.Any(y => y.Id == user.UserId)).ToList();
                 foreach (var course in courses)
                 {
+                    courseList.Add(course.Course.Code);
 
                     if (course.Course.Type == "Undergrad")
                     {
@@ -61,19 +64,23 @@ namespace Business.Services
             bill.QSetting = new BillRow
             {
                 Criteria = "Question Setting",
+                Courses = courseList,
                 Amount = (Double)amountForQSetting
             };
 
             //Question Modifying
+            courseList = new List<string>();
             var amountForQMod = 0m;
             foreach (var exam in exams)
             {
+
 
                 var filteredExam = exam.TheoryCourses.Where(x => x.QuestionModeratorId == user.UserId).ToList();
                 Decimal tk = 0m;
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
+                    courseList.Add(x.Course.Code);
                     if (x.Course.Type == "Undergrad")
                     {
                         flag = false;
@@ -119,11 +126,15 @@ namespace Business.Services
             bill.QMod = new BillRow
             {
                 Criteria = "Question moderation",
+                Courses = courseList,
+
                 Amount = (Double)amountForQMod
             };
 
 
             //Answer Checking
+            courseList = new List<string>();
+
             var amountForAnsCheck = 0;
             foreach (var exam in exams)
             {
@@ -133,7 +144,8 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
-                    if(x.NumberOfExamineePartA == null)
+                    courseList.Add(x.Course.Code);
+                    if (x.NumberOfExamineePartA == null)
                         x.NumberOfExamineePartA = 0;
                     if (x.Course.Type == "Undergrad")
                     {
@@ -179,7 +191,9 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
-                    if(x.NumberOfExamineePartB == null)
+                    courseList.Add(x.Course.Code);
+
+                    if (x.NumberOfExamineePartB == null)
                         x.NumberOfExamineePartB = 0;
                     if (x.Course.Type == "Undergrad")
                     {
@@ -220,10 +234,14 @@ namespace Business.Services
             bill.AnsCheck = new BillRow
             {
                 Criteria = "Answerpaper checking",
+                Courses = courseList,
+
                 Amount = amountForAnsCheck
             };
 
             // termTest
+            courseList = new List<string>();
+
             var amountForTermTest = 0;
             foreach (var exam in exams)
             {
@@ -233,6 +251,8 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
+                    courseList.Add(x.Course.Code);
+
                     if (x.Course.Type == "Undergrad")
                     {
                         flag = false;
@@ -257,10 +277,14 @@ namespace Business.Services
             bill.TermTest = new BillRow
             {
                 Criteria = "Termtest",
+                Courses = courseList,
+
                 Amount = amountForTermTest
             };
 
             // Lab
+            courseList = new List<string>();
+
             var amountForLab = 0;
             foreach (var exam in exams)
             {
@@ -270,6 +294,8 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
+                    courseList.Add(x.Course.Code);
+
                     if (x.Course.Type == "Undergrad")
                     {
                         flag = false;
@@ -293,10 +319,14 @@ namespace Business.Services
             bill.Practical = new BillRow
             {
                 Criteria = "Practical exam",
+                Courses = courseList,
+
                 Amount = amountForLab
             };
 
             // Tabulation
+            courseList = new List<string>();
+
             var amountForTabulation = 0;
             foreach (var exam in exams)
             {
@@ -309,10 +339,14 @@ namespace Business.Services
             bill.Tabulation = new BillRow
             {
                 Criteria = "Tabulation",
+                Courses = courseList,
+
                 Amount = amountForTabulation
             };
 
             //Viva
+            courseList = new List<string>();
+
             var amountForViva = 0;
             foreach (var exam in exams)
             {
@@ -322,6 +356,8 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
+                    courseList.Add(x.Course.Code);
+
                     if (x.Course.Type == "Undergrad")
                     {
                         flag = false;
@@ -338,10 +374,13 @@ namespace Business.Services
             bill.Viva = new BillRow
             {
                 Criteria = "Viva",
+                Courses = courseList,
                 Amount = amountForViva
             };
 
             // scrutiny
+            courseList = new List<string>();
+
             var amountForScrutiny = 0;
             foreach (var exam in exams)
             {
@@ -351,6 +390,8 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
+                    courseList.Add(x.Course.Code);
+
                     if (x.Course.Type == "Undergrad")
                     {
                         flag = false;
@@ -379,6 +420,8 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
+                    courseList.Add(x.Course.Code);
+
                     if (x.Course.Type == "Undergrad")
                     {
                         flag = false;
@@ -402,11 +445,14 @@ namespace Business.Services
             bill.Scrutiny = new BillRow
             {
                 Criteria = "Scrutiny",
+                Courses = courseList,
                 Amount = amountForScrutiny
             };
 
             // ecm members
-            var amountForEcm = 1500;
+            courseList = new List<string>();
+
+            var amountForEcm = 1400;
             foreach (var exam in exams)
             {
 
@@ -436,21 +482,30 @@ namespace Business.Services
             bill.EcmMember = new BillRow
             {
                 Criteria = "Exam committee member payment",
+                Courses = courseList,
                 Amount = amountForEcm
             };
 
 
             // Question Type
+            courseList = new List<string>();
+
             var amountForQuestionType = 0;
             foreach (var exam in exams)
             {
+
                 var filteredExam = exam.TheoryCourses.Where(x => x.QuestionTyperId == user.UserId).ToList();
+                foreach (var x in filteredExam)
+                {
+                    courseList.Add(x.Course.Code);
+                }
 
                 amountForQuestionType += (int)1000 * filteredExam.Count;
             }
             bill.QTyping = new BillRow
             {
                 Criteria = "Question typing",
+                Courses = courseList,
                 Amount = amountForQuestionType
             };
 

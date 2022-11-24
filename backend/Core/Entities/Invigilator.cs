@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.Entities
 {
-    [Index(nameof(ExamId), nameof(CourseId), nameof(TeacherId), IsUnique = true)]
+    // [Index(nameof(ExamId), nameof(CourseId), nameof(TeacherId), IsUnique = true)]
     public class Invigilator : BaseEntity
     {
         public Guid ExamId { get; set; } = Guid.Empty;

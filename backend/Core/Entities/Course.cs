@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-[Index(nameof(DepartmentId), nameof(Code), IsUnique = true)]
+// [Index(nameof(DepartmentId), nameof(Code), IsUnique = true)]
 public class Course : BaseEntity
 {
     public Guid DepartmentId { get; set; }
