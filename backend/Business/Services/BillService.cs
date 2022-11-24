@@ -98,7 +98,10 @@ namespace Business.Services
                         }
                     }
                 }
-                tk = tk / exam.Members.Count;
+                if (exam.Members.Count > 0)
+                    tk = tk / exam.Members.Count;
+                else
+                    tk = 0;
                 if (!flag)
                 {
                     if (tk < 2400) amountForQMod = 2400;
@@ -130,6 +133,8 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
+                    if(x.NumberOfExamineePartA == null)
+                        x.NumberOfExamineePartA = 0;
                     if (x.Course.Type == "Undergrad")
                     {
                         flag = false;
@@ -174,6 +179,8 @@ namespace Business.Services
                 Boolean flag = true;
                 foreach (var x in filteredExam)
                 {
+                    if(x.NumberOfExamineePartB == null)
+                        x.NumberOfExamineePartB = 0;
                     if (x.Course.Type == "Undergrad")
                     {
                         flag = false;
@@ -399,7 +406,7 @@ namespace Business.Services
             };
 
             // ecm members
-            var amountForEcm = 0;
+            var amountForEcm = 1500;
             foreach (var exam in exams)
             {
 
@@ -407,22 +414,22 @@ namespace Business.Services
                 {
                     if (exam.TheoryCourses.FirstOrDefault().Course.Type == "Undergrad")
                     {
-                        amountForEcm += 3500;
+                        amountForEcm = 3500;
                     }
                     else
                     {
-                        amountForEcm += 4000;
+                        amountForEcm = 4000;
                     }
                 }
                 else if (exam.Members.Any(x => x.Id == user.UserId))
                 {
                     if (exam.TheoryCourses.FirstOrDefault().Course.Type == "Undergrad")
                     {
-                        amountForEcm += 1500;
+                        amountForEcm = 1500;
                     }
                     else
                     {
-                        amountForEcm += 2000;
+                        amountForEcm = 2000;
                     }
                 }
             }
