@@ -20,3 +20,13 @@ The Teacher Staff Remuneration System is intended for use by the Exam Controller
 - **Frontend**: React, React Query, Axios, React Router DOM
 - **Backend**: C#, .NET, Entity Framework
 - **Database**: MySQL
+## Screenshots
+**Home Page**
+![alt text](image.png)
+
+**Part of Exam committee member form**
+![alt text](image-2.png)
+
+**Final bill**
+![alt text](image-1.png)
+
