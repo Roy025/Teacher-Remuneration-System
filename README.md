@@ -28,5 +28,6 @@ The Teacher Staff Remuneration System is intended for use by the Exam Controller
 ![alt text](image-2.png)
 
 **Final bill**
+
 ![alt text](image-1.png)
 
