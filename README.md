@@ -27,7 +27,9 @@ The Teacher Staff Remuneration System is intended for use by the Exam Controller
 ![alt text](image-3.png)
 
 **DFD Level - 2**
+
 ![alt text](image-4.png)
+
 
 ## Screenshots
 
