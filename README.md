@@ -2,9 +2,9 @@
 
 ## Overview
 
-The Teacher Staff Remuneration System is designed to automate the manual process of remunerating teachers at Shahjalal University of Science and Technology. Traditionally, the process involves maintaining handwritten ledgers, which is prone to inefficiencies, errors, and delays. This project aims to streamline the remuneration process by digitizing the entire workflow, from the formation of exam committees to the generation of payment invoices.
+The Teacher Staff Remuneration System automates the manual process of remunerating teachers at Shahjalal University of Science and Technology, replacing inefficient handwritten ledgers. It digitizes the entire workflow, from forming exam committees to generating payment invoices, improving accuracy, transparency, and efficiency. 
 
-The system is built to enhance accuracy, transparency, and efficiency, ensuring that all stakeholders—administrators, directors, chairpersons, and teachers—can manage and track payments seamlessly. By implementing role-based access, the system ensures that each user has the appropriate permissions, improving security and organization.
+The system uses a __normalized__ database architecture to optimize data storage and retrieval, ensuring consistency. Role-based access is implemented to provide appropriate permissions to administrators, directors, chairpersons, and teachers, enhancing both security and organization.
 
 ## Scope
 
@@ -20,6 +20,15 @@ The Teacher Staff Remuneration System is intended for use by the Exam Controller
 - **Frontend**: React, React Query, Axios, React Router DOM
 - **Backend**: C#, .NET, Entity Framework
 - **Database**: MySQL
+
+## Database Architecture
+**Process Flow Diagram**
+
+![alt text](image-3.png)
+
+**DFD Level - 2**
+![alt text](image-4.png)
+
 ## Screenshots
 **Home Page**
 ![alt text](image.png)
