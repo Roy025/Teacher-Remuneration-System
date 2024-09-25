@@ -30,12 +30,16 @@ The Teacher Staff Remuneration System is intended for use by the Exam Controller
 ![alt text](image-4.png)
 
 ## Screenshots
+
 **Home Page**
+
 ![alt text](image.png)
 
 **Part of Exam committee member form**
+
 ![alt text](image-2.png)
 
 **Final bill**
+
 ![alt text](image-1.png)
 
