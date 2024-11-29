@@ -1,4 +1,4 @@
-# Teacher Staff Remuneration System
+# Teacher Remuneration System
 
 ## Overview
 
